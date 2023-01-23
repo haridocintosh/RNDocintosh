@@ -2,7 +2,7 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
- * @format
+ * @format 
  */
 
 import React, { useState, useRef, useEffect } from 'react';

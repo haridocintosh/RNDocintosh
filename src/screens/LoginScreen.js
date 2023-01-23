@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 // import Checkbox from 'expo-checkbox';
+import CheckBox from "react-native-check-box";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
@@ -33,9 +34,11 @@ const LoginScreen = () => {
   const [datarm, setdatarm] = useState();
   const isFocused = useIsFocused();
 
-  const toggleRememberMe = (value) => {
-    setChecked(value);
-  }
+  // const toggleRememberMe = (value) => {
+  //   console.log('checkboxvalue',value);
+  //   setChecked(value);
+  // }
+
 
   const  updateEmail = (text)=>{
     if(!isValidemailRegex.test(text)){
@@ -54,7 +57,10 @@ const LoginScreen = () => {
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
+   //console.log('token1',register);
       const token = await dispatch(userLogin(register));
+   console.log('token',token.payload);
+   console.log('tokendsd',token.payload.message);
       if(token?.payload?.status == 'Success'){
           setloader(false)
           await storeData('USER_INFO',JSON.stringify({
@@ -74,7 +80,9 @@ const LoginScreen = () => {
           setshoweye(true)
       }else{
         setloader(false)
-        Toast.show(token.payload.message);
+        // Toast.show(token.payload.message);
+         Toast.show('INCORRECT PASSWORD');
+
       }
     }else{
       setloader(false)
@@ -174,7 +182,7 @@ const LoginScreen = () => {
           blurOnSubmit={true}
           autoComplete={"off"}
         />
-      <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
+      <Ionicons  style={styles.eyeIcon} name={showeye ? 'md-eye-off' : 'md-eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
       <View style={{justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
 
@@ -183,6 +191,13 @@ const LoginScreen = () => {
           value={isChecked} 
           onValueChange={(value) => toggleRememberMe(value)} 
         /> */}
+
+        <CheckBox
+          style={{ padding: 5 }}
+          onClick={() => setChecked(!isChecked)}
+          isChecked={isChecked}
+          checkBoxColor="#2C8892"
+        />
         <Text style={{
             fontSize: 12,
             fontWeight: '400',
@@ -192,7 +207,7 @@ const LoginScreen = () => {
             color: '#51668A',
             fontFamily: 'Inter-Regular',
           }}>
-          Remember Me
+          Remember Me {isChecked}
         </Text>
       </View>
           <Text style={{

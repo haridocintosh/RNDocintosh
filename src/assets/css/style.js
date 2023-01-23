@@ -1,7 +1,6 @@
 'use strict';
 import {
-  StyleSheet,
-  StatusBar
+  StyleSheet
 } from 'react-native';
 
 module.exports = StyleSheet.create({

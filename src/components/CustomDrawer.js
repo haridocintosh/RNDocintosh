@@ -12,7 +12,7 @@ import {
 } from '@react-navigation/drawer';
 // import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
-import {AntDesign} from 'react-native-vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';

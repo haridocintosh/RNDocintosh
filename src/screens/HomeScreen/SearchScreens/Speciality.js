@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import { View, Text ,Image,SafeAreaView,FlatList,Alert, Button,TouchableOpacity} from 'react-native';
-import {AntDesign} from 'react-native-vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch } from 'react-redux';
 import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 const styelcss = require('../../../assets/css/style');

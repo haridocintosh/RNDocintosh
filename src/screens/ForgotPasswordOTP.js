@@ -10,8 +10,9 @@
    import {useDispatch, useSelector} from 'react-redux';
    import { useNavigation } from '@react-navigation/native';
    import CustomButton from '../components/CustomButton';
-   import {AntDesign,Ionicons,FontAwesome} from 'react-native-vector-icons';
-   import Icon from 'react-native-vector-icons/FontAwesome';
+   import FontAwesome from 'react-native-vector-icons/FontAwesome';
+   import Ionicons from 'react-native-vector-icons/Ionicons';
+   import AntDesign from 'react-native-vector-icons/AntDesign';
    import { forgotverifyOtp } from '../apis/Apicall';
    import OTPTextView from 'react-native-otp-textinput';
    import Toast from 'react-native-simple-toast';

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text ,Image,SafeAreaView,ScrollView,Alert, FlatList,TouchableOpacity} from 'react-native';
-import {AntDesign} from 'react-native-vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const styelcss = require('../../../assets/css/style');
 
 const Doctor = ({handleRemove,filteredDataSource}) => {

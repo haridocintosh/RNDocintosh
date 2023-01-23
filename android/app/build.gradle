@@ -58,6 +58,9 @@ react {
  * use App Bundles (https://developer.android.com/guide/app-bundle/)
  * and want to have separate APKs to upload to the Play Store.
  */
+ 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 def enableSeparateBuildPerCPUArchitecture = false
 
 /**

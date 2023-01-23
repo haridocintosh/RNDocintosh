@@ -22,6 +22,7 @@ export default function CustomButton({label, onPress}) {
           fontWeight: '600',
           fontSize: 16,
           color: '#fff',
+          fontFamily: 'Inter-Bold',
         }}>
         {label}
       </Text>

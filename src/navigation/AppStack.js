@@ -1,6 +1,6 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Entypo} from 'react-native-vector-icons';
+import Entypo from 'react-native-vector-icons/Entypo';
 // import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 // import EditProfileScreen from '../screens/EditProfileScreen';
 // import MessagesScreen from '../screens/MessagesScreen';

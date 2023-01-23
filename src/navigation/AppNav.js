@@ -5,7 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppStack from './AppStack';
 import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
 import IntroStack from './IntroStack';
 import OtpVerification from '../screens/OtpVerification';
 import RegisterTwoScreen from '../screens/RegisterTwoScreen';
@@ -26,6 +25,8 @@ import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
 import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
 import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+import RegisterScreen from '../screens/RegisterScreen';
+
 
 export default function AppNav() {
   

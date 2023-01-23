@@ -24,7 +24,7 @@ import ContactPermission from '../screens/ContactPermission';
 import ReportPost from '../screens/HomeScreen/ReportPost/ReportPost';
 import ReportTrack from '../screens/HomeScreen/ReportPost/ReportTrack';
 import { TouchableOpacity} from 'react-native';
-import {AntDesign} from 'react-native-vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import HandleBack from './HandleBack';
 import BellNotification from '../screens/HomeScreen/BellNotification/BellNotification';

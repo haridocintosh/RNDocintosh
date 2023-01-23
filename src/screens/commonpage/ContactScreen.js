@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View,SafeAreaView, ScrollView,Text,Image, TextInput, } from 'react-native'
-import {FontAwesome, Entypo} from 'react-native-vector-icons'
+import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 

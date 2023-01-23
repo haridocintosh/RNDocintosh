@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
-import {Ionicons} from 'react-native-vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from "react-native-modal";
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';

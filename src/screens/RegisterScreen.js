@@ -9,10 +9,7 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native';
-import { useFonts } from 'expo-font';
 import CustomButton from '../components/CustomButton';
-// import DeviceInfo from 'react-native-device-info';
-// import { getUniqueId, getManufacturer } from 'react-native-device-info';
 import { useDispatch } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -20,10 +17,15 @@ const styelcss = require('../assets/css/style');
 import { getAllSpeciality } from "../../redux/reducers/getSpeciality";
 import { checkMobile, userRegisterOne,checkEmail } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
-import {MaterialCommunityIcons, Ionicons, FontAwesome5,Fontisto} from 'react-native-vector-icons';
-import { registerForPushNotificationsAsync } from './PushNotification';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
-export default function RegisterScreen() {
+// import { registerForPushNotificationsAsync } from './PushNotification';
+
+
+const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [checked, setChecked] = useState('');
@@ -42,10 +44,6 @@ export default function RegisterScreen() {
   const [spl, setSpl] = useState([
     {label: 'Doctor', value: '1'},
   ]);
-  // const [openGender, setOpenGender] = useState(false);
-  // const [valueGender, setValueGender] = useState('');
-
-
   const [register , setregister] = useState({
     fname : "",
     lname:"",
@@ -56,30 +54,9 @@ export default function RegisterScreen() {
     role:"",
     device_id:""
   });
-
   const ref = useRef(null);
-  
-  useEffect(()=>{
-    async function fetchSpecialities(){
-      const allSpeciality = await dispatch(getAllSpeciality());
-      setSpl(allSpeciality.payload.map((ele,index)=>{
-        return {label: ele.speciality, value: ele.speciality_id};
-     }))
-    }
-    fetchSpecialities();
-    fetchToken();
-  },[]);
 
-  function fetchToken(){
-    registerForPushNotificationsAsync().then(token => setregister({
-      ...register,
-      device_id: token,
-     }));
-  }
-
- 
-
-const firstName= (e) =>{
+  const firstName= (e) =>{
     const isValidnameRegex = /^[a-zA-Z]+[a-zA-Z]+$/;
     const name = e;
     if(!isValidnameRegex.test(name)){
@@ -118,14 +95,11 @@ const email= async(e)=>{
       setemail(result.payload.message)
     }
   }
-
   setregister({
     ...register,
     email: emailid,
    })
 }
-
-
 
 const phonenumber= async(e)=>{
   const isValidmobileRegex =  /^(\[0-9]?)?\d{10}$/;
@@ -138,7 +112,6 @@ const phonenumber= async(e)=>{
       setmobile(result.payload.message)
     }
   }
-  
   setregister({
     ...register,
     mobile: mobile,
@@ -181,11 +154,11 @@ const form_submit = async() =>{
   }else if(!register.email){
     setemail("Please enter valid Email ID");
   }
-  else if(emailIderr != ''){
-    setemail("This Email ID is registered with us");
-  }else if(mobileId !=''){
-    setmobile("This mobile no. is registred with us");
-  }
+  // else if(emailIderr != ''){
+  //   setemail("This Email ID is registered with us");
+  // }else if(mobileId !=''){
+  //   setmobile("This mobile no. is registred with us");
+  // }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
@@ -231,11 +204,11 @@ const form_submit = async() =>{
     }else if(!register.gender){
       errgender("Please Select gender");
     }
-    else if(emailIderr != ''){
-      setemail("This Email ID is registered with us");
-    }else if(mobileId !=''){
-      setmobile("This mobile no. is registred with us");
-    }
+    // else if(emailIderr != ''){
+    //   setemail("This Email ID is registered with us");
+    // }else if(mobileId !=''){
+    //   setmobile("This mobile no. is registred with us");
+    // }
     else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){
@@ -266,167 +239,164 @@ const form_submit = async() =>{
       })
       }
     }
-  
+
+  // function fetchToken(){
+  //   registerForPushNotificationsAsync().then(token => setregister({
+  //     ...register,
+  //     device_id: token,
+  //    }));
+  // }
+
+    useEffect(()=>{
+      async function fetchSpecialities(){
+        const allSpeciality = await dispatch(getAllSpeciality());
+        setSpl(allSpeciality.payload.map((ele,index)=>{
+          return {label: ele.speciality, value: ele.speciality_id};
+      }))
+      }
+    // fetchSpecialities();
+      // fetchToken();
+    },[]);
+
   if(loader){
     return(
-    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-        <ActivityIndicator size={'large'} color={"#2C8892"}/>
-    </View>)
+      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+          <ActivityIndicator size={'large'} color={"#2C8892"}/>
+      </View>)
   }
 
   return (
-    <View style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}  >
+    <View style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}>
       <ScrollView ref={ref} keyboardShouldPersistTaps='handled' 
           showsVerticalScrollIndicator={false} 
           nestedScrollEnable={true}>
-          <View style={{ marginTop :30}} >
-            <Text  style={styles.headingtext}>Hey There!</Text>
-            <Text style={styles.headingpara} >Welcome to Docintosh. Let’s create your account.</Text>
+          <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
+            <TextInput 
+              style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
+              placeholderTextColor='#687690' 
+              placeholder='First name'  
+              onChangeText={(e)=> firstName(e)}
+            />
+            <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
+            <TextInput 
+              style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
+              placeholderTextColor='#687690' 
+              placeholder='Last Name' 
+              onChangeText={(e)=>{lastName(e);}}
+            />
+            <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
           </View>
-            
-       <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
 
-        <TextInput 
-          style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
-          placeholderTextColor='#687690' 
-          placeholder='First name'  
-          onChangeText={(e)=> firstName(e)}
-        />
-        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
-        <TextInput 
-          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
-          placeholderTextColor='#687690' 
-          placeholder='Last Name' 
-          onChangeText={(e)=>{lastName(e);}}
-          
-        />
-        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
-
-        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
-          <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
-          <View style={styles.roleContainer}>
-            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '1' ? 1 : 0}]} 
-            onPress={() => {setcheckgender('1'); selectedgender('1')}}>
-            <Ionicons name="md-male-sharp" size={20} color="#51668A" />
-              <Text style={styles.roleTabText}>Male</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '0' ? 1 : 0}]} 
-            onPress={() => {setcheckgender('0'); selectedgender('0')}}>
-            <MaterialCommunityIcons name="gender-female" size={20} color="#51668A" />
-              <Text style={styles.roleTabText}>Female</Text>
-            </TouchableOpacity>
+          <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
+           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
+           <View style={styles.roleContainer}>
+             <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '1' ? 1 : 0}]} 
+              onPress={() => {setcheckgender('1'); selectedgender('1')}}>
+              <Ionicons name="md-male-sharp" size={25} color="#51668A" />
+                <Text style={styles.roleTabText}>Male</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '0' ? 1 : 0}]} 
+              onPress={() => {setcheckgender('0'); selectedgender('0')}}>
+              <MaterialCommunityIcons name="gender-female" size={25} color="#51668A" />
+                <Text style={styles.roleTabText}>Female</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{genderErr}</Text>
-        <TextInput  
-          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} 
-          placeholderTextColor='#687690' 
-          autoComplete='off' 
-          autoCapitalize="none" 
-          keyboardType="email-address" 
-          placeholder='Email ID' 
-          onChangeText={(e)=>{email(e)}}
-        />
-        <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{emailIderr !='' && emailIderr}</Text>
-        <TextInput 
-          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
-          placeholderTextColor='#687690' 
-          placeholder='Mobile Number' 
-          keyboardType="numeric"  
-          onChangeText={(e)=>{phonenumber(e)}}  
-          maxLength={10} 
-        />
-        <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{mobileId !='' && mobileId}</Text></View>
-        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0}}>
-          <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
-          <View style={styles.roleContainer}>
-            <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 4 ? 1 : 0}]} onPress={() => {setChecked('4'); setuserrole(4)}}>
-            <Fontisto name="doctor" size={20} color="#51668A" />
-              <Text style={styles.roleTabText}>Doctor</Text>
-            </TouchableOpacity>
+          <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{genderErr}</Text>
+          <TextInput  
+            style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} 
+            placeholderTextColor='#687690' 
+            autoComplete='off' 
+            autoCapitalize="none" 
+            keyboardType="email-address" 
+            placeholder='Email ID' 
+            onChangeText={(e)=>{email(e)}}
+          />
+          <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{emailIderr !='' && emailIderr}</Text>
+          <TextInput 
+            style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
+            placeholderTextColor='#687690' 
+            placeholder='Mobile Number' 
+            keyboardType="numeric"  
+            onChangeText={(e)=>{phonenumber(e)}}  
+            maxLength={10} 
+          />
+          <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{mobileId !='' && mobileId}</Text>
+          <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0}}>
+              <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
+              <View style={styles.roleContainer}>
+                <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 4 ? 1 : 0}]} onPress={() => {setChecked('4'); setuserrole(4)}}>
+                <Fontisto name="doctor" size={20} color="#51668A" />
+                  <Text style={styles.roleTabText}>Doctor</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 5 ? 1 : 0}]} onPress={() => {setChecked('5'); setuserrole(5)}}>
-            <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
-              <Text style={styles.roleTabText}>Student</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 5 ? 1 : 0}]} onPress={() => {setChecked('5'); setuserrole(5)}}>
+                <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
+                  <Text style={styles.roleTabText}>Student</Text>
+                </TouchableOpacity>
+              </View>
           </View>
-     </View>
+          <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
+          <View style={{alignSelf: 'center' }}>
+          {checked === '4'? (
+            <DropDownPicker style={styles.customInputVerify}
+                open={open}
+                value={value}
+                items={spl}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setSpl}
+                showTickIcon={false}
+                searchable={true}
+                placeholder="Speciality"
+                listMode="MODAL"
+                textStyle={{
+                  fontSize: 16,
+                  color:"#687690",
+                  fontFamily: 'PlusJakartaSans-Regular',
+                }}
+                onChangeValue={(value) => {
+                  selectedspl(value)
+                }}
 
-     <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
-    <View style={{alignSelf: 'center' }}>
-    {checked === '4'? (
-      <DropDownPicker style={styles.customInputVerify}
-          open={open}
-          value={value}
-          items={spl}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setSpl}
-          showTickIcon={false}
-          searchable={true}
-          placeholder="Speciality"
-          listMode="MODAL"
-          textStyle={{
-            fontSize: 16,
-            color:"#687690",
-            fontFamily: 'PlusJakartaSans-Regular',
-          }}
-          onChangeValue={(value) => {
-            selectedspl(value)
-          }}
-
-          listItemLabelStyle={{
-            color: "#687690",
-            fontWeight:"800",
-            borderBottomWidth:1,
-            borderBottomColor:"#687690",
-            textAlign:"center",
-            paddingBottom:10,
-          }}
-          selectedItemLabelStyle={{
-            fontWeight: "900",
-            color:"#45B5C0",
-            fontSize:18
-          }}
-          searchContainerStyle={{
-            borderBottomColor: "#687690"
-          }}
-  
-        />
-        ) : null}
-    </View>
-    <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{docspl}</Text>
-
-    <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-      <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{err}</Text>
-    </View>
-
-    <View>
-      {checked === '4'? ( 
-        <CustomButton label={'Continue'}  onPress={() =>{form_submit()}} />
-        ) : 
-      <CustomButton label={'Continue'}  onPress={() =>{handleStudentSubmit()}} />
-      }
-    </View>
-    
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginBottom: 30,
-        }}>
-        <Text>Already registered?</Text>
-        <TouchableOpacity >
-          <Text style={{color: '#2C8892', fontWeight: '700'}}  onPress={() => navigation.navigate('Login')}> Login</Text>
-        </TouchableOpacity>
-      </View> */}
-      <View>
-    </View>
+                listItemLabelStyle={{
+                  color: "#687690",
+                  fontWeight:"800",
+                  borderBottomWidth:1,
+                  borderBottomColor:"#687690",
+                  textAlign:"center",
+                  paddingBottom:10,
+                }}
+                selectedItemLabelStyle={{
+                  fontWeight: "900",
+                  color:"#45B5C0",
+                  fontSize:18
+                }}
+                searchContainerStyle={{
+                  borderBottomColor: "#687690"
+                }}
+        
+              />
+              ) : null}
+          </View>
+          <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{docspl}</Text>
+          <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{err}</Text>
+          </View>
+          <View>
+            {checked === '4'? ( 
+              <CustomButton label={'Continue'}  onPress={() =>{form_submit()}} />
+              ) : 
+            <CustomButton label={'Continue'}  onPress={() =>{handleStudentSubmit()}} />
+            }
+          </View>
       </ScrollView>
     </View>
-  );
+  )
 }
+
+export default RegisterScreen;
 
 
 const styles = StyleSheet.create({
@@ -492,12 +462,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,  
     elevation: 5
-
   },
-  roleTabText: {color:'#51668A',
-  marginLeft:5,
-  fontSize:16, 
-  fontWeight:'400'
+  roleTabText: {
+    color:'#51668A',
+    marginLeft:5,
+    fontSize:16, 
+    // fontWeight:'400',
+    fontFamily: 'Inter-Regular',
 },
     
 });

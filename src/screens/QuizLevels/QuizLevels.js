@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { quizPostData } from "../../../redux/reducers/mcqSlice";
 import { useFonts } from "expo-font";
-import {AntDesign} from 'react-native-vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import dcoin from "../../assets/dr-icon/dcoin.png";
 import { getLocalData } from "../../apis/GetLocalData";
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text,StyleSheet,TouchableOpacity,Pressable } from 'react-native'
+import { View, Text } from 'react-native'
 
 const CommunityScreen = () => {
   return (

@@ -4,34 +4,19 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  ImageBackground,
-  TextInput,
-  TouchableOpacity,
   Image,
-  
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import reactangle from '../assets/images/Rectangle.png';
-import reactangle1 from '../assets/images/Rectangle1.png';
-import oval from '../assets/dr-icon/Oval.png';
-import { FontAwesome5 } from '@expo/vector-icons';
-import docintoshd from '../assets/dr-icon/dric.png';
-import { Ionicons } from '@expo/vector-icons';
-import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import UserAvatar from '@muhzi/react-native-user-avatar';
-// import {freeGames, paidGames, sliderData} from '../model/data';
-import CustomSwitch from '../components/CustomSwitch';
-
 import { Button } from 'react-native-elements';
-
 import { Card } from 'react-native-paper';
 
 export default function KnowledgeScreen() {
   const [gamesTab, setGamesTab] = useState(1);
   const navigation = useNavigation();
-
-
   const onSelectSwitch = value => {
     setGamesTab(value);
   };

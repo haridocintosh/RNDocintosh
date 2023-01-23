@@ -11,7 +11,9 @@ import { View,
   import React, { useState, useEffect } from 'react';
   import { useNavigation } from '@react-navigation/native';
   import CustomButton from '../components/CustomButton';
-  import {AntDesign,Ionicons,FontAwesome} from 'react-native-vector-icons';
+  import AntDesign from 'react-native-vector-icons/AntDesign';
+  import Ionicons from 'react-native-vector-icons/Ionicons';
+  import FontAwesome from 'react-native-vector-icons/FontAwesome';
   import OTPTextView from 'react-native-otp-textinput';
   import { useDispatch } from 'react-redux';
   import Toast from 'react-native-simple-toast';
@@ -27,8 +29,14 @@ import { View,
   //  const email ='tara@docintosh.com';
   //  const user_id = '228737';
   //  const role = '4'
+  //  const speciality = '4'
 
   const {mobile_no, email, user_id, role, speciality} = route.params;
+  // console.log("mobile_no",mobile_no);
+  // console.log("email",email);
+  // console.log("user_id",user_id);
+  // console.log("role",role);
+  // console.log("speciality",speciality);
 
    const [phone ,setPhone] =useState("");
    const navigation = useNavigation();
@@ -110,59 +118,87 @@ import { View,
   }
 
    return (
+    // <SafeAreaView style={{paddingTop:32,paddingHorizontal:20}}>
+    //   <ScrollView showsVerticalScrollIndicator={false} 
+    //    nestedScrollEnable={true} 
+    //    keyboardShouldPersistTaps='handled'>
+    //     <View style={styles.topImgVerify}>
+    //        <Image source={require('../assets/images/image-verification-otp.png')}  />
+    //    </View>
+    //    <Text style={styles.verifyText}>
+    //      Please enter OTP sent to 
+    //    </Text>
+    //    <View style={styles.InputFieldVerify}>
+    //    <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
+    //       autoCapitalize="none"
+    //       value={editNumber ? phone: mobile_no}
+    //       onChangeText={e => setPhone(e)}
+    //       // keyboardType="tel"
+    //       clearTextOnFocus={true}
+    //   />
+    //   <View style={styles.InputSendIcons}>
+    //       <TouchableOpacity onPress={() => handleEdit()}>
+    //         {editNumber ? 
+    //             <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
+    //           :
+    //             <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+    //         }
+    //       </TouchableOpacity>
+    //       {editNumber &&
+    //       <TouchableOpacity onPress={() => handleSubmit()}>
+    //           <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+    //       </TouchableOpacity>
+    //       }
+    //   </View>
+
+    //   <OTPTextView 
+    //       handleTextChange={(text) => setotpInput(text)}
+    //       containerStyle={styles.textInputContainer}
+    //       textInputStyle={styles.roundedTextInput}
+    //       inputCount={4}
+    //     />
+
+    //    </View>
+
+    //    </ScrollView>
+    // </SafeAreaView>
+
      <SafeAreaView style={{paddingTop:32,paddingHorizontal:20}}>
        <ScrollView showsVerticalScrollIndicator={false} 
        nestedScrollEnable={true} 
        keyboardShouldPersistTaps='handled'>
 
       <View style={styles.topImgVerify}>
-         <Image source={require('../assets/images/image-verification-otp.png')}  />
-     </View>
+          <Image source={require('../assets/images/image-verification-otp.png')}  />
+      </View>
+      <Text style={styles.verifyText}>
+        Please enter OTP sent to 
+      </Text>
 
-     <Text style={styles.verifyText}>
-     Please enter OTP sent to 
-     </Text>
-
-     <View style={styles.InputFieldVerify}>
-
-     {/* <TextInput style={{fontSize:16,color:"#071B36",paddingRight:12}} 
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={mobile_no}
-          onChangeText={e=>
-           setPhone(e)
-          }
-        /> */}
-    <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
-        autoCapitalize="none"
-        value={editNumber ? phone: mobile_no}
-        onChangeText={e => setPhone(e)}
-        // keyboardType="tel"
-        clearTextOnFocus={true}
-    />
-
- {/* <Icon name="pencil" size={20} color="#2c9dd1"/>     */}
-
-
- <View style={styles.InputSendIcons}>
-    <TouchableOpacity onPress={() => handleEdit()}>
-      {editNumber ? 
-          <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
-        :
-          <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
-        }
-    </TouchableOpacity>
-    {editNumber &&
-    <TouchableOpacity onPress={() => handleSubmit()}>
-        <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
-    </TouchableOpacity>
-    }
-   </View>
-
-    </View>
-     {/* <Otp/> */}
- 
-     <OTPTextView 
+      <View style={styles.InputFieldVerify}>
+        <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
+            autoCapitalize="none"
+            value={editNumber ? phone: mobile_no}
+            onChangeText={e => setPhone(e)}
+            // keyboardType="tel"
+            clearTextOnFocus={true}
+            />
+        <View style={styles.InputSendIcons}>
+            <TouchableOpacity onPress={() => handleEdit()}>
+              {editNumber ? 
+                  <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
+                :
+                  <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+              }
+            </TouchableOpacity>
+            {editNumber &&
+            <TouchableOpacity onPress={() => handleSubmit()}>
+                <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+            </TouchableOpacity>
+            }
+        </View>
+      </View>
+        <OTPTextView 
            handleTextChange={(text) => setotpInput(text)}
            containerStyle={styles.textInputContainer}
            textInputStyle={styles.roundedTextInput}
@@ -178,14 +214,9 @@ import { View,
            </TouchableOpacity>
          </View>
          <Text style={{color:'red',fontFamily:"PlusJakartaSans-Regular",fontSize:16,textAlign:"center",marginBottom:12}}>{message}</Text>
-    <View>
-       <View style={{paddingHorizontal:6}}>
-   
-         <CustomButton label={"Verify"}  onPress={()=>submitOtp()} />
- 
-
-         </View>
-       </View>
+        <View style={{paddingHorizontal:6}}>
+          <CustomButton label={"Verify"}  onPress={()=>submitOtp()} />
+        </View>
        </ScrollView>
      </SafeAreaView>
     

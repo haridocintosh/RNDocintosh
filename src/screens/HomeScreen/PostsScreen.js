@@ -3,7 +3,9 @@ import React,{ useState,useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import PublicReactions from './PublicReactions';
 import Svg, {Path} from 'react-native-svg';
-import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from './Homestyle';
 import moment from "moment";
 import OptionModal from './optionModal';

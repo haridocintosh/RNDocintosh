@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { styles } from "./SurvayStyle";
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
   const [optId, setOptId] = useState(null);

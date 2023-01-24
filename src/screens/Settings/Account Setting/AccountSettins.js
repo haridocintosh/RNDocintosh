@@ -1,7 +1,7 @@
 import { View, Text ,SafeAreaView,TouchableOpacity} from 'react-native'
 import React, { useEffect } from 'react';
 import { styles } from './AccountSettingStyles';
-import { Entypo  } from '@expo/vector-icons';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const AccountSettings = ({navigation}) => {
     useEffect(() => {

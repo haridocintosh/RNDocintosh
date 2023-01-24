@@ -1,6 +1,8 @@
 import { View, Text, SafeAreaView,TouchableOpacity,Image,Dimensions, ScrollView } from 'react-native'
 import React,{useState,useEffect} from 'react';
-import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Card } from 'react-native-paper';
 import { styles } from './HomeScreen/Homestyle';
 import Svg, {Path} from 'react-native-svg';

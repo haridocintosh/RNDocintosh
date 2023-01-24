@@ -1,7 +1,7 @@
 import { View, Text, TextInput,SafeAreaView,TouchableOpacity } from 'react-native'
 import React, { useEffect,useState } from 'react';
 import { styles } from '../AccountSettingStyles';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useForm, Controller } from "react-hook-form";
 import { resetPasswordAPI } from './ResetPasswordSlice';
 import { useDispatch } from 'react-redux';

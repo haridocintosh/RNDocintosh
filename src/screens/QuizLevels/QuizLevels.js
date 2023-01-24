@@ -8,16 +8,12 @@ import {
 } from "react-native";
 import { styles } from "./QuizLevelsStyles";
 import React, { useEffect, useState } from "react";
-import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import McqListModal from "./McqListModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { quizPostData } from "../../../redux/reducers/mcqSlice";
-import { useFonts } from "expo-font";
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import dcoin from "../../assets/dr-icon/dcoin.png";
 import { getLocalData } from "../../apis/GetLocalData";
+import LinearGradient from 'react-native-linear-gradient';
 
 
 const QuizLevels = () => {

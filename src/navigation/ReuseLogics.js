@@ -35,9 +35,19 @@ export const PickImage = async (arg) => {
                   }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                  ImagePicker.launchCamera(options, (response) => {
-                        return response;
+                  const result = ImagePicker.launchCamera(options, (response) => {
+                        if(response.didCancel) {
+                              console.log('User cancelled image picker');
+                        } else if (response.error) {
+                              return response.error;
+                        } else if (response.customButton) {
+                              return response.customButton;
+                        } else {
+                        const result  = JSON.stringify(response);
+                          return result;
+                        }
                     });
+                    return result;
             } else {
                   console.log("Camera permission denied");
             }
@@ -54,9 +64,19 @@ export const PickImage = async (arg) => {
                   }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                  ImagePicker.launchImageLibrary(options, (response) => {
-                        return response;
+                  const result = ImagePicker.launchImageLibrary(options, (response) => {
+                        if(response.didCancel) {
+                              console.log('User cancelled image picker');
+                        } else if (response.error) {
+                              return response.error;
+                        } else if (response.customButton) {
+                              return response.customButton;
+                        } else {
+                        const result  = JSON.stringify(response);
+                          return result;
+                        }
                   });
+                  return result;
             } else {
                   console.log("Camera permission denied");
             }
@@ -96,8 +116,7 @@ export const PickImageAll = async (setloader) => {
                         return response.customButton;
                   } else {
                   const result  = JSON.stringify(response);
-                        
-                        return result;
+                    return result;
                   }
             });
             return result;

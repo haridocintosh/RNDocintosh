@@ -35,8 +35,10 @@ const LoginScreen = () => {
   const isFocused = useIsFocused();
 
   const toggleRememberMe = (value) => {
-    console.log('checkboxvalue',value);
-    setChecked(value);
+    // console.log('checkboxvalue',value);
+    // setChecked(value);
+    console.log(prev);
+   //setisChecked(prev => !prev);
   }
 
 

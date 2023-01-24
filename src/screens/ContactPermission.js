@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput } from 'react-native';
+import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput,PermissionsAndroid } from 'react-native';
+// import { PermissionsAndroid } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import * as Contacts from 'expo-contacts';
+// import * as Contacts from 'expo-contacts';
+// import Contacts from 'react-native-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from '../apis/GetLocalData';
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
+
 import Toast from 'react-native-simple-toast';
 
  
@@ -91,22 +94,70 @@ export default function ContactPermission({navigation}) {
 
 
     const getPrermission = async()=>{
-    const { status } = await Contacts.requestPermissionsAsync();
-    if(status === 'granted') {
-      const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.PhoneNumbers],
-      });
-       if(data.length > 0) {
-        const contact = await data.map(element=> {return{...element,isSelected:false}});
-        setTotalSlice(contact.length)  
-        setContact(contact);
-        setItem(contact)
-        setLoading(false);
-       }
-    }else{
-     //navigation.navigate('Login');
-     Toast.show('Permission deny',Toast.LONG);
-    }
+
+      //       Contacts.getAll().then(contacts => {
+      //   console.log('contacts',contacts);
+      //   // setContacts(contacts);
+      // });
+
+
+      // PermissionsAndroid.request(
+      //   PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+      //   {
+      //     'title': 'Contacts',
+      //     'message': 'This app would like to view your contacts.',
+      //     'buttonPositive': 'Please accept bare mortal'
+      //   }
+      // )
+      //   .then(Contacts.getAll()
+      //     .then((contacts) => {
+      //         // work with contacts
+      //           console.log(contacts)
+      //         })
+      //           .catch((e) => {
+      //               console.log(e)
+      //           }))
+
+
+      // Contacts.checkPermission().then(permission => {
+      //   // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+      //   if (permission === 'undefined') {
+      //     Contacts.requestPermission().then(permission => {
+      //       console.log('permit',permission);
+
+      //     })
+      //   }
+      //   if (permission === 'authorized') {
+      //     Contacts.getAll().then(contacts => {
+      //       console.log('contacts',contacts);
+      //       // setContacts(contacts);
+      //     });
+      //   }
+      //   if (permission === 'denied') {
+      //     // x.x
+      //   }
+      // })
+
+      // Contacts.getAll().then(contacts => {
+      //   console.log('contacts',contacts);
+      //   // setContacts(contacts);
+      // });
+   // const { status } = await Contacts.requestPermissionsAsync();
+    // if(status === 'granted') {
+    //   const { data } = await Contacts.getContactsAsync({
+    //     fields: [Contacts.Fields.PhoneNumbers],
+    //   });
+    //    if(data.length > 0) {
+    //     const contact = await data.map(element=> {return{...element,isSelected:false}});
+    //     setTotalSlice(contact.length)  
+    //     setContact(contact);
+    //     setItem(contact)
+    //     setLoading(false);
+    //    }
+    // }else{
+    //  //navigation.navigate('Login');
+    //  Toast.show('Permission deny',Toast.LONG);
+    // }
   }
   
   const handleSubmit = async()=>{

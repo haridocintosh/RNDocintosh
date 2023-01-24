@@ -24,7 +24,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 
 // import { registerForPushNotificationsAsync } from './PushNotification';
 
-
 const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -254,7 +253,7 @@ const form_submit = async() =>{
           return {label: ele.speciality, value: ele.speciality_id};
       }))
       }
-    // fetchSpecialities();
+     fetchSpecialities();
       // fetchToken();
     },[]);
 

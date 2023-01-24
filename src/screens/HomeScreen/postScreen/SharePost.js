@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
 //import { StatusBar } from "expo-status-bar";
-import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
+const ImagePicker = require('react-native-image-picker');
+import {PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,6 +31,29 @@ import data from "../../../model/data";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 
 // let recording = new Audio.Recording();
+
+
+const requestCameraPermission = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: "App Camera Permission",
+        message:"App needs access to your camera ",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("Camera permission given");
+    } else {
+      console.log("Camera permission denied");
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
 const  Sharepost = () => {
   const dispatch    = useDispatch();
@@ -92,12 +116,16 @@ const  Sharepost = () => {
   console.log("ppicked");
     setEmojiTab(!emojiTab)
   }
+
   const pickImage =  () => {
     setData(null)
     setDocument(null);
+    console.log("open Camera");
     PickImageAll(setloader).then(async (res) =>{
-      setloader(true);
-      const data = res?.map((data,i) => {return {...data, id:i}})
+      const result  = res.assets;
+      console.log("response",result);
+      // setloader(true);
+      const data = result?.map((data,i) => {return {...data, id:i}})
       setData(data);
       setPost({...post, 
           type:'i'

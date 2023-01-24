@@ -1,28 +1,26 @@
 import { View, Text, Image,StyleSheet,Dimensions } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-import Swiper from 'react-native-swiper';
-//import { Audio, Video } from 'expo-av';
+
+import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const AutoHeightImage = ({item}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [carouselItems] = useState(item?.attach_array)
   
-  //const video = useRef(null);
+  const video = useRef(null);
 
   const _renderItem = ({ item, index }) => {
     return (
-           <View key={index}>
-              {item?.filename?.includes("mp4") ? ''
-              // <Video
-              //     ref={video}
-              //     resizeMode={"contain"}
-              //     source={{uri:item?.filename}} 
-              //     useNativeControls
-              //     //shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
-              //     isLooping={false}
-              //     style={{width: "100%", height:300, marginHorizontal:10}} 
-              // />
+          <View key={index}>
+              {item?.filename?.includes("mp4") ?
+                <Video 
+                  ref={video}
+                  controls={true}
+                  source={{uri:item?.filename}} 
+                  playInBackground={false}
+                  style={{width:"100%", height:450,marginHorizontal:10,alignSelf:'center',}}
+                />
               :
                 <Image 
                   source={{uri:item?.filename}}

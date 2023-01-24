@@ -201,7 +201,7 @@ const form_submit = async() =>{
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
     setloader(false);
-    Toast.show(result.payload.message);
+    Toast.show(result.payload.message,Toast.LONG);
       if(result.payload.status == 'Success'){
         const coinDetails = {task : 1, receiverId:result.payload.user_id } 
         const coinResult  = await dispatch(coinTransfer(coinDetails));

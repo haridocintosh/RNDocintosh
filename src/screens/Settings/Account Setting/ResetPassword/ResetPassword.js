@@ -28,7 +28,7 @@ const ResetPassword = ({navigation}) => {
     }
     getLocalData('USER_INFO').then( async (res) => {
       const resetResult = await dispatch(resetPasswordAPI({current_pwd:data?.current_password,pwd:data?.re_new_password,id:res?.data?.id}));
-      Toast.show(resetResult?.payload?.message);
+      Toast.show(resetResult?.payload?.message,Toast.LONG);
       if(resetResult?.payload.status !== "Error"){
         reset();
         setPasswordMatch(false);

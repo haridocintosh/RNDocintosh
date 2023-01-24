@@ -70,7 +70,7 @@ export default function ContactPermission({navigation}) {
     const result = await dispatch(sendInvitation(uploadData));
     console.log("result",result.payload);
      if(result.payload.status=="Success"){
-      Toast.show(result.payload.message);
+      Toast.show(result.payload.message,Toast.LONG);
       getLocalData("USER_INFO").then((res) => {
         if(res?.login){
           navigation.goBack();
@@ -105,7 +105,7 @@ export default function ContactPermission({navigation}) {
        }
     }else{
      //navigation.navigate('Login');
-     Toast.show('Permission deny');
+     Toast.show('Permission deny',Toast.LONG);
     }
   }
   

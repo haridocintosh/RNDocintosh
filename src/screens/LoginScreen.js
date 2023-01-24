@@ -34,10 +34,10 @@ const LoginScreen = () => {
   const [datarm, setdatarm] = useState();
   const isFocused = useIsFocused();
 
-  // const toggleRememberMe = (value) => {
-  //   console.log('checkboxvalue',value);
-  //   setChecked(value);
-  // }
+  const toggleRememberMe = (value) => {
+    console.log('checkboxvalue',value);
+    setChecked(value);
+  }
 
 
   const  updateEmail = (text)=>{
@@ -57,10 +57,9 @@ const LoginScreen = () => {
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
-   //console.log('token1',register);
       const token = await dispatch(userLogin(register));
-   console.log('token',token.payload);
-   console.log('tokendsd',token.payload.message);
+  //  console.log('token',token.payload);
+  //  console.log('tokendsd',token.payload.message);
       if(token?.payload?.status == 'Success'){
           setloader(false)
           await storeData('USER_INFO',JSON.stringify({
@@ -79,10 +78,9 @@ const LoginScreen = () => {
           setloader(true);
           setshoweye(true)
       }else{
-        setloader(false)
-        // Toast.show(token.payload.message);
-         Toast.show('INCORRECT PASSWORD');
-
+      setloader(false)
+       Toast.show(token.payload.message, Toast.LONG);
+       //Toast.show('INCORRECT PASSWORD');
       }
     }else{
       setloader(false)
@@ -115,6 +113,7 @@ const LoginScreen = () => {
   }
 
   useEffect(() => {
+    
     getData('USER_INFO');
     if(isFocused){
       getDatarm('rememberme');
@@ -191,10 +190,8 @@ const LoginScreen = () => {
           value={isChecked} 
           onValueChange={(value) => toggleRememberMe(value)} 
         /> */}
-
         <CheckBox
-          style={{ padding: 5 }}
-          onClick={() => setChecked(!isChecked)}
+          onClick={() =>toggleRememberMe(isChecked) }
           isChecked={isChecked}
           checkBoxColor="#2C8892"
         />

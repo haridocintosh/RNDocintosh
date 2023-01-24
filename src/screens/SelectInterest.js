@@ -122,7 +122,7 @@ const SelectInterest = ({route}) => {
 
   const handleSubmit = ()=>{
     if(selectitem == ''){
-      Toast.show('Please Select Your Interest');
+      Toast.show('Please Select Your Interest', Toast.LONG);
     }else{
       navigation.navigate('ContactPermission'); 
     }

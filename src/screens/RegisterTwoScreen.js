@@ -254,7 +254,7 @@ useEffect(()=>{
       setsubmitbtn(true);
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
-      Toast.show(result.payload.message);
+      Toast.show(result.payload.message,Toast.LONG);
       console.log('imageUploadData', result.payload);
         if(result.payload.status == 'Success'){
           setloader(false);

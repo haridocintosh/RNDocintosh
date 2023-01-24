@@ -190,14 +190,14 @@ const publishCheck1 = (e, text)=>{
     setPostLoad(true);
     if(post.publishto ==''){
       setPostLoad(false);
-      Toast.show('Please Select Publish to');
+      Toast.show('Please Select Publish to',Toast.LONG);
       bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
       setPostLoad(false);
-      Toast.show("Please Write Something About Your Post!!!!!!!");
+      Toast.show("Please Write Something About Your Post!!!!!!!",Toast.LONG);
     }else if(!post.postType){
       setPostLoad(false);
-      Toast.show("Please Select PostType");
+      Toast.show("Please Select PostType",Toast.LONG);
       bottomSheetModalRef.current?.present();
     }else{
       if(media == 'images'){
@@ -289,7 +289,7 @@ const publishCheck1 = (e, text)=>{
           console.log(result);
           if(result.payload.status == 'Success'){
           // setloader(false);
-            Toast.show(result.payload.message);
+            Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
             const coinResult  = await dispatch(coinTransfer(coinDetails));
             if(coinResult.payload.status == 'Success')
@@ -330,7 +330,7 @@ const publishCheck1 = (e, text)=>{
   const result1 = await responce.json();
  // console.log(result1);
 
-  Toast.show(result1.payload.message);
+  Toast.show(result1.payload.message,Toast.LONG);
   setPost('');
   setTimeout(()=>{
     navigation.navigate('Home1')

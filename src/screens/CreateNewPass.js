@@ -15,16 +15,17 @@ const CreateNewPass = ({route}) => {
  const [cpassword,setcpassword] = useState();
  const [showeye, setshoweye]    = useState(true);
  const {mobile_no, email, user_id} = route.params;
+
  const handleSubmit = async ()=>{
   if(password!==cpassword){
-   Toast.show("Please Check Both Password");
+   Toast.show("Please Check Both Password", Toast.LONG);
   }else{
    const token =await dispatch(setpassword({
     id:user_id,
     pwd:password
   }));
   if(token?.payload?.status=="Success"){
-   Toast.show(token.payload.message);
+   Toast.show(token.payload.message,Toast.LONG);
   navigation.navigate('Login');
   }
   

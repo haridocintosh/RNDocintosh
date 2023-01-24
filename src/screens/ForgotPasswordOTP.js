@@ -56,7 +56,7 @@
       // setLoader(true);
       setCounter(30)
       const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-      Toast.show(result.payload.message);
+      Toast.show(result.payload.message,Toast.LONG);
    }
 
 
@@ -76,7 +76,7 @@
       const token =await dispatch(forgotPassword_({
         email:phone
       }))
-      Toast.show(token.payload.message);
+      Toast.show(token.payload.message, Toast.LONG);
       if(token?.payload?.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: phone,
@@ -85,7 +85,7 @@
         })
       }
     }else{
-      Toast.show("Please Enter Mobile No. OR Email");
+      Toast.show("Please Enter Mobile No. OR Email",Toast.LONG);
     }   
   }
 

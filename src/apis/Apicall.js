@@ -41,7 +41,7 @@ new Promise((resolve, reject) => {
         })) 
         singlestoreData('isloggedin','true');  
         resolve(res.data);
-        Toast.show(res.data["message"])
+        Toast.show(res.data["message"],Toast.LONG)
       } else reject(res);
     })
     .catch(error => {
@@ -65,7 +65,7 @@ new Promise((resolve, reject) => {
       .then(res => {
         if(res.status === 200) {
           resolve(res.data);
-          Toast.show(res.data["message"])
+          Toast.show(res.data["message"],Toast.LONG)
         } else reject(res);
       })
       .catch(error => {
@@ -94,7 +94,7 @@ const verifyOtp = (otp,user_id) =>
           data:res.data["session_data"]
         }))  
         resolve(res.data);
-        Toast.show(res.data["message"])
+        Toast.show(res.data["message"],Toast.LONG)
         } else reject(res);
       })
       .catch(error => {
@@ -119,7 +119,7 @@ const verifyOtp = (otp,user_id) =>
         if(res.status === 200) {
           resolve(res.data);
           if(res.data["message"])
-          Toast.show(res.data["message"])
+          Toast.show(res.data["message"],Toast.LONG)
         } else reject(res);
       })
       .catch(error => {
@@ -144,7 +144,7 @@ const verifyOtp = (otp,user_id) =>
       .then(res => {
         if(res.status === 200) {
         resolve(res.data);
-        Toast.show('OTP Verify Successfully')
+        Toast.show('OTP Verify Successfully',Toast.LONG)
         } else reject(res);
       })
       .catch(error => {

@@ -6,7 +6,6 @@ import CustomButton from '../components/CustomButton';
 const styelcss = require('../assets/css/style');
 import { useNavigation } from '@react-navigation/native';
 import { forgotPassword_ } from '../../redux/reducers/forgotPass';
-import { useFonts } from 'expo-font';
 
 
 const ForgetPassword = () => {
@@ -32,10 +31,10 @@ const ForgetPassword = () => {
           user_id :token.payload.userid
         })
       }else{
-        Toast.show(token.payload.message);
+        Toast.show(token.payload.message, Toast.LONG);
       }
     }else{
-      Toast.show("Please Enter valid Email address or Phone number.");
+      Toast.show("Please Enter valid Email address or Phone number.", Toast.LONG);
     }   
   }
 
@@ -43,13 +42,7 @@ const ForgetPassword = () => {
    // window.location.reload();
   },[])
 
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
+
   return (
   <SafeAreaView style={styelcss.maindDivBannerForget}>
     <ScrollView

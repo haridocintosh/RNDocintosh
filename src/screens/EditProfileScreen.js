@@ -1,13 +1,11 @@
 import React,{useState,useEffect } from 'react';
 import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, StyleSheet, Pressable,TouchableOpacity} from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import { Card } from 'react-native-paper';
-import { Entypo } from '@expo/vector-icons';
+import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import { getLocalData } from '../apis/GetLocalData';
-
-
 
 const EditProfileScreen = ({navigation}) => {
     // form validation start here

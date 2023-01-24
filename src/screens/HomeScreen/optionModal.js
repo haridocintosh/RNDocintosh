@@ -1,12 +1,15 @@
 import { View, Text, StyleSheet, TouchableOpacity,Modal } from 'react-native'
 import React, { useState } from 'react';
-import {MaterialCommunityIcons,Feather,Entypo,MaterialIcons } from '@expo/vector-icons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import { deletePost } from '../../../redux/reducers/postAction';
 import { useDispatch } from 'react-redux';
 import { coinTransfer } from '../../../redux/reducers/coinSlice';
 import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/ALL_APIs';
-import {Ionicons} from '@expo/vector-icons';
 
 const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,resData}) => {
   const [toggle, setToggle] = useState(false);

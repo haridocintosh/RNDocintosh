@@ -13,9 +13,11 @@ import {
 // import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { MaterialIcons,Ionicons,Entypo } from '@expo/vector-icons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
 import { Button } from 'react-native-elements';
-import { Feather } from '@expo/vector-icons';
 import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';

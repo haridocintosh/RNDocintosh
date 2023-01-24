@@ -14,7 +14,7 @@ import {
 import RadioMcq from "./RadioMcq";
 import TypoMcq from "./TypoMcq";
 import SurvayCheckBoxMcq from "./SurvayCheckBoxMcq";
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ProgressBar } from "react-native-paper";
 import { styles } from "./SurvayStyle";
 import { getLocalData } from "../../apis/GetLocalData";

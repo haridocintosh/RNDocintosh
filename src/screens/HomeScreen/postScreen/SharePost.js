@@ -3,7 +3,15 @@ import "react-native-gesture-handler";
 //import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
-import {Entypo, Ionicons, MaterialIcons, Fontisto,MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from "react-native-gesture-handler";
 import { List } from 'react-native-paper';
 import CheckBox from "react-native-check-box";
@@ -536,7 +544,7 @@ setSpecialNames(specialityName)
           </TouchableOpacity>
         </View>
           
-        <StatusBar style="auto" />
+        {/* <StatusBar style="auto" /> */}
 
         <BottomSheetModal
           ref={bottomSheetModalRef}

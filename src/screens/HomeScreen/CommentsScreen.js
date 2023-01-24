@@ -1,6 +1,7 @@
 import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity,Modal} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';

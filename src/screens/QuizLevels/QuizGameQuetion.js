@@ -77,7 +77,7 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   return (
     <View style={{ marginTop: 10 }}>
       <View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row"}}>
           <Progress.Circle
             unfilledColor={"#046B74"}
             size={60}

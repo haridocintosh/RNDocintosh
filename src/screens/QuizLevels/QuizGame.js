@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { SafeAreaView,ScrollView,Easing,Dimensions,Text,View} from 'react-native'
+import { SafeAreaView,ScrollView,Easing,Dimensions,Text,View,Animated} from 'react-native'
 import Svg, { Path } from 'react-native-svg';
-import Animated from 'react-native-reanimated';
+// import Animated from 'react-native-reanimated';
 import TimeOutModal from './TimeOutModal';
 import { useDispatch } from 'react-redux';
 import QuizGameQuetion from './QuizGameQuetion';

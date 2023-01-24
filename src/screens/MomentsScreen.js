@@ -11,7 +11,12 @@ import {
   Text
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { AntDesign,Ionicons, FontAwesome ,FontAwesome5, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from 'react-native-gesture-handler';
 
 

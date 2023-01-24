@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Share} from 'react-native'
 import React, { useState,useEffect } from 'react';
-import {AntDesign,} from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
 import { getallLikes, postLikeData } from '../../../redux/reducers/publicReactionSlice';
 import { useNavigation } from '@react-navigation/native';

@@ -3,7 +3,7 @@ import { View, Text ,Image,SafeAreaView,TextInput, ScrollView, Alert,  StyleShee
 import { useNavigation } from '@react-navigation/native';
 // import { SafeAreaView, ScrollView } from 'react-native-web';
 import profileimg from '../assets/images/p2.png';
-import { FontAwesome5,FontAwesome,Feather,Fontisto,Entypo } from '@expo/vector-icons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import icon from '../assets/images/Vector.png';
 import { Button , } from "react-native-elements";
 import Modal from "react-native-modal";

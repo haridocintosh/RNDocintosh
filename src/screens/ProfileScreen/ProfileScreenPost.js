@@ -1,7 +1,9 @@
 import { View, Text, TouchableOpacity,Dimensions,Image,FlatList,ActivityIndicator } from 'react-native'
 import React,{ useEffect,useState }  from 'react';
 import { Card } from 'react-native-paper';
-import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from './profilestyle';
 import { useDispatch } from 'react-redux';
 import { getMyPostsApi } from '../../../redux/reducers/postData';

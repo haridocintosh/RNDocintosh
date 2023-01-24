@@ -1,6 +1,6 @@
 'use strict';
 import {
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 module.exports = StyleSheet.create({

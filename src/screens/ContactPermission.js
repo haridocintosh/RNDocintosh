@@ -33,7 +33,7 @@ export default function ContactPermission({navigation}) {
   const handleChange = (phoneNumbers) => {
     // setSpinner(true);
     let temp = contactList.map((data) => {
-      if (phoneNumbers === data.id) {
+      if (phoneNumbers === data.recordID) {
         return { ...data, isSelected: !data.isSelected };
       }
       return data;
@@ -94,54 +94,38 @@ export default function ContactPermission({navigation}) {
 
 
     const getPrermission = async()=>{
-
-console.log(Contacts.getAll());
-      //   Contacts.getAll().then(contacts => {
-      //       console.log('contacts',contacts);
-      // });
-
-
-      // PermissionsAndroid.request(
-      //   PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-      //   {
-      //     'title': 'Contacts',
-      //     'message': 'This app would like to view your contacts.',
-      //     'buttonPositive': 'Please accept bare mortal'
-      //   }
-      // )
-      //   .then(Contacts.getAll()
-      //     .then((contacts) => {
-      //         // work with contacts
-      //           console.log(contacts)
-      //         })
-      //           .catch((e) => {
-      //               console.log(e)
-      //           }))
-
-
-      // Contacts.checkPermission().then(permission => {
-      //   // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-      //   if (permission === 'undefined') {
-      //     Contacts.requestPermission().then(permission => {
-      //       console.log('permit',permission);
-
-      //     })
-      //   }
-      //   if (permission === 'authorized') {
-      //     Contacts.getAll().then(contacts => {
-      //       console.log('contacts',contacts);
-      //       // setContacts(contacts);
-      //     });
-      //   }
-      //   if (permission === 'denied') {
-      //     // x.x
-      //   }
-      // })
-
-      // Contacts.getAll().then(contacts => {
-      //   console.log('contacts',contacts);
-      //   // setContacts(contacts);
-      // });
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+        {
+          'title': 'Contacts',
+          'message': 'This app would like to view your contacts.',
+          'buttonPositive': 'Please accept bare mortal'
+        }
+      )
+      .then(res=> { 
+        console.log(res);
+        if(res==='granted')
+        {
+           Contacts.getAll()
+          .then((contacts) => {
+          if(contacts.length > 0) { 
+            const contactlist =  contacts.map(element=> {return{...element,isSelected:false}});
+            console.log(contactlist.length)
+            console.log(contactlist)
+            setTotalSlice(contactlist.length)  
+            setContact(contactlist);
+            setItem(contactlist)
+            // setLoading(false);
+          }
+        })
+            .catch((e) => {
+                console.log(e)
+            })
+        }else{
+        navigation.navigate('Login');
+         Toast.show('Permission deny',Toast.LONG);
+        }
+      })
    // const { status } = await Contacts.requestPermissionsAsync();
     // if(status === 'granted') {
     //   const { data } = await Contacts.getContactsAsync({
@@ -169,7 +153,7 @@ console.log(Contacts.getAll());
  const onChangeText =  (text) =>{
   if (text) {
       const newData = item?.filter((data) => {
-        const itemData = data?.name.toUpperCase();
+        const itemData = data?.displayName.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -194,12 +178,13 @@ if(loading){
 }
 
 const renderItem = (item) => {
+  console.log(item);
   return(
     <View style={styelcss.peersmaniListArea}>
         <View style={styelcss.peersSubiListArea}>
             <Image style={styelcss.tinyLogo} source={require('../assets/dr-icon/normal.png')}/>
             <View style={styelcss.peerListcontent}>
-              <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{item?.item.name}</Text>
+              <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{item?.item.displayName}</Text>
               <Text style={[styelcss.peersubtextpara,{fontFamily:"Inter-Regular"}]}>
                   {item?.item.phoneNumbers?.[0]?.number} 
               </Text>
@@ -207,7 +192,7 @@ const renderItem = (item) => {
         </View>
         <TouchableOpacity>
           <CheckBox
-              onClick={() => handleChange(item.item.id)}
+              onClick={() => handleChange(item.item.recordID)}
               isChecked={item.item.isSelected}
               checkBoxColor="#2C8892"
           />
@@ -241,12 +226,11 @@ const renderItem = (item) => {
         </View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} 
       keyboardShouldPersistTaps='handled'>
-       
-      {/* <FlatList
+      <FlatList
         data={contactList?.slice(0,sliceCount)}
         renderItem={renderItem}
         keyExtractor={(item,i) => i}
-      /> */}
+      />
       {totalSlice >= sliceCount &&
       <TouchableOpacity style={{marginTop:10,width:"100%",alignItems:'center'}} onPress={() => loadMore()}>
           <Text style={{color:'#2C8892',fontFamily:"PlusJakartaSans-Bold",}}>Load More...</Text>

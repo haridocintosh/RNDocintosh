@@ -127,24 +127,63 @@ export const PickImageAll = async (setloader) => {
 }
 
 export const PickVideos = async (setloader) => {
-   const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-      if (granted === true) {
-            setloader(true);
-            var library = await ImagePicker.launchImageLibraryAsync({
-            selectionLimit: 5,
-            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-            allowsEditing: false,
-            allowsMultipleSelection: true,
-            aspect: [1, 1],
-            quality: 0.7,
-            });
-            if (!library.cancelled) {
-                  const selectedImg = library.uri ? [library] : library.selected;
-                  return selectedImg;
+      const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+                  title: "App Library Permission",
+                  message:"App needs access to your Library ",
+                  buttonNeutral: "Ask Me Later",
+                  buttonNegative: "Cancel",
+                  buttonPositive: "OK"
             }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            setloader(true);
+            let options = {
+              storageOptions: {
+                skipBackup: true,
+                path: 'video',
+              },
+              selectionLimit:3,
+              mediaType: 'video',
+            };
+            const result = ImagePicker.launchImageLibrary(options, (response) => {
+                  if(response.didCancel) {
+                        console.log('User cancelled image picker');
+                  } else if (response.error) {
+                        return response.error;
+                  } else if (response.customButton) {
+                        return response.customButton;
+                  } else {
+                  const result  = JSON.stringify(response);
+                    return result;
+                  }
+            });
+            return result;
+
       } else {
-            const denied = 'Camera permission denied';
-            // alert("You've refused to allow this app to access your camera!");
-            return denied;
+            console.log("Camera permission denied");
       }
+
+
+//    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+//       if (granted === true) {
+//             setloader(true);
+//             var library = await ImagePicker.launchImageLibraryAsync({
+//             selectionLimit: 5,
+//             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+//             allowsEditing: false,
+//             allowsMultipleSelection: true,
+//             aspect: [1, 1],
+//             quality: 0.7,
+//             });
+//             if (!library.cancelled) {
+//                   const selectedImg = library.uri ? [library] : library.selected;
+//                   return selectedImg;
+//             }
+//       } else {
+//             const denied = 'Camera permission denied';
+//             // alert("You've refused to allow this app to access your camera!");
+//             return denied;
+//       }
 }

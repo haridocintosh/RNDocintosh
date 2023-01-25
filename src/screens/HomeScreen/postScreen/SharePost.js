@@ -140,8 +140,9 @@ const  Sharepost = () => {
     
     setDocument(null);
     PickVideos(setloader).then(async (res) => {
+      const result  = res.assets;
       setloader(true);
-      const data = res?.map((data,i) => {return {...data, id:i}})
+      const data = result?.map((data,i) => {return {...data, id:i}})
       console.log(data);
       setData(data);
       setPost({...post,  type:'v' });
@@ -317,7 +318,6 @@ const publishCheck1 = (e, text)=>{
     console.log('realcount',countData);
   
     if(countData == uniqueData.length){
-  
           const uploadData = {userdata,post,uploadImage:uniqueData};
           console.log('uploadDatacheck', uploadData);
         // setloader(true);

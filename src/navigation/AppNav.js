@@ -24,7 +24,7 @@ import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
 import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
-import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+// import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import RegisterScreen from '../screens/RegisterScreen';
 
 
@@ -43,7 +43,7 @@ const navigation  = useNavigation();
         setDefaultRoute("HomeScreen");
       }else{
        setDefaultRoute("Intro");
-       // setDefaultRoute("SelectInterest");
+      // setDefaultRoute("ContactPermission");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

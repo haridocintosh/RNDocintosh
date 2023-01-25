@@ -243,14 +243,18 @@ useEffect(()=>{
       }
     }else if(!register.password){
       setPasswordErr("Please enter your password");
-    }else if(!register.profile_pic){
-      setprofilErr("Please upload your profile photo");
-      if (ref.current) {
-        ref.current.scrollTo({ y: 0, animated: true })
-      }
-    }else if(!register.mrnproof){
-      setmrnproofErr("Please upload MRN document");
-    }else{
+    }
+    
+    // else if(!register.profile_pic){
+    //   setprofilErr("Please upload your profile photo");
+    //   if (ref.current) {
+    //     ref.current.scrollTo({ y: 0, animated: true })
+    //   }
+    // }
+    // else if(!register.mrnproof){
+    //   setmrnproofErr("Please upload MRN document");
+    // }
+    else{
       setsubmitbtn(true);
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));

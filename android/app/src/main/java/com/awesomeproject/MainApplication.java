@@ -7,8 +7,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
-import com.facebook.soloader.SoLoader;
-import java.util.List;
+// import com.facebook.soloader.SoLoader;
+// import java.util.List;
 //import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 
 public class MainApplication extends Application implements ReactApplication {

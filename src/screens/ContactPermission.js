@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput } from 'react-native';
+import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput, PermissionsAndroid } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import * as Contacts from 'expo-contacts';
+// import * as Contacts from 'expo-contacts';
+// import Contacts from 'react-native-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -9,8 +10,6 @@ import { getLocalData } from '../apis/GetLocalData';
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
-
- 
 
 export default function ContactPermission({navigation}) {
   const refInput = React.useRef(null);
@@ -91,22 +90,39 @@ export default function ContactPermission({navigation}) {
 
 
     const getPrermission = async()=>{
-    const { status } = await Contacts.requestPermissionsAsync();
-    if(status === 'granted') {
-      const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.PhoneNumbers],
-      });
-       if(data.length > 0) {
-        const contact = await data.map(element=> {return{...element,isSelected:false}});
-        setTotalSlice(contact.length)  
-        setContact(contact);
-        setItem(contact)
-        setLoading(false);
-       }
-    }else{
-     //navigation.navigate('Login');
-     Toast.show('Permission deny',Toast.LONG);
-    }
+
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+        {
+          'title': 'Contacts',
+          'message': 'This app would like to view your contacts.',
+          'buttonPositive': 'Please accept bare mortal'
+        }
+      )
+        .then(Contacts.getAll()
+          .then((contacts) => {
+              // work with contacts
+                console.log(contacts)
+              })
+                .catch((e) => {
+                    console.log(e)
+                }))
+    // const { status } = await Contacts.requestPermissionsAsync();
+    // if(status === 'granted') {
+    //   const { data } = await Contacts.getContactsAsync({
+    //     fields: [Contacts.Fields.PhoneNumbers],
+    //   });
+    //    if(data.length > 0) {
+    //     const contact = await data.map(element=> {return{...element,isSelected:false}});
+    //     setTotalSlice(contact.length)  
+    //     setContact(contact);
+    //     setItem(contact)
+    //     setLoading(false);
+    //    }
+    // }else{
+    //  //navigation.navigate('Login');
+    //  Toast.show('Permission deny',Toast.LONG);
+    // }
   }
   
   const handleSubmit = async()=>{
@@ -190,12 +206,12 @@ const renderItem = (item) => {
         </View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} 
       keyboardShouldPersistTaps='handled'>
-       
+{/*        
       <FlatList
         data={contactList?.slice(0,sliceCount)}
         renderItem={renderItem}
         keyExtractor={(item,i) => i}
-      />
+      /> */}
       {totalSlice >= sliceCount &&
       <TouchableOpacity style={{marginTop:10,width:"100%",alignItems:'center'}} onPress={() => loadMore()}>
           <Text style={{color:'#2C8892',fontFamily:"PlusJakartaSans-Bold",}}>Load More...</Text>

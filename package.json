@@ -1,5 +1,5 @@
 {
-  "name": "AwesomeProject",
+  "name": "docintosh",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -56,6 +56,7 @@
     "react-native-screens": "^3.19.0",
     "react-native-simple-toast": "^2.0.0",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "^13.7.0",
     "react-native-swiper": "^1.6.0",

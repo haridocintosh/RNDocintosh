@@ -3,15 +3,15 @@ import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Li
 // import { PermissionsAndroid } from 'react-native';
 import CustomButton from '../components/CustomButton';
 // import * as Contacts from 'expo-contacts';
-// import Contacts from 'react-native-contacts';
+import Contacts from 'react-native-contacts';
 import CheckBox from "react-native-check-box";
-const styelcss = require('../assets/css/style');
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from '../apis/GetLocalData';
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
-
 import Toast from 'react-native-simple-toast';
+const styelcss = require('../assets/css/style');
+
 
  
 
@@ -95,9 +95,9 @@ export default function ContactPermission({navigation}) {
 
     const getPrermission = async()=>{
 
-      //       Contacts.getAll().then(contacts => {
-      //   console.log('contacts',contacts);
-      //   // setContacts(contacts);
+console.log(Contacts.getAll());
+      //   Contacts.getAll().then(contacts => {
+      //       console.log('contacts',contacts);
       // });
 
 
@@ -242,11 +242,11 @@ const renderItem = (item) => {
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} 
       keyboardShouldPersistTaps='handled'>
        
-      <FlatList
+      {/* <FlatList
         data={contactList?.slice(0,sliceCount)}
         renderItem={renderItem}
         keyExtractor={(item,i) => i}
-      />
+      /> */}
       {totalSlice >= sliceCount &&
       <TouchableOpacity style={{marginTop:10,width:"100%",alignItems:'center'}} onPress={() => loadMore()}>
           <Text style={{color:'#2C8892',fontFamily:"PlusJakartaSans-Bold",}}>Load More...</Text>

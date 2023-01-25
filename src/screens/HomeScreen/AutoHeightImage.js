@@ -19,12 +19,12 @@ const AutoHeightImage = ({item}) => {
                   controls={true}
                   source={{uri:item?.filename}} 
                   playInBackground={false}
-                  style={{width:"100%", height:450,marginHorizontal:10,alignSelf:'center',}}
+                  style={{width:"100%",marginHorizontal:10,alignSelf:'center',aspectRatio: 0.8 }}
                 />
               :
                 <Image 
                   source={{uri:item?.filename}}
-                  style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
+                  style={{width:"100%",marginHorizontal:10,alignSelf:'center',aspectRatio: 1 }} 
                   resizeMode={"contain"}/> 
               }
           </View>

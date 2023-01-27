@@ -12,7 +12,6 @@ const styelcss = require('../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
-// import Checkbox from 'expo-checkbox';
 import CheckBox from "react-native-check-box";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData, singlestoreData } from '../apis/Apicall';
@@ -34,11 +33,8 @@ const LoginScreen = () => {
   const [datarm, setdatarm] = useState();
   const isFocused = useIsFocused();
 
-  const toggleRememberMe = (value) => {
-    // console.log('checkboxvalue',value);
-    // setChecked(value);
-    console.log(prev);
-   //setisChecked(prev => !prev);
+  const toggleRememberMe = () => {
+    setChecked(!isChecked);
   }
 
 
@@ -54,7 +50,6 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
-
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
@@ -188,12 +183,9 @@ const LoginScreen = () => {
       <View style={{justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
 
       <View style={styles.section}>
-        {/* <Checkbox style={styles.checkbox} 
-          value={isChecked} 
-          onValueChange={(value) => toggleRememberMe(value)} 
-        /> */}
+       
         <CheckBox
-          onClick={() =>toggleRememberMe(isChecked) }
+          onClick={() => toggleRememberMe()}
           isChecked={isChecked}
           checkBoxColor="#2C8892"
         />
@@ -206,7 +198,7 @@ const LoginScreen = () => {
             color: '#51668A',
             fontFamily: 'Inter-Regular',
           }}>
-          Remember Me {isChecked}
+          Remember Me
         </Text>
       </View>
           <Text style={{

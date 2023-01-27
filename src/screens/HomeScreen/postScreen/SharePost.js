@@ -236,6 +236,9 @@ const publishCheck1 = (e, text)=>{
       setPostLoad(false);
       Toast.show("Please Select PostType",Toast.LONG);
       bottomSheetModalRef.current?.present();
+    }else if(pickedData == undefined){
+      setPostLoad(false);
+      Toast.show("Please Select Image",Toast.LONG);
     }else{
       if(media == 'images'){
         pickedData?.map(async(data) => {
@@ -492,7 +495,7 @@ setSpecialNames(specialityName)
                 <AntDesign name="down" size={12} color="#51668A" />
                 <Text 
                   style={[styles.publicOption,{width:120}]} numberOfLines={1} >
-                    {specialNames?.map(data => data+ " ")}
+                    {specialNames?.map(data => data + " ")}
                   </Text>
               </TouchableOpacity>
             </View>

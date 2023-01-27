@@ -146,23 +146,22 @@ export default OptionModal;
 
 export const styles = StyleSheet.create({
 optionModal:{
-    width:150,
+    width:155,
     backgroundColor:'#fff',
     position:'absolute',
     right:0,
     top:-10,
     borderRadius:5,
     justifyContent:"center",
-    // alignItems:'center',
     paddingHorizontal:15,
     paddingVertical:10,
-    zIndex:9999,
     shadowColor: 'black',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2},
     shadowRadius: 10,
     elevation: 3,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    zIndex:3
   },
   optionList:{
     paddingVertical:7,

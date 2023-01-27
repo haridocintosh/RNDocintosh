@@ -17,12 +17,12 @@ const AutoHeightImage = ({item}) => {
                   controls={false}
                   source={{uri:item?.filename}} 
                   playInBackground={false}
-                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',aspectRatio: 0.8 }}
+                  style={{width:"100%",marginHorizontal:10, alignSelf:'center',zIndex:0,aspectRatio: 0.8}}
                 />
               :
                 <Image 
                   source={{uri:item?.filename}}
-                  style={{width:"100%",marginHorizontal:10,zIndex:-1,alignSelf:'center',aspectRatio: 1 }} 
+                  style={{width:"100%",marginHorizontal:10,alignSelf:'center',zIndex:0,aspectRatio: 1 }} 
                   resizeMode={"contain"}/> 
               }
           </View>
@@ -45,7 +45,8 @@ const AutoHeightImage = ({item}) => {
         renderItem={_renderItem}
         pagingEnabled={true}
         onSnapToItem={index => setActiveIndex(index)} 
-        style={{zIndex:-1}}/>
+        style={{zIndex:0}}
+        />
 
         <View>
         <Pagination
@@ -101,8 +102,8 @@ export const styles = StyleSheet.create({
     top:10,
     fontFamily:'Inter-SemiBold'
   },
-
   imageVideoContainer:{
     zIndex:0
-  }
+  },
+
 })

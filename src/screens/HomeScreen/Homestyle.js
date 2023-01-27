@@ -55,28 +55,6 @@ export const styles = StyleSheet.create({
     shadowColor: "#000",
     zIndex: 1,
   },
-  careticontop: {
-    backgroundColor: "#45B5C0",
-    borderRadius: 50 / 2,
-    width: 30,
-    height: 30,
-    padding: 3,
-    marginTop: -100,
-    marginBottom: 70,
-    alignSelf: "center",
-    shadowColor: "#000",
-    zIndex: 99999,
-  },
-  imgblackstrip: {
-    backgroundColor: "#000",
-    width: "95%",
-    padding: 20,
-    marginLeft: 9,
-    zIndex: 1,
-    marginTop: -40,
-    opacity: 0.6,
-    height: 20,
-  },
 
   songStyle: {
     marginLeft: 10,
@@ -201,6 +179,9 @@ loaderStyle: {
 wrapper:{
   height:300,
   borderWidth:1,
+},
+optionModalContainer:{
+  zIndex:2
 },
 
 // ---------------------------postsScreen-----------------------------------

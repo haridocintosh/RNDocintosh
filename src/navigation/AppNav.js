@@ -43,7 +43,7 @@ const navigation  = useNavigation();
         setDefaultRoute("HomeScreen");
       }else{
         setDefaultRoute("Intro");
-       //setDefaultRoute("ContactPermission");
+     //setDefaultRoute("RegisterTwoScreen");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

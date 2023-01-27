@@ -26,13 +26,15 @@ import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PickImage } from '../navigation/ReuseLogics';
 
-
 const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 const ref = useRef(null);
 
 const dispatch    = useDispatch();
-  // const fullname = 'asj'
+  // const user_id = '1235';
+  // const fullname = 'tara'
+  // const role = '4'
+  // const specialityId = '34'
   const {user_id,fullname,role,specialityId} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
@@ -100,7 +102,7 @@ const dispatch    = useDispatch();
     profile_pic:"",
     mrnproof:"",
     // role:4,
-    // user_id:23334
+    // user_id:23334,
     role:role,
     user_id:user_id
   });
@@ -156,20 +158,21 @@ const pickupImage = (arg) => {
   bottomSheetModalRefSecond.current?.close();
   bottomSheetModalRef.current?.close();
     PickImage(arg).then(async (res) => {
-      let localUri = res?.uri;
-
+          let localUri = res?.assets[0]?.uri;
+          //console.log(localUri);
           let filename = localUri.split('/').pop();
-          // Infer the type of the image
-          // let match = /\.(\w+)$/.exec(filename);
-          // let type = match ? `image/${match[1]}` : `image`;
+         // console.log(filename);
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
+         // console.log(fileType);
           let formData = new FormData();
           const imageData = {
             uri : localUri,
             name: filename,
             type: `image/${fileType}`,
           }
+          //console.log(imageData);
+          // return;
           if(fromWhere == 'document'){
             setimgurl(localUri);
             formData.append('mrnproof', imageData);
@@ -185,7 +188,7 @@ const pickupImage = (arg) => {
             body :formData
          });
         const result=  await responce.json();
-
+         console.log(result);
         if(fromWhere == 'document'){
           setregister({ ...register,
             mrnproof: result,

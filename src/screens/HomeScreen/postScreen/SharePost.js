@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
 //import { StatusBar } from "expo-status-bar";
-const ImagePicker = require('react-native-image-picker');
 import {PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -122,8 +121,9 @@ const  Sharepost = () => {
     setDocument(null);
     console.log("open Camera");
     PickImageAll(setloader).then(async (res) =>{
+      console.log("response", res);
       const result  = res.assets;
-      console.log("response",result);
+      console.log("response", result);
       // setloader(true);
       const data = result?.map((data,i) => {return {...data, id:i}})
       setData(data);
@@ -143,7 +143,7 @@ const  Sharepost = () => {
       const result  = res.assets;
       setloader(true);
       const data = result?.map((data,i) => {return {...data, id:i}})
-      console.log(data);
+    //  console.log(data);
       setData(data);
       setPost({...post,  type:'v' });
       setCountData(data.length);
@@ -239,6 +239,7 @@ const publishCheck1 = (e, text)=>{
     }else{
       if(media == 'images'){
         pickedData?.map(async(data) => {
+        console.log('aftsbmit',data.uri);
           let localUri = data.uri
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');

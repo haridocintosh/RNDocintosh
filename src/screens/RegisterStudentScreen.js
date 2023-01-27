@@ -132,7 +132,7 @@ const setCollege= (e) =>{
 
 const pickupImage = (arg) => {
     PickImage(arg).then(async (res) => {
-      let localUri = res?.uri;
+      let localUri = res?.assets[0]?.uri;
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
@@ -154,6 +154,7 @@ const pickupImage = (arg) => {
               headers:{'Content-Type': 'multipart/form-data'},
               body :formData
           });
+          console.log('studentres',responce);
         const result=  await responce.json();
 
         if(fromWhere == 'document'){

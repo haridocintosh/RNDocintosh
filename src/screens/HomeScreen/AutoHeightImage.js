@@ -1,30 +1,28 @@
 import { View, Text, Image,StyleSheet,Dimensions } from 'react-native'
-import React, { useState, useRef, useEffect } from 'react'
-
+import React, { useState, useRef, useEffect } from 'react';
 import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const AutoHeightImage = ({item}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [carouselItems] = useState(item?.attach_array)
-  
   const video = useRef(null);
 
   const _renderItem = ({ item, index }) => {
     return (
-          <View key={index}>
+          <View key={index} style={styles.imageVideoContainer}>
               {item?.filename?.includes("mp4") ?
                 <Video 
                   ref={video}
-                  controls={true}
+                  controls={false}
                   source={{uri:item?.filename}} 
                   playInBackground={false}
-                  style={{width:"100%",marginHorizontal:10,alignSelf:'center',aspectRatio: 0.8 }}
+                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',aspectRatio: 0.8 }}
                 />
               :
                 <Image 
                   source={{uri:item?.filename}}
-                  style={{width:"100%",marginHorizontal:10,alignSelf:'center',aspectRatio: 1 }} 
+                  style={{width:"100%",marginHorizontal:10,zIndex:-1,alignSelf:'center',aspectRatio: 1 }} 
                   resizeMode={"contain"}/> 
               }
           </View>
@@ -46,7 +44,8 @@ const AutoHeightImage = ({item}) => {
         itemWidth={Dimensions.get("window").width - 50}
         renderItem={_renderItem}
         pagingEnabled={true}
-        onSnapToItem={index => setActiveIndex(index)} />
+        onSnapToItem={index => setActiveIndex(index)} 
+        style={{zIndex:-1}}/>
 
         <View>
         <Pagination
@@ -79,6 +78,7 @@ export const styles = StyleSheet.create({
   wrapper:{
     height:350,
   },
+
   paginationStyle:{
     position:'absolute',
     right:15,
@@ -88,6 +88,7 @@ export const styles = StyleSheet.create({
     paddingVertical:5,
     borderRadius:20
   },
+
   ImagePaginationCount:{
     backgroundColor: 'rgba(0,0,0,0.7)',
     position:'absolute',
@@ -99,5 +100,9 @@ export const styles = StyleSheet.create({
     right:10,
     top:10,
     fontFamily:'Inter-SemiBold'
+  },
+
+  imageVideoContainer:{
+    zIndex:0
   }
 })

@@ -86,7 +86,7 @@ const handleOption = (post_id,id) => {
 }
   const getStorageData =  () => {
     getLocalData('USER_INFO').then(async (res) =>{
-      const allCoins = { user_id:res.data.id};
+      const allCoins = {user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));
       setAllcoins(allCoinsResult.payload.coins);
     });
@@ -94,7 +94,7 @@ const handleOption = (post_id,id) => {
 
   // if(postLoader){
   //   return(
-  //   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+  //   <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
   //       <ActivityIndicator size={'large'} color="#1A7078"/>
   //   </View>)
   // }
@@ -214,7 +214,6 @@ const handleOption = (post_id,id) => {
                 deletePostID={deletePostID}
                 BlockId={BlockId} 
                 resData={resData} 
-                // saveState={handleSaveState}
               />}
             </View>
           </View>
@@ -289,7 +288,6 @@ const handleOption = (post_id,id) => {
                 [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
                 {useNativeDriver: false},
               )}
-              // contentInsetAdjustmentBehavior="automatic"
               data={allPost}
               renderItem={renderItem}
               keyExtractor={(item,index) => index}

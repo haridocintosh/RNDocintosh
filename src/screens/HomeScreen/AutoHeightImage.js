@@ -8,13 +8,20 @@ const AutoHeightImage = ({item}) => {
   const [carouselItems] = useState(item?.attach_array)
   const video = useRef(null);
 
+  const videoBuffer = (isBuffer) =>{
+    console.log(isBuffer)
+    //here you could set the isBuffer value to the state and then do something with it
+    //such as show a loading icon
+    }
+
   const _renderItem = ({ item, index }) => {
     return (
           <View key={index} style={styles.imageVideoContainer}>
               {item?.filename?.includes("mp4") ?
                 <Video 
                   ref={video}
-                  controls={false}
+                  controls={true}
+                  onBuffer={videoBuffer}
                   source={{uri:item?.filename}} 
                   playInBackground={false}
                   style={{width:"100%",marginHorizontal:10, alignSelf:'center',zIndex:0,aspectRatio: 0.8}}

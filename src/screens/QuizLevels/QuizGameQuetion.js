@@ -4,9 +4,6 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import ProgressCircle from 'react-native-progress-circle'
-import * as Progress from "react-native-progress";
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { saveQuizAnswer } from "../../../redux/reducers/mcqSlice";

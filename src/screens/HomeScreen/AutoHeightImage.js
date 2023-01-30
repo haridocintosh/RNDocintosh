@@ -20,7 +20,7 @@ const AutoHeightImage = ({item}) => {
               {item?.filename?.includes("mp4") ?
                 <Video 
                   ref={video}
-                  controls={true}
+                  controls={false}
                   onBuffer={videoBuffer}
                   source={{uri:item?.filename}} 
                   playInBackground={false}

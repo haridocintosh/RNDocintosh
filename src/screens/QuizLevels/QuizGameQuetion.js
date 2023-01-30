@@ -3,14 +3,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-
 } from "react-native";
-import * as Progress from "react-native-progress";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { saveQuizAnswer } from "../../../redux/reducers/mcqSlice";
 import { styles } from "./QuizLevelsStyles";
 import { getLocalData } from "../../apis/GetLocalData";
+import CircularProgress from 'react-native-circular-progress-indicator';
 
 
 const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
@@ -67,8 +66,6 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   };
 
   const outOff = currentQuestionIndex / TotalMcq;
-
-
   // useEffect(() => {
   // if (isTop == false) {
   //   setIsOptionsDisabled(true);
@@ -78,26 +75,18 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
     <View style={{ marginTop: 10 }}>
       <View>
         <View style={{ flexDirection: "row"}}>
-          <Progress.Circle
-            unfilledColor={"#046B74"}
-            size={60}
-            color={"#A7DFCC"}
-            borderWidth={0}
-            thickness={5}
-            progress={outOff ? outOff : 0}
-            style={styles.progressCircle}
-          >
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-                position: "absolute",
-                fontFamily: "PlusJakartaSans-Bold",
-              }}
-            >
-              {currentQuestionIndex}/{TotalMcq}
-            </Text>
-          </Progress.Circle>
+        <CircularProgress
+          value={currentQuestionIndex ?currentQuestionIndex :0}
+          radius={40}
+          duration={1000}
+          progressValueColor={'#000'}
+          maxValue={TotalMcq}
+          inActiveStrokeColor={'#A7DFCC'}
+          activeStrokeColor={'#046B74'}
+          title={TotalMcq}
+          titleColor={'white'}
+          titleStyle={{fontWeight: 'bold',color:'#000'}}
+        />
           <Text style={styles.quizGamequestion}>
             {mcqQue[currentQuestionIndex]?.question_title}
           </Text>

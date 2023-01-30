@@ -1,7 +1,6 @@
 
-// import * as Device from 'expo-device';
 // import * as Notifications from 'expo-notifications';
-// import { Platform ,LogBox} from 'react-native';
+// import { Platform ,LogBox} from 'react-native';expo-notifications
 
 // Notifications.setNotificationHandler({
 //   handleNotification: async () => ({

@@ -25,7 +25,7 @@ import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 // import { Audio } from 'expo-av';
-import * as DocumentPicker from 'expo-document-picker';
+// import * as DocumentPicker from 'expo-document-picker';
 import data from "../../../model/data";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 
@@ -177,12 +177,12 @@ const  Sharepost = () => {
   };
 
   const handleDocPicker = async () => {
-    let result = await DocumentPicker.getDocumentAsync({ 
-      type: "application/*",
-      copyToCacheDirectory: false, 
-    });
-    console.log(result);
-    setDocument(result)
+    // let result = await DocumentPicker.getDocumentAsync({ 
+    //   type: "application/*",
+    //   copyToCacheDirectory: false, 
+    // });
+    // console.log(result);
+    // setDocument(result)
   }
 
   const postCheck= (e)=>{

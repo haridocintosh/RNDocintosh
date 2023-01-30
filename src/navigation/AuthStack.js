@@ -13,9 +13,7 @@ import CreateNewPass from '../screens/CreateNewPass';
 import RegisterStudentScreen from '../screens/RegisterStudentScreen';
 import ForgotPasswordOTP from '../screens/ForgotPasswordOTP';
 import DoctorOtp from '../screens/DoctorOtp';
-import PracticeScreen from '../screens/PracticeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
-import InvitePeers from '../screens/InvitePeers';
 import SelectInterest from '../screens/SelectInterest';
 import ContactPermission from '../screens/ContactPermission';
 import AppStack from './AppStack';
@@ -24,22 +22,13 @@ import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 
-
-
-
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
-  const [user, setUser] = useState(null);
   const navigation = useNavigation();
   return (
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Login'}>
-          {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
-          {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
-          {/**/}
           <Stack.Screen name="Intro" component={IntroStack} />
-          <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
-              <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}} >Skip</Text>)}}  />
           <Stack.Screen name="MobileScreen" component={MobileScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="LoginScreen"> 

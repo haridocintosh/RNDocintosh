@@ -7,7 +7,6 @@ import {
   TouchableOpacity
 } from 'react-native'
 import Swiper from 'react-native-swiper';
-import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
@@ -102,14 +101,6 @@ height:"100%"
 export const Slider_comp = () => {
   const navigation = useNavigation();
   const animationRef = useRef(null)
-  // const [fontsLoaded] = useFonts({
-  //   'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-  //   'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-  //   'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
-  // });
-  // if(!fontsLoaded) {
-  //   return null;
-  // }
 
   useEffect(() => {
     animationRef.current?.play()

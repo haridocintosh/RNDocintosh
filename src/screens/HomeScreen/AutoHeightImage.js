@@ -35,7 +35,7 @@ const AutoHeightImage = ({item}) => {
                   playWhenInactive={false}  
                   playInBackground={false}
                   onLoad={onLoad}
-                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center'}}
+                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center', aspectRatio: 0.8}}
                 />
                </TouchableOpacity>
               :

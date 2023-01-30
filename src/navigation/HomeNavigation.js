@@ -9,7 +9,6 @@ import SentimentrixCong from '../screens/SentimentrixCong';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
 import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
-import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import PostsScreen from '../screens/HomeScreen/PostsScreen';
 import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
@@ -84,7 +83,7 @@ const HomeNavigation = () => {
              headerStyle: {backgroundColor: '#071B36'},
              headerTintColor: '#fff',
              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('ReportPost')}>
+                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
                    <AntDesign name="close" size={25} style={{color:"#fff",marginRight:5}} />
                  </TouchableOpacity>
                 )
@@ -104,8 +103,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="EarnDocCoins" component={EarnDocCoins} options={showHeaderItem} />
         <Stack.Screen name="Rewards" component={Rewards} options={showHeaderItem} />
         <Stack.Screen name="SinglePost" component={SinglePost} options={showHeaderItem}/>
-        {/* <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload}/>
-          <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
+        {/* <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={showHeaderItem}/> 
           <Stack.Screen name="Sentimentrix3" component={Sentimentrix3} options={showHeaderItem}/>*/}

@@ -17,7 +17,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
-// import { useFonts } from 'expo-font';
 // import { registerForPushNotificationsAsync } from './PushNotification';
 
 const LoginScreen = () => {
@@ -125,14 +124,6 @@ const LoginScreen = () => {
   //    }));
   // }
 
-  // const [fontsLoaded] = useFonts({
-  //   'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-  //   'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-  // });
-
-  // if(!fontsLoaded) {
-  //   return null;
-  // }
 
   if(loader){
     return(

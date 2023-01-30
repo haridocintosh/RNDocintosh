@@ -144,11 +144,11 @@ export default function ContactPermission({navigation}) {
     // }
   }
   
-  const handleSubmit = async()=>{
-    navigation.navigate('InvitePeers',{
-      alluserContact :contactList,
-    }) 
-  };
+  // const handleSubmit = async()=>{
+  //   navigation.navigate('InvitePeers',{
+  //     alluserContact :contactList,
+  //   }) 
+  // };
 
  const onChangeText =  (text) =>{
   if (text) {

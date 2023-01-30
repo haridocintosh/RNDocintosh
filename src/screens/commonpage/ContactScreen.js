@@ -3,20 +3,8 @@ import { View,SafeAreaView, ScrollView,Text,Image, TextInput, } from 'react-nati
 import Entypo from 'react-native-vector-icons/Entypo'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 
 const ContactScreen = () => {
-   
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../../assets/fonts/Inter-Regular.ttf'),
-    'PlusJakartaSans-Regular': require('../../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-
-  if(!fontsLoaded) {
-    return null;
-  }
-
   return (
   <SafeAreaView>
     <ScrollView

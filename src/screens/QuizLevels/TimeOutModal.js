@@ -8,7 +8,6 @@ import {
 import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
-import { useFonts } from "expo-font";
 
 const TimeOutModal = ({ setTimeOUtModal }) => {
   const navigation = useNavigation();

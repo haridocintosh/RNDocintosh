@@ -11,7 +11,6 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "./QuizLevelsStyles";
-import { useFonts } from "expo-font";
 
 const McqListModal = ({ toggle, quizData, topicId }) => {
   const navigation = useNavigation();

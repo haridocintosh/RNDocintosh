@@ -147,7 +147,8 @@ CartTitleSentimetrix:{
 },
 cartOffersText:{
     fontFamily:'PlusJakartaSans-Bold',
-    marginRight:10
+    marginRight:10,
+    color:'#071B36'
 },
 cartOffers:{
     flexDirection:'row',
@@ -167,7 +168,8 @@ CartWave:{
 trendTitle:{
     fontFamily:'PlusJakartaSans-Bold',
     fontSize:18,
-    paddingHorizontal:15
+    paddingHorizontal:15,
+    color:'#071B36'
 },
 trendTitleContent:{
     color:'#51668A',

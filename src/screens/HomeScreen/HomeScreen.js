@@ -178,7 +178,7 @@ const handleOption = (post_id) => {
               <Image source={{uri:item?.profileimage}} 
                style={{width:38, height:38,marginRight:5,borderRadius:50}}/>
               <View >
-                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
+                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
                   { item?.utitle} {item?.first_name} {item?.last_name} 
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                 </Text>
@@ -272,12 +272,12 @@ const handleOption = (post_id) => {
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
           </View>
-          <AntDesign name="pluscircle" size={26} color="#D5DEED"/>
+          <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
         </View>
       </Card>
       <View>
-         <View style={styles.marginten}>
-              <Text style={{fontSize:16, fontWeight:'600'}}>Suggested Post</Text>
+          <View style={styles.marginten}>
+              <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>
               <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
           </View>
           <View style={{paddingBottom:550}}>

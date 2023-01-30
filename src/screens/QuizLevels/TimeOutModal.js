@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     width: Dimensions.get("window").width / 1.1,
+    padding:10
   },
   iconContainer: {
     padding: 10,
@@ -74,8 +75,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     backgroundColor: "#046B74",
-    position: "relative",
-    top: 50,
+    marginTop:25
   },
   mcqsListText: {
     fontSize: 25,

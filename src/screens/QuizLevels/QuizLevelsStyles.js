@@ -394,6 +394,7 @@ export const styles = StyleSheet.create({
   cartText: {
     fontSize: 20,
     fontFamily: "Inter-SemiBold",
+    color:'#071B36'
   },
   ListsMcqPlay:{
     justifyContent:'space-between',

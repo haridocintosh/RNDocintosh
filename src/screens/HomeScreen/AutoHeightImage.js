@@ -1,31 +1,43 @@
-import { View, Text, Image,StyleSheet,Dimensions } from 'react-native'
+import { View, Text, Image,StyleSheet,Dimensions,TouchableOpacity } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react';
 import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const AutoHeightImage = ({item}) => {
+  const [isPlaying, setIsPlaying] = React.useState(false); 
   const [activeIndex, setActiveIndex] = useState(0);
   const [carouselItems] = useState(item?.attach_array)
   const video = useRef(null);
 
   const videoBuffer = (isBuffer) =>{
-    console.log(isBuffer)
+    console.log("isBuffer")
     //here you could set the isBuffer value to the state and then do something with it
     //such as show a loading icon
-    }
+  }
+  const onLoad = () =>{
+    console.log("loading")
+    //here you could set the isBuffer value to the state and then do something with it
+    //such as show a loading icon
+  }
 
   const _renderItem = ({ item, index }) => {
     return (
           <View key={index} style={styles.imageVideoContainer}>
               {item?.filename?.includes("mp4") ?
+              <TouchableOpacity onPress={() => setIsPlaying(p => !p)} >
                 <Video 
                   ref={video}
-                  controls={true}
+                  controls={false}
+                  paused={!isPlaying} 
+                  autoplay={false}
                   onBuffer={videoBuffer}
                   source={{uri:item?.filename}} 
+                  playWhenInactive={false}  
                   playInBackground={false}
-                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',aspectRatio: 0.8 }}
+                  onLoad={onLoad}
+                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center'}}
                 />
+               </TouchableOpacity>
               :
                 <Image 
                   source={{uri:item?.filename}}
@@ -37,7 +49,7 @@ const AutoHeightImage = ({item}) => {
   }
 
   return (
-    <View>
+    <View >
     {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
     <Carousel
         layout={"default"}
@@ -52,8 +64,7 @@ const AutoHeightImage = ({item}) => {
         renderItem={_renderItem}
         pagingEnabled={true}
         onSnapToItem={index => setActiveIndex(index)} 
-        style={{zIndex:-1}}/>
-
+      />
         <View>
         <Pagination
           dotsLength={carouselItems?.length}
@@ -82,19 +93,6 @@ const AutoHeightImage = ({item}) => {
 export default AutoHeightImage;
 
 export const styles = StyleSheet.create({
-  wrapper:{
-    height:350,
-  },
-
-  paginationStyle:{
-    position:'absolute',
-    right:15,
-    top:15,
-    backgroundColor:'#f2f2f2',
-    paddingHorizontal:10,
-    paddingVertical:5,
-    borderRadius:20
-  },
 
   ImagePaginationCount:{
     backgroundColor: 'rgba(0,0,0,0.7)',
@@ -109,7 +107,5 @@ export const styles = StyleSheet.create({
     fontFamily:'Inter-SemiBold'
   },
 
-  imageVideoContainer:{
-    zIndex:0
-  }
+  
 })

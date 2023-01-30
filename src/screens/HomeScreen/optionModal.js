@@ -82,7 +82,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
 
 // console.log("savedPost",savedPost);
   return (
-    <View>
+    <View style={styles.container}>
     {modalVisible &&
     <View style={styles.optionModal}>
       {resData?.id === item?.id ?
@@ -145,24 +145,31 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
 export default OptionModal;
 
 export const styles = StyleSheet.create({
+  container:{
+    width:150,
+    position:'absolute',
+    right:0,
+    borderRadius:5,
+    zIndex:3,
+    top:40
+},
 optionModal:{
     width:150,
     backgroundColor:'#fff',
-    position:'absolute',
-    right:0,
-    top:-10,
+    // position:'absolute',
+    // right:0,
+    // top:-10,
     borderRadius:5,
     justifyContent:"center",
     // alignItems:'center',
     paddingHorizontal:15,
     paddingVertical:10,
-    zIndex:9999,
+    zIndex:3,
     shadowColor: 'black',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2},
     shadowRadius: 10,
     elevation: 3,
-    backgroundColor: 'white'
   },
   optionList:{
     paddingVertical:7,

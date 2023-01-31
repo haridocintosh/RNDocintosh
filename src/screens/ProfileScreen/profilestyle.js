@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     fontFamily: "PlusJakartaSans-Bold",
+    color:'#071B36'
   },
   profileDesignationpro: {
     fontSize: 14,

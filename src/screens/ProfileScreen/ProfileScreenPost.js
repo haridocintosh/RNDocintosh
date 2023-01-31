@@ -108,7 +108,7 @@ const ProfileScreenPost = ({postLength}) => {
           <View  style={{flexDirection:'row',alignItems:'center'}}>
             <Image source={{uri:item.profileimage}} style={{width:38, height:38,marginRight:5,borderRadius:50}} />
               <View >
-                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
+                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
                   {item.role == '4' ? 'Dr.' : ''} {item.first_name && item.first_name} {item.last_name && item.last_name} 
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                 </Text>

@@ -59,7 +59,6 @@ const QuizLevels = () => {
       </View>
     );
   }
- 
   
   return (
     <View style={styles.QuizLevelcontainer}>

@@ -84,7 +84,7 @@ const AutoHeightImage = ({item}) => {
     return (
           <View key={index} style={styles.imageVideoContainer}>
               {item?.filename?.includes("mp4") ?
-              <TouchableOpacity>
+              <View>
                 <Video 
                   onEnd={onEnd}
                   onLoad={onLoad}
@@ -97,7 +97,6 @@ const AutoHeightImage = ({item}) => {
                   source={{uri:item?.filename}} 
                   style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',aspectRatio: 0.8}}
                   volume={10}
-
                   // onBuffer={videoBuffer}
                   // controls={false}
                   // autoplay={false}
@@ -118,7 +117,7 @@ const AutoHeightImage = ({item}) => {
                 progress={currentTime}
                 toolbar={renderToolbar()}
               />
-               </TouchableOpacity>
+               </View>
               :
               <>
               {/* {autoHeight(item?.filename)} */}

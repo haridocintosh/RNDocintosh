@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/navigation/RootNavigation';
 import AppNav from './src/navigation/AppNav';
 import SplashScreen from 'react-native-splash-screen';
+import OneSignal from 'react-native-onesignal';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -17,7 +18,14 @@ function App(): JSX.Element {
 
   useEffect(()=>{
     SplashScreen.hide();
-  })
+    // OneSignal Initialization
+    OneSignal.setAppId("33db6c28-a3c3-4c1b-bbb0-e7442543f32d");
+    console.log('aapID')
+    OneSignal.setNotificationOpenedHandler(notification => {
+      console.log("OneSignal: notification opened:", notification);
+    });
+
+  },[])
 
   const isDarkMode = useColorScheme() === 'dark';
 

@@ -59,19 +59,9 @@ const QuizLevels = () => {
       </View>
     );
   }
- 
   
   return (
     <View style={styles.QuizLevelcontainer}>
-      {/* {toggle && (
-        <McqListModal
-          toggle={setToggle}
-          quizData={quizData}
-          topicId={topicId}
-        />
-      )} */}
-      {/* <LinearGradient colors={['transparent', '#08A099']} style={styles.circleView}/> */}
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         nestedScrollEnable={true}>

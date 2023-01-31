@@ -18,7 +18,6 @@ const TimeOutModal = ({ setTimeOUtModal }) => {
           <AntDesign
             name="closecircleo"
             size={25}
-            
           />
         </TouchableOpacity> */}
         <View style={styles.McqSelection}>

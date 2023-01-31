@@ -27,7 +27,7 @@ const AppStack = () => {
         drawerLabelStyle: {marginLeft: -20,fontFamily:'Inter-SemiBold',fontSize: 15,},
       }}
       >
-      <Drawer.Screen name="Home" component={TabNavigator} options={{headerShown: false,
+      <Drawer.Screen name="Dashboard" component={TabNavigator} options={{headerShown: false,
           drawerIcon: () => (
             <Entypo name="home" size={25} style={{color:'#ffff'}} />
           ),

@@ -24,6 +24,7 @@ import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
+// import ImageCompressor  from 'react-native-compressor';
 // import { Audio } from 'expo-av';
 // import * as DocumentPicker from 'expo-document-picker';
 import data from "../../../model/data";
@@ -110,20 +111,15 @@ const  Sharepost = () => {
       setIsOpen(true);
     }, 100);
   }
-  // console.log("useId ","useId ",uniqueId);
   const pickEmoji =  () => {
-  console.log("ppicked");
     setEmojiTab(!emojiTab)
   }
 
   const pickImage =  () => {
     setData(null)
     setDocument(null);
-    console.log("open Camera");
     PickImageAll(setloader).then(async (res) =>{
-      console.log("response", res);
       const result  = res.assets;
-      console.log("response", result);
       // setloader(true);
       const data = result?.map((data,i) => {return {...data, id:i}})
       setData(data);
@@ -143,7 +139,6 @@ const  Sharepost = () => {
       const result  = res.assets;
       setloader(true);
       const data = result?.map((data,i) => {return {...data, id:i}})
-    //  console.log(data);
       setData(data);
       setPost({...post,  type:'v' });
       setCountData(data.length);
@@ -181,7 +176,6 @@ const  Sharepost = () => {
     //   type: "application/*",
     //   copyToCacheDirectory: false, 
     // });
-    // console.log(result);
     // setDocument(result)
   }
 
@@ -220,10 +214,7 @@ const publishCheck1 = (e, text)=>{
     setWhoCanSee(text)
 }
 
-// console.log("postLoad",postLoad);
-
   const handleStudentSubmit = async() =>{
-    console.log("start");
     setPostLoad(true);
     if(post.publishto ==''){
       setPostLoad(false);
@@ -236,20 +227,22 @@ const publishCheck1 = (e, text)=>{
       setPostLoad(false);
       Toast.show("Please Select PostType",Toast.LONG);
       bottomSheetModalRef.current?.present();
-    }else if(pickedData == undefined){
-      setPostLoad(false);
-      Toast.show("Please Select Image",Toast.LONG);
     }else{
+      if(pickedData != undefined){
       if(media == 'images'){
         pickedData?.map(async(data) => {
-        console.log('aftsbmit',data.uri);
           let localUri = data.uri
+          // const localUri1 = await ImageCompressor.compress(localUri, {
+          //   compressionMethod: 'auto',
+          // });
+          // console.log(localUri1);
+          // return;
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
           const imageData = {
-            uri : localUri,
+            uri : localUri1,
             name: filename,
             type: `image/${fileType}`,
           }
@@ -270,8 +263,6 @@ const publishCheck1 = (e, text)=>{
           });
 
       }else if(media == 'videos'){
-
-        console.log('videoPicked',pickedData);
         pickedData?.map(async(data) => {
           let localUri = data.uri;
           let filename = localUri.split('/').pop();
@@ -293,7 +284,6 @@ const publishCheck1 = (e, text)=>{
             body :formData
           });
           var result1=  await responce.json();
-          console.log('videoResult',result1);
 
           getFun({...uploadImage,
             uploadImage:uploadImage.pimage.push(result1.postImage)
@@ -301,32 +291,30 @@ const publishCheck1 = (e, text)=>{
       });
       
     }
-
-      // console.log("evenet k phle",uploadImage.pimage.length);
-      //   if(uploadImage.pimage.length > 0){
-      //     Toast.show("uploaded");
-      //     console.log("uploaded");
-      //     getFun(data);
-      // }else{
-      //   Toast.show("Please Select atleast One Images or Video");
-      // }
+    }else{
+      const uploadData = {userdata,post};
+    // setloader(true);
+      const result = await dispatch(postCreate(uploadData));
+      if(result.payload.status == 'Success'){
+      // setloader(false);
+        Toast.show(result.payload.message,Toast.LONG);
+        const coinDetails = {task : 4, receiverId:userdata.id } 
+        const coinResult  = await dispatch(coinTransfer(coinDetails));
+        if(coinResult.payload.status == 'Success')
+        {
+          navigation.navigate('HomeScreen');
+        }
+      }
     }
   }
+}
 
   const getFun = async(data) => {
-    console.log("datasfdgh",data);
-    console.log("uploaded");
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
-    console.log('filtercount', uniqueData);
-    console.log('filtercount', uniqueData.length);
-    console.log('realcount',countData);
-  
     if(countData == uniqueData.length){
           const uploadData = {userdata,post,uploadImage:uniqueData};
-          console.log('uploadDatacheck', uploadData);
         // setloader(true);
           const result = await dispatch(postCreate(uploadData));
-          console.log(result);
           if(result.payload.status == 'Success'){
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
@@ -342,16 +330,12 @@ const publishCheck1 = (e, text)=>{
     } 
 
   const uploadPostImage = async (post_id) => {
-    //console.log(post_id);
     let localUri = {pickedData};
-    //console.log(localUri);
     let filename = localUri.split('/').pop();
     log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
-    //console.log('uri', uriParts);
     let fileType = uriParts[uriParts.length - 1];
-    //console.log("fileType",fileType );
     let formData = new FormData();
     const imageData = {
       uri : localUri,
@@ -368,7 +352,6 @@ const publishCheck1 = (e, text)=>{
       body :formData
    });
   const result1 = await responce.json();
- // console.log(result1);
 
   Toast.show(result1.payload.message,Toast.LONG);
   setPost('');
@@ -428,44 +411,11 @@ setSpecialNames(specialityName)
     });
   };
 
-  // if(loader){
-  //   return(<View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-  //       <ActivityIndicator size={'large'} color={"#2C8892"}/>
-  //   </View>)
-  // }
-
-  //  const startRecording = async () => {
-  //   try {
-  //     await Audio.requestPermissionsAsync();
-  //     await Audio.setAudioModeAsync({
-  //       allowsRecordingIOS: true,
-  //       playsInSilentModeIOS: true,
-  //     });
-
-  //     const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
-  //     );
-  //     setRecording(recording);
-  //   } catch (err) {
-  //     console.error('Failed to start recording', err);
-  //   }
-  // }
-
-  // const stopRecording = async () =>{
-  //   setRecording(undefined);
-  //   await recording.stopAndUnloadAsync();
-  //   await Audio.setAudioModeAsync({
-  //     allowsRecordingIOS: false,
-  //   });
-  //   const uri = recording.getURI();
-  // }
 
   const removeImg = (id) => {
-    console.log(id);
     const removed = pickedData?.filter(data => data.id != id); 
-    console.log(removed);
     setData(removed);
     setCountData(removed.length);
-   // console.log('removepickedData',pickedData );
   }
 
   const handleDocType = (type) => {
@@ -606,12 +556,14 @@ setSpecialNames(specialityName)
           <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Publish a Study</Text>
           </View>
           </TouchableOpacity>
+
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(8) }}>
-          <View style={{flexDirection:'row'}}>
-          <MaterialCommunityIcons name="share" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Share A Procedure</Text>
-          </View></TouchableOpacity>
+            <View style={{flexDirection:'row'}}>
+            <MaterialCommunityIcons name="share" size={20} color="#45B5C0" />
+            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Share A Procedure</Text>
+            </View>
+          </TouchableOpacity>
 
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(5)}}>

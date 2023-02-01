@@ -29,7 +29,6 @@ import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 // import * as DocumentPicker from 'expo-document-picker';
 import data from "../../../model/data";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
-
 // let recording = new Audio.Recording();
 
 
@@ -121,6 +120,7 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const result  = res.assets;
       // setloader(true);
+      console.log("result",result);
       const data = result?.map((data,i) => {return {...data, id:i}})
       setData(data);
       setPost({...post, 
@@ -242,7 +242,7 @@ const publishCheck1 = (e, text)=>{
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
           const imageData = {
-            uri : localUri1,
+            uri : localUri,
             name: filename,
             type: `image/${fileType}`,
           }
@@ -411,7 +411,6 @@ setSpecialNames(specialityName)
     });
   };
 
-
   const removeImg = (id) => {
     const removed = pickedData?.filter(data => data.id != id); 
     setData(removed);
@@ -540,20 +539,20 @@ setSpecialNames(specialityName)
           <TouchableOpacity  onPress={() => { postCheck(11)}}>
           <View style={{flexDirection:'row',}}  >
           <Entypo name="edit" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Post an Update</Text>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}} >Post an Update</Text>
           </View></TouchableOpacity>
           
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(9)}}>
           <View style={{flexDirection:'row',}}>
           <FontAwesome name="bullhorn" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Announce Your Clinic</Text>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}}>Announce Your Clinic</Text>
           </View></TouchableOpacity>
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(3) }}>
           <View style={{flexDirection:'row'}}>
           <Feather name="send" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Publish a Study</Text>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}}>Publish a Study</Text>
           </View>
           </TouchableOpacity>
 
@@ -561,7 +560,7 @@ setSpecialNames(specialityName)
           <TouchableOpacity  onPress={() => { postCheck(8) }}>
             <View style={{flexDirection:'row'}}>
             <MaterialCommunityIcons name="share" size={20} color="#45B5C0" />
-            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Share A Procedure</Text>
+            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}}>Share A Procedure</Text>
             </View>
           </TouchableOpacity>
 
@@ -569,14 +568,14 @@ setSpecialNames(specialityName)
           <TouchableOpacity  onPress={() => { postCheck(5)}}>
           <View style={{flexDirection:'row',}}>
           <AntDesign name="questioncircle" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Ask a question</Text>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}} >Ask a question</Text>
           </View></TouchableOpacity>
 
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(2)}}>
           <View style={{flexDirection:'row',}}>
           <MaterialIcons name="dashboard" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Other</Text></View></TouchableOpacity>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}}>Other</Text></View></TouchableOpacity>
      </View>         
      </View>
         </BottomSheetModal>
@@ -592,14 +591,13 @@ setSpecialNames(specialityName)
             <View style={styles.contentContainer}>
               <Text style={styles.title}>Who can see this post? </Text>
             <View style={{margin:10, alignSelf:'flex-start'}}>
-
               <TouchableOpacity  onPress={() => { publishCheck(8)}} style={{flexDirection:'row'}}>   
                   <Ionicons name="earth" size={20} color="#45B5C0" />
-                  <Text style={{marginLeft:15, fontSize:16,fontFamily:'Inter-Regular'}}>Public</Text>
+                  <Text style={{marginLeft:15, fontSize:16,fontFamily:'Inter-Regular',color:'#071B36'}}>Public</Text>
               </TouchableOpacity>
               <TouchableOpacity  onPress={() => { publishCheck(1)}} style={{flexDirection:'row',marginTop:15}}>   
                 <MaterialCommunityIcons name="medal-outline" size={20} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontFamily:'Inter-Regular',}}>My Speciality ({ userdata && userdata['speciality']})</Text>
+                <Text style={{marginLeft:15, fontSize:16, fontFamily:'Inter-Regular',color:'#071B36'}}>My Speciality ({ userdata && userdata['speciality']})</Text>
               </TouchableOpacity>
 
               {/* <TouchableOpacity onPress={() => { publishCheck(1)}}>  */}
@@ -627,7 +625,7 @@ setSpecialNames(specialityName)
                     })}
                 </List.Accordion>
                 {/* </TouchableOpacity> */}
-         
+
             </View>        
             </View>
           </BottomSheetScrollView>

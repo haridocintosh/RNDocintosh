@@ -157,13 +157,13 @@ const SavedPost = ({navigation}) => {
     )
   }
 
-  const _listEmptyComponent = () => {
-    return ( 
-      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-          <Text>There is no data available</Text>
-      </View>
-    )
-}
+//   const _listEmptyComponent = () => {
+//     return ( 
+//       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+//           <Text>There is no data available</Text>
+//       </View>
+//     )
+// }
 
   return (
     <SafeAreaView style={{padding:10,marginTop:10,flex:1,backgroundColor:'#ecf2f6'}}>
@@ -175,7 +175,7 @@ const SavedPost = ({navigation}) => {
         ListFooterComponent={renderLoader}
         onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={_listEmptyComponent}
+        // ListEmptyComponent={_listEmptyComponent}
       />
     </SafeAreaView>
   )

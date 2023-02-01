@@ -21,7 +21,6 @@ const AutoHeightImage = ({item}) => {
   const [screenType, setScreenType] = useState('content');
 
   const videoBuffer = (isBuffer) =>{
-    console.log("isBuffer")
     //here you could set the isBuffer value to the state and then do something with it
     //such as show a loading icon
   }
@@ -31,7 +30,6 @@ const AutoHeightImage = ({item}) => {
     setIsLoading(false);
   };
   const onLoadStart = (data) => {
-    console.log("onLoadStart",data);
     setIsLoading(true)
   };
   const onProgress = (data) => {
@@ -47,7 +45,6 @@ const AutoHeightImage = ({item}) => {
   };
   const onPaused = (playerState) => {
     //Handler for Video Pause
-    console.log("playerState",playerState);
     setPaused(!paused);
     setPlayerState(playerState);
   };
@@ -101,11 +98,9 @@ const AutoHeightImage = ({item}) => {
                   source={{uri:item?.filename}} 
                   style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',aspectRatio: 0.8}}
                   volume={10}
-                  // onBuffer={videoBuffer}
-                  // controls={false}
-                  // autoplay={false}
-                  // playWhenInactive={false}  
-                  // playInBackground={false}
+                  useTextureView={false}
+                  playInBackground={true}
+                  disableFocus={true}
                 />
 
               <MediaControls

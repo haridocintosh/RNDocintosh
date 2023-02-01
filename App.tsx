@@ -10,7 +10,7 @@ import AppNav from './src/navigation/AppNav';
 import SplashScreen from 'react-native-splash-screen';
 import OneSignal from 'react-native-onesignal';
 import DeviceInfo from 'react-native-device-info';
-import { getdeviceId } from './src/screens/PushNotification';
+// import { getdeviceId } from './src/screens/PushNotification';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -27,9 +27,7 @@ function App(): JSX.Element {
     });
     let readableVersion = DeviceInfo.getReadableVersion();
     console.log(readableVersion);
-    getdeviceId().then((res) => {
-      console.log("res-------",res)
-    });
+  
   },[])
 
 

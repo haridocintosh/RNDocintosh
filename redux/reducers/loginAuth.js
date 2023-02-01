@@ -5,9 +5,6 @@ import { mainApi } from "../../src/apis/constant";
 export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
     console.log('paramter', loginData);
     try{
-    // console.log("tryBlock");
-
-
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/login`, {
             method : 'POST',
             headers:{

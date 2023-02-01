@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
-// import { registerForPushNotificationsAsync } from './PushNotification';
+import { getdeviceId } from './PushNotification';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -27,7 +27,11 @@ const LoginScreen = () => {
   const [isChecked, setChecked] = useState(false);
   const [message , setmessage]  = useState();
   const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
-  const [register ,setregister] = useState({email:"",password:"",device_id:""});
+  const [register,setregister] = useState({
+    email:"",
+    password:"", 
+    device_id:""
+  });
   const [data, setdata] = useState();
   const [datarm, setdatarm] = useState();
   const isFocused = useIsFocused();
@@ -49,6 +53,7 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
+    console.log(register);
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
@@ -101,7 +106,7 @@ const LoginScreen = () => {
       setdatarm(result)
       setChecked(result?.data.isChecked);
       if(result == null){
-        setregister({email: "",password:""});
+        setregister({email: "",password:"", device_id:""});
       }
     } catch(e) {
      console.log(e)
@@ -109,20 +114,22 @@ const LoginScreen = () => {
   }
 
   useEffect(() => {
-    
+    fetchToken();
     getData('USER_INFO');
     if(isFocused){
       getDatarm('rememberme');
     }
-   // fetchToken();
+   
   },[isFocused])
 
-  // function fetchToken(){
-  //   registerForPushNotificationsAsync().then(token => setregister({
-  //     ...register,
-  //     device_id: token,
-  //    }));
-  // }
+    function fetchToken(){
+     getdeviceId().then(token => 
+        setregister({
+          ...register,
+          device_id: token,
+        })
+      );
+    }
 
 
   if(loader){

@@ -21,6 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { getdeviceId } from './PushNotification';
 
 // import { registerForPushNotificationsAsync } from './PushNotification';
 
@@ -142,7 +143,7 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  console.log('expoToken',register);
+  console.log('uuid',register);
   if(!register.fname){
     fnerr("Please enter First Name");
     if (ref.current) {
@@ -193,6 +194,7 @@ const form_submit = async() =>{
   }
 
   const handleStudentSubmit = async() =>{
+    console.log('uuid', register);
     if(!register.fname){
       fnerr("Please enter First Name");
       if (ref.current) {
@@ -254,7 +256,12 @@ const form_submit = async() =>{
       }))
       }
      fetchSpecialities();
-      // fetchToken();
+      getdeviceId().then((res) => {
+        setregister({
+          ...register,
+          device_id: res,
+         })
+      });
     },[]);
 
   if(loader){

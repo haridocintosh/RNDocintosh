@@ -30,7 +30,10 @@ const AutoHeightImage = ({item}) => {
     setDuration(data.duration);
     setIsLoading(false);
   };
-  const onLoadStart = (data) => setIsLoading(true);
+  const onLoadStart = (data) => {
+    console.log("onLoadStart",data);
+    setIsLoading(true)
+  };
   const onProgress = (data) => {
     // Video Player will progress continue even if it ends
     if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
@@ -44,6 +47,7 @@ const AutoHeightImage = ({item}) => {
   };
   const onPaused = (playerState) => {
     //Handler for Video Pause
+    console.log("playerState",playerState);
     setPaused(!paused);
     setPlayerState(playerState);
   };

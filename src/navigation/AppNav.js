@@ -38,7 +38,7 @@ const navigation  = useNavigation();
       const jsonValue = await AsyncStorage.getItem(key);
       const logData = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
       if(logData?.login){
-        setDefaultRoute("appstackHomeScreen");
+        setDefaultRoute("HomeScreen");
       }else{
         setDefaultRoute("Intro");
      //setDefaultRoute("RegisterTwoScreen");
@@ -91,7 +91,7 @@ const handleMessage = () => {
             <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
             <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
             <Stack.Screen name="QuizLevels" component={QuizLevels} />
-            <Stack.Screen name="appstackHomeScreen" component={AppStack} options={{headerShown: false}} />
+            <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
       </Stack.Navigator>
     </>
   }

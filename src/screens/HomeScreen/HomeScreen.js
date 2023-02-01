@@ -171,13 +171,13 @@ const handleOption = (post_id) => {
     setallPost(BlockId);
   }
 
-  const _listEmptyComponent = () => {
-      return ( 
-        <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-            <Text>There is no data available</Text>
-        </View>
-      )
-  }
+  // const _listEmptyComponent = () => {
+  //     return ( 
+  //       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+  //           <Text>There is no data available</Text>
+  //       </View>
+  //     )
+  // }
   
     const renderItem = ({item}) => {
       return(
@@ -301,7 +301,7 @@ const handleOption = (post_id) => {
               ListFooterComponent={renderLoader}
               onEndReached={() => handleLoadeMore()}
               showsVerticalScrollIndicator={false}
-              ListEmptyComponent={_listEmptyComponent}
+              // ListEmptyComponent={_listEmptyComponent}
           />
           </View>
       </View>

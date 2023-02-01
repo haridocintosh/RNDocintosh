@@ -110,7 +110,7 @@ const SavedPost = ({navigation}) => {
                 style={{width:38, height:38,marginRight:5,borderRadius:50}}
               />
               <View>
-                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
+                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:"#071B36"}}>
                   {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name}
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                 </Text>
@@ -157,13 +157,13 @@ const SavedPost = ({navigation}) => {
     )
   }
 
-  const _listEmptyComponent = () => {
-    return ( 
-      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-          <Text>There is no data available</Text>
-      </View>
-    )
-}
+//   const _listEmptyComponent = () => {
+//     return ( 
+//       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+//           <Text>There is no data available</Text>
+//       </View>
+//     )
+// }
 
   return (
     <SafeAreaView style={{padding:10,marginTop:10,flex:1,backgroundColor:'#ecf2f6'}}>
@@ -175,7 +175,7 @@ const SavedPost = ({navigation}) => {
         ListFooterComponent={renderLoader}
         onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={_listEmptyComponent}
+        // ListEmptyComponent={_listEmptyComponent}
       />
     </SafeAreaView>
   )

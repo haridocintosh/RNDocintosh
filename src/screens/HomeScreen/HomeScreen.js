@@ -26,6 +26,7 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 
+
 const HomeScreen = ({navigation,route})=> {
   const postLoader = route?.params?.reload;
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
@@ -169,6 +170,14 @@ const handleOption = (post_id) => {
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
   }
+
+  // const _listEmptyComponent = () => {
+  //     return ( 
+  //       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+  //           <Text>There is no data available</Text>
+  //       </View>
+  //     )
+  // }
   
     const renderItem = ({item}) => {
       return(
@@ -204,7 +213,6 @@ const handleOption = (post_id) => {
                 <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
               </Svg>
             </TouchableOpacity>
-              
           </View>
           {item?.post_id == postId && <OptionModal 
               modalVisible={modalVisible} 
@@ -293,6 +301,7 @@ const handleOption = (post_id) => {
               ListFooterComponent={renderLoader}
               onEndReached={() => handleLoadeMore()}
               showsVerticalScrollIndicator={false}
+              // ListEmptyComponent={_listEmptyComponent}
           />
           </View>
       </View>

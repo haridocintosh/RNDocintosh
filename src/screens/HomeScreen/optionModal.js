@@ -81,6 +81,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   }
 
 // console.log("savedPost",savedPost);
+
   return (
     <View style={styles.container}>
     {modalVisible &&

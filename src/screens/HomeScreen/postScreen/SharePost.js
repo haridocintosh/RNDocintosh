@@ -246,6 +246,7 @@ const publishCheck1 = (e, text)=>{
             name: filename,
             type: `image/${fileType}`,
           }
+          console.log('typeess',imageData);
           formData.append('postImage', imageData);
           formData.append('post_id', '3032');
           const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsCompress`, {

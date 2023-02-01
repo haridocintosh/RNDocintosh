@@ -242,7 +242,7 @@ const publishCheck1 = (e, text)=>{
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
           const imageData = {
-            uri : localUri1,
+            uri : localUri,
             name: filename,
             type: `image/${fileType}`,
           }

@@ -25,9 +25,6 @@ function App(): JSX.Element {
     OneSignal.setNotificationOpenedHandler(notification => {
       console.log("OneSignal: notification opened:", notification);
     });
-    let readableVersion = DeviceInfo.getReadableVersion();
-    console.log(readableVersion);
-  
   },[])
 
 

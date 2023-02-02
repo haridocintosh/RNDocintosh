@@ -39,6 +39,7 @@ const HomeScreen = ({navigation,route})=> {
   const [endNull, setEndNull] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [bottumLoader, setBottumLoader] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const isFocused = useIsFocused();
   const ref = useRef(null);
@@ -171,15 +172,20 @@ const handleOption = (post_id) => {
     setallPost(BlockId);
   }
 
-  // const _listEmptyComponent = () => {
-  //     return ( 
-  //       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-  //           <Text>There is no data available</Text>
-  //       </View>
-  //     )
-  // }
-  
-    const renderItem = ({item}) => {
+  const onViewableItemsChanged = ({viewableItems}) => {
+    viewableItems.map((data) => {
+      setCurrentIndex(data.index)
+    });
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([
+    { onViewableItemsChanged },
+  ]);
+
+  var _viewabilityConfig = {
+    itemVisiblePercentThreshold: 50
+  };
+    const renderItem = ({item,index}) => {
       return(
         <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
@@ -229,7 +235,7 @@ const handleOption = (post_id) => {
             </Text>
           </View>
          
-            <AutoHeightImage item={item} width={width}/>
+            <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
@@ -301,6 +307,8 @@ const handleOption = (post_id) => {
               ListFooterComponent={renderLoader}
               onEndReached={() => handleLoadeMore()}
               showsVerticalScrollIndicator={false}
+              viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+              viewabilityConfig={_viewabilityConfig}
               // ListEmptyComponent={_listEmptyComponent}
           />
           </View>

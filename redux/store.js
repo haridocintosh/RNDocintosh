@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { allUsersData } from "./reducers/allUsers";
+// import { allUsersData } from "./reducers/allUsers";
 import { allSpeciality } from "./reducers/getSpeciality";
 import { userresult } from "./reducers/loginAuth";
 import { otpSlice } from "./reducers/otpSlice";
@@ -10,7 +10,7 @@ import { commentResults, LikesResult } from "./reducers/publicReactionSlice";
 
 const store = configureStore({
     reducer : {
-        myallUsers : allUsersData,
+        // myallUsers : allUsersData,
         mylogin: userresult,
         myspeciality : allSpeciality,
         forgotpass:result,

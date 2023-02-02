@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
 import CustomButton from '../components/CustomButton';
+
+
 const styles = {
   wrapper: {
     backgroundColor: 'transparent',
@@ -101,6 +103,7 @@ height:"100%"
 export const Slider_comp = () => {
   const navigation = useNavigation();
   const animationRef = useRef(null)
+
 
   useEffect(() => {
     animationRef.current?.play()

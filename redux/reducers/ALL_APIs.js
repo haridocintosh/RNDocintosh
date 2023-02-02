@@ -63,6 +63,17 @@ export const getsearchSplData = createAsyncThunk("searchSplData", async ()=>{
      }
 })
 
+export const deviceVersion = createAsyncThunk("getVersion", async ()=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getversion`);
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 
 export const sendInvitation = createAsyncThunk("sendinvite", async (data)=>{
     try{
@@ -187,6 +198,19 @@ export const savePost = createSlice({
             state.singlePostDataResult    = action.payload;
         })
         builder.addCase(singlePostDataAPI.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+
+        //-------------------------DeviceVersion----------------------------------
+        builder.addCase(deviceVersion.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deviceVersion.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.singlePostDataResult    = action.payload;
+        })
+        builder.addCase(deviceVersion.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })

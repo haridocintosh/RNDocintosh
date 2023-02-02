@@ -22,6 +22,7 @@ import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
+import UpgradeApp from './UpgradeApp';
 // import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import RegisterScreen from '../screens/RegisterScreen';
 
@@ -41,7 +42,7 @@ const navigation  = useNavigation();
         setDefaultRoute("HomeScreen");
       }else{
         setDefaultRoute("Intro");
-     //setDefaultRoute("RegisterTwoScreen");
+      //setDefaultRoute("RegisterTwoScreen");
       }
       setStatusKeyLoaded(true);
     } catch(e) {
@@ -63,6 +64,7 @@ const handleMessage = () => {
   return (<>
     {statusKeyLoaded && 
     <>
+    <UpgradeApp/>
       <HandleBack/>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}

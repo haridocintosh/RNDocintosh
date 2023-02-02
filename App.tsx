@@ -28,7 +28,7 @@ function App(): JSX.Element {
     let readableVersion = DeviceInfo.getReadableVersion();
     console.log(readableVersion);
     getdeviceId().then((res) => {
-      console.log("res-------",res)
+      // console.log("res-------",res)
     });
   },[])
 

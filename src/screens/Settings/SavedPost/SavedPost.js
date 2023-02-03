@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import OptionModal from '../../HomeScreen/optionModal';
 import AutoHeightImage from '../../HomeScreen/AutoHeightImage';
 
+
 const SavedPost = ({navigation}) => {
   const [item, setItem] = useState([]);
   const [postId, setPostId] = useState();
@@ -36,14 +37,15 @@ const SavedPost = ({navigation}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const ref = useRef(null);
+  const width = Dimensions.get('window').width
 
   const LocalStorage = () => {
     setBottumLoader(true);
     getLocalData('USER_INFO').then(async (res) => {
       setUserData(res?.data)
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
-      setItem(savedResult?.payload.result);
-      console.log("result.payload.result",savedResult);
+      setItem(savedResult?.payload?.result);
+      // console.log("result.payload.result",savedResult.payload);
     });
     setBottumLoader(false);
   }
@@ -89,8 +91,6 @@ const SavedPost = ({navigation}) => {
     const BlockId = item?.filter(Uid => Uid.id != id);
     setItem(BlockId);
   }
-
-
   
   const renderLoader = () => {
     return (
@@ -166,19 +166,19 @@ const SavedPost = ({navigation}) => {
               {item?.description.replace(/<[^>]+>/g, "")}
             </Text>
           </View>
-          <AutoHeightImage item={item} width={Dimensions.get('window').width} currentIndex={currentIndex} postIndex={index}/>
+          <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
           <PublicReactions item={item}/>
       </Card> 
     )
   }
 
-//   const _listEmptyComponent = () => {
-//     return ( 
-//       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-//           <Text>There is no data available</Text>
-//       </View>
-//     )
-// }
+  const _listEmptyComponent = () => {
+    return ( 
+      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+          <Text>There is no post saved</Text>
+      </View>
+    )
+}
 
   return (
     <SafeAreaView style={{padding:10,marginTop:10,flex:1,backgroundColor:'#ecf2f6'}}>
@@ -192,7 +192,7 @@ const SavedPost = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         viewabilityConfig={_viewabilityConfig}
-        // ListEmptyComponent={_listEmptyComponent}
+        ListEmptyComponent={_listEmptyComponent}
       />
     </SafeAreaView>
   )

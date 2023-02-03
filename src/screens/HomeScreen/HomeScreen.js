@@ -228,13 +228,11 @@ const handleOption = (post_id) => {
               BlockId={BlockId} 
               resData={resData} 
           />}
-
           <View style={item?.description &&{paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-         
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>

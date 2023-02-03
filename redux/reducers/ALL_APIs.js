@@ -52,9 +52,15 @@ export const followApi = createAsyncThunk("follow", async (data)=>{
      }
 })
 
-export const getsearchSplData = createAsyncThunk("searchSplData", async ()=>{
+export const getsearchSplData = createAsyncThunk("searchSplData", async (data)=>{
     try{
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getsearchSplData`);
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getsearchSplData`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
         const result = await responce.json();
         return result;
      }

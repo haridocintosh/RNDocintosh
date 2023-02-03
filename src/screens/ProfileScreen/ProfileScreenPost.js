@@ -117,7 +117,7 @@ const ProfileScreenPost = ({postLength}) => {
   };
 
 
-  console.log("myPost",myPost?.map(data => data.items?.attach_array));
+  console.log("myPost",myPost);
 
 
   const renderItem = ({item,index}) => {
@@ -168,7 +168,7 @@ const ProfileScreenPost = ({postLength}) => {
           {item?.ptitle }
           </Text>
         </View>
-        <AutoHeightImage item={item} width={width} currentIndex={currentIndex} postIndex={index}/>
+        <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
         <PublicReactions item={item}/>
       </Card>
     )

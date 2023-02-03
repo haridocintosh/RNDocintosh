@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import{ View, Text ,useWindowDimensions,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
+import{ View, ActivityIndicator ,useWindowDimensions,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'; 
 import { useNavigation } from '@react-navigation/native';
 import Doctor from './Doctor';
@@ -11,7 +11,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 
-
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
@@ -19,6 +18,10 @@ const CommonSearchScreen = () => {
   const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
   const [index, setIndex] = React.useState(0);
+  const [endNull, setEndNull] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [bottumLoader, setBottumLoader] = useState(false);
+
   const [routes] = React.useState([
     { key: 'first',  title: 'Doctor'},
     { key: 'second', title: 'Community' },
@@ -28,6 +31,9 @@ const CommonSearchScreen = () => {
   const [item, setItem] = useState();
   const [filteredDataSource, setFilteredDataSource] = useState();
 
+  console.log("item",item?.length);
+  console.log("filteredDataSource",filteredDataSource?.length);
+
   const handleRemove = (id) => {
       const removed = filteredDataSource?.filter(o => o.id != id)
       setFilteredDataSource(removed);
@@ -35,8 +41,8 @@ const CommonSearchScreen = () => {
   const onChangeText =  (text) =>{
     if (text) {
         const newData = item?.filter((data) => {
-          const itemData = `${data?.username.toUpperCase() + data?.speciality.toUpperCase()}`;
-          const textData = text.toUpperCase();
+          const itemData = `${data?.username + data?.speciality}`;
+          const textData = text;
           return itemData.indexOf(textData) > -1;
         });
         setFilteredDataSource(newData);
@@ -46,9 +52,44 @@ const CommonSearchScreen = () => {
         setInputText(text);
       }
   }
+
+  const handleLoadeMore = () => {
+    if(endNull !== null){
+      LoadPost(currentPage + 1);
+    }
+  };
+
+  const LoadPost = async (page) => {
+    console.log("page",page);
+    setBottumLoader(true);
+    const result = await dispatch(getsearchSplData({pageCounter:page}));
+    setEndNull(result?.payload?.result)
+    if(result?.payload?.result !== null){
+      setCurrentPage(prev => prev + 1);
+      setItem([...filteredDataSource, ...result?.payload?.result])
+      setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
+    }
+    setBottumLoader(false);
+  }
+  
+  const renderLoader = () => {
+    return (
+      bottumLoader ?
+        <View style={styelcss.loaderStyle}>
+          <ActivityIndicator size="small" color="#1A7078" />
+        </View> : null
+    );
+  };
+
+  
   const FirstRoute = () => {
     return(
-      <Doctor filteredDataSource={filteredDataSource} handleRemove={handleRemove}/>
+      <Doctor 
+        filteredDataSource={filteredDataSource} 
+        handleRemove={handleRemove} 
+        handleLoadeMore={handleLoadeMore} 
+        renderLoader={renderLoader}
+      />
     )
   };
   const SecondRoute = () => { 
@@ -58,7 +99,12 @@ const CommonSearchScreen = () => {
   };
   const ThirdRoute = () => {
     return(
-      <Speciality filteredDataSource={filteredDataSource} handleRemove={handleRemove}/>
+      <Speciality 
+        filteredDataSource={filteredDataSource} 
+        handleRemove={handleRemove}
+        handleLoadeMore={handleLoadeMore} 
+        renderLoader={renderLoader}
+      />
     )
   };
   const fourthRoute = () => {
@@ -102,10 +148,10 @@ const CommonSearchScreen = () => {
   };
 
   const GetsearchData = async () => {
-      const result = await dispatch(getsearchSplData());
-      // console.log("result?.payload",result?.payload);
-      setItem(result?.payload);
-      setFilteredDataSource(result?.payload);
+      const result = await dispatch(getsearchSplData({pageCounter:0}));
+      console.log("result?.payload",result);
+      setItem(result?.payload?.result);
+      setFilteredDataSource(result?.payload?.result);
   }
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 const styelcss = require('../../../assets/css/style');
 
 
-const Speciality = ({filteredDataSource}) => {
+const Speciality = ({handleRemove,filteredDataSource,handleLoadeMore,renderLoader}) => {
 
     const ItemView = ({ item }) => {
         return (
@@ -33,6 +33,8 @@ const Speciality = ({filteredDataSource}) => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={ItemView}
             showsVerticalScrollIndicator={false}
+            onEndReached={() => handleLoadeMore()}
+            ListFooterComponent={renderLoader}
         />
     </SafeAreaView>
   )

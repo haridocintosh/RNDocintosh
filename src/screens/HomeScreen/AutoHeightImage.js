@@ -12,7 +12,6 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   const videoPlayer = useRef(null);
   const [imgHeight, setImgHeight] = useState();
 
-
   // const [currentTime, setCurrentTime] = useState(0);
   // const [duration, setDuration] = useState(0);
   // const [isFullScreen, setIsFullScreen] = useState(false);
@@ -78,10 +77,10 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
     Image.getSize(url, (width, height) => {
       const ratio = Dimensions.get("window").width/width
       const actual = height*ratio;
-      console.log("actual",actual);
       setImgHeight(actual)
     })
   }
+
   // useEffect(() => {
     
   // },[])
@@ -126,7 +125,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
               :
               <>
               {/* {autoHeight(item?.filename)} */}
-              {/* {console.log("logggggggggg")} */}
+              
               <Image 
                   source={{uri:item?.filename}}
                   style={styles.multiImageStyle} 

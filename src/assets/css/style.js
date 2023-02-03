@@ -104,6 +104,11 @@ module.exports = StyleSheet.create({
     paddingLeft: 8,
 
   },
+  loaderStyle: {
+    marginVertical: 16,
+    alignItems: "center",
+    // borderWidth:10
+  },
   topImgVerify: {
     paddingTop: 50,
     display: "flex",

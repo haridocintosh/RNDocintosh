@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput,PermissionsAndroid } from 'react-native';
 // import { PermissionsAndroid } from 'react-native';
 import CustomButton from '../components/CustomButton';
-// import * as Contacts from 'expo-contacts';
 import Contacts from 'react-native-contacts';
 import CheckBox from "react-native-check-box";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -12,8 +11,6 @@ import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
 const styelcss = require('../assets/css/style');
 
-
- 
 
 export default function ContactPermission({navigation}) {
   const refInput = React.useRef(null);

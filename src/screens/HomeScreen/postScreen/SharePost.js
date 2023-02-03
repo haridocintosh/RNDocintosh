@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
-//import { StatusBar } from "expo-status-bar";
 import {PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -25,8 +24,6 @@ import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 // import ImageCompressor  from 'react-native-compressor';
-// import { Audio } from 'expo-av';
-// import * as DocumentPicker from 'expo-document-picker';
 import data from "../../../model/data";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();

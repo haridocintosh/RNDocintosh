@@ -73,15 +73,15 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   //     <Text style={styles.toolbar}>toolbar</Text>
   //   </View>
   // );
-  
-  // const autoHeight = (url) => {
-  //   Image.getSize(url, (width, height) => {
-  //     const ratio = Dimensions.get("window").width/width
-  //     const actual = height*ratio;
-  //     console.log("actual",actual);
-  //     setImgHeight(actual)
-  //   })
-  // }
+
+  const autoHeight = (url) => {
+    Image.getSize(url, (width, height) => {
+      const ratio = Dimensions.get("window").width/width
+      const actual = height*ratio;
+      console.log("actual",actual);
+      setImgHeight(actual)
+    })
+  }
   // useEffect(() => {
     
   // },[])
@@ -137,6 +137,8 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
           </View>
     )
   }
+
+  // console.log("items?.attach_array",items?.attach_array);
 
   return (
     <View >

@@ -1,8 +1,5 @@
 import { View, Text,Image,StyleSheet, SafeAreaView, TouchableOpacity, Modal,Dimensions,ImageBackground } from 'react-native';
 import React, { useEffect, useState } from 'react';
-//import * as MediaLibrary from 'expo-media-library';
-//import * as Permissions from 'expo-permissions';
-//import { Audio } from 'expo-av'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

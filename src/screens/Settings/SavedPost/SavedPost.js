@@ -33,6 +33,7 @@ const SavedPost = ({navigation}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [userData, setUserData] = useState();
   const dispatch = useDispatch();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const ref = useRef(null);
 
@@ -42,7 +43,7 @@ const SavedPost = ({navigation}) => {
       setUserData(res?.data)
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
       setItem(savedResult?.payload.result);
-      console.log("result.payload.result",savedResult.message);
+      console.log("result.payload.result",savedResult);
     });
     setBottumLoader(false);
   }
@@ -74,7 +75,7 @@ const SavedPost = ({navigation}) => {
     console.log(page);
     setBottumLoader(true);
     const result = await dispatch(getSavedPostsApi({user_id:userData?.id,pageCounter:page}));
-    console.log("result.payload.result",result.payload.result);
+    console.log("result",result);
     setEndNull(result?.payload?.result)
      if(result.payload.result !== null){
       setCurrentPage(prev => prev + 1);
@@ -100,7 +101,21 @@ const SavedPost = ({navigation}) => {
     );
   };
 
-  const renderItem = ({item}) => {
+
+  const onViewableItemsChanged = ({viewableItems}) => {
+    viewableItems.map((data) => {
+      setCurrentIndex(data.index)
+    });
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([
+    { onViewableItemsChanged },
+  ]);
+  var _viewabilityConfig = {
+    itemVisiblePercentThreshold: 50
+  };
+
+  const renderItem = ({item,index}) => {
     // console.log("item",item);
     return(
       <Card style={styles.SavePostsContainer} >
@@ -151,7 +166,7 @@ const SavedPost = ({navigation}) => {
               {item?.description.replace(/<[^>]+>/g, "")}
             </Text>
           </View>
-          <AutoHeightImage item={item} width={Dimensions.get('window').width}/>
+          <AutoHeightImage item={item} width={Dimensions.get('window').width} currentIndex={currentIndex} postIndex={index}/>
           <PublicReactions item={item}/>
       </Card> 
     )
@@ -175,6 +190,8 @@ const SavedPost = ({navigation}) => {
         ListFooterComponent={renderLoader}
         onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        viewabilityConfig={_viewabilityConfig}
         // ListEmptyComponent={_listEmptyComponent}
       />
     </SafeAreaView>

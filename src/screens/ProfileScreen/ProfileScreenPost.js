@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity,Dimensions,Image,FlatList,ActivityIndicator } from 'react-native'
-import React,{ useEffect,useState }  from 'react';
+import React,{ useEffect,useState,useRef }  from 'react';
 import { Card } from 'react-native-paper';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -26,6 +26,7 @@ const ProfileScreenPost = ({postLength}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [bottumLoader, setBottumLoader] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const { width } = Dimensions.get('window')
 
@@ -46,7 +47,7 @@ const ProfileScreenPost = ({postLength}) => {
         city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:1,user_id:resData?.id,id:resData?.id
       }
       const allPostResult = await dispatch(getMyPostsApi(postDetails));
-      // console.log("allPostResult.payload.result",allPostResult.payload.count);
+      // console.log("allPostResult.payload.result",allPostResult.payload);
       setMyPost(allPostResult.payload.result);
       await postLength(allPostResult.payload.count);
     });
@@ -101,7 +102,25 @@ const ProfileScreenPost = ({postLength}) => {
     const BlockId = myPost.filter(Uid => Uid.id != id);
     setMyPost(BlockId);
   }
-  const renderItem = ({item}) => {
+
+  const onViewableItemsChanged = ({viewableItems}) => {
+    viewableItems.map((data) => {
+      setCurrentIndex(data.index)
+    });
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([
+    { onViewableItemsChanged },
+  ]);
+  var _viewabilityConfig = {
+    itemVisiblePercentThreshold: 50
+  };
+
+
+  console.log("myPost",myPost?.map(data => data.items?.attach_array));
+
+
+  const renderItem = ({item,index}) => {
     return(
       <Card style={styles.cardOfPosts} >
         <View style={styles.userInfo}>
@@ -149,7 +168,7 @@ const ProfileScreenPost = ({postLength}) => {
           {item?.ptitle }
           </Text>
         </View>
-        <AutoHeightImage item={item} width={width}/>
+        <AutoHeightImage item={item} width={width} currentIndex={currentIndex} postIndex={index}/>
         <PublicReactions item={item}/>
       </Card>
     )
@@ -165,6 +184,8 @@ const ProfileScreenPost = ({postLength}) => {
         ListFooterComponent={renderLoader}
         onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        viewabilityConfig={_viewabilityConfig}
     />
     </View>
   )

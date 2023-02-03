@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import{ View, Text ,useWindowDimensions,Image,TextInput,Animated,Alert, Button,TouchableOpacity, SafeAreaView}from 'react-native'
+import{ View, Text ,useWindowDimensions,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'; 
 import { useNavigation } from '@react-navigation/native';
 import Doctor from './Doctor';
@@ -8,8 +8,6 @@ import Speciality from './Speciality';
 import Page from './Page';
 const styelcss = require('../../../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-// import Voice from '@react-native-voice/voice';
 import { useDispatch } from 'react-redux';
 import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 
@@ -138,7 +136,7 @@ const CommonSearchScreen = () => {
   // }
 
 return (
-  <>
+  <View style={{flex:1}}>
     <View style={styelcss.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
          <Ionicons name="arrow-back" size={25} color={"#fff"}/>
@@ -166,7 +164,7 @@ return (
       swipeEnabled={true}
       renderTabBar={renderTabBar}
     />
-  </>
+  </View>
 )
 }
 export default CommonSearchScreen

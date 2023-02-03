@@ -77,7 +77,7 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
         <View style={{ flexDirection: "row"}}>
         <CircularProgress
           value={currentQuestionIndex ?currentQuestionIndex :0}
-          radius={40}
+          radius={35}
           duration={1000}
           progressValueColor={'#000'}
           maxValue={TotalMcq}

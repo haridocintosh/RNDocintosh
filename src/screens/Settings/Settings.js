@@ -15,10 +15,10 @@ const Settings = ({navigation}) => {
             <MaterialCommunityIcons name="account" size={22} color={'#51668A'}/>
             <Text style={styles.SettingText}>Account Settings</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('SavedPost')}>
+        {/* <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('SavedPost')}>
             <Ionicons name="bookmark" size={22} color={'#51668A'}/>
             <Text style={styles.SettingText}>Saved Post</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('BlockList')}>
             <MaterialCommunityIcons name="block-helper" size={22} color={'#51668A'}/>
             <Text style={styles.SettingText}>Block list</Text>

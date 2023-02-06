@@ -73,18 +73,13 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   //   </View>
   // );
 
-  const autoHeight = (url) => {
-    Image.getSize(url, (width, height) => {
-      const ratio = Dimensions.get("window").width/width
+
+  const actualHeight = (width,height) => {
+      const ratio = Dimensions.get("window").width/width;
       const actual = height*ratio;
-      setImgHeight(actual)
-    })
+      return actual;
   }
 
-  // useEffect(() => {
-    
-  // },[])
-  
   const _renderItem = ({ item, index }) => {
         return (
           <View key={index} style={styles.imageVideoContainer}>
@@ -128,7 +123,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
               
               <Image 
                   source={{uri:item?.filename}}
-                  style={styles.multiImageStyle} 
+                  style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
                   // style={carouselItems?.length > 1 ? styles.multiImageStyle: [styles.imageStyle,{height:imgHeight}]} 
                   resizeMode={"contain"}/>
               </>
@@ -207,6 +202,6 @@ export const styles = StyleSheet.create({
     marginHorizontal:10,
     alignSelf:'center',
     zIndex:0, 
-    aspectRatio:1
+    // aspectRatio:1
   },  
 })

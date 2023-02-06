@@ -113,6 +113,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     shadowRadius: 10,
     padding: 15,
+    backgroundColor:'#fff'
   },
   bgtophome: {
     width: "100%",

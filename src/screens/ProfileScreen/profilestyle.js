@@ -223,6 +223,7 @@ cardOfPosts: {
   shadowRadius: 10,
   padding: 15,
   // marginTop: -10,
+  backgroundColor:"#fff"
 },
 userInfo: {
   justifyContent: "space-between",

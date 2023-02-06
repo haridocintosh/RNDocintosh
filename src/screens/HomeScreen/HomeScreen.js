@@ -40,6 +40,7 @@ const HomeScreen = ({navigation,route})=> {
   const [currentPage, setCurrentPage] = useState(1);
   const [bottumLoader, setBottumLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [refresh, setRefresh] = useState(false)
 
   const isFocused = useIsFocused();
   const ref = useRef(null);
@@ -159,7 +160,9 @@ const handleOption = (post_id) => {
       const result = await dispatch(userPostData(postDetails));
       setBottumLoader(false);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
+      // console.log("allPostData------------tara",allPostData);
       setallPost(allPostData);
+      setRefresh(false)
     })
   }
  
@@ -185,6 +188,14 @@ const handleOption = (post_id) => {
   var _viewabilityConfig = {
     itemVisiblePercentThreshold: 50
   };
+
+  useEffect(() => {
+    if(refresh){
+      asyncFetchDailyData();
+      
+    }
+  }, [refresh])
+
     const renderItem = ({item,index}) => {
       return(
         <Card style={styles.cardOfPosts}>
@@ -308,6 +319,9 @@ const handleOption = (post_id) => {
               viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
               viewabilityConfig={_viewabilityConfig}
               // ListEmptyComponent={_listEmptyComponent}
+              refreshing={refresh}
+              onRefresh={() => setRefresh(true)}
+              onScrollBeginDrag={() => setModalVisible(false)}
           />
           </View>
       </View>

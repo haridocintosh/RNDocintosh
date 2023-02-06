@@ -91,7 +91,6 @@ const ProfileScreenPost = ({postLength}) => {
       getMyPosts();
   }, [])
 
-
   const deletePostID = (postId) =>{
     const deletePost = myPost.filter(pId => pId.post_id != postId);
     setMyPost(deletePost);

@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useRef} from 'react'
 import{ View, ActivityIndicator ,useWindowDimensions,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'; 
 import { useNavigation } from '@react-navigation/native';
@@ -14,15 +14,15 @@ import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
-  const refInput = React.useRef(null);
+  const refInput = useRef(null);
   const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
   const [endNull, setEndNull] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [bottumLoader, setBottumLoader] = useState(false);
 
-  const [routes] = React.useState([
+  const [routes] = useState([
     { key: 'first',  title: 'Doctor'},
     { key: 'second', title: 'Community' },
     { key: 'third',  title: 'Speciality' },
@@ -41,8 +41,8 @@ const CommonSearchScreen = () => {
   const onChangeText =  (text) =>{
     if (text) {
         const newData = item?.filter((data) => {
-          const itemData = `${data?.username + data?.speciality}`;
-          const textData = text;
+          const itemData = `${data?.username.toUpperCase() + data?.speciality.toUpperCase()}`;
+          const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
         });
         setFilteredDataSource(newData);
@@ -66,8 +66,8 @@ const CommonSearchScreen = () => {
     setEndNull(result?.payload?.result)
     if(result?.payload?.result !== null){
       setCurrentPage(prev => prev + 1);
-      setItem([...filteredDataSource, ...result?.payload?.result])
       setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
+      // setItem([...filteredDataSource, ...result?.payload?.result])
     }
     setBottumLoader(false);
   }
@@ -175,11 +175,12 @@ const CommonSearchScreen = () => {
   const emptyField =  () =>{
     setInputText(null)
   }
-  // const startVoice = async () =>{
-  //   refInput.current.focus();
-  //   // await Voice.start("en-US");
-  //   // console.log("startVoice");
-  // }
+
+  const startVoice = async () =>{
+    refInput.current.focus();
+    // await Voice.start("en-US");
+    // console.log("startVoice");
+  }
 
 return (
   <View style={{flex:1}}>

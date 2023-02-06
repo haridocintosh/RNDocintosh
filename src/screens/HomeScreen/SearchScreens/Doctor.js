@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text ,Image,SafeAreaView,Alert, FlatList,TouchableOpacity} from 'react-native';
+import { View, Text ,Image, SafeAreaView,FlatList,TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const styelcss = require('../../../assets/css/style');
 

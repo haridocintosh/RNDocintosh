@@ -77,7 +77,8 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   const actualHeight = (width,height) => {
       const ratio = Dimensions.get("window").width/width;
       const actual = height*ratio;
-      return actual;
+      const ActualHeight = actual? actual : 350;
+      return ActualHeight;
   }
 
   const _renderItem = ({ item, index }) => {

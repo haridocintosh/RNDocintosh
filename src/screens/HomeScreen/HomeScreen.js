@@ -28,7 +28,6 @@ import AutoHeightImage from './AutoHeightImage';
 
 
 const HomeScreen = ({navigation,route})=> {
-  const postLoader = route?.params?.reload;
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState();
   const [resData, setResData]  = useState();
@@ -44,12 +43,12 @@ const HomeScreen = ({navigation,route})=> {
 
   const isFocused = useIsFocused();
   const ref = useRef(null);
-  const { width, height} = Dimensions.get('window')
+  const { width, height} = Dimensions.get('window');
 
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
-  const minHeaderHeight = 100
-  const maxHeaderHeight = 160
+  const minHeaderHeight = 100;
+  const maxHeaderHeight = 160;
 
   const headerHeight = scrollPosition.interpolate({
     inputRange: [0, 500],
@@ -170,6 +169,7 @@ const handleOption = (post_id) => {
     const deletePost = allPost.filter(pId => pId.post_id != postId);
     setallPost(deletePost);
   }
+
   const BlockId = (id) =>{
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
@@ -192,7 +192,6 @@ const handleOption = (post_id) => {
   useEffect(() => {
     if(refresh){
       asyncFetchDailyData();
-      
     }
   }, [refresh])
 
@@ -206,7 +205,7 @@ const handleOption = (post_id) => {
               <View >
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
                   { item?.utitle} {item?.first_name} {item?.last_name} 
-                  <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
+                  <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69"/>
                 </Text>
                 <View style={{flexDirection:'row',alignItems:'flex-start',}}>
                   <Text style={{marginLeft:5}}>

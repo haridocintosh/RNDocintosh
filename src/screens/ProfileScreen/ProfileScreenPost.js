@@ -17,7 +17,7 @@ import AutoHeightImage from '../HomeScreen/AutoHeightImage';
 
 
 const ProfileScreenPost = ({postLength}) => {
-  const [myPost,setMyPost] = useState();
+  const [myPost, setMyPost] = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [endNull, setEndNull] = useState();
@@ -41,15 +41,17 @@ const ProfileScreenPost = ({postLength}) => {
 
   const getMyPosts = async () => {
     getLocalData('USER_INFO').then( async (res) =>{
+      setBottumLoader(true)
       setUserData(res?.data)
       const resData = res?.data;
       const postDetails = { postType:0,role:resData?.role,circle_type:resData?.role == 4 ? 1 : resData?.circle_type,
         city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:1,user_id:resData?.id,id:resData?.id
       }
       const allPostResult = await dispatch(getMyPostsApi(postDetails));
-      // console.log("allPostResult.payload.result",allPostResult.payload);
+      console.log("allPostResult++++++++++++++++",allPostResult.payload);
       setMyPost(allPostResult.payload.result);
       await postLength(allPostResult.payload.count);
+      setBottumLoader(false)
     });
   }
 
@@ -82,7 +84,7 @@ const ProfileScreenPost = ({postLength}) => {
     return (
       bottumLoader ?
         <View style={styles.loaderStyle}>
-          <ActivityIndicator size="small" color="#1A7078" />
+          <ActivityIndicator size="small" color="#1A7078"/>
         </View> : null
     );
   };
@@ -115,10 +117,6 @@ const ProfileScreenPost = ({postLength}) => {
     itemVisiblePercentThreshold: 50
   };
 
-
-  console.log("myPost",myPost);
-
-
   const renderItem = ({item,index}) => {
     return(
       <Card style={styles.cardOfPosts} >
@@ -145,22 +143,20 @@ const ProfileScreenPost = ({postLength}) => {
                 </View>
               </View> 
           </View>
-          <View>
           <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{padding:10,right:-10,top:-10}}>
             <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
             </Svg>
           </TouchableOpacity>
-            {item?.post_id == postId && <OptionModal 
-                modalVisible={modalVisible}
-                deletePostID={deletePostID}
-                setModalVisible={setModalVisible}
-                item={item}
-                BlockId={BlockId} 
-                resData={userData} 
-            />}
-          </View>
         </View>
+        {item?.post_id == postId && <OptionModal 
+            modalVisible={modalVisible}
+            deletePostID={deletePostID}
+            setModalVisible={setModalVisible}
+            item={item}
+            BlockId={BlockId} 
+            resData={userData} 
+        />}
 
         <View style={item?.ptitle &&{ flexDirection:'row',paddingVertical:10}}>
           <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
@@ -185,6 +181,7 @@ const ProfileScreenPost = ({postLength}) => {
         showsVerticalScrollIndicator={false}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         viewabilityConfig={_viewabilityConfig}
+        onScrollBeginDrag={() => setModalVisible(false)}
     />
     </View>
   )

@@ -14,7 +14,7 @@ import PostsScreen from '../screens/HomeScreen/PostsScreen';
 import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import EditProfileScreen from '../screens/EditProfileScreen';
+import EditProfileScreen from '../screens/EditProfile/EditProfileScreen';
 import WhatsNew from '../screens/HomeScreen/What\'s New/What\'sNew';
 import ContactPermission from '../screens/ContactPermission';
 import ReportPost from '../screens/HomeScreen/ReportPost/ReportPost';

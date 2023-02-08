@@ -42,7 +42,7 @@ const navigation  = useNavigation();
         setDefaultRoute("HomeScreen");
       }else{
         setDefaultRoute("Intro");
-      //setDefaultRoute("RegisterTwoScreen");
+      //setDefaultRoute("CreateNewPass");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

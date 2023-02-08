@@ -13,11 +13,11 @@
    import FontAwesome from 'react-native-vector-icons/FontAwesome';
    import Ionicons from 'react-native-vector-icons/Ionicons';
    import AntDesign from 'react-native-vector-icons/AntDesign';
-   import { forgotverifyOtp } from '../apis/Apicall';
    import OTPTextView from 'react-native-otp-textinput';
    import Toast from 'react-native-simple-toast';
    import { forgotPassword_ } from '../../redux/reducers/forgotPass';
    import { resendOTP } from '../../redux/reducers/loginAuth';
+   import { forgotverifyOtp } from '../../redux/reducers/loginAuth';
 
    const ForgotPasswordOTP = ({route}) => {
     const navigation = useNavigation();
@@ -26,29 +26,25 @@
    const [phone ,setPhone] =useState("");
    const [counter, setCounter] = useState(30);
    const [otpInput, setotpInput ] = useState('');
-   const [message , setmessage] = useState();
    const [editNumber , setEditNumber] = useState(false);
    const [loader, setLoader] = useState(false);
    const [verify, setVerifying] = useState('Verify');
 
     
-   const submitOtp = ()=>{
+   const submitOtp = async() =>{
     setVerifying("Verifying...")
-   if(otpInput !== ""){
-   forgotverifyOtp(otpInput,user_id)
-    .then(res => {
-    if(res['status'] == 'Success'){
-      navigation.navigate('CreateNewPass',{user_id})
-    }
-   })
-   .catch(err => {
-   setmessage('Error occured!');
-   console.log(err);
-   });
-   }else{
-   setmessage('Please Enter Otp');
-   }
-   setVerifying("Verify")
+      if(otpInput !== ""){
+      const result = await dispatch(forgotverifyOtp({otp:otpInput, user_id:user_id}));
+      // console.log('check Resulttttttttttt',result.payload);
+      if(result.payload.status == 'Success'){
+        Toast.show(result.payload.message,Toast.LONG);
+        navigation.navigate('CreateNewPass',{user_id})
+      } 
+        Toast.show(result.payload.message,Toast.LONG);
+      }else{
+        Toast.show('Please Enter OTP',Toast.LONG);
+      }
+        setVerifying("Verify");
    };
 
 

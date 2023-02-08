@@ -29,7 +29,7 @@ export const addCircle = createAsyncThunk("user/addCircle", async(data)=>{
           body : JSON.stringify(data)
       });
       const result=  await responce.json();
-      console.log('slice',result);
+      // console.log('slice',result);
       return result
   }
   catch(e){

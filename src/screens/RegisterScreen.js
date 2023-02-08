@@ -280,6 +280,7 @@ const form_submit = async() =>{
             <TextInput 
               style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
               placeholderTextColor='#687690' 
+              returnKeyType='go'
               placeholder='First name'  
               onChangeText={(e)=> firstName(e)}
             />
@@ -313,6 +314,7 @@ const form_submit = async() =>{
           <TextInput  
             style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} 
             placeholderTextColor='#687690' 
+            returnKeyType='go'
             autoComplete='off' 
             autoCapitalize="none" 
             keyboardType="email-address" 

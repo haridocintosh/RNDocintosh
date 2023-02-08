@@ -18,14 +18,24 @@ export default function ContactPermission({navigation}) {
   const [isChecked, setisChecked] = useState(false);
   const [sliceCount, setSliceCount] = useState(10);
   const [totalSlice, setTotalSlice] = useState(0);
-  // const [contactData, setcontactData] = useState('');
-  // const [contactData1, setcontactData1] = useState(contactList);
+  const [defaultRoute, setDefaultRoute] = useState();
   const [inputText,setInputText] = useState(null);
   const [item, setItem] = useState()
   const [selectedList, setSelectedList] = useState();
   const [loading, setLoading]  = useState(false);
   const [spinner, setSpinner]  = useState(false);
   const dispatch = useDispatch();
+
+
+
+  getLocalData("USER_INFO").then((res) => {
+    if(res?.login){
+      setDefaultRoute("HomeScreen");
+    }else{
+      setDefaultRoute("Login");
+    }
+  })
+
 
   const handleChange = (phoneNumbers) => {
     // setSpinner(true);
@@ -87,6 +97,7 @@ export default function ContactPermission({navigation}) {
   useEffect(() => {
     navigation.setOptions({ title: 'Invite Peers'});
     getPrermission();
+    getLocalData("USER_INFO")
   }, []);
 
 
@@ -119,7 +130,8 @@ export default function ContactPermission({navigation}) {
                 console.log(e)
             })
         }else{
-        navigation.navigate('Login');
+          
+          navigation.navigate({defaultRoute});
          Toast.show('Permission deny',Toast.LONG);
         }
       })

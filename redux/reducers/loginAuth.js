@@ -109,6 +109,24 @@ export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
     }
 })
 
+
+export const forgotverifyOtp = createAsyncThunk("user/forgotverifyOtp", async(regData)=>
+{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/verifyotp`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(regData)
+        });
+        const result = await responce.json();
+        return result
+    }catch(e){
+       console.log(e);
+    }
+})
+
 export const loginAuth = createSlice({
     name : "auth",
     initialState : {

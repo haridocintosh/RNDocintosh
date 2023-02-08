@@ -24,11 +24,15 @@ import {  View,
     const [selectitem,setselectitem]=useState('');
     const [getspclist,setgetspclist]=useState('');
     const [loader, setLoader] = useState(true);
+    const [userId, setuserId] = useState();
   
     const getItem = (item) => {
       let spl  = item.speciality_id;
+      console.log('111111111,',spl);
       let copy=[...selectitem];
+      console.log('22222222222,',copy);
       copy =[...copy,spl]
+      console.log('333333333',copy);
      setselectitem(copy)
     const newItem = filteredDataSource.map((val)=>{
       if(val.speciality_id===item.speciality_id){
@@ -41,6 +45,7 @@ import {  View,
   
     var array = [...selectitem]; // make a separate copy of the array
     var index = array.indexOf(spl)
+    console.log('index', index);
       if(index !== -1) {
         array.splice(index, 1);
         setselectitem(array);
@@ -49,9 +54,9 @@ import {  View,
     };
   
     const fetchPostData = async (speciality_id)=>{
-      const postDetails = {speciality_id:speciality_id}
+      const postDetails = {speciality_id:speciality_id,id:userId}
       const result = await dispatch(addCircle(postDetails));
-    //,id:user_id
+      // console.log(result);
    }
   
    const getInterestSplData = async () => {
@@ -74,6 +79,7 @@ import {  View,
       navigation.setOptions({title:'Select Interest'})
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
+        setuserId(reData?.id)
         fetchSpecialities(reData?.id);
       });
     }, []);

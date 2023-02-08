@@ -123,12 +123,12 @@ const LoginScreen = () => {
   },[isFocused])
 
     function fetchToken(){
-     getdeviceId().then(token => 
-        setregister({
-          ...register,
-          device_id: token,
-        })
-      );
+      getdeviceId().then(token => 
+          setregister({
+            ...register,
+            device_id: token,
+          })
+        );
     }
 
 

@@ -27,17 +27,19 @@ export const PickImage = async (arg) => {
             const granted = await PermissionsAndroid.request(
                   PermissionsAndroid.PERMISSIONS.CAMERA,
                   {
-                  title: "App Camera Permission",
-                  message:"App needs access to your camera ",
-                  buttonNeutral: "Ask Me Later",
-                  buttonNegative: "Cancel",
-                  buttonPositive: "OK"
+                        title: "App Camera Permission",
+                        message:"App needs access to your camera ",
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
                   }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                   const result = ImagePicker.launchCamera(options, (response) => {
+                        setloader(true);
                         if(response.didCancel) {
                               console.log('User cancelled image picker');
+                              setloader(false);
                         } else if (response.error) {
                               return response.error;
                         } else if (response.customButton) {
@@ -51,7 +53,6 @@ export const PickImage = async (arg) => {
             } else {
                   console.log("Camera permission denied");
             }
-            
       }else{
             const granted = await PermissionsAndroid.request(
                   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -65,8 +66,10 @@ export const PickImage = async (arg) => {
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                   const result = ImagePicker.launchImageLibrary(options, (response) => {
+                        setloader(true);
                         if(response.didCancel) {
                               console.log('User cancelled image picker');
+                              setloader(false)
                         } else if (response.error) {
                               return response.error;
                         } else if (response.customButton) {
@@ -81,10 +84,6 @@ export const PickImage = async (arg) => {
                   console.log("Camera permission denied");
             }
       }
-
-
-
-      
 }
 export const PickImageAll = async (setloader) => {
       const granted = await PermissionsAndroid.request(
@@ -110,6 +109,7 @@ export const PickImageAll = async (setloader) => {
                   setloader(true);
                   if(response.didCancel) {
                         console.log('User cancelled image picker');
+                        setloader(false);
                   } else if (response.error) {
                         return response.error;
                   } else if (response.customButton) {
@@ -150,6 +150,7 @@ export const PickVideos = async (setloader) => {
             const result = ImagePicker.launchImageLibrary(options, (response) => {
                   if(response.didCancel) {
                         console.log('User cancelled image picker');
+                        setloader(false)
                   } else if (response.error) {
                         return response.error;
                   } else if (response.customButton) {
@@ -165,25 +166,74 @@ export const PickVideos = async (setloader) => {
             console.log("Camera permission denied");
       }
 
+}
 
-//    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-//       if (granted === true) {
-//             setloader(true);
-//             var library = await ImagePicker.launchImageLibraryAsync({
-//             selectionLimit: 5,
-//             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-//             allowsEditing: false,
-//             allowsMultipleSelection: true,
-//             aspect: [1, 1],
-//             quality: 0.7,
-//             });
-//             if (!library.cancelled) {
-//                   const selectedImg = library.uri ? [library] : library.selected;
-//                   return selectedImg;
-//             }
-//       } else {
-//             const denied = 'Camera permission denied';
-//             // alert("You've refused to allow this app to access your camera!");
-//             return denied;
-//       }
+
+
+export const SingleImage = async (arg) => {
+      let options = {
+            storageOptions: {
+              skipBackup: true,
+              path: 'images',
+            },
+            selectionLimit:1,
+            mediaType: 'photo',
+          };
+      if(arg==1){
+            const granted = await PermissionsAndroid.request(
+                  PermissionsAndroid.PERMISSIONS.CAMERA,
+                  {
+                        title: "App Camera Permission",
+                        message:"App needs access to your camera ",
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
+                  }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                  const result = ImagePicker.launchCamera(options, (response) => {
+                        if(response.didCancel) {
+                              console.log('User cancelled image picker');
+                        } else if (response.error) {
+                              return response.error;
+                        } else if (response.customButton) {
+                              return response.customButton;
+                        } else {
+                        const result  = JSON.stringify(response);
+                          return result;
+                        }
+                    });
+                    return result;
+            } else {
+                  console.log("Camera permission denied");
+            }
+      }else{
+            const granted = await PermissionsAndroid.request(
+                  PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                  {
+                        title: "App Library Permission",
+                        message:"App needs access to your Library ",
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
+                  }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                  const result = ImagePicker.launchImageLibrary(options, (response) => {
+                        if(response.didCancel) {
+                              console.log('User cancelled image picker');
+                        } else if (response.error) {
+                              return response.error;
+                        } else if (response.customButton) {
+                              return response.customButton;
+                        } else {
+                        const result  = JSON.stringify(response);
+                          return result;
+                        }
+                  });
+                  return result;
+            } else {
+                  console.log("Camera permission denied");
+            }
+      }
 }

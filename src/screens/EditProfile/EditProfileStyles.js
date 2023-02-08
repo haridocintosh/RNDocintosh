@@ -1,10 +1,12 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { color } from "react-native-reanimated";
 
 export const styles = StyleSheet.create({
     CartContainer:{
         marginVertical:10, 
         borderRadius:10,
-        backgroundColor:'#fff'
+        backgroundColor:'#fff',
+        padding:20
     },
     userName:{
         alignSelf:'center',
@@ -18,7 +20,6 @@ export const styles = StyleSheet.create({
     closebtn: {
         backgroundColor: "#FFFF",
         alignSelf:'flex-end',
-        margin:10
     },
     labels:{
         color:'#071B36'
@@ -33,10 +34,21 @@ export const styles = StyleSheet.create({
     },
     input:{
         alignSelf:'center',
-        marginHorizontal:20,
-        borderBottomColor:'#000',
+        borderBottomColor:'#071B36',
         borderBottomWidth:0.5,
-        width:300,
+        width:'100%',
+        marginBottom:15
+    },
+    pickFrom:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginVertical:15,
+        width:'100%',
+        borderWidth:2,
+        justifyContent:'center',
+        borderRadius:50,
+        paddingVertical:5,
+        borderColor:'#009688'
     },
     centeredView: {
         flex: 1,
@@ -47,19 +59,16 @@ export const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding:20,
+        borderRadius: 15,
+        paddingHorizontal:15,
+        paddingVertical:25,
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: {
-        width: 0,
-        height: 2,
-        },
+        shadowOffset: {width:0,height:2},
         shadowOpacity: 0.30,
         shadowRadius: 4,
         elevation: 10,
         width:'100%',
-        // height:200
     },
     button: {
         borderRadius: 20,
@@ -80,11 +89,22 @@ export const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         alignSelf:'flex-start',
-        marginLeft:5,
         fontSize:18,
-        fontWeight:'600'
-        
+        color:'#071B36',
+        fontFamily:"PlusJakartaSans-Regular"
     },
+    modalSubText: {
+        fontSize:12,
+        color:'#071B36',
+        fontFamily:"PlusJakartaSans-Regular"
+    },
+    PicModalSubText: {
+        fontSize:18,
+        color:'#071B36',
+        fontFamily:"PlusJakartaSans-Regular",
+        marginLeft:10
+    },
+    modalBtnContainer:{marginTop:20,width:'100%'},
     ProfileImageContainer:{
         width:72,
         height:72,
@@ -101,8 +121,20 @@ export const styles = StyleSheet.create({
     profileEditBtnTouch:{position:'absolute',backgroundColor:"#fff",right:0,bottom:0,borderRadius:4,padding:1},
     profileEditBtn:{color:'#51668A'},
     basicInfoConatiner:{padding:20},
-    basicInfoTitle:{fontSize:20,color:"#071B36",fontFamily:"Plus-Jakarta-Sans"},
+    basicInfoTitle:{fontSize:20,color:"#071B36",fontFamily:"PlusJakartaSans-Bold"},
     userInfoContainer:{flexDirection:'row',paddingTop:16, justifyContent:'space-between'},
     userInfoTextResult:{paddingLeft:10,color:'#51668A'},
-    userInfoText:{color:'#071B36'}
+    userInfoText:{color:'#071B36'},
+    userInfoTitle:{fontSize:16,fontWeight:'600',color:"#071B36",fontFamily:"PlusJakartaSans-Bold"},
+    AddInfo:{fontSize:16,marginVertical:20, color:'#2376E5',fontFamily:"Inter-Regular"},
+    AddedDetails:{flexDirection:'row',paddingHorizontal:20,justifyContent:'space-between'},
+    AddedDetailsTitle:{fontSize:16,color:"#071B36",fontFamily:"PlusJakartaSans-Regular"},
+    AddedDetailsDate:{fontSize:12,color:"#51668A",fontFamily:"Inter-Regular"},
+    AddedDetailsSubTitle:{color:"#51668A",fontFamily:"Inter-Regular"},
+    devider:{backgroundColor:'#D5DEED',width:"90%", alignSelf:'center',height:1,marginTop:10},
+    showMore:{fontSize:16, color:'#2376E5',marginRight:5},
+    showMoreContainer:{justifyContent:'center',alignItems:'center',flexDirection:'row',paddingVertical:12},
+    InterestsContainer:{flexDirection:'row',justifyContent:'space-between',marginBottom:15},
+    InterestsList:{flexDirection:'row',flexWrap:'wrap'},
+    InterestsSelected:{borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5},
 });

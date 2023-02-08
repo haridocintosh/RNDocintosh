@@ -57,7 +57,6 @@ export const getMyPostsApi = createAsyncThunk("MyPosts", async (data)=>{
         body : JSON.stringify(data)
     });
     const getMyPostsResult = await response.json();
-    console.log('checmypost', getMyPostsResult);
     return getMyPostsResult;
 })
 

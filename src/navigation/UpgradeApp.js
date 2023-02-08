@@ -29,8 +29,13 @@ const UpgradeApp = () => {
 
       const checkAppUpdate = async()=>{
             const result = await dispatch(deviceVersion());
+            //console.log("resultpayload",result?.payload);
             let readableVersion = DeviceInfo.getReadableVersion().split('.');
+            //console.log('ceje',readableVersion);
             let serverVersion = result?.payload?.current.split('.')
+           // console.log('ceje',readableVersion[0]);
+            //console.log('dsfsd',serverVersion[0]); 
+            // serverVersion[0] > readableVersion[0] && console.log(result?.payload?.majorMsg.title);
             {serverVersion[0] > readableVersion[0] ? (setmsg(result?.payload?.majorMsg.msg), setapptitle(result?.payload?.majorMsg.title), setModalVisible(!modalVisible)): serverVersion[1] > readableVersion[1]  && (setapptitle(result?.payload?.minorMsg.title), setmsg(result?.payload?.minorMsg.msg), setModalVisible(!modalVisible))}
         }
 

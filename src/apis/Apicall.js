@@ -129,7 +129,7 @@ const verifyOtp = (otp,user_id) =>
   })
   
 
-  const forgotverifyOtp = (otp,user_id) =>
+  const forgotverifyOtp_bk = (otp,user_id) =>
   new Promise((resolve, reject) => {
     axios({
       method: 'post',
@@ -144,8 +144,13 @@ const verifyOtp = (otp,user_id) =>
       .then(res => {
         if(res.status === 200) {
         resolve(res.data);
+        console.log(res.data);
         Toast.show('OTP Verify Successfully',Toast.LONG)
-        } else reject(res);
+        } else{ 
+          reject(res)
+          Toast.show('Please Enter Valid OTP ',Toast.LONG)
+        
+        };
       })
       .catch(error => {
         console.log(error);
@@ -154,4 +159,4 @@ const verifyOtp = (otp,user_id) =>
   });
 
 
-export {login, quicklogin, verifyOtp, check_mail, storeData, singlestoreData,forgotverifyOtp} 
+export {login, quicklogin, verifyOtp, check_mail, storeData, singlestoreData} 

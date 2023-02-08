@@ -43,6 +43,8 @@ import Leaderboard from '../screens/Leaderboard/Leaderboard';
 import EarnDocCoins from '../screens/Leaderboard/EarnDocCoins';
 import Rewards from '../components/Rewards/Rewards';
 import SinglePost from '../screens/SinglePost';
+import ProfilePictureCrop from '../screens/EditProfile/ProfilePictureCrop';
+
 
 
 
@@ -103,6 +105,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="EarnDocCoins" component={EarnDocCoins} options={showHeaderItem} />
         <Stack.Screen name="Rewards" component={Rewards} options={showHeaderItem} />
         <Stack.Screen name="SinglePost" component={SinglePost} options={showHeaderItem}/>
+        <Stack.Screen name="ProfilePictureCrop" component={ProfilePictureCrop} options={showHeaderItem}/>
         {/* <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={showHeaderItem}/> 

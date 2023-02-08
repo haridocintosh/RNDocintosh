@@ -146,7 +146,6 @@ export const loginAuth = createSlice({
             state.error = false
         })
 
-
         //-------------------------userRegisterOne-----------------------------
         builder.addCase(userRegisterOne.pending, (state) => {
             state.loading       =  true;

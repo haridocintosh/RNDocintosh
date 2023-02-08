@@ -100,7 +100,7 @@ android {
         applicationId "com.docintosh.tech"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 3
         versionName "3.0"
     }
 
@@ -114,10 +114,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('comdocintech.keystore')
+            storePassword 'asdasd'
+            keyAlias 'comdocintech'
+            keyPassword 'asdasd'
         }
     }
     buildTypes {

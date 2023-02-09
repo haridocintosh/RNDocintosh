@@ -1,5 +1,5 @@
   import React,{useState,useEffect } from 'react';
-  import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, ImageBackground, Pressable,TouchableOpacity} from 'react-native';
+  import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity} from 'react-native';
   import { Card } from 'react-native-paper';
   import Feather from 'react-native-vector-icons/Feather';
   import Entypo from 'react-native-vector-icons/Entypo';
@@ -14,14 +14,14 @@
   import AwardsModal from './Modals/AwardsModal';
   import PublicationModal from './Modals/PublicationModal';
   import AchievementsModal from './Modals/AchievementsModal';
-import IntrestsModal from './Modals/IntrestsModal';
-import { SingleImage } from '../../navigation/ReuseLogics';
-import GetProfile from './Modals/GetProfile';
-
+  import IntrestsModal from './Modals/IntrestsModal';
+  import { SingleImage } from '../../navigation/ReuseLogics';
+  import GetProfile from './Modals/GetProfile';
+import { useDispatch } from 'react-redux';
   
 
-  const EditProfileScreen = ({navigation}) => {
-    const [userdata,setuserdata]=useState([])
+  const EditProfileScreen = ({route,navigation}) => {
+    const [userdata,setuserdata] = useState([]);
     const [locationModal, setLocationModal] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [emailid, setemailid] = useState(false);
@@ -33,6 +33,8 @@ import GetProfile from './Modals/GetProfile';
     const [achievement, setAchievement] = useState(false);
     const [Interests, setInterests] = useState(false);
     const [profile, setProfile] = useState(false);
+
+    const dispatch = useDispatch();
 
     const toggleModal = () => {
       setLocationModal(!locationModal);
@@ -71,24 +73,25 @@ import GetProfile from './Modals/GetProfile';
     const changeProfile = (arg) => {
       SingleImage(arg).then((res) => {
         setProfile(!profile)
-        console.log("res----------bb",res.assets[0]);
         navigation.navigate("ProfilePictureCrop",{pucUrl : res.assets[0]})
       })
     }
 
-    const isValidmobileNoRegex   = /^[0]?[789]\d{9}$/; 
+    const isValidmobileNoRegex = /^[0]?[789]\d{9}$/; 
     
-    const asyncFetchDailyData = async () => {
+    const asyncFetchDailyData = () => {
       navigation.setOptions({ title: 'Edit Profile'});
-      getLocalData('USER_INFO').then((res) => {
+      getLocalData('USER_INFO').then(async (res) => {
         const reData = res?.data;
         setuserdata(reData);
+        console.log(reData.id);
+        // const result = await dispatch(getAllCoins({user_id : reData.id}));
       });
     }
 
-      useEffect(()=>{
-        asyncFetchDailyData();
-      },[])
+    useEffect(()=>{
+      asyncFetchDailyData();
+    },[])
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
@@ -98,12 +101,14 @@ import GetProfile from './Modals/GetProfile';
           <MobileNumberModal mobileNumber={mobileNumber} setMobileNumber={setMobileNumber}/>
           <EmailModal emailid={emailid} setemailid={setemailid}/>
           <Card style={styles.CartContainer}>
+
             <View style={styles.ProfileImageContainer}>
               <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/>
               <TouchableOpacity onPress={() => handleProfile()} style={styles.profileEditBtnTouch}>
                 <Entypo name="edit" size={20} color="black"  style={styles.profileEditBtn}  />
               </TouchableOpacity>
             </View>
+
             <View>
                 <Text style={styles.userName}>
                   {userdata.first_name} {userdata.last_name} 
@@ -114,8 +119,8 @@ import GetProfile from './Modals/GetProfile';
                     {userdata?.speciality} | {userdata?.city}
                   </Text>
                   <TouchableOpacity onPress={toggleModal}>
-                      <Entypo name="edit" size={23} color="black"  style={{marginLeft:10,color:'#2C8892'}}  />
-                    </TouchableOpacity>
+                    <Entypo name="edit" size={23} color="black"  style={{marginLeft:10,color:'#2C8892'}}  />
+                  </TouchableOpacity>
                 </View>
             </View>
 

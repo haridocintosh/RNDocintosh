@@ -14,6 +14,9 @@ const MobileNumberModal = ({mobileNumber,setMobileNumber}) => {
         visible={mobileNumber}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
+                <Pressable style={styles.closebtn} onPress={() => setMobileNumber(!mobileNumber)}>
+                    <AntDesign name="close" size={20} color="#51668A" />
+                </Pressable>
                 <View style={styles.modalBtnContainer}>
                     <Button title="Verify" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
                         titleStyle={{ color:'#fff', textAlign:"center"}}

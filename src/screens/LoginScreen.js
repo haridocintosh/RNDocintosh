@@ -142,14 +142,11 @@ const LoginScreen = () => {
   return (
     <SafeAreaView style={{paddingHorizontal:30}}>
       <View style={{marginTop:40}}>
-        <Text  style={styles.headingtexts}>
-          Welcome
-        </Text>
+        <Text  style={styles.headingtexts}>Welcome</Text>
         <Text  style={styles.headingtext}>
          {data?((data.data.role<='4')?'Dr. ':''):''}{data?data.data.first_name+' '+data.data.last_name:''}
         </Text>
-        <Text style={styles.headingpara}>Log in to your own personal space in one of the fastest growing professional network for doctors. 
-        </Text>
+        <Text style={styles.headingpara}>Log in to your own personal space in one of the fastest growing professional network for doctors.</Text>
     
       <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
           autoCapitalize="none"
@@ -181,7 +178,6 @@ const LoginScreen = () => {
       <View style={{justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
 
       <View style={styles.section}>
-       
         <CheckBox
           onClick={() => toggleRememberMe()}
           isChecked={isChecked}
@@ -239,9 +235,9 @@ checkbox: {
   color:'blue',
 },
 headingtexts:{
-fontSize:16,
-fontFamily:"PlusJakartaSans-Bold",
-
+  fontSize:16,
+  fontFamily:"PlusJakartaSans-Bold",
+  color: '#071B36',
 },
 headingtext:{
   fontSize: 20,
@@ -285,7 +281,7 @@ ragistertext2:{
   color:'#51668A',
   fontFamily:"Inter-Regular"
 },
-section:{flexDirection:'row',justifyContent:'center',},
+section:{flexDirection:'row',justifyContent:'center',alignItems:'center'},
 });
 
 export default LoginScreen;

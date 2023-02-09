@@ -142,10 +142,16 @@ const stateCouncil= (e) =>{
 }
 
 const setPassword= (e) =>{
-  setregister({ ...register,
-    password: e,
-  });
-  setPasswordErr('');
+  const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  const password = e;
+  if(!isValidnameRegex.test(password)){
+    setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
+  }else{
+    setPasswordErr('');
+    setregister({...register,
+      password: password,
+    });
+  }
 }
 
 const showcong = ()=>{
@@ -224,6 +230,7 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
+    console.log('sdfdnj',register);
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
       if(ref.current){
@@ -244,19 +251,19 @@ useEffect(()=>{
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
-    }else if(!register.password){
-      setPasswordErr("Please enter your password");
     }
-    
-    // else if(!register.profile_pic){
-    //   setprofilErr("Please upload your profile photo");
-    //   if (ref.current) {
-    //     ref.current.scrollTo({ y: 0, animated: true })
-    //   }
-    // }
-    // else if(!register.mrnproof){
-    //   setmrnproofErr("Please upload MRN document");
-    // }
+    else if(!register.password){
+      setPasswordErr("Please enter Valid password");
+    }
+    else if(!register.profile_pic){
+      setprofilErr("Please upload your profile photo");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
+    }
+    else if(!register.mrnproof){
+      setmrnproofErr("Please upload MRN document");
+    }
     else{
       setsubmitbtn(true);
       setloader(true);

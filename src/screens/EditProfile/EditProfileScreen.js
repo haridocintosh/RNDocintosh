@@ -18,6 +18,8 @@
   import { SingleImage } from '../../navigation/ReuseLogics';
   import GetProfile from './Modals/GetProfile';
 import { useDispatch } from 'react-redux';
+import { getSelectedInterest } from '../../../redux/reducers/postData';
+
   
 
   const EditProfileScreen = ({route,navigation}) => {
@@ -33,6 +35,9 @@ import { useDispatch } from 'react-redux';
     const [achievement, setAchievement] = useState(false);
     const [Interests, setInterests] = useState(false);
     const [profile, setProfile] = useState(false);
+    const [interestsData, setInterestsData] = useState(null);
+    const [allInterestsData, setAllInterestsData] = useState(null);
+
 
     const dispatch = useDispatch();
 
@@ -85,7 +90,11 @@ import { useDispatch } from 'react-redux';
         const reData = res?.data;
         setuserdata(reData);
         console.log(reData.id);
-        // const result = await dispatch(getAllCoins({user_id : reData.id}));
+        const result = await dispatch(getSelectedInterest({user_id : reData.id}));
+        setAllInterestsData(result?.payload)
+        const TrueData = result.payload.filter(data => data.isSelected == true)
+        console.log("result",TrueData);
+        setInterestsData(TrueData)
       });
     }
 
@@ -96,6 +105,7 @@ import { useDispatch } from 'react-redux';
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
         <View style={{padding:10}}>
+
           <GetProfile profile={profile} setProfile={setProfile} changeProfile={changeProfile}/>
           <LocationModal locationModal={locationModal} setLocationModal={setLocationModal}/>
           <MobileNumberModal mobileNumber={mobileNumber} setMobileNumber={setMobileNumber}/>
@@ -280,28 +290,20 @@ import { useDispatch } from 'react-redux';
             </View>
           </Card>
           
-          <IntrestsModal setInterests={setInterests} Interests={Interests}/>
+          <IntrestsModal setInterests={setInterests} Interests={Interests} allInterestsData={allInterestsData}/>
           <Card style={styles.CartContainer}>
             <View style={styles.InterestsContainer}>
               <Text style={styles.userInfoTitle}>Interests</Text>
               <Entypo name="edit" size={23} color="#2C8892" onPress={InterestsModal} />
             </View>
             <View style={styles.InterestsList}>
-              <View style={styles.InterestsSelected}>
-                <Text>Family Medicine</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>Radiology</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>General Surgery</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>Gastroenterology</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>Obstetrics and gynaecology</Text>
-              </View>
+              {interestsData?.map((data) => {
+                return(
+                  <View style={styles.InterestsSelected}>
+                    <Text>{data.speciality}</Text>
+                  </View>
+                )
+              })}
             </View>
           </Card>
         </View>

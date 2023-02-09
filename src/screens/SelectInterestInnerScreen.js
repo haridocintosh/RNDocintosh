@@ -9,11 +9,8 @@ import {  View,
   import { useDispatch } from "react-redux";
   import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
   import Toast from 'react-native-simple-toast';
-  import { getMycircle } from '../../redux/reducers/postData';
+  import { getSelectedInterest } from '../../redux/reducers/postData';
   import { getLocalData } from '../apis/GetLocalData';
-  
-
-
   
   const SelectInterestInnerScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -28,11 +25,8 @@ import {  View,
   
     const getItem = (item) => {
       let spl  = item.speciality_id;
-      console.log('111111111,',spl);
       let copy=[...selectitem];
-      console.log('22222222222,',copy);
-      copy =[...copy,spl]
-      console.log('333333333',copy);
+      copy = [...copy,spl]
      setselectitem(copy)
     const newItem = filteredDataSource.map((val)=>{
       if(val.speciality_id===item.speciality_id){
@@ -45,7 +39,7 @@ import {  View,
   
     var array = [...selectitem]; // make a separate copy of the array
     var index = array.indexOf(spl)
-    console.log('index', index);
+    // console.log('index', index);
       if(index !== -1) {
         array.splice(index, 1);
         setselectitem(array);
@@ -56,23 +50,20 @@ import {  View,
     const fetchPostData = async (speciality_id)=>{
       const postDetails = {speciality_id:speciality_id,id:userId}
       const result = await dispatch(addCircle(postDetails));
-      // console.log(result);
+       console.log(result);
    }
   
-   const getInterestSplData = async () => {
+   const getInterestSplData = async (id) => {
+    const postDetails = {user_id : id}
     // const postDetails = {speciality_id:specialityId}
-    const result = await dispatch(getInterestSpl());
+    const result = await dispatch(getSelectedInterest(postDetails));
+    //console.log('checkresult',result?.payload);
     setFilteredDataSource(result?.payload);
     setMasterDataSource(result?.payload);
     setLoader(false)
    }
 
-   const fetchSpecialities = async (id)=>{
-    const postDetails = {user_id : id}
-    const result = await dispatch(getMycircle(postDetails));
-    console.log("getSpecialityList", result.payload);
-    setgetspclist(result.payload);
-   }
+  
   
     useEffect(() => {
       getInterestSplData()
@@ -80,7 +71,7 @@ import {  View,
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
         setuserId(reData?.id)
-        fetchSpecialities(reData?.id);
+        getInterestSplData(reData?.id);
       });
     }, []);
 
@@ -110,10 +101,10 @@ import {  View,
     const ItemView = ({ item }) => {
       return (
       <View style={styles.item}>
-        <Text style={[styles.itemStyle, item.isSelected ? { borderColor:"#E6E6E6", backgroundColor:"transparent",color:"#51668A"} : { borderColor:"#45B5C0", backgroundColor:"#F6FBFC", color:"#071B36"} ]} onPress={() => getItem(item)}> 
-          {'#'}{item.speciality }{ item.isSelected?"":"    "}
+        <Text style={[styles.itemStyle, !item.isSelected ? { borderColor:"#E6E6E6", backgroundColor:"transparent",color:"#51668A"} : { borderColor:"#45B5C0", backgroundColor:"#F6FBFC", color:"#071B36"} ]} onPress={() => getItem(item)}> 
+          {'#'}{item.speciality }{ !item.isSelected?"":"    "}
         </Text>
-        <Text style={{position:"absolute",top:11,right:4}}>{ item.isSelected ?'':<Ionicons style={{width:40, right:100,marginBottom:0}} name="close-circle" size={20} color="#45B5C0"/> } </Text>
+        <Text style={{position:"absolute",top:11,right:4}}>{ !item.isSelected ?'':<Ionicons style={{width:40, right:100,marginBottom:0}} name="close-circle" size={20} color="#45B5C0"/> } </Text>
       </View>
       );
     };
@@ -132,11 +123,11 @@ import {  View,
     };
   
     const handleSubmit = ()=>{
-      if(selectitem == ''){
-        Toast.show('Please Select Your Interest',Toast.LONG);
-      }else{
-        navigation.navigate('SelectInterestInnerScreen'); 
-      }
+      // if(selectitem == ''){
+      //   Toast.show('Please Select Your Interest',Toast.LONG);
+      // }else{ 
+      //}
+      navigation.navigate('SelectInterestInnerScreen'); 
     }
   
       if(loader){

@@ -36,10 +36,10 @@ export const PickImage = async (arg) => {
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                   const result = ImagePicker.launchCamera(options, (response) => {
-                        setloader(true);
+                      //  setloader(true);
                         if(response.didCancel) {
                               console.log('User cancelled image picker');
-                              setloader(false);
+                              //setloader(false);
                         } else if (response.error) {
                               return response.error;
                         } else if (response.customButton) {
@@ -66,10 +66,10 @@ export const PickImage = async (arg) => {
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                   const result = ImagePicker.launchImageLibrary(options, (response) => {
-                        setloader(true);
+                       // setloader(true);
                         if(response.didCancel) {
                               console.log('User cancelled image picker');
-                              setloader(false)
+                         //     setloader(false)
                         } else if (response.error) {
                               return response.error;
                         } else if (response.customButton) {

@@ -41,8 +41,8 @@ const navigation  = useNavigation();
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
-        setDefaultRoute("Intro");
-       // setDefaultRoute("RegisterTwoScreen");
+       setDefaultRoute("Intro");
+        //setDefaultRoute("RegisterStudentScreen");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

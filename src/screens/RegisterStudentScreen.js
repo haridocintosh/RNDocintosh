@@ -41,8 +41,9 @@ const [profilErr,setprofilErr] = useState();
 const [mrnproofErr,setmrnproofErr] = useState();
 const [passworderr,setPasswordErr] = useState();  
 const [showeye, setshoweye] = useState(true);
-// const fullname="gagan";
-const {user_id, fullname, role} = route.params;
+const fullname="gagan";
+
+//const {user_id, fullname, role} = route.params;
 const [register , setregister] = useState({
   pincode : "",
   university:"",
@@ -86,11 +87,18 @@ setregister({ ...register,
 }
 
 const setPassword= (e) =>{
-  setregister({ ...register,
-    password: e,
-  });
-  setPasswordErr('');
+  const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  const password = e;
+  if(!isValidnameRegex.test(password)){
+    setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
+  }else{
+    setPasswordErr('');
+    setregister({...register,
+      password: password,
+    });
+  }
 }
+
 
 useEffect(()=>{
   async function fetchUniversity(){
@@ -198,7 +206,7 @@ const form_submit = async() =>{
   }else if(!register.mrnproof){
     setmrnproofErr("Please Upload CollegeId/Library Card");
   }else{
-    setsubmitbtn(true);
+    // setsubmitbtn(true);
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
     setloader(false);

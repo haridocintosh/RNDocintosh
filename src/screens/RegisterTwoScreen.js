@@ -101,8 +101,6 @@ const dispatch    = useDispatch();
     password:"",
     profile_pic:"",
     mrnproof:"",
-    // role:4,
-    // user_id:23334,
     role:role,
     user_id:user_id
   });
@@ -265,7 +263,7 @@ useEffect(()=>{
       setmrnproofErr("Please upload MRN document");
     }
     else{
-      setsubmitbtn(true);
+      // setsubmitbtn(true);
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
       Toast.show(result.payload.message,Toast.LONG);

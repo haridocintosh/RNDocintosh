@@ -1,5 +1,5 @@
   import React,{useState,useEffect } from 'react';
-  import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, ImageBackground, Pressable,TouchableOpacity} from 'react-native';
+  import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity} from 'react-native';
   import { Card } from 'react-native-paper';
   import Feather from 'react-native-vector-icons/Feather';
   import Entypo from 'react-native-vector-icons/Entypo';
@@ -14,14 +14,16 @@
   import AwardsModal from './Modals/AwardsModal';
   import PublicationModal from './Modals/PublicationModal';
   import AchievementsModal from './Modals/AchievementsModal';
-import IntrestsModal from './Modals/IntrestsModal';
-import { SingleImage } from '../../navigation/ReuseLogics';
-import GetProfile from './Modals/GetProfile';
+  import IntrestsModal from './Modals/IntrestsModal';
+  import { SingleImage } from '../../navigation/ReuseLogics';
+  import GetProfile from './Modals/GetProfile';
+import { useDispatch } from 'react-redux';
+import { getSelectedInterest } from '../../../redux/reducers/postData';
 
   
 
-  const EditProfileScreen = ({navigation}) => {
-    const [userdata,setuserdata]=useState([])
+  const EditProfileScreen = ({route,navigation}) => {
+    const [userdata,setuserdata] = useState([]);
     const [locationModal, setLocationModal] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [emailid, setemailid] = useState(false);
@@ -33,6 +35,11 @@ import GetProfile from './Modals/GetProfile';
     const [achievement, setAchievement] = useState(false);
     const [Interests, setInterests] = useState(false);
     const [profile, setProfile] = useState(false);
+    const [interestsData, setInterestsData] = useState(null);
+    const [allInterestsData, setAllInterestsData] = useState(null);
+
+
+    const dispatch = useDispatch();
 
     const toggleModal = () => {
       setLocationModal(!locationModal);
@@ -71,39 +78,47 @@ import GetProfile from './Modals/GetProfile';
     const changeProfile = (arg) => {
       SingleImage(arg).then((res) => {
         setProfile(!profile)
-        console.log("res----------bb",res.assets[0]);
         navigation.navigate("ProfilePictureCrop",{pucUrl : res.assets[0]})
       })
     }
 
-    const isValidmobileNoRegex   = /^[0]?[789]\d{9}$/; 
+    const isValidmobileNoRegex = /^[0]?[789]\d{9}$/; 
     
-    const asyncFetchDailyData = async () => {
+    const asyncFetchDailyData = () => {
       navigation.setOptions({ title: 'Edit Profile'});
-      getLocalData('USER_INFO').then((res) => {
+      getLocalData('USER_INFO').then(async (res) => {
         const reData = res?.data;
         setuserdata(reData);
+        console.log(reData.id);
+        const result = await dispatch(getSelectedInterest({user_id : reData.id}));
+        setAllInterestsData(result?.payload)
+        const TrueData = result.payload.filter(data => data.isSelected == true)
+        console.log("result",TrueData);
+        setInterestsData(TrueData)
       });
     }
 
-      useEffect(()=>{
-        asyncFetchDailyData();
-      },[])
+    useEffect(()=>{
+      asyncFetchDailyData();
+    },[])
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
         <View style={{padding:10}}>
+
           <GetProfile profile={profile} setProfile={setProfile} changeProfile={changeProfile}/>
           <LocationModal locationModal={locationModal} setLocationModal={setLocationModal}/>
           <MobileNumberModal mobileNumber={mobileNumber} setMobileNumber={setMobileNumber}/>
           <EmailModal emailid={emailid} setemailid={setemailid}/>
           <Card style={styles.CartContainer}>
+
             <View style={styles.ProfileImageContainer}>
               <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/>
               <TouchableOpacity onPress={() => handleProfile()} style={styles.profileEditBtnTouch}>
                 <Entypo name="edit" size={20} color="black"  style={styles.profileEditBtn}  />
               </TouchableOpacity>
             </View>
+
             <View>
                 <Text style={styles.userName}>
                   {userdata.first_name} {userdata.last_name} 
@@ -114,8 +129,8 @@ import GetProfile from './Modals/GetProfile';
                     {userdata?.speciality} | {userdata?.city}
                   </Text>
                   <TouchableOpacity onPress={toggleModal}>
-                      <Entypo name="edit" size={23} color="black"  style={{marginLeft:10,color:'#2C8892'}}  />
-                    </TouchableOpacity>
+                    <Entypo name="edit" size={23} color="black"  style={{marginLeft:10,color:'#2C8892'}}  />
+                  </TouchableOpacity>
                 </View>
             </View>
 
@@ -275,28 +290,20 @@ import GetProfile from './Modals/GetProfile';
             </View>
           </Card>
           
-          <IntrestsModal setInterests={setInterests} Interests={Interests}/>
+          <IntrestsModal setInterests={setInterests} Interests={Interests} allInterestsData={allInterestsData}/>
           <Card style={styles.CartContainer}>
             <View style={styles.InterestsContainer}>
               <Text style={styles.userInfoTitle}>Interests</Text>
               <Entypo name="edit" size={23} color="#2C8892" onPress={InterestsModal} />
             </View>
             <View style={styles.InterestsList}>
-              <View style={styles.InterestsSelected}>
-                <Text>Family Medicine</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>Radiology</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>General Surgery</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>Gastroenterology</Text>
-              </View>
-              <View style={styles.InterestsSelected}>
-                <Text>Obstetrics and gynaecology</Text>
-              </View>
+              {interestsData?.map((data) => {
+                return(
+                  <View style={styles.InterestsSelected}>
+                    <Text>{data.speciality}</Text>
+                  </View>
+                )
+              })}
             </View>
           </Card>
         </View>

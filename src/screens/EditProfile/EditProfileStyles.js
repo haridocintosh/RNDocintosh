@@ -136,5 +136,7 @@ export const styles = StyleSheet.create({
     showMoreContainer:{justifyContent:'center',alignItems:'center',flexDirection:'row',paddingVertical:12},
     InterestsContainer:{flexDirection:'row',justifyContent:'space-between',marginBottom:15},
     InterestsList:{flexDirection:'row',flexWrap:'wrap'},
-    InterestsSelected:{borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5},
+    InterestsSelected:{backgroundColor : 'rgba(69, 181, 192, 0.05)',borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
+    InterestsNotSelected:{borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
+    selectedIcons:{marginLeft:10},
 });

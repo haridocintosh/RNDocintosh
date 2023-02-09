@@ -73,7 +73,7 @@ const HomeScreen = ({navigation,route})=> {
   });
   const scoresPosition = scrollPosition.interpolate({
     inputRange: [0, 500],
-    outputRange: [(10 * Dimensions.get('window').height) / 100, 15],
+    outputRange: [(8 * Dimensions.get('window').height) / 100, 15],
     extrapolateLeft: 'identity',
     extrapolateRight: 'clamp',
   });
@@ -86,7 +86,7 @@ const handleOption = (post_id) => {
   }
   setModalVisible(true);
 }
-  const getStorageData =  () => {
+  const getStorageData = () => {
     getLocalData('USER_INFO').then(async (res) =>{
       const allCoins = {user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));

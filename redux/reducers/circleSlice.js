@@ -62,9 +62,7 @@ export const circleSlice = createSlice({
         loading : false,
         error :false,
     },
-    reducers : {
-
-    },
+    reducers : { },
     extraReducers :builder => {
 //---------------------------------getInterestSpl-----------------------------
       builder.addCase(getInterestSpl.pending, (state) => {

@@ -1,5 +1,5 @@
   import React,{useState,useEffect } from 'react';
-  import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity} from 'react-native';
+  import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity,ActivityIndicator} from 'react-native';
   import { Card } from 'react-native-paper';
   import Feather from 'react-native-vector-icons/Feather';
   import Entypo from 'react-native-vector-icons/Entypo';
@@ -17,8 +17,8 @@
   import IntrestsModal from './Modals/IntrestsModal';
   import { SingleImage } from '../../navigation/ReuseLogics';
   import GetProfile from './Modals/GetProfile';
-import { useDispatch } from 'react-redux';
-import { getSelectedInterest } from '../../../redux/reducers/postData';
+  import { useDispatch } from 'react-redux';
+  import { getSelectedInterest } from '../../../redux/reducers/postData';
 
   
 
@@ -37,6 +37,7 @@ import { getSelectedInterest } from '../../../redux/reducers/postData';
     const [profile, setProfile] = useState(false);
     const [interestsData, setInterestsData] = useState(null);
     const [allInterestsData, setAllInterestsData] = useState(null);
+    const [loader, setLoader] = useState(false);
 
 
     const dispatch = useDispatch();
@@ -87,14 +88,14 @@ import { getSelectedInterest } from '../../../redux/reducers/postData';
     const asyncFetchDailyData = () => {
       navigation.setOptions({ title: 'Edit Profile'});
       getLocalData('USER_INFO').then(async (res) => {
+        setLoader(true);
         const reData = res?.data;
         setuserdata(reData);
-        console.log(reData.id);
         const result = await dispatch(getSelectedInterest({user_id : reData.id}));
         setAllInterestsData(result?.payload)
         const TrueData = result.payload.filter(data => data.isSelected == true)
-        console.log("result",TrueData);
-        setInterestsData(TrueData)
+        setInterestsData(TrueData);
+        setLoader(false);
       });
     }
 
@@ -297,6 +298,9 @@ import { getSelectedInterest } from '../../../redux/reducers/postData';
               <Entypo name="edit" size={23} color="#2C8892" onPress={InterestsModal} />
             </View>
             <View style={styles.InterestsList}>
+              {loader &&<View style={styles.loaderContainer}>
+                 <ActivityIndicator size={'small'}/>
+              </View>}
               {interestsData?.map((data) => {
                 return(
                   <View style={styles.InterestsSelected}>

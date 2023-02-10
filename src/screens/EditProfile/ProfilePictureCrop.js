@@ -13,7 +13,7 @@ const ProfilePictureCrop = ({route}) => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        navigation.setOptions({ title: 'Preview Profile Picture' });
+        navigation.setOptions({ title:'Preview Profile Picture'});
     },[])
 
     const uri = pucUrl.uri;

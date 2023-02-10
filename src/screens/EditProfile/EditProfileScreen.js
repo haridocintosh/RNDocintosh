@@ -38,8 +38,7 @@
     const [interestsData, setInterestsData] = useState(null);
     const [allInterestsData, setAllInterestsData] = useState(null);
     const [loader, setLoader] = useState(false);
-
-
+    
     const dispatch = useDispatch();
 
     const toggleModal = () => {
@@ -181,10 +180,12 @@
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>Work Experience</Text>
-                <Text style={styles.AddInfo}>
-                  <Entypo name="plus" size={15} color="#2376E5" /> 
-                  Add Work Experience
-                </Text>
+                <TouchableOpacity onPress={WorkExpModal}>
+                  <Text style={styles.AddInfo}>
+                    <Entypo name="plus" size={15} color="#2376E5" /> 
+                    Add Work Experience
+                  </Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.AddedDetails}>
                 <View style={{flexDirection:'row'}}>

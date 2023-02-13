@@ -20,7 +20,7 @@ const AboutMeModal = ({aboutMe,setaboutMe}) => {
                 <Text style={styles.modalText}>Edit About Me</Text>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>About Me*</Text>
-                    <TextInput autoCapitalize="none" placeholder="write about you..."/>
+                    <TextInput multiline autoCapitalize="none" placeholder="write about you..."/>
                 </View>
                 <View style={styles.modalBtnContainer}>
                     <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}

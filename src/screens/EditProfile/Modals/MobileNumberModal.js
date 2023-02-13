@@ -1,21 +1,40 @@
 import React,{useState, useEffect} from 'react';
-import { View, Text ,Image,Pressable,TouchableOpacity} from 'react-native';
+import { View, Text ,Image,Pressable,TextInput} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
-import OTPTextView from 'react-native-otp-textinput';
+import MobileVerify from './MobileVerify';
+import {useForm, Controller} from 'react-hook-form'
+import { useNavigation } from '@react-navigation/native';
+useNavigation
+
+
 
 const MobileNumberModal = ({mobileNumber,setMobileNumber}) => {
-  const [editNum, setEditNum] = useState(false);
-  const setotpInput = (text) => {
-    console.log("text",text);
+const [numVerify,setNumVerify] = useState(false);
+const [mobNumber,setMobNumber] = useState(null);
+
+const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
+const navigation = useNavigation();
+
+const handleVerify = () => {
+  setNumVerify(true);
+  setMobileNumber(false)
+}
+const onSubmit = (data) => {
+  console.log('data',data);
+  if(data.phone_no != ""){
+    setNumVerify(true);
+    setMobileNumber(false);
+    setMobNumber(data.phone_no)
   }
-  const handleEdit = () => {
-    setEditNum(!editNum)
-  }
+}
+
   return (
+    <>
+    <MobileVerify numVerify={numVerify} setNumVerify={setNumVerify} mobNumber={mobNumber}/>
     <Modal
         style={{}}
         animationType="slide"
@@ -27,34 +46,37 @@ const MobileNumberModal = ({mobileNumber,setMobileNumber}) => {
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
                 <View style={styles.ModalBody}>
-                  <Image source={require('../../../assets/images/Phone_Verification.png')} style={{width:95,height:95}}/>
-                  <Text style={styles.OTPtext}>Please enter OTP sent</Text>
-                  <View style={styles.NumberEditBox}>
-                    <Text style={styles.NumberText}>+91 9842839100</Text>
-                    <TouchableOpacity onPress={() => handleEdit()}>
-                      <Entypo name="edit" size={23} color="#2C8892" style={styles.NumberEditIcon}/>
-                    </TouchableOpacity>
-                  </View>
-                  <OTPTextView 
-                    handleTextChange={(text) => setotpInput(text)}
-                    containerStyle={styles.textInputContainer}
-                    textInputStyle={styles.roundedTextInput}
-                    inputCount={4}
-                    tintColor="#51668A"
-                  />
-                  <View style={styles.NumberEditBox}>
-                    <Text style={styles.resendOtp}>Didn’t Receive OTP?</Text>
-                    <Text style={styles.resendOtpSec}>Resend in 15s</Text>
-                  </View>
+                  <Text style={styles.modalText}>Edit Mobile Number</Text>
+                <View style={styles.input}>
+                    <Text style={styles.modalSubText}>Mobile Number*</Text>
+                    <Controller
+                        control={control}        
+                        name="phone_no"      
+                        rules={{
+                        required: true,
+                        }}  
+                        render={({field: {onChange, value, onBlur}}) => (
+                        <TextInput
+                            value={value}            
+                            onBlur={onBlur}            
+                            onChangeText={value => onChange(value)} 
+                            placeholder = "Mobile"
+                            keyboardType = 'number-pad'
+                        />
+                        )}  
+                    />
+                </View>
+                  {errors.phone_no && <Text style={styles.errorMsg}>Phone number is required!</Text>}
                 </View>
                 <View style={styles.modalBtnContainer}>
-                    <Button title="Verify" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
+                    <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
                         titleStyle={{ color:'#fff', textAlign:"center"}}
-                        onPress={() => setLocationModal(false)}/>
+                        onPress={handleSubmit(onSubmit)}/>
                 </View>
             </View>
         </View>
     </Modal>
+    </>
   )
 }
 

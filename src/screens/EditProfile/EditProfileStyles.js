@@ -35,9 +35,9 @@ export const styles = StyleSheet.create({
     input:{
         alignSelf:'center',
         borderBottomColor:'#071B36',
-        borderBottomWidth:0.5,
+        borderBottomWidth:0.7,
         width:'100%',
-        marginBottom:15
+        marginBottom:20
     },
     pickFrom:{
         flexDirection:'row',
@@ -83,8 +83,22 @@ export const styles = StyleSheet.create({
     NumberText:{
         color:'#071B36',
         fontFamily:"Inter-SemiBold",
-        marginTop:15,
         fontSize:16
+    },
+    numInput:{
+        fontSize:16,
+        color:"#071B36",
+        paddingLeft:10,
+        fontFamily:"Inter-SemiBold",
+    },
+    numInputEdit:{
+        fontSize:16,
+        color:"#071B36",
+        borderBottomWidth: 1,
+        borderColor:"#ccc",
+        paddingLeft:10,
+        fontFamily:"Inter-SemiBold",
+        minWidth:120
     },
     textInputContainer: {
         marginBottom: 20,
@@ -98,6 +112,8 @@ export const styles = StyleSheet.create({
     NumberEditBox:{
         flexDirection:'row',
         alignItems:'center',
+        justifyContent:'center',
+        marginTop:15,
     },
     NumberEditIcon:{
         marginTop:10,
@@ -140,6 +156,23 @@ export const styles = StyleSheet.create({
         color:'#071B36',
         fontFamily:"PlusJakartaSans-Regular"
     },
+    errorMsg:{
+        color:'#cc0000'
+    },
+    datePickerStyle:{
+        width:'100%'
+    },
+    workingToggle:{
+        flexDirection:'row',
+        justifyContent:'flex-start',
+        width:'100%',
+        alignItems:'center'
+    },
+    workingToggleText:{
+        fontSize:16,
+        color:'#071B36',
+        marginRight:10
+    },
     PicModalSubText: {
         fontSize:18,
         color:'#071B36',
@@ -151,7 +184,8 @@ export const styles = StyleSheet.create({
         width:72,
         height:72,
         alignSelf:'center',
-        marginVertical:20
+        marginVertical:20,
+        marginTop:25
     },
     profileimg:{
         borderColor:"#DCE0E8",

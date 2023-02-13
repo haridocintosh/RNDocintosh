@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
 export const profileSpeciality = createAsyncThunk("profile/speciality", async(data)=>{
-    console.log('paramter', data);
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/login`, {
             method : 'POST',
@@ -18,6 +17,20 @@ export const profileSpeciality = createAsyncThunk("profile/speciality", async(da
        console.log(e);
     }
 })
+export const addworkexperianceAPI = createAsyncThunk("addWorkexp", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/addworkexperiance`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
 
 export const profileSlice= createSlice({
     name : 'Profile',
@@ -26,6 +39,7 @@ export const profileSlice= createSlice({
         isLoggedIn  : false,
         error       : false,
         userInfo    : {},
+        workExp    : {},
         registerData: {},
         registerTwoData : {}
 
@@ -46,6 +60,20 @@ export const profileSlice= createSlice({
             state.userInfo      =  action.payload;
         })
         builder.addCase(userLogin.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+        builder.addCase(addworkexperianceAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(addworkexperianceAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.workExp      =  action.payload;
+        })
+        builder.addCase(addworkexperianceAPI.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

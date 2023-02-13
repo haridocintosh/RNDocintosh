@@ -21,7 +21,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
         setVerifying("Verifying...")
           if(otpInput !== ""){
         //   const result = await dispatch(forgotverifyOtp({otp:otpInput, user_id:user_id}));
-          // console.log('check Resulttttttttttt',result.payload);
+        //   console.log('check Resulttttttttttt',result.payload);
         //   if(result.payload.status == 'Success'){
         //     Toast.show(result.payload.message,Toast.LONG);
         //     navigation.navigate('CreateNewPass',{user_id})
@@ -38,7 +38,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
         setEditNumber(!editNumber)
     }
 
-    const resendUserOtp = async() =>{ 
+    const resendUserOtp = async() =>{
         // setLoader(true);
         setCounter(30)
         // const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));

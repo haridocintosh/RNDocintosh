@@ -164,7 +164,7 @@
    </View>
     <View >
    <View style={{paddingHorizontal:6}}>
-   <CustomButton label={verify}onPress={()=>submitOtp()} />
+   <CustomButton label={verify} onPress={()=>submitOtp()} />
    </View>
    </View>
    </ScrollView>

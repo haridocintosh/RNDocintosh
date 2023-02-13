@@ -70,6 +70,48 @@ export const styles = StyleSheet.create({
         elevation: 10,
         width:'100%',
     },
+    ModalBody:{
+        width:'100%',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    OTPtext:{
+        color:'#071B36',
+        fontFamily:"Inter-Regular",
+        marginTop:25,
+    },
+    NumberText:{
+        color:'#071B36',
+        fontFamily:"Inter-SemiBold",
+        marginTop:15,
+        fontSize:16
+    },
+    textInputContainer: {
+        marginBottom: 20,
+        width:'100%'
+    },
+    roundedTextInput:{
+        borderBottomWidth:2,
+        width:'20%'
+    },
+   
+    NumberEditBox:{
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    NumberEditIcon:{
+        marginTop:10,
+        marginLeft:5
+    },
+    resendOtp:{
+        color:'#687690',
+        fontFamily:"Inter-Regular",
+    },
+    resendOtpSec:{
+        color:'#2376E5',
+        fontFamily:"Inter-SemiBold",
+        marginLeft:5
+    },
     button: {
         borderRadius: 20,
         padding: 10,
@@ -139,4 +181,5 @@ export const styles = StyleSheet.create({
     InterestsSelected:{backgroundColor : 'rgba(69, 181, 192, 0.05)',borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
     InterestsNotSelected:{borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
     selectedIcons:{marginLeft:10},
+    loaderContainer:{flex:1,justifyContent:'center',alignItems:'center'},
 });

@@ -23,8 +23,8 @@ const ProfilePictureCrop = ({route}) => {
     const handleSave = async () =>{
       const cropped = await crop();
       // setSrc(cropped)
-      // console.log("cropped",cropped);
-      navigation.navigate("EditProfileScreen");
+      console.log("cropped",cropped);
+      // navigation.navigate("EditProfileScreen");
     }
 
   return (

@@ -1,11 +1,11 @@
 import React,{useState, useEffect} from 'react';
-import { View, Text ,ScrollView,Pressable,TouchableOpacity} from 'react-native';
+import { View, Text , ScrollView, Pressable, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
 
-const IntrestsModal = ({Interests,setInterests,allInterestsData}) => {
+const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
 
     const handleSelect = (id) => {
         console.log("id",id);

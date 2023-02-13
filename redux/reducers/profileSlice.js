@@ -31,6 +31,20 @@ export const addworkexperianceAPI = createAsyncThunk("addWorkexp", async(data)=>
        console.log(e);
     }
 })
+export const getWorkExpAPI = createAsyncThunk("getWorkExp", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/workexperiance`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
 
 export const profileSlice= createSlice({
     name : 'Profile',
@@ -74,6 +88,20 @@ export const profileSlice= createSlice({
             state.workExp      =  action.payload;
         })
         builder.addCase(addworkexperianceAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+        builder.addCase(getWorkExpAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getWorkExpAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.workExp      =  action.payload;
+        })
+        builder.addCase(getWorkExpAPI.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

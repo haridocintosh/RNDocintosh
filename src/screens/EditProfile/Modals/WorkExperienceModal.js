@@ -9,7 +9,7 @@ import {useForm, Controller} from 'react-hook-form'
 // import DatePicker from 'react-native-modern-datepicker';
 // import { TextInputMask } from 'react-native-masked-text';
 import { DatePickerInput } from 'react-native-paper-dates';
-import { compareAsc, format } from 'date-fns';
+import { format } from 'date-fns';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { addworkexperianceAPI } from '../../../../redux/reducers/profileSlice';
 import { useDispatch } from 'react-redux';
@@ -22,16 +22,17 @@ const WorkExperienceModal = ({workExp,setWorkExp}) => {
     const onSubmit = (data) => {
         getLocalData('USER_INFO').then(async (res) => {
             const reData = res?.data;
-            data.start_date = format(data?.start_date, 'yyyy-MM-dd');
-            data.end_date = format(data?.end_date, 'yyyy-MM-dd');
-            const mergeData = {...data, switch:isEnabled, user_id:reData?.id, workexp_id:null};
+            data.startdate = format(data?.startdate, 'yyyy-MM-dd');
+            isEnabled ? data.enddate = "" : data.enddate = format(data?.enddate, 'yyyy-MM-dd');
+            const mergeData = {...data, user_id:reData?.id, workexp_id:null};
             console.log("mergeData",mergeData);
-            // const allCoinsResult = await dispatch(addworkexperianceAPI(allCoins));
-            
-            // reset();
+            const allCoinsResult = await dispatch(addworkexperianceAPI(mergeData));
+            console.log("allCoinsResult",allCoinsResult);
+            reset();
         })
-        
     }
+
+   
 
   return (
     <Modal
@@ -68,7 +69,7 @@ const WorkExperienceModal = ({workExp,setWorkExp}) => {
                     <Text style={styles.modalSubText}>Hospital/Institution**</Text>
                     <Controller
                         control={control}        
-                        name="hspl_or_inst"      
+                        name="hospitalname"      
                         rules={{
                         required: true,
                         }}  
@@ -81,13 +82,13 @@ const WorkExperienceModal = ({workExp,setWorkExp}) => {
                         )}  
                     />
                 </View>
-                {errors.hspl_or_inst && <Text style={styles.errorMsg}>This field is required!</Text>}
+                {errors.hospitalname && <Text style={styles.errorMsg}>This field is required!</Text>}
                 
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Start Date*</Text>
                     <Controller
                         control={control}        
-                        name="start_date"      
+                        name="startdate"      
                         rules={{
                         required: true,
                         }}  
@@ -101,14 +102,14 @@ const WorkExperienceModal = ({workExp,setWorkExp}) => {
                         )}  
                     />
                 </View>
-                {errors.start_date && <Text style={styles.errorMsg}>This field is required!</Text>}
+                {errors.startdate && <Text style={styles.errorMsg}>This field is required!</Text>}
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>End Date*</Text>
                     <Controller
                         control={control}        
-                        name="end_date"      
+                        name="enddate"      
                         rules={{
-                        required: true,
+                          required: isEnabled ? false : true,
                         }}  
                         render={({field: {onChange, value, onBlur}}) => (
                         <DatePickerInput
@@ -116,11 +117,12 @@ const WorkExperienceModal = ({workExp,setWorkExp}) => {
                             value={value}
                             onChange={(d) => onChange(d)}
                             style={{backgroundColor:'#fff'}}
+                            disabled={isEnabled}
                         />
                         )}  
                     />
                 </View>
-                {errors.end_date && <Text style={styles.errorMsg}>This field is required!</Text>}
+                {errors.enddate && <Text style={styles.errorMsg}>This field is required!</Text>}
                 <View style={styles.workingToggle}>
                     <Text style={styles.workingToggleText}>Currently Working</Text>
                         <Switch
@@ -130,8 +132,6 @@ const WorkExperienceModal = ({workExp,setWorkExp}) => {
                             onValueChange={setIsEnabled}
                             value={isEnabled}
                         />
-                     
-                   
                 </View>
                 <View style={styles.modalBtnContainer}>
                     <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}

@@ -19,7 +19,8 @@
   import GetProfile from './Modals/GetProfile';
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
-
+  import { getWorkExpAPI } from '../../../redux/reducers/profileSlice';
+  import moment from "moment";
   
 
   const EditProfileScreen = ({route,navigation}) => {
@@ -37,6 +38,7 @@
     const [profile, setProfile] = useState(false);
     const [interestsData, setInterestsData] = useState(null);
     const [allInterestsData, setAllInterestsData] = useState(null);
+    const [workResult, setWorkResult] = useState(null);
     const [loader, setLoader] = useState(false);
     
     const dispatch = useDispatch();
@@ -91,9 +93,13 @@
         const reData = res?.data;
         setuserdata(reData);
         const result = await dispatch(getSelectedInterest({user_id : reData.id}));
+        
         setAllInterestsData(result?.payload)
         const TrueData = result.payload.filter(data => data.isSelected == true)
         setInterestsData(TrueData);
+        const getWorkResult = await dispatch(getWorkExpAPI({user_id : reData.id}));
+        console.log("getWorkResult",getWorkResult.payload);
+        setWorkResult(getWorkResult.payload)
         setLoader(false);
       });
     }
@@ -187,17 +193,27 @@
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.AddedDetails}>
-                <View style={{flexDirection:'row'}}>
-                  <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
-                  <View style={{paddingLeft:10}}>
-                    <Text style={styles.AddedDetailsTitle}>Senior Medical Officer</Text>
-                    <Text style={styles.AddedDetailsSubTitle}>Sai Hospital</Text>
-                    <Text style={styles.AddedDetailsDate}>Jul 2021 - Present</Text>
-                  </View>  
-                </View>
-                <Entypo name="edit" size={23} color="#2C8892"  onPress={WorkExpModal}/>    
-              </View>
+              {workResult?.map((data,i) => {
+                return (
+                  <View style={styles.AddedDetails} key={i}>
+                    <View style={{flexDirection:'row'}}>
+                      <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
+                      <View style={{paddingLeft:10}}>
+                        <Text style={styles.AddedDetailsTitle}>{data.designation}</Text>
+                        <Text style={styles.AddedDetailsSubTitle}>{data.hospital_id}</Text>
+                        <Text style={styles.AddedDetailsDate}>
+                          {moment(data.start_date).format("MMM YYYY")} - {
+                          data.end_date == "1970-01-01" ? "Present" : moment(data.end_date).format("MMM YYYY")}
+                        </Text>
+                      </View>  
+                    </View>
+                    <Entypo name="edit" size={23} color="#2C8892"  onPress={WorkExpModal}/>    
+                  </View>
+                )
+              })}
+
+              
+
           </Card>
           
           <QualificationModal qualification={qualification} setQualification={setQualification}/>

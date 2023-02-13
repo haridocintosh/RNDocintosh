@@ -93,10 +93,10 @@ const setPassword= (e) =>{
     setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
   }else{
     setPasswordErr('');
-    setregister({...register,
-      password: password,
-    });
   }
+  setregister({...register,
+    password: password,
+  });
 }
 
 
@@ -163,7 +163,7 @@ const pickupImage = (arg) => {
               body :formData
           });
           console.log('studentres',responce);
-        const result=  await responce.json();
+          const result=  await responce.json();
 
         if(fromWhere == 'document'){
           setregister({ ...register,
@@ -222,6 +222,14 @@ const form_submit = async() =>{
           },3000);
         }
       }
+      setregister({
+        pincode : "",
+        university:"",
+        college:"",
+        password:"",
+        profile_pic:"",
+        mrnproof:"",
+    })
       setloader(false);
     }
   }

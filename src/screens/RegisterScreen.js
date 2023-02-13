@@ -194,7 +194,7 @@ const form_submit = async() =>{
   }
 
   const handleStudentSubmit = async() =>{
-    console.log('uuid', register);
+    // console.log('uuid', register);
     if(!register.fname){
       fnerr("Please enter First Name");
       if (ref.current) {

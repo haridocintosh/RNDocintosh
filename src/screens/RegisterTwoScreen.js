@@ -146,10 +146,10 @@ const setPassword= (e) =>{
     setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
   }else{
     setPasswordErr('');
-    setregister({...register,
-      password: password,
-    });
   }
+  setregister({...register,
+    password: password,
+  });
 }
 
 const showcong = ()=>{
@@ -228,7 +228,8 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
-    console.log('sdfdnj',register);
+   console.log('sdfdnj',register);
+   console.log('sdfdnj',register);
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
       if(ref.current){
@@ -249,6 +250,9 @@ useEffect(()=>{
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
+    }
+    else if(passworderr == ''){
+      setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.");
     }
     else if(!register.password){
       setPasswordErr("Please enter Valid password");

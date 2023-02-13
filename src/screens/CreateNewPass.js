@@ -16,7 +16,7 @@ const CreateNewPass = ({route}) => {
  const [cpassword,setcpassword] = useState();
  const [cpassworderr,setcpassworderr] = useState();
  const [showeye, setshoweye]    = useState(true);
-// const {user_id} = route.params;
+ const {user_id} = route.params;
 
 
  const checkpassword= async(e)=>{
@@ -54,7 +54,7 @@ const checkConfirmpassword= async(e)=>{
       Toast.show("Please Check Both Password", Toast.LONG);
     }else{
       const token =await dispatch(setpassword({
-        id:230025,
+        id:user_id,
         pwd:password
     }));
       if(token?.payload?.status=="Success"){

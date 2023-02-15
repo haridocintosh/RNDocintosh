@@ -203,7 +203,7 @@ export const styles = StyleSheet.create({
     userInfoText:{color:'#071B36'},
     userInfoTitle:{fontSize:16,fontWeight:'600',color:"#071B36",fontFamily:"PlusJakartaSans-Bold"},
     AddInfo:{fontSize:16,marginVertical:20, color:'#2376E5',fontFamily:"Inter-Regular"},
-    AddedDetails:{flexDirection:'row',paddingHorizontal:20,justifyContent:'space-between'},
+    AddedDetails:{flexDirection:'row',padding:20,justifyContent:'space-between',borderColor:'#D5DEED'},
     AddedDetailsTitle:{fontSize:16,color:"#071B36",fontFamily:"PlusJakartaSans-Regular"},
     AddedDetailsDate:{fontSize:12,color:"#51668A",fontFamily:"Inter-Regular"},
     AddedDetailsSubTitle:{color:"#51668A",fontFamily:"Inter-Regular"},
@@ -216,4 +216,6 @@ export const styles = StyleSheet.create({
     InterestsNotSelected:{borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
     selectedIcons:{marginLeft:10},
     loaderContainer:{flex:1,justifyContent:'center',alignItems:'center'},
+    ShowAllContainer:{justifyContent:'center',alignItems:'center',padding:7,marginTop:5,flexDirection:'row'},
+    ShowAllText:{color:'#2376E5',fontSize:16,marginRight:5},
 });

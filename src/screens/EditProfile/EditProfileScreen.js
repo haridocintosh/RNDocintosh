@@ -3,6 +3,7 @@
   import { Card } from 'react-native-paper';
   import Feather from 'react-native-vector-icons/Feather';
   import Entypo from 'react-native-vector-icons/Entypo';
+  import AntDesign from 'react-native-vector-icons/AntDesign';
   import { getLocalData } from '../../apis/GetLocalData';
   import {styles} from './EditProfileStyles';
   import LocationModal from './Modals/LocationModal';
@@ -19,9 +20,10 @@
   import GetProfile from './Modals/GetProfile';
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
-
-import { useIsFocused } from '@react-navigation/native';
-
+  import { useIsFocused } from '@react-navigation/native';
+  import { getWorkExpAPI } from '../../../redux/reducers/profileSlice';
+  import moment from "moment";
+  import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   
 
   const EditProfileScreen = ({route,navigation}) => {
@@ -30,6 +32,8 @@ import { useIsFocused } from '@react-navigation/native';
     const [mobileNumber, setMobileNumber] = useState(false);
     const [emailid, setemailid] = useState(false);
     const [workExp, setWorkExp] = useState(false);
+    const [editWorkExp, setEditWorkExp] = useState(false);
+    const [passWorkExp, setPassWorkExp] = useState(false);
     const [aboutMe, setaboutMe] = useState(false);
     const [qualification, setQualification] = useState(false);
     const [awards, setAwards] = useState(false);
@@ -39,7 +43,9 @@ import { useIsFocused } from '@react-navigation/native';
     const [profile, setProfile] = useState(false);
     const [interestsData, setInterestsData] = useState(null);
     const [allInterestsData, setAllInterestsData] = useState(null);
+    const [workResult, setWorkResult] = useState(null);
     const [loader, setLoader] = useState(false);
+    const [workShowAll, setWorkShowAll] = useState(2);
     
     const dispatch = useDispatch();
 
@@ -54,6 +60,10 @@ import { useIsFocused } from '@react-navigation/native';
     };
     const WorkExpModal = () => {
       setWorkExp(!workExp);
+    };
+    const WorkExpEditModal = (data) => {
+      setPassWorkExp(data)
+      setEditWorkExp(!editWorkExp)
     };
     const aboutMeModal = () => {
       setaboutMe(!aboutMe);
@@ -87,7 +97,7 @@ import { useIsFocused } from '@react-navigation/native';
     const isValidmobileNoRegex = /^[0]?[789]\d{9}$/; 
     
     const asyncFetchDailyData = () => {
-      navigation.setOptions({ title: 'Edit Profile'});
+      navigation.setOptions({ title:'Edit Profile'});
       getLocalData('USER_INFO').then(async (res) => {
         setLoader(true);
         const reData = res?.data;
@@ -96,13 +106,28 @@ import { useIsFocused } from '@react-navigation/native';
         setAllInterestsData(result?.payload)
         const TrueData = result.payload.filter(data => data.isSelected == true)
         setInterestsData(TrueData);
+        handleWorkReload();
         setLoader(false);
       });
     }
 
+    const handleWorkReload = () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        const reData = res?.data;
+        const getWorkResult = await dispatch(getWorkExpAPI({user_id : reData.id}));
+        setWorkResult(getWorkResult.payload);
+      })
+    }
+
+    const handleWorkloadMore = () => {
+      setWorkShowAll()
+    }
+
     useEffect(()=>{
       asyncFetchDailyData();
+      handleWorkReload();
     },[])
+
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
@@ -178,28 +203,48 @@ import { useIsFocused } from '@react-navigation/native';
               <Text style={{paddingHorizontal:20,color:'#51668A',lineHeight:20,marginBottom:20}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquet cursus pellentesque. Mauris gravida libero nec sapien ultricies blandit. </Text>
           </Card>
 
-          <WorkExperienceModal workExp={workExp} setWorkExp={setWorkExp}/>
+          <WorkExperienceModal workExp={workExp} setWorkExp={setWorkExp} handleWorkReload={handleWorkReload}/>
+          <EditWorkExperienceModal 
+            editWorkExp={editWorkExp} 
+            setEditWorkExp={setEditWorkExp} 
+            passWorkExp={passWorkExp}
+            handleWorkReload={handleWorkReload}
+          />
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>Work Experience</Text>
-                <TouchableOpacity onPress={WorkExpModal}>
+                <TouchableOpacity onPress={() => WorkExpModal()}>
                   <Text style={styles.AddInfo}>
                     <Entypo name="plus" size={15} color="#2376E5" /> 
                     Add Work Experience
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.AddedDetails}>
-                <View style={{flexDirection:'row'}}>
-                  <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
-                  <View style={{paddingLeft:10}}>
-                    <Text style={styles.AddedDetailsTitle}>Senior Medical Officer</Text>
-                    <Text style={styles.AddedDetailsSubTitle}>Sai Hospital</Text>
-                    <Text style={styles.AddedDetailsDate}>Jul 2021 - Present</Text>
-                  </View>  
-                </View>
-                <Entypo name="edit" size={23} color="#2C8892"  onPress={WorkExpModal}/>    
-              </View>
+              {workResult?.slice(0, workShowAll).map((data,i) => {
+                return (
+                  <View style={[styles.AddedDetails,{borderBottomWidth: i == workResult?.length-1 ? 0 : 2}]} key={i}>
+                    <View style={{flexDirection:'row'}}>
+                      <Image source={require('../../assets/dr-icon/trofee.png')}/>
+                      <View style={{paddingLeft:10}}>
+                        <Text style={styles.AddedDetailsTitle}>{data.designation}</Text>
+                        <Text style={styles.AddedDetailsSubTitle}>{data.hospital_id}</Text>
+                        <Text style={styles.AddedDetailsDate}>
+                          {moment(data.start_date).format("MMM YYYY")} - {
+                          data.end_date == "1970-01-01" ? "Present" : moment(data.end_date).format("MMM YYYY")}
+                        </Text>
+                      </View>  
+                    </View>
+                    <TouchableOpacity onPress={() => WorkExpEditModal(data)}>
+                      <Entypo name="edit" size={23} color="#2C8892"  />
+                    </TouchableOpacity>
+                  </View>
+                )
+              })}
+              {workShowAll !== undefined &&
+              <TouchableOpacity style={styles.ShowAllContainer} onPress={() => handleWorkloadMore()}>
+                <Text style={styles.ShowAllText}>Show all {workResult?.length-2} experiences</Text>
+                <AntDesign name="arrowright" size={25} color="#2376E5"/>
+              </TouchableOpacity>}
           </Card>
           
           <QualificationModal qualification={qualification} setQualification={setQualification}/>
@@ -304,9 +349,9 @@ import { useIsFocused } from '@react-navigation/native';
               {loader &&<View style={styles.loaderContainer}>
                  <ActivityIndicator size={'small'}/>
               </View>}
-              {interestsData?.map((data) => {
+              {interestsData?.map((data,i) => {
                 return(
-                  <View style={styles.InterestsSelected}>
+                  <View style={styles.InterestsSelected} key={i}>
                     <Text>{data.speciality}</Text>
                   </View>
                 )

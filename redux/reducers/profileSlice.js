@@ -32,6 +32,40 @@ export const addworkexperianceAPI = createAsyncThunk("addWorkexp", async(data)=>
     }
 })
 
+export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/UpdateMobileNo`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+export const userInfo = createAsyncThunk("userInfo", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_profile`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+
+
 export const profileSlice= createSlice({
     name : 'Profile',
     initialState : {
@@ -39,9 +73,9 @@ export const profileSlice= createSlice({
         isLoggedIn  : false,
         error       : false,
         userInfo    : {},
-        workExp    : {},
-        registerData: {},
-        registerTwoData : {}
+        workExp     : {},
+        updateData  : {},
+        user_data   : {},
 
     },
     reducers : {
@@ -49,6 +83,22 @@ export const profileSlice= createSlice({
     },
 
     extraReducers : builder =>{
+        //-------------------------userInfo-----------------------------
+        builder.addCase(userInfo.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userInfo.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.user_data    =  action.payload;
+        })
+        builder.addCase(userInfo.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+
         //-------------------------userLogin-----------------------------
         builder.addCase(userLogin.pending, (state) => {
             state.loading       =  true;
@@ -64,7 +114,7 @@ export const profileSlice= createSlice({
             state.loading = false;
             state.error = false
         })
-
+    //===========================addworkexperianceAPI=============================
         builder.addCase(addworkexperianceAPI.pending, (state) => {
             state.loading       =  true;
         })
@@ -78,6 +128,23 @@ export const profileSlice= createSlice({
             state.loading = false;
             state.error = false
         })
+
+    //===========================updateMobileNumber=============================
+
+        builder.addCase(updateMobileNumber.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(updateMobileNumber.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.updateData    =  action.payload;
+        })
+        builder.addCase(updateMobileNumber.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
     }
 
 

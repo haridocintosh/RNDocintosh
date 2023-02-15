@@ -8,11 +8,14 @@ import {styles} from '../EditProfileStyles';
 import MobileVerify from './MobileVerify';
 import {useForm, Controller} from 'react-hook-form'
 import { useNavigation } from '@react-navigation/native';
-useNavigation
-
+import Toast from 'react-native-simple-toast';
+import { checkMobile } from '../../../../redux/reducers/loginAuth';
+import { useDispatch } from 'react-redux';
 
 
 const MobileNumberModal = ({mobileNumber,setMobileNumber}) => {
+const dispatch = useDispatch();
+  // console.log(mobileno);
 const [numVerify,setNumVerify] = useState(false);
 const [mobNumber,setMobNumber] = useState(null);
 
@@ -23,12 +26,19 @@ const handleVerify = () => {
   setNumVerify(true);
   setMobileNumber(false)
 }
-const onSubmit = (data) => {
-  console.log('data',data);
+const onSubmit = async(data) => {
+  console.log(data);
   if(data.phone_no != ""){
-    setNumVerify(true);
     setMobileNumber(false);
     setMobNumber(data.phone_no)
+    const result = await dispatch(checkMobile({mobile:data.phone_no}));
+   console.log(result.payload.status_code);
+    if(result.payload.status_code != "NE"){
+      Toast.show('This mobile no. is registered with us', Toast.LONG);
+    }else{
+      setNumVerify(true);
+
+    }  
   }
 }
 
@@ -62,6 +72,8 @@ const onSubmit = (data) => {
                             onChangeText={value => onChange(value)} 
                             placeholder = "Mobile"
                             keyboardType = 'number-pad'
+                            editable={true}
+                            maxLength={10}
                         />
                         )}  
                     />

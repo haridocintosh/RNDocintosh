@@ -20,6 +20,8 @@
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
 
+import { useIsFocused } from '@react-navigation/native';
+
   
 
   const EditProfileScreen = ({route,navigation}) => {

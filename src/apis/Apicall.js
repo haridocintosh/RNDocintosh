@@ -6,7 +6,8 @@ import axios  from 'axios';
 const storeData = async (key,value) => {
     try {
       const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem(key, jsonValue)
+      const result = await AsyncStorage.setItem(key, jsonValue);
+      console.log("result",result);
     } catch (e) {
       console.log(e);
     }

@@ -7,47 +7,102 @@ import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
 import OTPTextView from 'react-native-otp-textinput';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-simple-toast';
-
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { userIdupdate } from '../../../../redux/reducers/otpSlice';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { updateMobileNumber } from '../../../../redux/reducers/profileSlice';
+import { storeData } from '../../../apis/Apicall';
 
 const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
     const [editNumber , setEditNumber] = useState(false);
     const [counter, setCounter] = useState(30);
     const [otpInput, setotpInput ] = useState(null);
     const [phone ,setPhone] =useState("");
+    const [userId, setuserId] = useState();
+    const [alluser, setuser] = useState();
+    const [mobileNumb, setmobileNumb] = useState();
     const [verify, setVerifying] = useState('Verify');
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+
 
     const submitOtp = async() =>{
         setVerifying("Verifying...")
+        console.log(mobileNumb, otpInput, userId);
           if(otpInput !== ""){
-        //   const result = await dispatch(forgotverifyOtp({otp:otpInput, user_id:user_id}));
-        //   console.log('check Resulttttttttttt',result.payload);
-        //   if(result.payload.status == 'Success'){
-        //     Toast.show(result.payload.message,Toast.LONG);
-        //     navigation.navigate('CreateNewPass',{user_id})
-        //   } 
-        //     Toast.show(result.payload.message,Toast.LONG);
-        //   }else{
-        //     Toast.show('Please Enter OTP',Toast.LONG);
-        //   }
+          const result = await dispatch(updateMobileNumber({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
+          console.log('check Resulttttttttttt',result.payload);
+          if(result.payload.status == 'Success'){
+            Toast.show(result.payload.message,Toast.LONG);
+            navigation.navigate('EditProfileScreen');
+            setNumVerify(false);
+          } 
+            Toast.show(result.payload.message,Toast.LONG);
+          }else{
+            Toast.show('Please Enter OTP',Toast.LONG);
+          }
             setVerifying("Verify");
        };
-    }
+    
 
     const handleEdit = () => {
         setEditNumber(!editNumber)
     }
 
     const resendUserOtp = async() =>{
-        // setLoader(true);
+        setLoader(true);
         setCounter(30)
-        // const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-        // Toast.show(result.payload.message,Toast.LONG);
+        const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
+        Toast.show(result.payload.message,Toast.LONG);
      }
 
+    const handleSubmit = async ()=>{
+        console.log('checkphone',userId);
+        if(phone){
+          const token =await dispatch(userIdupdate({
+            email:phone,
+            id:userId
+          }))
+          
+          if(token?.payload?.status == 'Success'){
+            setmobileNumb(phone);
+            console.log('dsbjdsjj',phone);
+            // await storeData('USER_INFO',JSON.stringify({
+            //   login:true,
+            //   ...alluser,
+            //   mobilenumber:'9090909090'
+            // }));
+            // await storeData('USER_INFO.data.mobilenumber',9090909090);
+            Toast.show(token.payload.message, Toast.LONG);
+
+            // navigation.navigate('DoctorOtp',{
+            //   mobile_no: token.payload.userdetails,
+            //   email:email,
+            //   user_id : token.payload.userid,
+            //   role:role
+            // })
+          }
+          // Toast.show("Please Enter Mobile No. OR Email");
+        }else{
+          Toast.show("Please Enter Mobile No. OR Email",Toast.LONG);
+        }   
+    }
+
     useEffect(() => {
+     // console.log(mobNumber);
+        setmobileNumb(mobNumber);
+        getLocalData('USER_INFO').then((res) => {
+          const reData = res?.data;
+          setuser(reData)
+          setuserId(reData?.id)
+        });
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
         return () => clearInterval(timer);
+
+       
     }, [counter]);
   return (
     <Modal
@@ -69,8 +124,8 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
                         autoCapitalize="none"
                         value={editNumber ? phone: mobNumber}
                         onChangeText={e => setPhone(e)}
-                        // keyboardType="tel"
                         clearTextOnFocus={true}
+                        maxLength={10}
                     />
                     <TouchableOpacity onPress={() => handleEdit()}>
                     {editNumber ? 
@@ -79,6 +134,11 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
                        <Entypo name="edit" size={23} color="#2C8892" style={{margin:5}}/>
                     }
                     </TouchableOpacity>
+                    {editNumber &&
+                    <TouchableOpacity onPress={() => handleSubmit()}>
+                        <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+                    </TouchableOpacity>
+                    }
                 </View>
                 <OTPTextView 
                     handleTextChange={(text) => setotpInput(text)}

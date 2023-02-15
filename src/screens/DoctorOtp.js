@@ -23,28 +23,15 @@ import { View,
 
  
  const DoctorOtp = ({route}) => {
-   const dispatch = useDispatch(); 
-  //  console.log("routedata",route);
-  //  const mobile_no = '9029634011';
-  //  const email ='tara@docintosh.com';
-  //  const user_id = '228737';
-  //  const role = '4'
-  //  const speciality = '4'
-
-  const {mobile_no, email, user_id, role, speciality} = route.params;
-  // console.log("mobile_no",mobile_no);
-  // console.log("email",email);
-  // console.log("user_id",user_id);
-  // console.log("role",role);
-  // console.log("speciality",speciality);
-
-   const [phone ,setPhone] =useState("");
-   const navigation = useNavigation();
-   const [counter, setCounter] = useState(30);
-   const [otpInput, setotpInput ] = useState('');
-   const [message , setmessage] = useState();
-   const [loader, setLoader] = useState(false);
-   const [editNumber , setEditNumber] = useState(false);
+    const dispatch = useDispatch(); 
+    const {mobile_no, email, user_id, role, speciality} = route.params;
+    const [phone ,setPhone] = useState("");
+    const navigation = useNavigation();
+    const [counter, setCounter] = useState(30);
+    const [otpInput, setotpInput ] = useState('');
+    const [message , setmessage] = useState();
+    const [loader, setLoader] = useState(false);
+    const [editNumber , setEditNumber] = useState(false);
  
      const resendUserOtp = async() =>{ 
        setCounter(30);

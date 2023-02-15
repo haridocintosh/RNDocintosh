@@ -11,23 +11,23 @@ import { getLocalData } from '../../../apis/GetLocalData';
 import { addworkexperianceAPI } from '../../../../redux/reducers/profileSlice';
 import { useDispatch } from 'react-redux';
 
-const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
-    const [isEnabled, setIsEnabled] = useState(false);
+const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,passWorkExp}) => {
     
+    const [isEnabled, setIsEnabled] = useState(passWorkExp?.end_date == "1970-01-01"? true : false);
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const dispatch = useDispatch();
-    
+
     const onSubmit = (data) => {
+        console.log(data);
         getLocalData('USER_INFO').then(async (res) => {
             const reData = res?.data;
             data.startdate = format(data?.startdate, 'yyyy-MM-dd');
             isEnabled ? data.enddate = "" : data.enddate = format(data?.enddate, 'yyyy-MM-dd');
-            const mergeData = {...data, user_id:reData?.id, workexp_id:null};
-            console.log("mergeData",mergeData);
+            const mergeData = {...data, user_id:reData?.id, workexp_id:passWorkExp?.workexp_id};
             const allCoinsResult = await dispatch(addworkexperianceAPI(mergeData));
-            console.log("allCoinsResult",allCoinsResult);
-            handleWorkReload()
-            setWorkExp(false)
+            console.log("allCoinsResult",allCoinsResult.payload);
+            handleWorkReload();
+            setEditWorkExp(false)
             reset();
         })
     }
@@ -37,13 +37,13 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
         style={{}}
         animationType="slide"
         transparent={true}
-        visible={workExp}>
+        visible={editWorkExp}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
-                <Pressable style={styles.closebtn} onPress={() => setWorkExp(!workExp)}>
+                <Pressable style={styles.closebtn} onPress={() => setEditWorkExp(!editWorkExp)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
-                <Text style={styles.modalText}>Add Work Experience </Text>
+                <Text style={styles.modalText}>Edit Work Experience </Text>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Designation*</Text>
                     <Controller
@@ -57,6 +57,7 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
                             value={value}            
                             onBlur={onBlur}            
                             onChangeText={value => onChange(value)} 
+                            editable
                         />
                         )}  
                     />
@@ -76,6 +77,7 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
                             value={value}            
                             onBlur={onBlur}            
                             onChangeText={value => onChange(value)} 
+                            editable
                         />
                         )}  
                     />
@@ -124,7 +126,7 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
                 <View style={styles.workingToggle}>
                     <Text style={styles.workingToggleText}>Currently Working</Text>
                         <Switch
-                            trackColor={{false:'#DDDDDD', true: '#2C8892'}}
+                            trackColor={{false: '#DDDDDD', true: '#2C8892'}}
                             thumbColor={isEnabled ? '#DDDDDD' : '#f4f3f4'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={setIsEnabled}
@@ -141,4 +143,4 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
   )
 }
 
-export default WorkExperienceModal
+export default EditWorkExperienceModal;

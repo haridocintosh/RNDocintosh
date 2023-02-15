@@ -26,7 +26,6 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 
-
 const HomeScreen = ({navigation,route})=> {
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState();

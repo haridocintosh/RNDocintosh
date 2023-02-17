@@ -53,20 +53,20 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
-    console.log(register);
+    
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const token = await dispatch(userLogin(register));
-  //  console.log('token',token.payload);
-  //  console.log('tokendsd',token.payload.message);
       if(token?.payload?.status == 'Success'){
+        console.log(token.payload.session_data.profileimage);
           setloader(false)
           await storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data
         }));
+        singlestoreData('profileImage',token.payload.session_data.profileimage); 
         if(isChecked){
             storeData('rememberme',JSON.stringify({
             data:{...token.meta.arg, isChecked:isChecked }
@@ -113,23 +113,28 @@ const LoginScreen = () => {
     }
   }
 
+  function fetchToken(){
+    console.log(getdeviceId());
+    getdeviceId().then(token => 
+        setregister({
+          ...register,
+          device_id: token,
+      })
+    );
+
+  }
+
   useEffect(() => {
     fetchToken();
     getData('USER_INFO');
+    // getData('profileImage');
     if(isFocused){
       getDatarm('rememberme');
     }
    
   },[isFocused])
 
-    function fetchToken(){
-      getdeviceId().then(token => 
-          setregister({
-            ...register,
-            device_id: token,
-          })
-        );
-    }
+   
 
 
   if(loader){

@@ -7,11 +7,9 @@ import { Card, TextInput } from 'react-native-paper';
 import { Button } from 'react-native-elements';
 
 
-
-
-    const ReportPost = () => {
-    const navigation = useNavigation();
-    const [text, setText] = React.useState("");
+  const ReportPost = () => {
+  const navigation = useNavigation();
+  const [text, setText] = React.useState("");
   return (
   <SafeAreaView>
     <ScrollView

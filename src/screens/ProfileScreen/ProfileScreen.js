@@ -7,6 +7,8 @@ import { styles } from './profilestyle';
 import { getLocalData } from '../../apis/GetLocalData';
 import { getAllCoins, getFollowersDataApi, getFollowingDataApi } from '../../../redux/reducers/postData';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const ProfileScreen = ({navigation}) => {
   const [allcoins, setAllcoins] = useState(0);
@@ -20,14 +22,16 @@ const ProfileScreen = ({navigation}) => {
   })
   const dispatch = useDispatch();
 
-  const asyncFetchDailyData =  () => {
+  const asyncFetchDailyData =  async() => {
     navigation.setOptions({ title: 'Profile'});
+    const value = await AsyncStorage.getItem('profileImage');
     getLocalData('USER_INFO').then( async (res) => {
       const reData = res?.data;
       setuserdata({...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,
         speciality: reData?.speciality,
-        profile: reData?.profileimage,
+        // profile: reData?.profileimage,
+        profile: value,
         role:reData?.role
       });
       const postData = { user_id:reData.id};

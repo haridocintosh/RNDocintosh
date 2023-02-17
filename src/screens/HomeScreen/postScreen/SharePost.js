@@ -24,7 +24,6 @@ import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 // import ImageCompressor  from 'react-native-compressor';
-import data from "../../../model/data";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
 
@@ -237,6 +236,7 @@ const publishCheck1 = (e, text)=>{
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
+
           let formData = new FormData();
           const imageData = {
             uri : localUri,

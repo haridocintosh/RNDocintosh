@@ -31,6 +31,7 @@ export const addworkexperianceAPI = createAsyncThunk("addWorkexp", async(data)=>
        console.log(e);
     }
 })
+
 export const getWorkExpAPI = createAsyncThunk("getWorkExp", async(data)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/workexperiance`, {
@@ -64,7 +65,7 @@ export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(d
 
 export const userInfo = createAsyncThunk("userInfo", async(data)=>{
     try{
-       const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_profile`, {
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_profileReact`, {
             method : 'POST',
             headers:{ 'Content-Type': 'application/json'},
             body : JSON.stringify(data)
@@ -76,9 +77,6 @@ export const userInfo = createAsyncThunk("userInfo", async(data)=>{
        console.log(e);
     }
 })
-
-
-
 
 export const profileSlice= createSlice({
     name : 'Profile',

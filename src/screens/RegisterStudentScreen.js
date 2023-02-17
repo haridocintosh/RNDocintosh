@@ -162,7 +162,6 @@ const pickupImage = (arg) => {
               headers:{'Content-Type': 'multipart/form-data'},
               body :formData
           });
-          console.log('studentres',responce);
           const result=  await responce.json();
 
         if(fromWhere == 'document'){
@@ -180,7 +179,6 @@ const pickupImage = (arg) => {
 };
 
 const form_submit = async() =>{ 
-  console.log("register",register);
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
     if (ref.current) {
@@ -243,7 +241,6 @@ const form_submit = async() =>{
   }
 
   const handlePickupModal = (val) => {
-    // console.log("val",val);
     setFromWhere(val)
     setModalVisible(true);
   }

@@ -117,7 +117,6 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const result  = res.assets;
       // setloader(true);
-      console.log("result",result);
       const data = result?.map((data,i) => {return {...data, id:i}})
       setData(data);
       setPost({...post, 
@@ -232,7 +231,6 @@ const publishCheck1 = (e, text)=>{
           // const localUri1 = await ImageCompressor.compress(localUri, {
           //   compressionMethod: 'auto',
           // });
-          // console.log(localUri1);
           // return;
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
@@ -243,7 +241,6 @@ const publishCheck1 = (e, text)=>{
             name: filename,
             type: `image/${fileType}`,
           }
-          console.log('typeess',imageData);
           formData.append('postImage', imageData);
           formData.append('post_id', '3032');
           const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsCompress`, {

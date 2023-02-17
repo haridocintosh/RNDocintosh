@@ -12,35 +12,41 @@ import { addworkexperianceAPI } from '../../../../redux/reducers/profileSlice';
 import { useDispatch } from 'react-redux';
 
 const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,passWorkExp}) => {
-    
-    const [isEnabled, setIsEnabled] = useState(passWorkExp?.end_date == "1970-01-01"? true : false);
+    const [isEnabled, setIsEnabled] = useState(String(passWorkExp?.end_date).includes(1970) ? true : false);
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
+    const [startDate,setStartDate] = useState(passWorkExp?.start_date);
+    const [endDate,setEndDate] = useState(String(passWorkExp?.end_date).includes(1970)?  "" : passWorkExp?.end_date);
     const dispatch = useDispatch();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        getLocalData('USER_INFO').then(async (res) => {
-            const reData = res?.data;
-            data.startdate = format(data?.startdate, 'yyyy-MM-dd');
-            isEnabled ? data.enddate = "" : data.enddate = format(data?.enddate, 'yyyy-MM-dd');
-            const mergeData = {...data, user_id:reData?.id, workexp_id:passWorkExp?.workexp_id};
-            const allCoinsResult = await dispatch(addworkexperianceAPI(mergeData));
-            console.log("allCoinsResult",allCoinsResult.payload);
-            handleWorkReload();
-            setEditWorkExp(false)
-            reset();
-        })
+    console.log("passWorkExp----",passWorkExp);
+
+    const onSubmit = async (data) => {
+        const startingDate = format(startDate, 'yyyy-MM-dd');
+        const endingDate = isEnabled ? "" : format(endDate, 'yyyy-MM-dd');
+        const postParams = {
+            user_id:passWorkExp.userID,
+            designation:data.designation,
+            hospitalname:data.hospitalname,
+            startdate:startingDate,
+            enddate :endingDate,
+            workexp_id :passWorkExp.workexp_id
+        }
+        const allCoinsResult = await dispatch(addworkexperianceAPI(postParams));
+        handleWorkReload();
+        setEditWorkExp(false);
+        setEndDate();
+        setStartDate();
+        reset();
     }
 
   return (
     <Modal
-        style={{}}
         animationType="slide"
         transparent={true}
         visible={editWorkExp}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
-                <Pressable style={styles.closebtn} onPress={() => setEditWorkExp(!editWorkExp)}>
+                <Pressable style={styles.closebtn} onPress={() => {setEditWorkExp(!editWorkExp),reset()}}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
                 <Text style={styles.modalText}>Edit Work Experience </Text>
@@ -49,6 +55,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Controller
                         control={control}        
                         name="designation"      
+                        defaultValue={passWorkExp?.designation}  
                         rules={{
                         required: true,
                         }}  
@@ -57,7 +64,6 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                             value={value}            
                             onBlur={onBlur}            
                             onChangeText={value => onChange(value)} 
-                            editable
                         />
                         )}  
                     />
@@ -68,7 +74,8 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Text style={styles.modalSubText}>Hospital/Institution**</Text>
                     <Controller
                         control={control}        
-                        name="hospitalname"      
+                        name="hospitalname"  
+                        defaultValue={passWorkExp?.hospital_id}    
                         rules={{
                         required: true,
                         }}  
@@ -83,44 +90,25 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     />
                 </View>
                 {errors.hospitalname && <Text style={styles.errorMsg}>This field is required!</Text>}
-                
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Start Date*</Text>
-                    <Controller
-                        control={control}        
-                        name="startdate"      
-                        rules={{
-                        required: true,
-                        }}  
-                        render={({field: {onChange, value, onBlur}}) => (
                         <DatePickerInput
                             locale="en"
-                            value={value}
-                            onChange={(d) => onChange(d)}
+                            value={startDate ? startDate: passWorkExp?.start_date}
+                            onChange={(d) => setStartDate(d)}
                             style={{backgroundColor:'#fff'}}
                         />
-                        )}  
-                    />
                 </View>
                 {errors.startdate && <Text style={styles.errorMsg}>This field is required!</Text>}
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>End Date*</Text>
-                    <Controller
-                        control={control}        
-                        name="enddate"      
-                        rules={{
-                          required: isEnabled ? false : true,
-                        }}  
-                        render={({field: {onChange, value, onBlur}}) => (
                         <DatePickerInput
                             locale="en"
-                            value={value}
-                            onChange={(d) => onChange(d)}
+                            value={endDate}
+                            onChange={(d) => setEndDate(d)}
                             style={{backgroundColor:'#fff'}}
                             disabled={isEnabled}
                         />
-                        )}  
-                    />
                 </View>
                 {errors.enddate && <Text style={styles.errorMsg}>This field is required!</Text>}
                 <View style={styles.workingToggle}>
@@ -134,7 +122,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                         />
                 </View>
                 <View style={styles.modalBtnContainer}>
-                    <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
+                    <Button title="Save" buttonStyle={{backgroundColor:'#2C8892',width:'100%'}}
                         titleStyle={{ color:'#fff', textAlign:"center"}} onPress={handleSubmit(onSubmit)}/>
                 </View>
             </View>

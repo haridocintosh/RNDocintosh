@@ -45,7 +45,6 @@ const SavedPost = ({navigation}) => {
       setUserData(res?.data)
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
       setItem(savedResult?.payload?.result);
-      // console.log("result.payload.result",savedResult.payload);
     });
     setBottumLoader(false);
   }
@@ -74,10 +73,8 @@ const SavedPost = ({navigation}) => {
   };
   
   const LoadPost = async (page) => {
-    console.log(page);
     setBottumLoader(true);
     const result = await dispatch(getSavedPostsApi({user_id:userData?.id,pageCounter:page}));
-    console.log("result",result);
     setEndNull(result?.payload?.result)
      if(result.payload.result !== null){
       setCurrentPage(prev => prev + 1);
@@ -87,7 +84,6 @@ const SavedPost = ({navigation}) => {
   }
 
   const BlockId = (id) =>{
-    console.log("BlockId",id);
     const BlockId = item?.filter(Uid => Uid.id != id);
     setItem(BlockId);
   }
@@ -116,7 +112,6 @@ const SavedPost = ({navigation}) => {
   };
 
   const renderItem = ({item,index}) => {
-    // console.log("item",item);
     return(
       <Card style={styles.SavePostsContainer} >
           <View style={styles.userInfo}>

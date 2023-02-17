@@ -66,7 +66,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   const handleUnfollow = async () => {
     const postDetails = {follow_from:resData?.id, follow_to:item?.id};
     const followResult  = await dispatch(followApi(postDetails));
-    console.log("followApi",followResult.payload);
     if(followResult.payload.status){
       setFollow(false);
     }else{
@@ -79,8 +78,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     setModalVisible(false);
     setToggle(true);
   }
-
-// console.log("savedPost",savedPost);
 
   return (
     <View style={styles.container}>

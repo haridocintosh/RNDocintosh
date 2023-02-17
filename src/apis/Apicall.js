@@ -7,7 +7,6 @@ const storeData = async (key,value) => {
     try {
       const jsonValue = JSON.stringify(value)
       const result = await AsyncStorage.setItem(key, jsonValue);
-      console.log("result",result);
     } catch (e) {
       console.log(e);
     }
@@ -145,7 +144,6 @@ const verifyOtp = (otp,user_id) =>
       .then(res => {
         if(res.status === 200) {
         resolve(res.data);
-        console.log(res.data);
         Toast.show('OTP Verify Successfully',Toast.LONG)
         } else{ 
           reject(res)

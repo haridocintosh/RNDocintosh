@@ -9,7 +9,6 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
 
     const handleSelect = (id) => {
         console.log("id",id);
-
     }
   return (
     <Modal

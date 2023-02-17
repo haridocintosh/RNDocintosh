@@ -16,16 +16,14 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
     
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const dispatch = useDispatch();
-    
+
     const onSubmit = (data) => {
         getLocalData('USER_INFO').then(async (res) => {
             const reData = res?.data;
             data.startdate = format(data?.startdate, 'yyyy-MM-dd');
             isEnabled ? data.enddate = "" : data.enddate = format(data?.enddate, 'yyyy-MM-dd');
             const mergeData = {...data, user_id:reData?.id, workexp_id:null};
-            console.log("mergeData",mergeData);
             const allCoinsResult = await dispatch(addworkexperianceAPI(mergeData));
-            console.log("allCoinsResult",allCoinsResult);
             handleWorkReload()
             setWorkExp(false)
             reset();
@@ -64,7 +62,7 @@ const WorkExperienceModal = ({workExp,setWorkExp,handleWorkReload}) => {
                 {errors.designation && <Text style={styles.errorMsg}>Designation field is required!</Text>}
                 
                 <View style={styles.input}>
-                    <Text style={styles.modalSubText}>Hospital/Institution**</Text>
+                    <Text style={styles.modalSubText}>Hospital/Institution*</Text>
                     <Controller
                         control={control}        
                         name="hospitalname"      

@@ -46,6 +46,21 @@ export const getWorkExpAPI = createAsyncThunk("getWorkExp", async(data)=>{
     }
 })
 
+export const getAwardAPI = createAsyncThunk("getAward", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/award`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(data)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/UpdateMobileNo`, {
@@ -77,6 +92,21 @@ export const userInfo = createAsyncThunk("userInfo", async(data)=>{
     }
 })
 
+export const EditProfileAwardAPI = createAsyncThunk("editAward", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileAward`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 
 
 
@@ -88,9 +118,10 @@ export const profileSlice= createSlice({
         error       : false,
         userInfo    : {},
         workExp     : {},
+        award     : {},
+        editAward     : {},
         updateData  : {},
         user_data   : {},
-
     },
     reducers : {
       
@@ -168,6 +199,38 @@ export const profileSlice= createSlice({
             state.workExp      =  action.payload;
         })
         builder.addCase(getWorkExpAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+   //===========================getAwardAPI=============================
+   
+        builder.addCase(getAwardAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getAwardAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.award      =  action.payload;
+        })
+        builder.addCase(getAwardAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+   //===========================EditProfileAwardAPI=============================
+   
+        builder.addCase(EditProfileAwardAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(EditProfileAwardAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.editAward      =  action.payload;
+        })
+        builder.addCase(EditProfileAwardAPI.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

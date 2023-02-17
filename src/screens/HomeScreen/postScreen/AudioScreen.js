@@ -62,7 +62,6 @@ const AudioScreen = ({navigation}) => {
        const insert =  media?.assets.map((data) => {
          return {...data, isSelected:false}
       });
-      console.log(insert);
       setContactData(insert)
     };
 
@@ -86,7 +85,6 @@ const AudioScreen = ({navigation}) => {
     };
 
     const selectAudio = async (audioId) => {
-      console.log(audioId);
       // setShouldPlay({...shouldPlay, audioId});
       let temp = contactData?.map((data) => {
         if (audioId === data.id) {
@@ -94,7 +92,6 @@ const AudioScreen = ({navigation}) => {
         }
         return data;
       });
-      console.log(temp);
       setContactData(temp);
       // setSend(true)
     }

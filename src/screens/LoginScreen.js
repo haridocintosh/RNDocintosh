@@ -53,14 +53,11 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
-    console.log(register);
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const token = await dispatch(userLogin(register));
-  //  console.log('token',token.payload);
-  //  console.log('tokendsd',token.payload.message);
       if(token?.payload?.status == 'Success'){
           setloader(false)
           await storeData('USER_INFO',JSON.stringify({

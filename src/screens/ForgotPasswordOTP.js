@@ -35,7 +35,6 @@
     setVerifying("Verifying...")
       if(otpInput !== ""){
       const result = await dispatch(forgotverifyOtp({otp:otpInput, user_id:user_id}));
-      // console.log('check Resulttttttttttt',result.payload);
       if(result.payload.status == 'Success'){
         Toast.show(result.payload.message,Toast.LONG);
         navigation.navigate('CreateNewPass',{user_id})

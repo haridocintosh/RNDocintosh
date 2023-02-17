@@ -3,7 +3,6 @@ import { mainApi } from "../../src/apis/constant";
  
 
 export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
-    console.log('paramter', loginData);
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/login`, {
             method : 'POST',
@@ -14,11 +13,9 @@ export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
         });
         
         const userresult=  await responce.json();
-        // console.log('loginResult', userresult);
         return userresult
     }
     catch(e){
-        // console.log("catchBlock");
        console.log(e);
     }
 })

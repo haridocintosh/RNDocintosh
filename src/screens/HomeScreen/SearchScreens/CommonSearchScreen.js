@@ -31,9 +31,6 @@ const CommonSearchScreen = () => {
   const [item, setItem] = useState();
   const [filteredDataSource, setFilteredDataSource] = useState();
 
-  console.log("item",item?.length);
-  console.log("filteredDataSource",filteredDataSource?.length);
-
   const handleRemove = (id) => {
       const removed = filteredDataSource?.filter(o => o.id != id)
       setFilteredDataSource(removed);
@@ -60,7 +57,6 @@ const CommonSearchScreen = () => {
   };
 
   const LoadPost = async (page) => {
-    console.log("page",page);
     setBottumLoader(true);
     const result = await dispatch(getsearchSplData({pageCounter:page}));
     setEndNull(result?.payload?.result)
@@ -149,7 +145,6 @@ const CommonSearchScreen = () => {
 
   const GetsearchData = async () => {
       const result = await dispatch(getsearchSplData({pageCounter:0}));
-      console.log("result?.payload",result);
       setItem(result?.payload?.result);
       setFilteredDataSource(result?.payload?.result);
   }

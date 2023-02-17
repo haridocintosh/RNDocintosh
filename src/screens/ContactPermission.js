@@ -78,7 +78,6 @@ export default function ContactPermission({navigation}) {
   const sentInvite = async () => {
     const uploadData = {usercontact:selectedList};
     const result = await dispatch(sendInvitation(uploadData));
-    console.log("result",result.payload);
      if(result.payload.status=="Success"){
       Toast.show(result.payload.message,Toast.LONG);
       getLocalData("USER_INFO").then((res) => {
@@ -111,15 +110,12 @@ export default function ContactPermission({navigation}) {
         }
       )
       .then(res=> { 
-        console.log(res);
         if(res==='granted')
         {
            Contacts.getAll()
           .then((contacts) => {
           if(contacts.length > 0) { 
             const contactlist =  contacts.map(element=> {return{...element,isSelected:false}});
-            console.log(contactlist.length)
-            console.log(contactlist)
             setTotalSlice(contactlist.length)  
             setContact(contactlist);
             setItem(contactlist)
@@ -187,7 +183,6 @@ if(loading){
 }
 
 const renderItem = (item) => {
-  console.log(item);
   return(
     <View style={styelcss.peersmaniListArea}>
         <View style={styelcss.peersSubiListArea}>

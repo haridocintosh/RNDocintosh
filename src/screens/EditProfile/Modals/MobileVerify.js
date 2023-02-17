@@ -31,10 +31,8 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
 
     const submitOtp = async() =>{
         setVerifying("Verifying...")
-        console.log(mobileNumb, otpInput, userId);
           if(otpInput !== ""){
           const result = await dispatch(updateMobileNumber({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
-          console.log('check Resulttttttttttt',result.payload);
           if(result.payload.status == 'Success'){
             Toast.show(result.payload.message,Toast.LONG);
             navigation.navigate('EditProfileScreen');
@@ -60,7 +58,6 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
      }
 
     const handleSubmit = async ()=>{
-        console.log('checkphone',userId);
         if(phone){
           const token =await dispatch(userIdupdate({
             email:phone,
@@ -69,7 +66,6 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
           
           if(token?.payload?.status == 'Success'){
             setmobileNumb(phone);
-            console.log('dsbjdsjj',phone);
             // await storeData('USER_INFO',JSON.stringify({
             //   login:true,
             //   ...alluser,
@@ -92,7 +88,6 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
     }
 
     useEffect(() => {
-     // console.log(mobNumber);
         setmobileNumb(mobNumber);
         getLocalData('USER_INFO').then((res) => {
           const reData = res?.data;

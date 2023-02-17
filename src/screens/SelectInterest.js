@@ -28,9 +28,7 @@ const SelectInterest = ({route}) => {
   // const user_id ='229533';
   const specialityId ='59';
   const {user_id } = route.params;
-  console.log(user_id, specialityId)
   const getItem = (item) => {
-   // alert(item.speciality);
     // Function for click on an item
     let spl=item.speciality_id;
     let copy=[...selectitem];

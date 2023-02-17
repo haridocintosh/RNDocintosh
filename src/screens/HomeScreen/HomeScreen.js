@@ -77,14 +77,15 @@ const HomeScreen = ({navigation,route})=> {
     extrapolateRight: 'clamp',
   });
 
-const handleOption = (post_id) => {
-  setPostId(post_id);
-  if(postId == post_id){
-    setModalVisible(!modalVisible);
-    return;
+  const handleOption = (post_id) => {
+    setPostId(post_id);
+    if(postId == post_id){
+      setModalVisible(!modalVisible);
+      return;
+    }
+    setModalVisible(true);
   }
-  setModalVisible(true);
-}
+
   const getStorageData = () => {
     getLocalData('USER_INFO').then(async (res) =>{
       const allCoins = {user_id:res.data.id};
@@ -115,11 +116,9 @@ const handleOption = (post_id) => {
     }
   };
 
-  
   const LoadPost = async (page) => {
     setBottumLoader(true);
     const postDetails = {postType:0,role:resData?.role,city_id:resData?.city_id,assoc_id:resData?.assoc_id, pageCounter:page, id:resData?.id,circle_type:resData?.role == 5 ? 2 : 1,speciality_id:resData?.speciality_id};
-    // console.log(postDetails);
     const result = await dispatch(userPostData(postDetails));
     setEndNull(result.payload.result)
      if(result.payload.result !== null){
@@ -129,8 +128,6 @@ const handleOption = (post_id) => {
      }
      setBottumLoader(false);
   }
-
-  // console.log("bottumLoader",bottumLoader);
 
   useEffect(()=>{
     if(ref.current) {
@@ -154,11 +151,9 @@ const handleOption = (post_id) => {
       setModalVisible(false);
       setBottumLoader(true);
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
-       //console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
       setBottumLoader(false);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
-      // console.log("allPostData------------tara",allPostData);
       setallPost(allPostData);
       setRefresh(false)
     })
@@ -277,17 +272,18 @@ const handleOption = (post_id) => {
               </TouchableOpacity>
             </Animated.View>
           </View>
-          <Animated.View style={[styles.collectedCoins,{transform: [{translateY: scoresPosition}]}]} >
+          <Animated.View style={[styles.collectedCoins,{transform: [{translateY : scoresPosition}]}]} >
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.d} />
             <Text style={styles.count}>
               {allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0} |</Text>
-            <Image source={require('../../assets/dr-icon/discount1.png')} style={{width:16, height:16, marginVertical:5,  marginHorizontal:5}}></Image>
+            <Image source={require('../../assets/dr-icon/discount1.png')} style={{width:16, height:16, marginVertical:5,marginHorizontal:5}}/>
             <Text style={styles.count}>0</Text>
           </Animated.View>
       </Animated.View>
       
     <View style={{padding:10}}>
-      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
+      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} 
+        onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
         <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',alignItems:'center'}} >
           <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>

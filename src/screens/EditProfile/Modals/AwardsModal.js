@@ -4,6 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
+import { DatePickerInput } from 'react-native-paper-dates';
 
 const AwardsModal = ({awards,setAwards}) => {
   return (
@@ -17,7 +18,7 @@ const AwardsModal = ({awards,setAwards}) => {
                 <Pressable style={styles.closebtn} onPress={() => setAwards(!awards)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
-                <Text style={styles.modalText}>Edit Awards</Text>
+                <Text style={styles.modalText}>Add Awards</Text>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Name of Award*</Text>
                     <TextInput 
@@ -26,12 +27,16 @@ const AwardsModal = ({awards,setAwards}) => {
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Date*</Text>
-                    <TextInput 
-                        placeholder="MM/YYYY"
-                        keyboardType='default'/>
+                    <DatePickerInput
+                            locale="en"
+                            // value={value}
+                            // onChange={(d) => onChange(d)}
+                            style={{backgroundColor:'#fff'}}
+                            // disabled={isEnabled}
+                        />
                 </View>
                 <View style={styles.modalBtnContainer}>
-                    <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
+                    <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}} 
                         titleStyle={{ color:'#fff', textAlign:"center"}}/>
                 </View>
             </View>

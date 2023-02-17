@@ -21,9 +21,11 @@
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
   import { useIsFocused } from '@react-navigation/native';
-  import { getWorkExpAPI } from '../../../redux/reducers/profileSlice';
+  import { getAwardAPI, getWorkExpAPI } from '../../../redux/reducers/profileSlice';
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
+  import AwardsEditModal from './Modals/AwardsEditModal';
+  
   
 
   const EditProfileScreen = ({route,navigation}) => {
@@ -33,10 +35,11 @@
     const [emailid, setemailid] = useState(false);
     const [workExp, setWorkExp] = useState(false);
     const [editWorkExp, setEditWorkExp] = useState(false);
-    const [passWorkExp, setPassWorkExp] = useState(false);
+    const [passWorkExp, setPassWorkExp] = useState(undefined);
     const [aboutMe, setaboutMe] = useState(false);
     const [qualification, setQualification] = useState(false);
     const [awards, setAwards] = useState(false);
+    const [editAwards, setEditAwards] = useState(false);
     const [publication, setPublication] = useState(false);
     const [achievement, setAchievement] = useState(false);
     const [Interests, setInterests] = useState(false);
@@ -46,6 +49,8 @@
     const [workResult, setWorkResult] = useState(null);
     const [loader, setLoader] = useState(false);
     const [workShowAll, setWorkShowAll] = useState(2);
+    const [getAward, setGetAward] = useState(null);
+    const [passAwardData, setPassAwardData] = useState(null);
     
     const dispatch = useDispatch();
 
@@ -61,7 +66,9 @@
     const WorkExpModal = () => {
       setWorkExp(!workExp);
     };
-    const WorkExpEditModal = (data) => {
+    const WorkExpEditModal = async (data) => {
+      data.start_date = await new Date(moment(data?.start_date).format("MM/DD/YYYY"))
+      data.end_date = await new Date(moment(data?.end_date).format("MM/DD/YYYY"))
       setPassWorkExp(data)
       setEditWorkExp(!editWorkExp)
     };
@@ -73,6 +80,11 @@
     };
     const awardsModal = () => {
       setAwards(!awards);
+    };
+    const awardsEditModal = async (data) => {
+      data.awardyear = await new Date(moment(data?.awardyear).format("MM/DD/YYYY"))
+      setPassAwardData(data);
+      setEditAwards(!editAwards);
     };
     const publicationModal = () => {
       setPublication(!publication);
@@ -119,6 +131,14 @@
       })
     }
 
+    const handleAward = () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        const reData = res?.data;
+        const getAwardResult = await dispatch(getAwardAPI({user_id : 230025}));
+        setGetAward(getAwardResult.payload)
+      })
+    }
+
     const handleWorkloadMore = () => {
       setWorkShowAll()
     }
@@ -126,6 +146,7 @@
     useEffect(()=>{
       asyncFetchDailyData();
       handleWorkReload();
+      handleAward();
     },[])
 
     return (
@@ -224,13 +245,17 @@
                 return (
                   <View style={[styles.AddedDetails,{borderBottomWidth: i == workResult?.length-1 ? 0 : 2}]} key={i}>
                     <View style={{flexDirection:'row'}}>
-                      <Image source={require('../../assets/dr-icon/trofee.png')}/>
+                      {/* <Image source={require('../../assets/dr-icon/trofee.png')}/> */}
+                      <View style={styles.SingleLetter}>
+                          <Text style={styles.SingleLetterText}>{data.designation[0].toUpperCase()}</Text>
+                      </View>
                       <View style={{paddingLeft:10}}>
                         <Text style={styles.AddedDetailsTitle}>{data.designation}</Text>
                         <Text style={styles.AddedDetailsSubTitle}>{data.hospital_id}</Text>
                         <Text style={styles.AddedDetailsDate}>
                           {moment(data.start_date).format("MMM YYYY")} - {
                           data.end_date == "1970-01-01" ? "Present" : moment(data.end_date).format("MMM YYYY")}
+                          {/* {console.log(data.end_date)} */}
                         </Text>
                       </View>  
                     </View>
@@ -277,24 +302,42 @@
           </Card>
 
           <AwardsModal awards={awards} setAwards={setAwards}/>
+          <AwardsEditModal 
+            editAwards={editAwards} 
+            setEditAwards={setEditAwards} 
+            passAwardData={passAwardData} 
+            handleAward={handleAward}
+          />
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>Awards</Text>
-                <Text style={styles.AddInfo}>
-                  <Entypo name="plus" size={15} color="#2376E5" /> 
-                  Add Awards
-                </Text>
+                <TouchableOpacity onPress={() => awardsModal()}>
+                  <Text style={styles.AddInfo}>
+                    <Entypo name="plus" size={15} color="#2376E5" /> 
+                    Add Awards
+                  </Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.AddedDetails}>
-                <View style={{flexDirection:'row'}}>
-                  <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
-                  <View style={{paddingLeft:10}}>
-                    <Text style={styles.AddedDetailsSubTitle}>Lorem ipsum dolor sit amet</Text>
-                    <Text style={styles.AddedDetailsDate}>June 2021</Text>
-                  </View>  
-                </View>
-                <Entypo name="edit" size={23} color="#2C8892"  onPress={awardsModal}/>    
-              </View>
+              {getAward?.map((data,i) => {
+                return(
+                  <View style={styles.AddedDetails} key={i}>
+                    <View style={{flexDirection:'row'}}>
+                      <View style={styles.SingleLetter}>
+                          <Text style={styles.SingleLetterText}>{data.award[0].toUpperCase()}</Text>
+                      </View>
+                      <View style={{paddingLeft:10}}>
+                        <Text style={styles.AddedDetailsTitle}>{data.award}</Text>
+                        <Text style={styles.AddedDetailsDate}>
+                        {moment(data.awardyear).format("MMM YYYY")}</Text>
+                      </View>  
+                    </View>
+                    <TouchableOpacity onPress={() => awardsEditModal(data)}>
+                      <Entypo name="edit" size={23} color="#2C8892"  /> 
+                    </TouchableOpacity>
+                       
+                  </View>
+                )
+              })}
           </Card>
 
           <PublicationModal publication={publication} setPublication={setPublication}/>
@@ -308,9 +351,9 @@
               </View>
               <View style={styles.AddedDetails}>
                 <View style={{flexDirection:'row'}}>
-                  <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
+                  <Image source={require('../../assets/dr-icon/trofee.png')}/>
                   <View style={{paddingLeft:10}}>
-                    <Text style={styles.AddedDetailsSubTitle}>Lorem ipsum dolor sit amet</Text>
+                    <Text style={styles.AddedDetailsTitle}>Lorem ipsum dolor sit amet</Text>
                     <Text style={styles.AddedDetailsDate}>June 2021</Text>
                   </View>  
                 </View>
@@ -331,7 +374,7 @@
               <View style={{flexDirection:'row'}}>
                 <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
                 <View style={{paddingLeft:10}}>
-                  <Text style={styles.AddedDetailsSubTitle}>Lorem ipsum dolor sit amet</Text>
+                  <Text style={styles.AddedDetailsTitle}>Lorem ipsum dolor sit amet</Text>
                   <Text style={styles.AddedDetailsDate}>June 2021</Text>
                 </View>  
               </View>

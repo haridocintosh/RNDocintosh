@@ -63,8 +63,6 @@ const checkConfirmpassword= async(e)=>{
     }
   }
   }
-  //console.log('djandjsan',password,cpassword);
-   
  }
 
  return (

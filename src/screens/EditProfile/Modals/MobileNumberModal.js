@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 
 const MobileNumberModal = ({mobileNumber,setMobileNumber}) => {
 const dispatch = useDispatch();
-  // console.log(mobileno);
 const [numVerify,setNumVerify] = useState(false);
 const [mobNumber,setMobNumber] = useState(null);
 
@@ -27,12 +26,10 @@ const handleVerify = () => {
   setMobileNumber(false)
 }
 const onSubmit = async(data) => {
-  console.log(data);
   if(data.phone_no != ""){
     setMobileNumber(false);
     setMobNumber(data.phone_no)
     const result = await dispatch(checkMobile({mobile:data.phone_no}));
-   console.log(result.payload.status_code);
     if(result.payload.status_code != "NE"){
       Toast.show('This mobile no. is registered with us', Toast.LONG);
     }else{

@@ -32,17 +32,14 @@ const SinglePost = () => {
 
     const GetSinglePOstData = async () => {
         const singleResult = await dispatch(singlePostDataAPI({post_id : 3176}));
-        console.log("singleResult",singleResult.payload[0]);
         setItem(singleResult.payload[0])
     }  
-    // console.log("item",item?.profileimage);
 
     useEffect(() => {
         GetSinglePOstData();
     },[isFocused])  
 
     const BlockId = (id) =>{
-    console.log("BlockId",id);
     const BlockId = item?.filter(Uid => Uid.id != id);
     setItem(BlockId);
     }

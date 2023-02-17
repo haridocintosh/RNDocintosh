@@ -39,7 +39,6 @@ import {  View,
   
     var array = [...selectitem]; // make a separate copy of the array
     var index = array.indexOf(spl)
-    // console.log('index', index);
       if(index !== -1) {
         array.splice(index, 1);
         setselectitem(array);
@@ -50,14 +49,11 @@ import {  View,
     const fetchPostData = async (speciality_id)=>{
       const postDetails = {speciality_id:speciality_id,id:userId}
       const result = await dispatch(addCircle(postDetails));
-       console.log(result);
    }
   
    const getInterestSplData = async (id) => {
     const postDetails = {user_id : id}
-    // const postDetails = {speciality_id:specialityId}
     const result = await dispatch(getSelectedInterest(postDetails));
-    //console.log('checkresult',result?.payload);
     setFilteredDataSource(result?.payload);
     setMasterDataSource(result?.payload);
     setLoader(false)

@@ -158,25 +158,19 @@ const showcong = ()=>{
 
 
 const pickupImage = (arg) => {
-  console.log("fromWhere",fromWhere);
   bottomSheetModalRefSecond.current?.close();
   bottomSheetModalRef.current?.close();
     PickImage(arg).then(async (res) => {
           let localUri = res?.assets[0]?.uri;
-          //console.log(localUri);
           let filename = localUri.split('/').pop();
-         // console.log(filename);
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
-         // console.log(fileType);
           let formData = new FormData();
           const imageData = {
             uri : localUri,
             name: filename,
             type: `image/${fileType}`,
           }
-          //console.log(imageData);
-          // return;
           if(fromWhere == 'document'){
             setimgurl(localUri);
             formData.append('mrnproof', imageData);
@@ -192,7 +186,6 @@ const pickupImage = (arg) => {
             body :formData
          });
         const result=  await responce.json();
-         console.log(result);
         if(fromWhere == 'document'){
           setregister({ ...register,
             mrnproof: result,
@@ -228,8 +221,6 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
-   console.log('sdfdnj',register);
-   console.log('sdfdnj',register);
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
       if(ref.current){
@@ -271,12 +262,10 @@ useEffect(()=>{
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
       Toast.show(result.payload.message,Toast.LONG);
-      console.log('imageUploadData', result.payload);
         if(result.payload.status == 'Success'){
           setloader(false);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
           const coinResult  = await dispatch(coinTransfer(coinDetails));
-          console.log('coinsStatus', coinResult.payload);
           if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {
@@ -298,7 +287,6 @@ if(loader){
 }
 
 const handlePickupModal = (val) => {
-  // console.log("val",val);
   setFromWhere(val)
   setModalVisible(true);
 }

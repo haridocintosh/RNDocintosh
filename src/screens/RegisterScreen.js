@@ -143,7 +143,6 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  console.log('uuid',register);
   if(!register.fname){
     fnerr("Please enter First Name");
     if (ref.current) {
@@ -182,7 +181,6 @@ const form_submit = async() =>{
       role:"",
       speciality:""
    })
-  // console.log(result.payload);
     navigation.navigate('DoctorOtp', {
       mobile_no : result.payload.mobilenumber,
       email     : result.payload.email,
@@ -194,7 +192,6 @@ const form_submit = async() =>{
   }
 
   const handleStudentSubmit = async() =>{
-    // console.log('uuid', register);
     if(!register.fname){
       fnerr("Please enter First Name");
       if (ref.current) {

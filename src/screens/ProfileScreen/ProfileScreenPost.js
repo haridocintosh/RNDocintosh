@@ -61,7 +61,6 @@ const ProfileScreenPost = ({postLength}) => {
   };
   
   const LoadPost = async (page) => {
-    console.log(page);
     setBottumLoader(true);
     const postDetails = { postType:0,role:userData?.role,circle_type:userData?.role == 4 ? 1 : userData?.circle_type,
       city_id:userData?.city_id,assoc_id:userData?.assoc_id,pageCounter:page,user_id:userData?.id,id:userData?.id
@@ -98,7 +97,6 @@ const ProfileScreenPost = ({postLength}) => {
   }
 
   const BlockId = (id) =>{
-    // console.log("BlockId",id);
     const BlockId = myPost.filter(Uid => Uid.id != id);
     setMyPost(BlockId);
   }

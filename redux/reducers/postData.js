@@ -74,7 +74,7 @@ export const getMyPostsApi = createAsyncThunk("MyPosts", async (data)=>{
     return getMyPostsResult;
 })
 
-export const getAllCoins = createAsyncThunk("AllCoins", async (data)=>{
+export const getAllCoins = createAsyncThunk("AllCoins", async (data) => {
     const response = await fetch(`${mainApi.baseUrl}/ApiController/totalCoins`,{
         method : 'POST',
         headers:{

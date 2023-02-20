@@ -69,7 +69,7 @@
     };
     const WorkExpEditModal = async (data) => {
       data.start_date = await new Date(moment(data?.start_date).format("MM/DD/YYYY"))
-      data.end_date = await new Date(moment(data?.end_date).format("MM/DD/YYYY"))
+      data.end_date = await new Date(moment(data?.end_date).format("MM/DD/YYYY"));
       setPassWorkExp(data)
       setEditWorkExp(!editWorkExp)
     };
@@ -150,6 +150,7 @@
       handleWorkReload();
       handleAward();
     },[])
+    
 
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
@@ -256,8 +257,8 @@
                         <Text style={styles.AddedDetailsSubTitle}>{data.hospital_id}</Text>
                         <Text style={styles.AddedDetailsDate}>
                           {moment(data.start_date).format("MMM YYYY")} - {
-                          data.end_date == "1970-01-01" ? "Present" : moment(data.end_date).format("MMM YYYY")}
-                          {/* {console.log(data.end_date)} */}
+                          String(data.end_date).includes(1970) ? "Present" : moment(data.end_date).format("MMM YYYY")}
+                          {/* {console.log("data.end_date",data.end_date)} */}
                         </Text>
                       </View>  
                     </View>

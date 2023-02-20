@@ -41,8 +41,8 @@ const navigation  = useNavigation();
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
-       setDefaultRoute("Intro");
-        //setDefaultRoute("RegisterStudentScreen");
+      setDefaultRoute("Intro");
+        // setDefaultRoute("RegisterTwoScreen");
       }
       setStatusKeyLoaded(true);
     } catch(e) {
@@ -67,8 +67,6 @@ const handleMessage = () => {
     <UpgradeApp/>
       <HandleBack/>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
-            {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
-            {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
             <Stack.Screen name="Intro" component={IntroStack} />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />

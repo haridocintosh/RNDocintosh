@@ -107,7 +107,7 @@ const PublicReactions = ({item,getStorageData}) => {
                     <TouchableOpacity onPress={() => onShare(item?.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
-                  <Text style={styles.socialCountText}>4k</Text>
+                  <Text style={styles.socialCountText}>0</Text>
                 </View>
 
               </View>

@@ -143,13 +143,18 @@ const setPassword= (e) =>{
   const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   const password = e;
   if(!isValidnameRegex.test(password)){
-    setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
+    setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character.")
+    setregister({...register,
+      password: '',
+    });
   }else{
+    setregister({...register,
+      password: password,
+    });
     setPasswordErr('');
   }
-  setregister({...register,
-    password: password,
-  });
+ 
+  setPasswordErr('');
 }
 
 const showcong = ()=>{
@@ -221,6 +226,7 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
+    console.log(register.password);
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
       if(ref.current){
@@ -242,11 +248,8 @@ useEffect(()=>{
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }
-    else if(passworderr == ''){
-      setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.");
-    }
     else if(!register.password){
-      setPasswordErr("Please enter Valid password");
+      setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character.");
     }
     else if(!register.profile_pic){
       setprofilErr("Please upload your profile photo");

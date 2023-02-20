@@ -41,9 +41,9 @@ const [profilErr,setprofilErr] = useState();
 const [mrnproofErr,setmrnproofErr] = useState();
 const [passworderr,setPasswordErr] = useState();  
 const [showeye, setshoweye] = useState(true);
-const fullname="gagan";
+//  const fullname="gagan";
 
-//const {user_id, fullname, role} = route.params;
+const {user_id, fullname, role} = route.params;
 const [register , setregister] = useState({
   pincode : "",
   university:"",
@@ -90,14 +90,20 @@ const setPassword= (e) =>{
   const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   const password = e;
   if(!isValidnameRegex.test(password)){
-    setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
+    setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character.")
+    setregister({...register,
+      password: '',
+    });
   }else{
+    setregister({...register,
+      password: password,
+    });
     setPasswordErr('');
   }
-  setregister({...register,
-    password: password,
-  });
+ 
+  setPasswordErr('');
 }
+
 
 
 useEffect(()=>{
@@ -179,25 +185,30 @@ const pickupImage = (arg) => {
 };
 
 const form_submit = async() =>{ 
+  // console.log(passworderr);
+  console.log(register.password );
+  // const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-  }else if(!register.university){
+    }else if(!register.university){
     setuniversityerr("Please Select University ");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-  }else if(!register.college){
+    }else if(!register.college){
     setclgerr("Please Select College");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-  }else if(!register.password){
-    setPasswordErr("Please enter your password");
-  }else if(!register.profile_pic){
-    if (ref.current) {
+  }
+  else if(!register.password){
+    setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character..");
+  }
+  else if(!register.profile_pic){
+  if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
     setprofilErr("Please Upload your Profile Photo");

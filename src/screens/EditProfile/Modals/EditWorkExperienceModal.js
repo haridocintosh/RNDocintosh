@@ -14,16 +14,14 @@ import { useDispatch } from 'react-redux';
 const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,passWorkExp}) => {
     const [endDate,setEndDate] = useState(String(passWorkExp?.end_date).includes(1970));
     const [isEnabled, setIsEnabled] = useState(String(passWorkExp?.end_date).includes(1970));
-    const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
+    const {control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const [startDate,setStartDate] = useState(passWorkExp?.start_date);
     
     const dispatch = useDispatch();
-
-    console.log("isEnabled----",isEnabled, passWorkExp?.end_date);
-    console.log("endDate----",endDate, passWorkExp?.end_date);
+    console.log("isEnabled------",endDate);
 
     const onSubmit = async (data) => {
-        const startingDate = format(startDate, 'yyyy-MM-dd');
+        const startingDate = format(startDate? startDate :passWorkExp?.start_date, 'yyyy-MM-dd');
         const endingDate = isEnabled ? "1970-01-01" : format(endDate, 'yyyy-MM-dd');
         const postParams = {
             user_id:passWorkExp.userID,
@@ -33,6 +31,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
             enddate :endingDate,
             workexp_id :passWorkExp.workexp_id
         }
+        console.log("postParams",postParams);
         const allCoinsResult = await dispatch(addworkexperianceAPI(postParams));
         handleWorkReload();
         setEditWorkExp(false);
@@ -44,9 +43,12 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
         setEditWorkExp(!editWorkExp);
         reset();
         setEndDate();
-        setIsEnabled();
         setStartDate();
     }
+    useEffect(() => {
+        setIsEnabled(String(passWorkExp?.end_date).includes(1970));
+        setEndDate(String(passWorkExp?.end_date).includes(1970) ? "": passWorkExp?.end_date)
+    },[passWorkExp?.end_date])
 
   return (
     <Modal
@@ -80,7 +82,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                 {errors.designation && <Text style={styles.errorMsg}>Designation field is required!</Text>}
                 
                 <View style={styles.input}>
-                    <Text style={styles.modalSubText}>Hospital/Institution**</Text>
+                    <Text style={styles.modalSubText}>Hospital/Institution*</Text>
                     <Controller
                         control={control}        
                         name="hospitalname"  
@@ -113,7 +115,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Text style={styles.modalSubText}>End Date*</Text>
                         <DatePickerInput
                             locale="en"
-                            value={endDate ? endDate : passWorkExp?.end_date}
+                            value={endDate}
                             onChange={(d) => setEndDate(d)}
                             style={{backgroundColor:'#fff'}}
                             disabled={isEnabled}
@@ -124,7 +126,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Text style={styles.workingToggleText}>Currently Working</Text>
                         <Switch
                             trackColor={{false: '#DDDDDD', true: '#2C8892'}}
-                            thumbColor={isEnabled ? '#DDDDDD' : '#f4f3f4'}
+                            thumbColor={String(passWorkExp?.end_date).includes(1970) ? '#DDDDDD' : '#f4f3f4'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={setIsEnabled}
                             value={isEnabled}

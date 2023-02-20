@@ -113,21 +113,15 @@ const LoginScreen = () => {
     }
   }
 
-  function fetchToken(){
-    // console.log(getdeviceId());
-    getdeviceId().then(token => 
-        setregister({
-          ...register,
-          device_id: token,
-      })
-    );
-
-  }
 
   useEffect(() => {
-    fetchToken();
     getData('USER_INFO');
-    // getData('profileImage');
+    getdeviceId().then((res) => {
+      setregister({
+        ...register,
+        device_id: res,
+       })
+    });
     if(isFocused){
       getDatarm('rememberme');
     }

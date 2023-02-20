@@ -12,7 +12,7 @@ import { addworkexperianceAPI } from '../../../../redux/reducers/profileSlice';
 import { useDispatch } from 'react-redux';
 
 const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,passWorkExp}) => {
-    const [endDate,setEndDate] = useState(String(passWorkExp?.end_date).includes(1970));
+    const [endDate, setEndDate] = useState(String(passWorkExp?.end_date).includes(1970));
     const [isEnabled, setIsEnabled] = useState(String(passWorkExp?.end_date).includes(1970));
     const {control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const [startDate,setStartDate] = useState(passWorkExp?.start_date);

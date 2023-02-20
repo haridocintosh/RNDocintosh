@@ -8,6 +8,7 @@ import {
   Dimensions,
   Animated,
   ActivityIndicator,
+  TouchableHighlight
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
@@ -26,7 +27,7 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { Pressable } from 'native-base';
 
 const HomeScreen = ({navigation,route})=> {
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
@@ -290,16 +291,16 @@ const HomeScreen = ({navigation,route})=> {
       </Animated.View>
       
     <View style={{padding:10}}>
-      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} 
-        onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
-        <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',alignItems:'center'}} >
+        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'#fff',borderRadius:50,marginTop:-35,padding:10}} >
           <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
           </View>
-          <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
+          <TouchableOpacity  onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
+            <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
+          </TouchableOpacity>
         </View>
-      </Card>
+      
       <View>
           <View style={styles.marginten}>
               <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>

@@ -18,7 +18,6 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
     const [startDate,setStartDate] = useState(passWorkExp?.start_date);
     
     const dispatch = useDispatch();
-    console.log("isEnabled------",endDate);
 
     const onSubmit = async (data) => {
         const startingDate = format(startDate? startDate :passWorkExp?.start_date, 'yyyy-MM-dd');

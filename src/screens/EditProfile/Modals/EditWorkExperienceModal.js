@@ -18,11 +18,11 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
     const [startDate,setStartDate] = useState(passWorkExp?.start_date);
     
     const dispatch = useDispatch();
-    console.log("isEnabled------",isEnabled);
+    console.log("isEnabled------",endDate);
 
     const onSubmit = async (data) => {
         const startingDate = format(startDate? startDate :passWorkExp?.start_date, 'yyyy-MM-dd');
-        const endingDate = isEnabled ? "1970-01-01" : format(endDate ? endDate : passWorkExp?.end_date, 'yyyy-MM-dd');
+        const endingDate = isEnabled ? "1970-01-01" : format(endDate, 'yyyy-MM-dd');
         const postParams = {
             user_id:passWorkExp.userID,
             designation:data.designation,
@@ -46,7 +46,8 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
         setStartDate();
     }
     useEffect(() => {
-        setIsEnabled(String(passWorkExp?.end_date).includes(1970))
+        setIsEnabled(String(passWorkExp?.end_date).includes(1970));
+        setEndDate(String(passWorkExp?.end_date).includes(1970) ? "": passWorkExp?.end_date)
     },[passWorkExp?.end_date])
 
   return (
@@ -114,7 +115,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Text style={styles.modalSubText}>End Date*</Text>
                         <DatePickerInput
                             locale="en"
-                            value={endDate ? endDate : passWorkExp?.end_date}
+                            value={endDate}
                             onChange={(d) => setEndDate(d)}
                             style={{backgroundColor:'#fff'}}
                             disabled={isEnabled}

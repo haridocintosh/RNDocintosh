@@ -12,17 +12,19 @@ import { addworkexperianceAPI } from '../../../../redux/reducers/profileSlice';
 import { useDispatch } from 'react-redux';
 
 const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,passWorkExp}) => {
-    const [isEnabled, setIsEnabled] = useState(String(passWorkExp?.end_date).includes(1970) ? true : false);
+    const [endDate,setEndDate] = useState(String(passWorkExp?.end_date).includes(1970));
+    const [isEnabled, setIsEnabled] = useState(String(passWorkExp?.end_date).includes(1970));
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const [startDate,setStartDate] = useState(passWorkExp?.start_date);
-    const [endDate,setEndDate] = useState(String(passWorkExp?.end_date).includes(1970)?  "" : passWorkExp?.end_date);
+    
     const dispatch = useDispatch();
 
-    console.log("passWorkExp----",passWorkExp);
+    console.log("isEnabled----",isEnabled, passWorkExp?.end_date);
+    console.log("endDate----",endDate, passWorkExp?.end_date);
 
     const onSubmit = async (data) => {
         const startingDate = format(startDate, 'yyyy-MM-dd');
-        const endingDate = isEnabled ? "" : format(endDate, 'yyyy-MM-dd');
+        const endingDate = isEnabled ? "1970-01-01" : format(endDate, 'yyyy-MM-dd');
         const postParams = {
             user_id:passWorkExp.userID,
             designation:data.designation,
@@ -38,6 +40,13 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
         setStartDate();
         reset();
     }
+    const handleCloseModal = () => {
+        setEditWorkExp(!editWorkExp);
+        reset();
+        setEndDate();
+        setIsEnabled();
+        setStartDate();
+    }
 
   return (
     <Modal
@@ -46,7 +55,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
         visible={editWorkExp}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
-                <Pressable style={styles.closebtn} onPress={() => {setEditWorkExp(!editWorkExp),reset()}}>
+                <Pressable style={styles.closebtn} onPress={() => handleCloseModal()}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
                 <Text style={styles.modalText}>Edit Work Experience </Text>
@@ -104,7 +113,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Text style={styles.modalSubText}>End Date*</Text>
                         <DatePickerInput
                             locale="en"
-                            value={endDate}
+                            value={endDate ? endDate : passWorkExp?.end_date}
                             onChange={(d) => setEndDate(d)}
                             style={{backgroundColor:'#fff'}}
                             disabled={isEnabled}

@@ -114,7 +114,7 @@ const LoginScreen = () => {
   }
 
   function fetchToken(){
-    console.log(getdeviceId());
+    // console.log(getdeviceId());
     getdeviceId().then(token => 
         setregister({
           ...register,

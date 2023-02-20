@@ -41,9 +41,9 @@ const [profilErr,setprofilErr] = useState();
 const [mrnproofErr,setmrnproofErr] = useState();
 const [passworderr,setPasswordErr] = useState();  
 const [showeye, setshoweye] = useState(true);
-const fullname="gagan";
+// const fullname="gagan";
 
-//const {user_id, fullname, role} = route.params;
+const {user_id, fullname, role} = route.params;
 const [register , setregister] = useState({
   pincode : "",
   university:"",
@@ -87,16 +87,17 @@ setregister({ ...register,
 }
 
 const setPassword= (e) =>{
-  const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  //const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   const password = e;
-  if(!isValidnameRegex.test(password)){
-    setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
-  }else{
-    setPasswordErr('');
-  }
+  // if(!isValidnameRegex.test(password)){
+  //   setPasswordErr("Min 8 characters which contain at least one numeric digit and a special character.")
+  // }else{
+  //   setPasswordErr('');
+  // }
   setregister({...register,
     password: password,
   });
+  setPasswordErr('');
 }
 
 

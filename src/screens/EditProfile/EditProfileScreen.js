@@ -21,10 +21,11 @@
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
   import { useIsFocused } from '@react-navigation/native';
-  import { getAwardAPI, getWorkExpAPI } from '../../../redux/reducers/profileSlice';
+  import { getWorkExpAPI, userInfo, getAwardAPI } from '../../../redux/reducers/profileSlice';
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
+  
   
   
 
@@ -100,25 +101,26 @@
     };
 
     const changeProfile = (arg) => {
+      // console.log('EditScreen',arg);
       SingleImage(arg).then((res) => {
         setProfile(!profile)
-        navigation.navigate("ProfilePictureCrop",{pucUrl : res.assets[0]})
+        navigation.navigate("ProfilePictureCrop",{pucUrl : res.assets[0], user_ID: userdata.id})
       })
     }
 
-    const isValidmobileNoRegex = /^[0]?[789]\d{9}$/; 
-    
     const asyncFetchDailyData = () => {
-      navigation.setOptions({ title:'Edit Profile'});
+      navigation.setOptions({title:'Edit Profile'});
       getLocalData('USER_INFO').then(async (res) => {
         setLoader(true);
         const reData = res?.data;
-        setuserdata(reData);
+        // setuserdata(reData);
+        const uresult = await dispatch(userInfo({user_id : reData.id}));
+        // console.log(uresult?.payload[0]);
+        setuserdata(uresult?.payload[0]);
         const result = await dispatch(getSelectedInterest({user_id : reData.id}));
         setAllInterestsData(result?.payload)
         const TrueData = result.payload.filter(data => data.isSelected == true)
         setInterestsData(TrueData);
-        handleWorkReload();
         setLoader(false);
       });
     }
@@ -204,12 +206,12 @@
               </View>
               <View style={styles.userInfoContainer}>
                   <Text style={styles.userInfoText}>
-                  MRN :  <Text style={styles.userInfoTextResult}>12345 | 2010</Text>
+                  MRN :  <Text style={styles.userInfoTextResult}>{userdata?.mrn}</Text>
                   </Text>
               </View>
               <View style={styles.userInfoContainer}>
                   <Text style={styles.userInfoText}>
-                  MRN Reg: <Text style={styles.userInfoTextResult}>Himachal Pradesh</Text>
+                  MRN Reg: <Text style={styles.userInfoTextResult}>{userdata?.mry}</Text>
                   </Text>
               </View>
             </View>

@@ -23,6 +23,8 @@ import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import { getLocalData } from '../apis/GetLocalData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const CustomDrawer = (props) => { 
@@ -30,7 +32,7 @@ const CustomDrawer = (props) => {
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
-  const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
+  // const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
   const [userdata,setuserdata]=useState({
     fullname : "",
     profile:"",
@@ -40,21 +42,23 @@ const CustomDrawer = (props) => {
   const Drawer = createDrawerNavigator();
 
   const asyncFetchDailyData = async () => {
+    const value = await AsyncStorage.getItem('profileImage');
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
       setlogoutdata(reData);
       setuserdata({ ...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,
         speciality: `${reData?.speciality}`,
-        profile: `${reData?.profileimage}`,
-        role:`${reData?.role}`
+        role:`${reData?.role}`,
+        profile: value,
       });
     });
-  }
-  useEffect(() => {
-    if(isFocused){
-      asyncFetchDailyData();
     }
+  
+  useEffect(() => {
+    // if(isFocused){
+      asyncFetchDailyData();
+    // }
   }, [isFocused])
   
   const removeData = async () => {

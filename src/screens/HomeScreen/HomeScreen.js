@@ -25,6 +25,8 @@ import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const HomeScreen = ({navigation,route})=> {
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
@@ -144,12 +146,18 @@ const HomeScreen = ({navigation,route})=> {
       const reData = res?.data;
       setResData(reData)
       setuserdata({
-        profile:reData?.profileimage,
+        // profile:reData?.profileimage,
         user_id:reData?.id,
         role:reData?.role,
       });
       setModalVisible(false);
       setBottumLoader(true);
+      const value = await AsyncStorage.getItem('profileImage');
+      if (value !== null) {
+        setuserdata({
+          profile:value,
+        });
+      }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
       const result = await dispatch(userPostData(postDetails));
       setBottumLoader(false);

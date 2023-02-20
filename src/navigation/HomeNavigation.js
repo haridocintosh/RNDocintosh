@@ -12,7 +12,7 @@ import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollow
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import PostsScreen from '../screens/HomeScreen/PostsScreen';
 import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
-import MessagesScreen from '../screens/MessagesScreen';
+// import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import EditProfileScreen from '../screens/EditProfile/EditProfileScreen';
 import WhatsNew from '../screens/HomeScreen/What\'s New/What\'sNew';
@@ -46,16 +46,9 @@ import SinglePost from '../screens/SinglePost';
 import ProfilePictureCrop from '../screens/EditProfile/ProfilePictureCrop';
 
 
-
-
-
-
-
 const HomeNavigation = () => {
     const navigation  = useNavigation();
-
     const Stack = createNativeStackNavigator();
-    
     return (<>
     <HandleBack/>
         <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="HomeScreen">
@@ -71,7 +64,7 @@ const HomeNavigation = () => {
           <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen}/>
           <Stack.Screen name="PostsScreen" component={PostsScreen} options={showHeaderItem}/>
           <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={showHeaderItem} />
-          <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={showHeaderItem} />
+          {/* <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={showHeaderItem} /> */}
           <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={showHeaderItem}/>
           <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={showHeaderItem}/>
           <Stack.Screen name="WhatsNew" component={WhatsNew} options={showHeaderItem}/>

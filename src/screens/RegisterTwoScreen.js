@@ -109,7 +109,7 @@ const dispatch    = useDispatch();
     const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;;
     const pincode = e;
     if(!isValidnameRegex.test(pincode)){
-      setPincode("Please enter valid Pincode")
+      setPincode("Please enter a valid pincode")
     }else{
       setPincode('');
   }

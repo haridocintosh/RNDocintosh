@@ -32,7 +32,7 @@ const EmailModal = ({emailid,setemailid}) => {
       }
  
       const onSubmitEmail = async() => {
-        console.log('jnfjsdnj',email);
+         console.log('jnfjsdnj',email);
         if(email != ""){
             setemailid(false);
           const result = await dispatch(checkEmail({email:email}));

@@ -22,7 +22,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
     const [otpInput, setotpInput ] = useState(null);
     const [phone ,setPhone] =useState("");
     const [userId, setuserId] = useState();
-    const [alluser, setuser] = useState();
+    // const [alluser, setuser] = useState();
     const [mobileNumb, setmobileNumb] = useState();
     const [verify, setVerifying] = useState('Verify');
     const dispatch = useDispatch();
@@ -77,7 +77,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
         setmobileNumb(mobNumber);
         getLocalData('USER_INFO').then((res) => {
           const reData = res?.data;
-          setuser(reData)
+          // setuser(reData)
           setuserId(reData?.id)
         });
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);

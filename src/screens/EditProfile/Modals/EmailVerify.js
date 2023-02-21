@@ -20,6 +20,7 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
   const [email ,setEmail] = useState("");
   const [emailID, setEmailID] = useState();
   const [verify, setVerifying] = useState('Verify');
+  const [message , setmessage] = useState('');
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
 
@@ -43,12 +44,22 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
     setEditEmail(!editEmail)
   }
 
+  const isValidemailRegex    =    /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+  const  EmailCheck = (text)=>{
+      if(!isValidemailRegex.test(text)){
+          setEmail('');
+          setmessage("Please enter valid email!");
+      }else{
+          setmessage('');
+          setEmail(text);
+      }
+    }
+
 
   useEffect(() => {
     setEmailID(emailId);
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
-      setuser(reData)
       setuserId(reData?.id)
     });
     const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -74,11 +85,10 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
                 <Text style={styles.OTPtext}>Please enter OTP sent</Text>
                 <View style={styles.NumberEditBox}>
                   <TextInput style={editEmail ? styles.numInputEdit:styles.numInput } 
-                        autoCapitalize="none"
-                        value={editEmail ? email: emailId}
-                        onChangeText={e => setPhone(e)}
-                        clearTextOnFocus={true}
-                        
+                      autoCapitalize="none"
+                      value={editEmail ? email: emailId}
+                      onChangeText={e => EmailCheck(e)}
+                      clearTextOnFocus={true}
                     />
                      <TouchableOpacity onPress={() => handleEdit()}>
                     {editEmail ? 
@@ -86,13 +96,16 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
                     :
                        <Entypo name="edit" size={23} color="#2C8892" style={{margin:5}}/>
                     }
+                     
                     </TouchableOpacity>
+                  
                     {editEmail &&
                     <TouchableOpacity onPress={() => handleSubmit()}>
                         <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
                     </TouchableOpacity>
                     }
                 </View>
+                {message ? (<Text style={{color:'red', fontSize:12, alignSelf:'center'}}>{message}</Text>):null}
                 <OTPTextView 
                     handleTextChange={(text) => setotpInput(text)}
                     containerStyle={styles.textInputContainer}

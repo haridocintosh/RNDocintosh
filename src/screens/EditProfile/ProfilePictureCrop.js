@@ -9,12 +9,12 @@ import Toast from 'react-native-simple-toast';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
+
 const ProfilePictureCrop = ({route}) => {
+  const [loader, setLoader] = useState(false);
     // console.log('cropScreen',route);
     const {pucUrl, user_ID} = route?.params;
     
-    const [src, setSrc]= useState(null);
-    const [preview, setPreview]= useState(null);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -27,6 +27,7 @@ const ProfilePictureCrop = ({route}) => {
     let crop = async (quality) => ({uri: '', width: 0, height: 0});
     
     const handleSave = async () =>{
+      setLoader(true);
       const cropped = await crop();
       // console.log("merge",cropped);
       let localUri = cropped.uri
@@ -52,11 +53,9 @@ const ProfilePictureCrop = ({route}) => {
       singlestoreData('profileImage',result1.result); 
       // console.log(result1);
       setTimeout(()=>{
-          navigation.navigate('EditProfileScreen');
+          navigation.navigate('EditProfileScreen', {justLoad : "justLoad"});
+          setLoader(false);
       },3000)
-
-      
-      
     }
 
   return (
@@ -68,8 +67,7 @@ const ProfilePictureCrop = ({route}) => {
         cropArea={{width: SCREEN_WIDTH / 1.3, height: SCREEN_WIDTH / 1.3}}
         onCrop={cropCallback => (crop = cropCallback)}
       />
-      {/* {src && <Image source={{uri:src.uri}} style={{ width:src.height, height:src.width }}/>} */}
-      <Button title="Save" buttonStyle={{backgroundColor:'#2C8892',width:'100%', marginTop:50}} onPress={handleSave}/>
+      <Button title={loader ?  "Saving..." : "Save"} buttonStyle={{backgroundColor:'#2C8892',width:'100%', marginTop:50}} onPress={loader? "" :handleSave}/>
     </SafeAreaView>
   )
 }

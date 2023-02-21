@@ -30,7 +30,6 @@ const ProfileScreen = ({navigation}) => {
       setuserdata({...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,
         speciality: reData?.speciality,
-        // profile: reData?.profileimage,
         profile: value,
         role:reData?.role
       });

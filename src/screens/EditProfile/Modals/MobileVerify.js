@@ -30,20 +30,20 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
 
 
     const submitOtp = async() =>{
-        setVerifying("Verifying...")
-          if(otpInput !== ""){
-          const result = await dispatch(updateMobileNumber({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
-          if(result.payload.status == 'Success'){
-            Toast.show(result.payload.message,Toast.LONG);
-            navigation.navigate('EditProfileScreen');
-            setNumVerify(false);
-          } 
-            Toast.show(result.payload.message,Toast.LONG);
-          }else{
-            Toast.show('Please Enter OTP',Toast.LONG);
-          }
-            setVerifying("Verify");
-       };
+      setVerifying("Verifying...")
+        if(otpInput !== ""){
+        const result = await dispatch(updateMobileNumber({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
+        if(result.payload.status == 'Success'){
+          Toast.show(result.payload.message,Toast.LONG);
+          navigation.navigate('EditProfileScreen');
+          setNumVerify(false);
+        } 
+          Toast.show(result.payload.message,Toast.LONG);
+        }else{
+          Toast.show('Please Enter OTP',Toast.LONG);
+        }
+          setVerifying("Verify");
+    };
     
 
     const handleEdit = () => {
@@ -66,24 +66,10 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
           
           if(token?.payload?.status == 'Success'){
             setmobileNumb(phone);
-            // await storeData('USER_INFO',JSON.stringify({
-            //   login:true,
-            //   ...alluser,
-            //   mobilenumber:'9090909090'
-            // }));
-            // await storeData('USER_INFO.data.mobilenumber',9090909090);
             Toast.show(token.payload.message, Toast.LONG);
-
-            // navigation.navigate('DoctorOtp',{
-            //   mobile_no: token.payload.userdetails,
-            //   email:email,
-            //   user_id : token.payload.userid,
-            //   role:role
-            // })
           }
-          // Toast.show("Please Enter Mobile No. OR Email");
         }else{
-          Toast.show("Please Enter Mobile No. OR Email",Toast.LONG);
+          Toast.show("Please Enter Mobile No.",Toast.LONG);
         }   
     }
 

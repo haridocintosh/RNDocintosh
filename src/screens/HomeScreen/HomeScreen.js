@@ -145,17 +145,16 @@ const HomeScreen = ({navigation,route})=> {
     getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResData(reData)
-      setuserdata({
-        // profile:reData?.profileimage,
-        user_id:reData?.id,
-        role:reData?.role,
-      });
       setModalVisible(false);
       setBottumLoader(true);
       const value = await AsyncStorage.getItem('profileImage');
       if (value !== null) {
         setuserdata({
+          ...userdata,
           profile:value,
+          user_id:reData?.id,
+          role:reData?.role,
+
         });
       }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
@@ -291,8 +290,8 @@ const HomeScreen = ({navigation,route})=> {
       
     <View style={{padding:10}}>
       <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} 
-        onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
-        <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',alignItems:'center'}} >
+        onPress={() => navigation.navigate('SharePost')}>
+        <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',   alignItems:'center'}} >
           <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>

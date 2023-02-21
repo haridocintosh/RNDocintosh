@@ -5,11 +5,15 @@ import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
 import EmailVerify from './EmailVerify';
-
+import { checkEmail } from '../../../../redux/reducers/loginAuth';
+import { useDispatch } from 'react-redux';
+import Toast from 'react-native-simple-toast';
 
 const EmailModal = ({emailid,setemailid}) => {
     const [message , setmessage] = useState();
+    const [email , setEmail] = useState();
     const [emailVerify,setemailVerify] = useState(false);
+    const dispatch = useDispatch();
 
     const handleVerify = () => {
         setemailVerify(true);
@@ -17,22 +21,34 @@ const EmailModal = ({emailid,setemailid}) => {
     }
 
     const isValidemailRegex    =    /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-
     const  handleOnChangeEmail = (text)=>{
         if(!isValidemailRegex.test(text)){
+            setEmail('');
             setmessage("Please enter valid email!");
         }else{
             setmessage('');
+            setEmail(text);
         }
-        // setUserInfo({ ...userInfo, 
-        //   email: text,
-        // });
+      }
+ 
+      const onSubmitEmail = async() => {
+        console.log('jnfjsdnj',email);
+        if(email != ""){
+            setemailid(false);
+          const result = await dispatch(checkEmail({email:email}));
+          // console.log(result.payload);
+          if(result.payload.status_code != "NE"){
+            Toast.show('This Email Id registered with us', Toast.LONG);
+          }else{
+            setemailVerify(true);
+          }  
+        }
       }
 
 
   return (
     <>
-    <EmailVerify emailVerify={emailVerify} setemailVerify={setemailVerify}/>
+    <EmailVerify emailVerify={emailVerify} setemailVerify={setemailVerify} emailId={email} />
     <Modal
         style={{}}
         animationType="slide"
@@ -46,13 +62,16 @@ const EmailModal = ({emailid,setemailid}) => {
                 <Text style={styles.modalText}>Edit Email ID</Text>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Email ID*</Text>
-                    <TextInput autoCapitalize="none" keyboardType="email-address" placeholder="docintosh@gmail.com" onChangeText={(value) => handleOnChangeEmail(value)}/>
+                    <TextInput autoCapitalize="none" 
+                    keyboardType="email-address"
+                    placeholder="docintosh@gmail.com" 
+                    onChangeText={(value) => handleOnChangeEmail(value)}/>
                 </View>
                 {message ? (<Text style={{color:'red', fontSize:12, alignSelf:'center'}}>{message}</Text>):null}
                 <View style={styles.modalBtnContainer}>
                     <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
                         titleStyle={{ color:'#fff', textAlign:"center"}}
-                        onPress={() => handleVerify()} />
+                        onPress={() => onSubmitEmail()} />
                 </View>
             </View>
         </View>

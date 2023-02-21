@@ -27,7 +27,6 @@ import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
 
-
 const requestCameraPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(
@@ -743,4 +742,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default  Sharepost
+export default Sharepost

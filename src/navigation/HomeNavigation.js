@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Knowledge2Screen from '../screens/Knowledge2Screen';
-import SharePost from '../screens/HomeScreen/postScreen/SharePost';
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
 import SentimentixScreen from '../screens/SentimentixScreen';
@@ -44,7 +43,7 @@ import EarnDocCoins from '../screens/Leaderboard/EarnDocCoins';
 import Rewards from '../components/Rewards/Rewards';
 import SinglePost from '../screens/SinglePost';
 import ProfilePictureCrop from '../screens/EditProfile/ProfilePictureCrop';
-
+import Sharepost from '../screens/HomeScreen/postScreen/SharePost';
 
 const HomeNavigation = () => {
     const navigation  = useNavigation();
@@ -60,7 +59,7 @@ const HomeNavigation = () => {
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={showHeaderItem}/>
           <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={showHeaderItem}/>
           <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={showHeaderItem}/>
-          <Stack.Screen  name="SharePost" component={SharePost} options={showHeaderItem} />
+          <Stack.Screen  name="Sharepost" component={Sharepost} options={showHeaderItem} />
           <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen}/>
           <Stack.Screen name="PostsScreen" component={PostsScreen} options={showHeaderItem}/>
           <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={showHeaderItem} />

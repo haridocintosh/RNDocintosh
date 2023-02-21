@@ -290,7 +290,7 @@ const HomeScreen = ({navigation,route})=> {
       
     <View style={{padding:10}}>
       <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} 
-        onPress={() => navigation.navigate('SharePost')}>
+        onPress={() => navigation.navigate('Sharepost')}>
         <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',   alignItems:'center'}} >
           <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>

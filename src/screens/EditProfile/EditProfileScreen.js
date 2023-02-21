@@ -177,11 +177,11 @@
                 </Text>
                 <View style={styles.userCategoryContainer}>
                   <Text style={styles.userCategory}>
-                    {userdata?.speciality} | {userdata?.city}
+                    {userdata?.speciality}  {`| $userdata?.city`}
                   </Text>
-                  <TouchableOpacity onPress={toggleModal}>
+                  {/* <TouchableOpacity onPress={toggleModal}>
                     <Entypo name="edit" size={23} color="black"  style={{marginLeft:10,color:'#2C8892'}}  />
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
             </View>
 

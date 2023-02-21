@@ -296,11 +296,10 @@ const HomeScreen = ({navigation,route})=> {
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
           </View>
-          <TouchableOpacity  onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
+          <TouchableOpacity  onPress={() => userdata?.role == 4 && navigation.navigate('Sharepost')}>
             <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
           </TouchableOpacity>
         </View>
-      
       <View>
           <View style={styles.marginten}>
               <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>

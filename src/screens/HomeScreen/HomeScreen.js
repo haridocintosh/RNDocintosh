@@ -146,17 +146,15 @@ const HomeScreen = ({navigation,route})=> {
     getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResData(reData)
-      setuserdata({
-        // profile:reData?.profileimage,
-        user_id:reData?.id,
-        role:reData?.role,
-      });
       setModalVisible(false);
       setBottumLoader(true);
       const value = await AsyncStorage.getItem('profileImage');
       if (value !== null) {
         setuserdata({
+          ...userdata,
           profile:value,
+          user_id:reData?.id,
+          role:reData?.role,
         });
       }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
@@ -291,15 +289,16 @@ const HomeScreen = ({navigation,route})=> {
       </Animated.View>
       
     <View style={{padding:10}}>
-        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'#fff',borderRadius:50,marginTop:-35,padding:10}} >
+      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} 
+        onPress={() => navigation.navigate('SharePost')}>
+        <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',   alignItems:'center'}} >
           <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
           </View>
-          <TouchableOpacity  onPress={() => userdata?.role == 4 && navigation.navigate('Sharepost')}>
             <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
-          </TouchableOpacity>
         </View>
+        </Card>
       <View>
           <View style={styles.marginten}>
               <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>

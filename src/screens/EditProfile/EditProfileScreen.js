@@ -26,9 +26,6 @@
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
   
-  
-  
-
   const EditProfileScreen = ({route,navigation}) => {
     const [userdata,setuserdata] = useState([]);
     const [locationModal, setLocationModal] = useState(false);
@@ -159,7 +156,7 @@
 
           <GetProfile profile={profile} setProfile={setProfile} changeProfile={changeProfile}/>
           <LocationModal locationModal={locationModal} setLocationModal={setLocationModal}/>
-          <MobileNumberModal mobileNumber={mobileNumber} setMobileNumber={setMobileNumber}/>
+          <MobileNumberModal mobileNumber={mobileNumber} currentmobileno= {userdata.mobilenumber} setMobileNumber={setMobileNumber}/>
           <EmailModal emailid={emailid} setemailid={setemailid}/>
           <Card style={styles.CartContainer}>
 

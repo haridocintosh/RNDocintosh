@@ -26,6 +26,7 @@
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
   
+  
   const EditProfileScreen = ({route,navigation}) => {
     const [userdata,setuserdata] = useState([]);
     const [locationModal, setLocationModal] = useState(false);
@@ -141,6 +142,13 @@
     const handleWorkloadMore = () => {
       setWorkShowAll()
     }
+    
+    useEffect(()=>{
+      const {justLoad} = route?.params;
+      if(justLoad == "justLoad"){
+        asyncFetchDailyData();
+      }
+    },[route?.params])
 
     useEffect(()=>{
       asyncFetchDailyData();

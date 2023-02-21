@@ -146,22 +146,18 @@ export const styles = StyleSheet.create({
   container:{
     width:150,
     position:'absolute',
-    right:0,
+    right:10,
     borderRadius:5,
-    zIndex:3,
+    zIndex:100,
     top:40
-},
+  },
   optionModal:{
     width:155,
     backgroundColor:'#fff',
-    // position:'absolute',
-    // right:0,
-    // top:-10,
     borderRadius:5,
     justifyContent:"center",
     paddingHorizontal:15,
     paddingVertical:10,
-    zIndex:3,
     shadowColor: 'black',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2},
@@ -170,7 +166,9 @@ export const styles = StyleSheet.create({
   },
   optionList:{
     paddingVertical:7,
-    flexDirection:'row'
+    flexDirection:'row',
+    justifyContent:'flex-start',
+    alignItems:'center'
   },
   optionListText:{
     color:'#071B36',

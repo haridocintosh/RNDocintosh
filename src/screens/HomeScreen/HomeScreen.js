@@ -288,45 +288,45 @@ const HomeScreen = ({navigation,route})=> {
           </Animated.View>
       </Animated.View>
       
-    <View style={{padding:10}}>
-      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} 
-        onPress={() => navigation.navigate('Sharepost')}>
-        <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',   alignItems:'center'}} >
-          <View style={{flexDirection:'row'}}>
-          <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
-          <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
+      <View style={{padding:10}}>
+        <Card style={styles.whatsMindCartConatiner} 
+          onPress={() => navigation.navigate('Sharepost')}>
+          <View style={styles.whatsMindConatiner} >
+            <View style={{flexDirection:'row'}}>
+            <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
+            <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
+            </View>
+              <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
           </View>
-            <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
+          </Card>
+        <View>
+            <View style={styles.marginten}>
+                <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>
+                <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
+            </View>
+            <View style={{paddingBottom:550}}>
+            <Animated.FlatList
+                ref={ref}
+                onScroll={Animated.event(
+                  [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
+                  {useNativeDriver: false},
+                )}
+                data={allPost}
+                renderItem={renderItem}
+                keyExtractor={(item,index) => index}
+                ListFooterComponent={renderLoader}
+                onEndReached={() => handleLoadeMore()}
+                showsVerticalScrollIndicator={false}
+                viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+                viewabilityConfig={_viewabilityConfig}
+                // ListEmptyComponent={_listEmptyComponent}
+                refreshing={refresh}
+                onRefresh={() => setRefresh(true)}
+                onScrollBeginDrag={() => setModalVisible(false)}
+            />
+            </View>
         </View>
-        </Card>
-      <View>
-          <View style={styles.marginten}>
-              <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>
-              <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
-          </View>
-          <View style={{paddingBottom:550}}>
-          <Animated.FlatList
-              ref={ref}
-              onScroll={Animated.event(
-                [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
-                {useNativeDriver: false},
-              )}
-              data={allPost}
-              renderItem={renderItem}
-              keyExtractor={(item,index) => index}
-              ListFooterComponent={renderLoader}
-              onEndReached={() => handleLoadeMore()}
-              showsVerticalScrollIndicator={false}
-              viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-              viewabilityConfig={_viewabilityConfig}
-              // ListEmptyComponent={_listEmptyComponent}
-              refreshing={refresh}
-              onRefresh={() => setRefresh(true)}
-              onScrollBeginDrag={() => setModalVisible(false)}
-          />
-          </View>
-      </View>
-      </View>
+        </View>
   </SafeAreaView>
   );
 }

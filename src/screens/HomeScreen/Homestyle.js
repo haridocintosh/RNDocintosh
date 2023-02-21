@@ -13,6 +13,20 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Inter-Regular",
   },
+  whatsMindCartConatiner: {
+    marginTop:-35, 
+    zIndex:1, 
+    borderRadius:50,
+    shadowRadius:10, 
+    shadowOffset:10,
+    backgroundColor:'#fff'
+  },
+  whatsMindConatiner: {
+    flexDirection:'row', 
+    margin:10,
+    justifyContent:'space-between',   
+    alignItems:'center'
+  },
   whtsnewtxt: {
     alignSelf: "center",
     paddingLeft: 12,

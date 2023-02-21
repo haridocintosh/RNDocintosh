@@ -53,6 +53,7 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
+    console.log(register);
     
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
@@ -60,7 +61,7 @@ const LoginScreen = () => {
       setloader(true);
       const token = await dispatch(userLogin(register));
       if(token?.payload?.status == 'Success'){
-        console.log(token.payload.session_data.profileimage);
+        // console.log(token.payload.session_data.profileimage);
           setloader(false)
           await storeData('USER_INFO',JSON.stringify({
           login:true,

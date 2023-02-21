@@ -10,6 +10,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { getLocalData } from '../../../apis/GetLocalData';
+import { userIdupdate } from '../../../../redux/reducers/otpSlice';
+import Toast from 'react-native-simple-toast';
  
 
 const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
@@ -24,19 +26,21 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
 
+
   const handleSubmit = async ()=>{
-      if(phone){
+    //console.log(email, userId);
+      if(email){
         const token =await dispatch(userIdupdate({
           email:email,
           id:userId
         }))
         
         if(token?.payload?.status == 'Success'){
-          setEmailID(phone);
+          //setEmailID(phone);
           Toast.show(token.payload.message, Toast.LONG);
-        }
+       }
       }else{
-        Toast.show("Please Enter Mobile No.",Toast.LONG);
+        Toast.show("Please Enter Email ID.",Toast.LONG);
       }   
   }
 
@@ -44,7 +48,7 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
     setEditEmail(!editEmail)
   }
 
-  const isValidemailRegex    =    /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+  const isValidemailRegex =  /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
   const  EmailCheck = (text)=>{
       if(!isValidemailRegex.test(text)){
           setEmail('');
@@ -54,6 +58,23 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
           setEmail(text);
       }
     }
+
+    const submitEmailOtp = async() =>{
+      console.log(otpInput, userId);
+      // setVerifying("Verifying...")
+      //   if(otpInput !== ""){
+      //   const result = await dispatch(updateEmail({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
+      //   if(result.payload.status == 'Success'){
+      //     Toast.show(result.payload.message,Toast.LONG);
+      //     navigation.navigate('EditProfileScreen');
+      //     setNumVerify(false);
+      //   } 
+      //     Toast.show(result.payload.message,Toast.LONG);
+      //   }else{
+      //     Toast.show('Please Enter OTP',Toast.LONG);
+      //   }
+      //     setVerifying("Verify");
+    };
 
 
   useEffect(() => {
@@ -65,7 +86,6 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
     const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
 
-   
 }, [counter]);
 
 
@@ -86,17 +106,16 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
                 <View style={styles.NumberEditBox}>
                   <TextInput style={editEmail ? styles.numInputEdit:styles.numInput } 
                       autoCapitalize="none"
-                      value={editEmail ? email: emailId}
+                      value={editEmail ? editEmail: emailId}
                       onChangeText={e => EmailCheck(e)}
                       clearTextOnFocus={true}
                     />
-                     <TouchableOpacity onPress={() => handleEdit()}>
+                    <TouchableOpacity onPress={() => handleEdit()}>
                     {editEmail ? 
                         <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
                     :
                        <Entypo name="edit" size={23} color="#2C8892" style={{margin:5}}/>
                     }
-                     
                     </TouchableOpacity>
                   
                     {editEmail &&
@@ -121,8 +140,7 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
                 </View>
                 </View>
                 <View style={styles.modalBtnContainer}>
-                    <Button title="Verify" buttonStyle={{ backgroundColor:'#2C8892',width:'100%',marginTop:25}}
-                        titleStyle={{ color:'#fff', textAlign:"center"}} />
+                    <Button title="Verify" buttonStyle={{ backgroundColor:'#2C8892',width:'100%',marginTop:25}} titleStyle={{ color:'#fff', textAlign:"center"}}   onPress={()=>submitEmailOtp()} />
                 </View>
             </View>
         </View>

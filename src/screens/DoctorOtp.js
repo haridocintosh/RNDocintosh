@@ -25,6 +25,7 @@ import { View,
  const DoctorOtp = ({route}) => {
     const dispatch = useDispatch(); 
     const {mobile_no, email, user_id, role, speciality} = route.params;
+    console.log(speciality);
     const [phone ,setPhone] = useState("");
     const navigation = useNavigation();
     const [counter, setCounter] = useState(30);

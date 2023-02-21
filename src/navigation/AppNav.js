@@ -86,7 +86,7 @@ const handleMessage = () => {
             <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
             <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  
                headerRight: () => (
-                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)
+                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}} >Skip</Text>)
               }} />
             <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
             <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />

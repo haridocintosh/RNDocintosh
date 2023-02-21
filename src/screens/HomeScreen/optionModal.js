@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
     zIndex:3,
     top:40
 },
-optionModal:{
+  optionModal:{
     width:155,
     backgroundColor:'#fff',
     // position:'absolute',

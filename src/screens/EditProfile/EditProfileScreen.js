@@ -133,7 +133,7 @@
     const handleAward = () => {
       getLocalData('USER_INFO').then(async (res) => {
         const reData = res?.data;
-        const getAwardResult = await dispatch(getAwardAPI({user_id : 230025}));
+        const getAwardResult = await dispatch(getAwardAPI({user_id : reData.id}));
         setGetAward(getAwardResult.payload)
       })
     }
@@ -266,8 +266,9 @@
                 )
               })}
               {workShowAll !== undefined &&
+              workResult?.length > 2 &&
               <TouchableOpacity style={styles.ShowAllContainer} onPress={() => handleWorkloadMore()}>
-                <Text style={styles.ShowAllText}>Show all {workResult?.length-2} experiences</Text>
+                <Text style={styles.ShowAllText}>Show all { workResult?.length-2  } experiences</Text>
                 <AntDesign name="arrowright" size={25} color="#2376E5"/>
               </TouchableOpacity>}
           </Card>

@@ -19,6 +19,9 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
     
     const dispatch = useDispatch();
 
+    console.log("passWorkExp",passWorkExp);
+    console.log("isEnabled",isEnabled);
+
     const onSubmit = async (data) => {
         const startingDate = format(startDate? startDate :passWorkExp?.start_date, 'yyyy-MM-dd');
         const endingDate = isEnabled ? "1970-01-01" : format(endDate, 'yyyy-MM-dd');
@@ -125,7 +128,7 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
                     <Text style={styles.workingToggleText}>Currently Working</Text>
                         <Switch
                             trackColor={{false: '#DDDDDD', true: '#2C8892'}}
-                            thumbColor={String(passWorkExp?.end_date).includes(1970) ? '#DDDDDD' : '#f4f3f4'}
+                            thumbColor={isEnabled ? '#DDDDDD' : '#f4f3f4'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={setIsEnabled}
                             value={isEnabled}

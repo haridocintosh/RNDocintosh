@@ -174,7 +174,7 @@ const LoginScreen = () => {
         />
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'md-eye-off' : 'md-eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
-      <View style={{justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
+      <View style={styles.forgetPassContainer}>
 
       <View style={styles.section}>
         <CheckBox
@@ -184,8 +184,8 @@ const LoginScreen = () => {
         />
         <Text style={{
             fontSize: 12,
+            marginLeft:5,
             fontWeight: '400',
-            marginBottom: 20,
             fontStyle: 'normal',
             letterSpacing: 1,
             color: '#51668A',
@@ -197,7 +197,6 @@ const LoginScreen = () => {
           <Text style={{
             fontSize: 14,
             fontWeight: '600',
-            marginBottom: 20,
             fontFamily: 'PlusJakartaSans-Bold',
             fontStyle: 'normal',
             lineHeight: 24,
@@ -281,6 +280,14 @@ ragistertext2:{
   fontFamily:"Inter-Regular"
 },
 section:{flexDirection:'row',justifyContent:'center',alignItems:'center'},
+forgetPassContainer:{
+  justifyContent: 'space-between',
+  flexDirection:'row',
+  paddingHorizontal: 5,
+  paddingBottom:12,
+  alignItems:"center",
+  marginTop:20
+},
 });
 
 export default LoginScreen;

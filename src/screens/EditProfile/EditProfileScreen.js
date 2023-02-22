@@ -144,12 +144,12 @@
     }
     
     useEffect(()=>{
-      if(route?.params){
-      const {justLoad} = route?.params;
-      if(justLoad == "justLoad"){
-        asyncFetchDailyData();
+      if(route?.params) {
+        const {justLoad} = route?.params;
+        if(justLoad == "justLoad"){
+          asyncFetchDailyData();
+        }
       }
-    }
     },[route?.params])
 
     useEffect(()=>{

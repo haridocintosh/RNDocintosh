@@ -87,6 +87,8 @@ export default function ContactPermission({navigation}) {
           navigation.navigate("Login");
         }
       })
+     }else{
+      navigation.navigate("Login");
      }
     }
      
@@ -106,7 +108,7 @@ export default function ContactPermission({navigation}) {
         {
           'title': 'Contacts',
           'message': 'This app would like to view your contacts.',
-          'buttonPositive': 'Please accept bare mortal'
+          'buttonPositive': 'Ok'
         }
       )
       .then(res=> { 
@@ -222,6 +224,8 @@ const renderItem = (item) => {
           <View style={styelcss.selectAllList}>
             {/* <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text>
             {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
+            {/* <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text> */}
+            {/* {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
             <CheckBox  
               onClick={()=> onAllChecked()} 
               isChecked={isChecked} 

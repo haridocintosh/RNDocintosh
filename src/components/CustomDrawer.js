@@ -25,8 +25,6 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import { getLocalData } from '../apis/GetLocalData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const CustomDrawer = (props) => { 
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
@@ -99,10 +97,10 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
               <Entypo name="trophy" size={25} style={{color:'#ffff'}} />
               <Text style={styles.sideDrawerName}>Leaderboard</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
@@ -131,10 +129,10 @@ const CustomDrawer = (props) => {
               <Entypo name="text-document-inverted" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Business Page</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Rewards")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Rewards")}}>
               <Ionicons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Rewards</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
               <Ionicons name="settings-sharp" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Settings</Text>

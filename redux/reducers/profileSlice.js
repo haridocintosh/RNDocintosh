@@ -77,6 +77,21 @@ export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(d
     }
 })
 
+export const updateEmailID = createAsyncThunk("updateEmailID", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/updateEmailID`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 
 export const userInfo = createAsyncThunk("userInfo", async(data)=>{
     try{
@@ -109,8 +124,6 @@ export const EditProfileAwardAPI = createAsyncThunk("editAward", async(data)=>{
 })
 
 
-
-
 export const profileSlice= createSlice({
     name : 'Profile',
     initialState : {
@@ -119,10 +132,11 @@ export const profileSlice= createSlice({
         error       : false,
         userInfo    : {},
         workExp     : {},
-        award     : {},
-        editAward     : {},
+        award       : {},
+        editAward   : {},
         updateData  : {},
         user_data   : {},
+        updateEmail : {}
     },
     reducers : {
       
@@ -190,7 +204,24 @@ export const profileSlice= createSlice({
             state.loading = false;
             state.error = false
         })
-   //===========================getWorkExpAPI=============================
+
+    //===========================updateEmailID=============================
+
+        builder.addCase(updateEmailID.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(updateEmailID.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.updateEmail    =  action.payload;
+        })
+        builder.addCase(updateEmailID.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===========================getWorkExpAPI=============================
         builder.addCase(getWorkExpAPI.pending, (state) => {
             state.loading       =  true;
         })

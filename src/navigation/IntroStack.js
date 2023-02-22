@@ -12,23 +12,20 @@ import Lottie from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
 import CustomButton from '../components/CustomButton';
 
-
 const styles = {
   wrapper: {
     backgroundColor: 'transparent',
-    paddingTop: 20,
-    height:"100%"
+    height:"100%",
   },
-
-  slide: {
-
+  slide:{
     backgroundColor: 'transparent',
-    width:"100%",
-height:"100%"
- 
+    width:Dimensions.get('window').width,
+    height:"100%",
   },
   sliderImgBox:{
     flex:1,
+    justifyContent:'center',
+    alignItems:'center'
   },
   container: {
     flex: 1,
@@ -38,13 +35,10 @@ height:"100%"
       backgroundColor: 'transparent',
     position: 'absolute',
   },
-
   image: {
-    width:360,
-   height:333,
-    position: "relative",
-   
-    resizeMode : "cover"
+    width:Dimensions.get('window').width/1,
+    height:"100%",
+    resizeMode : "contain"
   },
   imagelogo: {
     width: 57,
@@ -62,22 +56,18 @@ height:"100%"
     fontSize: 32,
     paddingTop: 40,
     color: '#071B36',
-    // fontWeight: "700",
-    lineHeight: 40,
     paddingLeft: 32,
     paddingRight:40,
     fontFamily:"PlusJakartaSans-Bold"
-    // width: 300,
   },
   sliderPara: {
     fontSize: 14,
     paddingTop: 12,
     color: '#071B36',
-    fontWeight: "500",
-    lineHeight: 20,
     paddingLeft: 32,
     width: 281,
-    fontFamily:"Inter-Regular" 
+    fontFamily:"Inter-Regular",
+    lineHeight:18 
   },
   ragisterbutton: {
     paddingLeft: 20,
@@ -90,7 +80,6 @@ height:"100%"
   ragistertext0: {
     flexDirection: 'row',
     justifyContent: 'center',
-
     marginBottom: 20,
   },
   ragistertext2: {
@@ -98,7 +87,23 @@ height:"100%"
     fontWeight: '400',
     color: '#8C97AB',
   },
-
+  DotStyle: {
+    width: 6,
+    height: 6,
+    borderRadius: 7,
+    marginLeft: 7,
+    marginRight: 7,
+    backgroundColor: '#F8B84E',
+    // position:'absolute'
+  },
+  activeDotStyle: {
+    backgroundColor: '#F8B84E',
+    width: 32,
+    height: 6,
+    borderRadius: 7,
+    marginLeft: 7,
+    marginRight: 7,
+  },
 }
 export const Slider_comp = () => {
   const navigation = useNavigation();
@@ -112,105 +117,51 @@ export const Slider_comp = () => {
   }, [])
 
   return ( 
-  <View style = {
-      styles.container
-    } >
-    <StatusBar barStyle = "light-content" />
-    <Swiper style = { styles.wrapper}
-    dot = {
-      <View
-      style = {
-        {
-          width: 6,
-          height: 6,
-          borderRadius: 7,
-          marginLeft: 7,
-          marginRight: 7,
-          backgroundColor: '#F8B84E',
-        }
-      }
-      />
-    }
-    activeDot = {
-    <View
-      style = {
-        {
-          backgroundColor: '#F8B84E',
-          width: 32,
-          height: 6,
-          borderRadius: 7,
-          marginLeft: 7,
-          marginRight: 7
-        }
-      }
-      />
-    }
-    paginationStyle = {
-      {
-        bottom: -15,
-        left: -220
-      }
-    }
-    loop = {
-      false
-    } >
-    {/* <View style = {styles.slide}>
-    <View style={styles.sliderImgBox}>
-        <Image style = {styles.image} source = {require('../assets/intro/Image1.png')} resizeMode = "cover" />
-        <Image style = {styles.imagelogo} source = {require('../assets/intro/logo1.png')}resizeMode = "cover" />
-    </View>
-    <Text style = {styles.sliderText}>Create & Join Discussion Groups </Text> 
-    <Text style = {styles.sliderPara}>Impedit quo minus id quod maxime placeat facere possimus. </Text>
-    </View> */}
+    <View style={styles.container}>
+      <StatusBar barStyle = "light-content"/>
+      <Swiper 
+        style={ styles.wrapper} 
+        dot={<View style={styles.DotStyle}/>}
+        activeDot={<View style={styles.activeDotStyle}/>}
+        paginationStyle={{bottom: -15,right:275}}
+        loop={false}
+        autoplay={true}
+      >
+          <View style={styles.slide}>
+            <View style={styles.sliderImgBox}>
+              <Lottie  ref={animationRef} source={require('../assets/intro/lone.json')}/>
+            </View>
+            <Text style={styles.sliderText }>Securely Share Posts on Social</Text> 
+            <Text style={styles.sliderPara}>Share studies, reports, and personal awards, achievements and professional milestones. Securely.</Text> 
+          </View>
 
-      <View style ={styles.slide}>
+          <View style={styles.slide} >
+            <View style={styles.sliderImgBox}>
+              <Image style={styles.image} source={require('../assets/intro/Image3.png')}/>
+            </View> 
+            <Text style={styles.sliderText}>Earn by Answering Polls, Surveys </Text>    
+            <Text style={styles.sliderPara}>Earn honoraria by sharing opinions in polls and taking part in surveys.</Text>
+          </View> 
+      </Swiper> 
 
-    
-      {/* <Image style ={styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" /> */}
-      <View style={styles.sliderImgBox}>
-        {/* <Image style = {styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" /> */}
-        <Lottie
-      ref={animationRef}
-      source={require('../assets/intro/lone.json')}/>
-   
-      </View>
-      <Text style = {styles.sliderText }>Securely Share Posts on Social</Text> 
-      <Text style = { styles.sliderPara}>Share studies, reports, and personal awards, achievements and professional milestones. Securely.</Text> 
-    </View>
-
-    <View style = {styles.slide} >
-      <View style={styles.sliderImgBox}>
-        <Image style = {styles.image} source = {require('../assets/intro/Image3.png')} resizeMode = "cover" />
+      <View style = {styles.ragisterbutton} >
+        <CustomButton label = {'Register'} onPress = {() => navigation.navigate('Register')}/>
       </View> 
-      <Text style = {styles.sliderText}>Earn by Answering Polls, Surveys </Text>    
-      <Text style = {styles.sliderPara}>Earn honoraria by sharing opinions in polls and taking part in surveys. </Text>
-    </View> 
-  </Swiper> 
-    <View style = {styles.ragisterbutton} >
-      <CustomButton label = {'Register'} onPress = { () => navigation.navigate('Register')}/>
-      {/* <CustomButton label = {'Login'} onPress = { () => navigation.navigate('MobileScreen')}/> */}
-      </View> 
-      <View style = {styles.ragistertext0}>
-      <Text style = {styles.ragistertext2}>Already a member ? </Text> 
-      <TouchableOpacity onPress = {() => navigation.navigate('Login')} >
-      <Text style = {{ color: '#2376E5', fontWeight: '600',fontSize: 16,fontFamily:"Inter-Regular"}}> Login </Text> 
-      </TouchableOpacity> 
+
+      <View style={styles.ragistertext0}>
+        <Text style={styles.ragistertext2}>Already a member ?</Text> 
+        <TouchableOpacity onPress = {() => navigation.navigate('Login')} >
+          <Text style={{ color: '#2376E5', fontWeight: '600',fontSize: 16,fontFamily:"Inter-Regular"}}> Login </Text> 
+        </TouchableOpacity> 
       </View>
-      </View>
+    </View>
   )
 }
 
 export default function IntroStack() {
-  return ( 
-    <View style = {
-      {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }
-    } >
-    <Slider_comp/>
-    
+  return( 
+    <View style={{flex: 1,justifyContent: "center",alignItems: "center"}}>
+      <Slider_comp/>
     </View>
   );
 }

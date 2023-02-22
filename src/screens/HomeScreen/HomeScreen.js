@@ -132,13 +132,19 @@ const HomeScreen = ({navigation,route})=> {
      setBottumLoader(false);
   }
 
+  
+
   useEffect(()=>{
-    if(ref.current) {
-      ref.current.scrollToOffset({ offset: 0 })
-    }
     if(isFocused){
       asyncFetchDailyData();
       getStorageData();
+      if(ref.current && !route?.params?.comment) {
+        ref.current.scrollToOffset({ offset: 0})
+      }else{
+        route.params.comment == ""
+        console.log("done");
+        console.log(route?.params?.comment);
+      }
     }
   },[isFocused]);
 

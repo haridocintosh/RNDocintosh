@@ -39,7 +39,8 @@ const CommentsScreen = ({route,navigation}) => {
       const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       getData();
-      onChangeText()
+      onChangeText();
+      navigation.navigate("HomeScreen",{comment:"comment"})
     }
 
 

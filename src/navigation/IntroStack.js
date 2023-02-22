@@ -65,7 +65,7 @@ const styles = {
     paddingTop: 12,
     color: '#071B36',
     paddingLeft: 32,
-    width: 281,
+    width: 300,
     fontFamily:"Inter-Regular",
     lineHeight:18 
   },
@@ -127,21 +127,21 @@ export const Slider_comp = () => {
         loop={false}
         autoplay={true}
       >
-          <View style={styles.slide}>
-            <View style={styles.sliderImgBox}>
-              <Lottie  ref={animationRef} source={require('../assets/intro/lone.json')}/>
-            </View>
-            <Text style={styles.sliderText }>Securely Share Posts on Social</Text> 
-            <Text style={styles.sliderPara}>Share studies, reports, and personal awards, achievements and professional milestones. Securely.</Text> 
-          </View>
-
           <View style={styles.slide} >
             <View style={styles.sliderImgBox}>
               <Image style={styles.image} source={require('../assets/intro/Image3.png')}/>
             </View> 
-            <Text style={styles.sliderText}>Earn by Answering Polls, Surveys </Text>    
-            <Text style={styles.sliderPara}>Earn honoraria by sharing opinions in polls and taking part in surveys.</Text>
+            <Text style={styles.sliderText}>Earn while you learn</Text>    
+            <Text style={styles.sliderPara}>Take part in the survey and be rewarded.</Text>
           </View> 
+
+          <View style={styles.slide}>
+            <View style={styles.sliderImgBox}>
+              <Lottie  ref={animationRef} source={require('../assets/intro/lone.json')}/>
+            </View>
+            <Text style={styles.sliderText }>Share for fame</Text> 
+            <Text style={styles.sliderPara}>Let's talk about your practice insights and milestones.</Text> 
+          </View>
       </Swiper> 
 
       <View style = {styles.ragisterbutton} >

@@ -84,7 +84,7 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
                 <Image source={require('../../../assets/images/Phone_Verification.png')} style={{width:95,height:95}}/>
                 <Text style={styles.OTPtext}>Please enter OTP sent</Text>
                 <View style={styles.NumberEditBox}>
-                  <TextInput style={editEmail ? styles.numInputEdit:styles.numInput } 
+                  {/* <TextInput style={editEmail ? styles.numInputEdit:styles.numInput } 
                       autoCapitalize="none"
                       value={editEmail ? email: emailId}
                       onChangeText={e => EmailCheck(e)}
@@ -96,14 +96,12 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
                     :
                        <Entypo name="edit" size={23} color="#2C8892" style={{margin:5}}/>
                     }
-                     
-                    </TouchableOpacity>
-                  
-                    {editEmail &&
+                    </TouchableOpacity> */}
+                    {/* {editEmail &&
                     <TouchableOpacity onPress={() => handleSubmit()}>
                         <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
                     </TouchableOpacity>
-                    }
+                    } */}
                 </View>
                 {message ? (<Text style={{color:'red', fontSize:12, alignSelf:'center'}}>{message}</Text>):null}
                 <OTPTextView 

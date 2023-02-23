@@ -103,7 +103,7 @@ const HomeScreen = ({navigation,route})=> {
   //       <ActivityIndicator size={'large'} color="#1A7078"/>
   //   </View>)
   // }
-
+// console.log("currentPage",currentPage);
   const renderLoader = () => {
     return (
       bottumLoader ?
@@ -125,30 +125,33 @@ const HomeScreen = ({navigation,route})=> {
     const result = await dispatch(userPostData(postDetails));
     setEndNull(result.payload.result)
      if(result.payload.result !== null){
-      setCurrentPage(prev => prev + 1);
+      console.log("result",result);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
+      console.log("allPostData",allPostData);
+      setCurrentPage(prev => prev + 1)
       setallPost([...allPost, ...allPostData]);
      }
      setBottumLoader(false);
   }
-
-  
+  // console.log(route?.params?.commentCount);
 
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
       getStorageData();
-      if(ref.current && !route?.params?.comment) {
-        ref.current.scrollToOffset({ offset: 0})
-      }else{
-        route.params.comment == ""
-        console.log("done");
-        console.log(route?.params?.comment);
+      if(ref.current) {
+        ref.current.scrollToOffset({offset: 0})
       }
     }
   },[isFocused]);
 
+  // useEffect(()=>{
+  //     asyncFetchDailyData();
+  //     getStorageData();
+  // },[]);
+
   const asyncFetchDailyData = async () => {
+    setCurrentPage(1)
     getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResData(reData)

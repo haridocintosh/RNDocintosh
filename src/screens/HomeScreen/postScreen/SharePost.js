@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
   textInput:{
     height: 100,
     fontSize: 20,
-    fontFamily:'Inter-SemiBold'
+    fontFamily:'Inter-Regular'
   },
   line: {
     backgroundColor: '#cecece',

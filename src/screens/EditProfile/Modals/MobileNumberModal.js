@@ -11,13 +11,16 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
 import { checkMobile } from '../../../../redux/reducers/loginAuth';
 import { useDispatch } from 'react-redux';
-
+import { Edit_ProfileOTP } from '../../../../redux/reducers/profileSlice';
 
 const MobileNumberModal = ({mobileNumber,setMobileNumber, currentmobileno}) => {
 // console.log(currentmobileno);
 const dispatch = useDispatch();
 const [numVerify,setNumVerify] = useState(false);
 const [mobNumber,setMobNumber] = useState(null);
+const [userId, setuserId] = useState();
+const [message , setmessage] = useState();
+
 
   const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
   const navigation = useNavigation();

@@ -1,17 +1,21 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { View, Text ,TextInput,Pressable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
 import EmailVerify from './EmailVerify';
-import { checkEmail } from '../../../../redux/reducers/loginAuth';
 import { useDispatch } from 'react-redux';
 import Toast from 'react-native-simple-toast';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { Edit_ProfileOTP } from '../../../../redux/reducers/profileSlice';
+
+
 
 const EmailModal = ({emailid,setemailid}) => {
     const [message , setmessage] = useState();
     const [email , setEmail] = useState();
+    const [userId, setuserId] = useState();
     const [emailVerify,setemailVerify] = useState(false);
     const dispatch = useDispatch();
 
@@ -33,17 +37,28 @@ const EmailModal = ({emailid,setemailid}) => {
  
       const onSubmitEmail = async() => {
          console.log('jnfjsdnj',email);
+         console.log('userID',userId);
         if(email != ""){
-            setemailid(false);
-          const result = await dispatch(checkEmail({email:email}));
-          // console.log(result.payload);
-          if(result.payload.status_code != "NE"){
-            Toast.show('This Email Id registered with us', Toast.LONG);
-          }else{
+          setemailid(false);
+          const result = await dispatch(Edit_ProfileOTP({email:email, id:userId}));
+          console.log(result.payload);
+          if(result?.payload?.status == 'Success'){
+            Toast.show(result.payload.message, Toast.LONG);
             setemailVerify(true);
+         }else{
+          Toast.show(result.payload.message,Toast.LONG);
           }  
         }
       }
+
+      useEffect(()=>{
+        getLocalData('USER_INFO').then((res) => {
+          const reData = res?.data;
+          // setuser(reData)
+          setuserId(reData?.id)
+        });
+      })
+     
 
 
   return (

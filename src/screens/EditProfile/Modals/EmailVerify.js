@@ -12,6 +12,9 @@ import { useNavigation } from '@react-navigation/native';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { userIdupdate } from '../../../../redux/reducers/otpSlice';
 import Toast from 'react-native-simple-toast';
+import { updateEmailID } from '../../../../redux/reducers/profileSlice';
+
+
  
 
 const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
@@ -60,21 +63,23 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
     }
 
     const submitEmailOtp = async() =>{
-      console.log(otpInput, userId);
-      // setVerifying("Verifying...")
-      //   if(otpInput !== ""){
-      //   const result = await dispatch(updateEmail({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
-      //   if(result.payload.status == 'Success'){
-      //     Toast.show(result.payload.message,Toast.LONG);
-      //     navigation.navigate('EditProfileScreen');
-      //     setNumVerify(false);
-      //   } 
-      //     Toast.show(result.payload.message,Toast.LONG);
-      //   }else{
-      //     Toast.show('Please Enter OTP',Toast.LONG);
-      //   }
-      //     setVerifying("Verify");
-    };
+      console.log(otpInput, userId, emailID);
+      setVerifying("Verifying...")
+        if(otpInput !== ""){
+        const result = await dispatch(updateEmailID({otp:otpInput, user_id:userId, email:emailID}));
+        console.log(result);
+        if(result.payload.status == 'Success'){
+          Toast.show(result.payload.message,Toast.LONG);
+          navigation.navigate('EditProfileScreen');
+          setemailVerify(false);
+          }else{
+            Toast.show(result.payload.message,Toast.LONG);
+          } 
+        }else{
+          Toast.show('Please Enter OTP',Toast.LONG);
+        }
+        setVerifying("Verify");
+      };
 
 
   useEffect(() => {

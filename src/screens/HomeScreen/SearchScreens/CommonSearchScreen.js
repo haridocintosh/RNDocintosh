@@ -10,6 +10,7 @@ const styelcss = require('../../../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
+import { getLocalData } from '../../../apis/GetLocalData';
 
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
@@ -17,9 +18,10 @@ const CommonSearchScreen = () => {
   const refInput = useRef(null);
   const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
+  const [userData,setUserData] = useState();
   const [index, setIndex] = useState(0);
   const [endNull, setEndNull] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState();
   const [bottumLoader, setBottumLoader] = useState(false);
 
   const [routes] = useState([
@@ -35,18 +37,30 @@ const CommonSearchScreen = () => {
       const removed = filteredDataSource?.filter(o => o.id != id)
       setFilteredDataSource(removed);
   }
-  const onChangeText =  (text) =>{
+
+  const GetsearchData =  () => {
+    getLocalData('USER_INFO').then(async (res) => {
+      const reData = res?.data;
+      setUserData(reData)
+      const postData = {pageCounter:1,user_id:reData.id,type:"doctor",search:''};
+      const result = await dispatch(getsearchSplData(postData));
+      setCurrentPage(result?.payload?.pageCounter);
+      setItem(result?.payload?.result);
+      setFilteredDataSource(result?.payload?.result);
+    })
+  }
+
+  const onChangeText = async (text) =>{
     if (text) {
-        const newData = item?.filter((data) => {
-          const itemData = `${data?.username.toUpperCase() + data?.speciality.toUpperCase()}`;
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        });
-        setFilteredDataSource(newData);
         setInputText(text);
+        const postData = {pageCounter:1,user_id:userData.id,type:"doctor",search:text}
+        console.log(postData);
+        const result = await dispatch(getsearchSplData(postData));
+        console.log(result.payload.result);
+        setFilteredDataSource(result?.payload?.result);
       } else {
-        setFilteredDataSource(item);
         setInputText(text);
+        setFilteredDataSource(item);
       }
   }
 
@@ -54,14 +68,17 @@ const CommonSearchScreen = () => {
     if(endNull !== null){
       LoadPost(currentPage + 1);
     }
+    console.log("filteredDataSource",filteredDataSource);
   };
 
   const LoadPost = async (page) => {
     setBottumLoader(true);
-    const result = await dispatch(getsearchSplData({pageCounter:page}));
+    const postData = {pageCounter:page,user_id:userData.id,type:"doctor",search:''};
+    const result = await dispatch(getsearchSplData(postData));
     setEndNull(result?.payload?.result)
     if(result?.payload?.result !== null){
-      setCurrentPage(prev => prev + 1);
+      console.log(result?.payload);
+      setCurrentPage(result?.payload?.pageCounter);
       setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
       // setItem([...filteredDataSource, ...result?.payload?.result])
     }
@@ -143,11 +160,7 @@ const CommonSearchScreen = () => {
     );
   };
 
-  const GetsearchData = async () => {
-      const result = await dispatch(getsearchSplData({pageCounter:0}));
-      setItem(result?.payload?.result);
-      setFilteredDataSource(result?.payload?.result);
-  }
+
 
   useEffect(() => {
     GetsearchData();

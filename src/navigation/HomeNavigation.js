@@ -44,6 +44,8 @@ import Rewards from '../components/Rewards/Rewards';
 import SinglePost from '../screens/SinglePost';
 import ProfilePictureCrop from '../screens/EditProfile/ProfilePictureCrop';
 import Sharepost from '../screens/HomeScreen/postScreen/SharePost';
+import PublicReactions from '../screens/HomeScreen/PublicReactions';
+
 
 const HomeNavigation = () => {
     const navigation  = useNavigation();
@@ -54,6 +56,7 @@ const HomeNavigation = () => {
           <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={showHeaderItem} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={showHeaderItem}/>
           <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+          <Stack.Screen name="PublicReactions" component={PublicReactions}/>
           <Stack.Screen name="Polls" component={Polls} options={showHeaderItem}/>
           <Stack.Screen name="Polls1" component={Polls1} options={showHeaderItem}/>
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={showHeaderItem}/>

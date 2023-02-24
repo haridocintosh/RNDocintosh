@@ -69,6 +69,7 @@ export const getsearchSplData = createAsyncThunk("searchSplData", async (data)=>
      }
 })
 
+
 export const deviceVersion = createAsyncThunk("getVersion", async ()=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getversion`);

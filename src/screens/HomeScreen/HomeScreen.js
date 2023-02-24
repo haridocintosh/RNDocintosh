@@ -47,6 +47,7 @@ const HomeScreen = ({navigation,route})=> {
   const ref = useRef(null);
   const { width, height} = Dimensions.get('window');
 
+
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100;
@@ -103,7 +104,7 @@ const HomeScreen = ({navigation,route})=> {
   //       <ActivityIndicator size={'large'} color="#1A7078"/>
   //   </View>)
   // }
-// console.log("currentPage",currentPage);
+
   const renderLoader = () => {
     return (
       bottumLoader ?
@@ -125,33 +126,29 @@ const HomeScreen = ({navigation,route})=> {
     const result = await dispatch(userPostData(postDetails));
     setEndNull(result.payload.result)
      if(result.payload.result !== null){
-      console.log("result",result);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
-      console.log("allPostData",allPostData);
-      setCurrentPage(prev => prev + 1)
+      setCurrentPage(result?.payload?.pageCounter)
       setallPost([...allPost, ...allPostData]);
      }
      setBottumLoader(false);
   }
-  // console.log(route?.params?.commentCount);
-
-  useEffect(()=>{
-    if(isFocused){
-      asyncFetchDailyData();
-      getStorageData();
-      if(ref.current) {
-        ref.current.scrollToOffset({offset: 0})
-      }
-    }
-  },[isFocused]);
 
   // useEffect(()=>{
+  //   if(isFocused){
   //     asyncFetchDailyData();
   //     getStorageData();
-  // },[]);
+  //     // if(ref.current) {
+  //     //   ref.current.scrollToOffset({offset: 0})
+  //     // }
+  //   }
+  // },[isFocused]);
+
+  useEffect(()=>{
+      asyncFetchDailyData();
+      getStorageData();
+  },[]);
 
   const asyncFetchDailyData = async () => {
-    setCurrentPage(1)
     getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResData(reData)
@@ -168,6 +165,8 @@ const HomeScreen = ({navigation,route})=> {
       }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
       const result = await dispatch(userPostData(postDetails));
+      console.log("result",result.payload.pageCounter);
+      setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
@@ -281,20 +280,24 @@ const HomeScreen = ({navigation,route})=> {
             </View>
             <Animated.View style={{flexDirection:'row'}} >
               <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen')}}>
-                <Feather name="search" size={24} color="#ffff"  />
+                <Feather name="search" size={24} color="#ffff" />
               </TouchableOpacity>
               <TouchableOpacity style={{marginLeft:10}} onPress={() => navigation.navigate('BellNotification')}>
                 <MaterialCommunityIcons name="bell-ring-outline" size={24} color="#ffff" />
               </TouchableOpacity>
             </Animated.View>
           </View>
+
           <Animated.View style={[styles.collectedCoins,{transform: [{translateY : scoresPosition}]}]} >
+          <TouchableOpacity onPress={() => navigation.navigate("Rewards")} style={styles.collectedCoinss}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.d} />
             <Text style={styles.count}>
               {allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0} |</Text>
             <Image source={require('../../assets/dr-icon/discount1.png')} style={{width:16, height:16, marginVertical:5,marginHorizontal:5}}/>
             <Text style={styles.count}>0</Text>
+          </TouchableOpacity>
           </Animated.View>
+
       </Animated.View>
       
       <View style={{padding:10}}>

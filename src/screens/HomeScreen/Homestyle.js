@@ -145,12 +145,15 @@ export const styles = StyleSheet.create({
   collectedCoins: {
     borderRadius: 50,
     backgroundColor: "#20324a",
-    flexDirection: "row",
     position: "absolute",
     alignSelf: "center",
     paddingHorizontal: 10,
+    marginTop:20,
+  },
+  collectedCoinss: {
+    flexDirection: "row",
     alignItems: "center",
-    marginTop:20
+    justifyContent:'center'
   },
   viewDoccin: {
     fontSize: 18,
@@ -160,25 +163,27 @@ export const styles = StyleSheet.create({
     color: "#51668A",
     fontSize: 18,
     fontWeight: "500",
-    fontFamily:"Inter-Regular"
+    fontFamily:"Inter-Regular",
+    borderWidth:1,
+    borderColor:'#fff'
   },
-triangle: {
-  width: 0,
-  height: 0,
-  backgroundColor: 'transparent',
-  borderStyle: 'solid',
-  borderTopWidth: 0,
-  borderRightWidth: 13,
-  borderBottomWidth: 13,
-  borderLeftWidth: 13,
-  borderTopColor: 'transparent',
-  borderRightColor: 'transparent',
-  borderBottomColor: '#071B36',
-  borderLeftColor: 'transparent',
-  transform: [{ rotate: '-90deg'}],
-  position:'absolute',
-  right:-7
-},
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: 0,
+    borderRightWidth: 13,
+    borderBottomWidth: 13,
+    borderLeftWidth: 13,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#071B36',
+    borderLeftColor: 'transparent',
+    transform: [{ rotate: '-90deg'}],
+    position:'absolute',
+    right:-7
+  },
 darkBlueOnWhatsNew: {
   width: 2,
   height: 20,

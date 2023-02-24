@@ -26,9 +26,9 @@ const CommonSearchScreen = () => {
 
   const [routes] = useState([
     { key: 'first',  title: 'Doctor'},
-    { key: 'second', title: 'Community' },
+    // { key: 'second', title: 'Community' },
     { key: 'third',  title: 'Speciality' },
-    { key: 'fourth', title: 'page' },
+    // { key: 'fourth', title: 'page' },
   ]); 
   const [item, setItem] = useState();
   const [filteredDataSource, setFilteredDataSource] = useState();

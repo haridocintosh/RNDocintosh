@@ -198,6 +198,8 @@ const renderItem = (item) => {
             />
           </View>
           <View style={styelcss.selectAllList}>
+            {/* <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text>
+            {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
             {/* <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text> */}
             {/* {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
             <CheckBox  

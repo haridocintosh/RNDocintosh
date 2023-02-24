@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
-import { getdeviceId } from './PushNotification';
+import OneSignal from 'react-native-onesignal';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -30,8 +30,9 @@ const LoginScreen = () => {
   const [register,setregister] = useState({
     email:"",
     password:"", 
-    device_id:""
+    // device_id:""
   });
+  const [device_id , setdevice_id]  = useState('');
   const [data, setdata] = useState();
   const [datarm, setdatarm] = useState();
   const isFocused = useIsFocused();
@@ -54,12 +55,15 @@ const LoginScreen = () => {
 
   const authLogin = async ()=>{
     console.log(register);
+    console.log(device_id);
     
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
-      const token = await dispatch(userLogin(register));
+      const uploadData = {register,device_id};
+      console.log(uploadData);
+      const token = await dispatch(userLogin(uploadData));
       if(token?.payload?.status == 'Success'){
         // console.log(token.payload.session_data.profileimage);
           setloader(false)
@@ -107,7 +111,7 @@ const LoginScreen = () => {
       setdatarm(result)
       setChecked(result?.data.isChecked);
       if(result == null){
-        setregister({email: "",password:"", device_id:""});
+        setregister({email: "",password:""});
       }
     } catch(e) {
      console.log(e)
@@ -117,16 +121,21 @@ const LoginScreen = () => {
 
   useEffect(() => {
     getData('USER_INFO');
-    getdeviceId().then((res) => {
-      setregister({
-        ...register,
-        device_id: res,
-       })
-    });
+
+    const getdeviceId = () => {
+      var userId = OneSignal.getDeviceState()
+        userId.then((deviceUUid)=>{
+        console.log(deviceUUid.userId);
+        const deviceId  = deviceUUid.userId
+          setdevice_id({deviceId})
+      }).catch(()=>{
+        console.log('Error');
+      })
+    };
     if(isFocused){
       getDatarm('rememberme');
     }
-   
+    getdeviceId()
   },[isFocused])
 
    

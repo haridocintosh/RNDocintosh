@@ -79,7 +79,7 @@ export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(d
 
 export const updateEmailID = createAsyncThunk("updateEmailID", async(data)=>{
     try{
-       const responce = await fetch(`${mainApi.baseUrl}/ApiController/updateEmailID`, {
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/Update_Email_ID`, {
             method : 'POST',
             headers:{ 'Content-Type': 'application/json'},
             body : JSON.stringify(data)
@@ -108,20 +108,35 @@ export const userInfo = createAsyncThunk("userInfo", async(data)=>{
     }
 })
 
-export const EditProfileAwardAPI = createAsyncThunk("editAward", async(data)=>{
-    try{
-       const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileAward`, {
-            method : 'POST',
-            headers:{ 'Content-Type': 'application/json'},
-            body : JSON.stringify(data)
-        });
-        const userResult=  await responce.json();
-        return userResult
-    }
-    catch(e){
-       console.log(e);
-    }
-})
+    export const EditProfileAwardAPI = createAsyncThunk("editAward", async(data)=>{
+        try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileAward`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult=  await responce.json();
+            return userResult
+        }
+        catch(e){
+        console.log(e);
+        }
+    })
+
+    export const Edit_ProfileOTP = createAsyncThunk("Edit_Profile_OTP", async(data)=>{
+        try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileOTP`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult=  await responce.json();
+            return userResult
+        }
+        catch(e){
+        console.log(e);
+        }
+    })
 
 
 export const profileSlice= createSlice({
@@ -263,6 +278,22 @@ export const profileSlice= createSlice({
             state.editAward      =  action.payload;
         })
         builder.addCase(EditProfileAwardAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================Edit_ProfileOTP===============================
+
+        builder.addCase(Edit_ProfileOTP.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(Edit_ProfileOTP.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.editAward      =  action.payload;
+        })
+        builder.addCase(Edit_ProfileOTP.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

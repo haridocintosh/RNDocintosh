@@ -196,7 +196,8 @@ export const styles = StyleSheet.create({
     },
     barPrmaryKey:{
        fontFamily:'Inter-SemiBold',
-       fontSize:16
+       fontSize:16,
+       lineHeight:18
     },
     barName:{
        fontFamily:'PlusJakartaSans-Bold',

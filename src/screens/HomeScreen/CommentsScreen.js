@@ -39,9 +39,9 @@ const CommentsScreen = ({route,navigation}) => {
       const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       getData();
-      onChangeText()
+      onChangeText();
+      navigation.navigate("HomeScreen",{commentCount: instData.length})
     }
-
 
     useEffect(()=>{
         getData();
@@ -68,8 +68,8 @@ const CommentsScreen = ({route,navigation}) => {
     }
   return (
     <View style={styles.commentContainer}>
-      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
-               { instData.length > 0 ? instData?.map((element, index)=>{
+      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
+               {instData.length > 0 ? instData?.map((element, index)=>{
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>

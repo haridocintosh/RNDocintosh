@@ -91,9 +91,6 @@ export default function ContactPermission({navigation}) {
       navigation.navigate("Login");
      }
     }
-     
-    
-  
 
   useEffect(() => {
     navigation.setOptions({ title: 'Invite Peers'});
@@ -118,9 +115,11 @@ export default function ContactPermission({navigation}) {
           .then((contacts) => {
           if(contacts.length > 0) { 
             const contactlist =  contacts.map(element=> {return{...element,isSelected:false}});
-            setTotalSlice(contactlist.length)  
-            setContact(contactlist);
-            setItem(contactlist)
+            const sortName = contactlist.sort((a,b) => a.givenName.localeCompare(b.givenName));
+            console.log("sortName",sortName);
+            setTotalSlice(sortName.length)  
+            setContact(sortName);
+            setItem(sortName)
             // setLoading(false);
           }
         })
@@ -133,29 +132,9 @@ export default function ContactPermission({navigation}) {
          Toast.show('Permission deny',Toast.LONG);
         }
       })
-   // const { status } = await Contacts.requestPermissionsAsync();
-    // if(status === 'granted') {
-    //   const { data } = await Contacts.getContactsAsync({
-    //     fields: [Contacts.Fields.PhoneNumbers],
-    //   });
-    //    if(data.length > 0) {
-    //     const contact = await data.map(element=> {return{...element,isSelected:false}});
-    //     setTotalSlice(contact.length)  
-    //     setContact(contact);
-    //     setItem(contact)
-    //     setLoading(false);
-    //    }
-    // }else{
-    //  //navigation.navigate('Login');
-    //  Toast.show('Permission deny',Toast.LONG);
-    // }
   }
   
-  // const handleSubmit = async()=>{
-  //   navigation.navigate('InvitePeers',{
-  //     alluserContact :contactList,
-  //   }) 
-  // };
+  
 
  const onChangeText =  (text) =>{
   if (text) {
@@ -206,6 +185,7 @@ const renderItem = (item) => {
     </View>
   )
 }
+
 
   return (
     <View style={{paddingHorizontal:20,flex:1,height:"100%"}}>

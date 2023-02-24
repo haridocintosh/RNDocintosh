@@ -108,7 +108,7 @@ const CustomDrawer = (props) => {
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SelectInterestInnerScreen")}}>
               <AntDesign name="select1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Select Interest</Text>
-            </TouchableOpacity >
+            </TouchableOpacity>
             {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Gift DocCoins</Text>

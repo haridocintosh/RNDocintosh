@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { View, Text ,Image,Pressable,TextInput} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
@@ -9,12 +8,11 @@ import MobileVerify from './MobileVerify';
 import {useForm, Controller} from 'react-hook-form'
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
-import { checkMobile } from '../../../../redux/reducers/loginAuth';
 import { useDispatch } from 'react-redux';
 import { Edit_ProfileOTP } from '../../../../redux/reducers/profileSlice';
+import { getLocalData } from '../../../apis/GetLocalData';
 
-const MobileNumberModal = ({mobileNumber,setMobileNumber, currentmobileno}) => {
-// console.log(currentmobileno);
+const MobileNumberModal = ({mobileNumber,setMobileNumber}) => {
 const dispatch = useDispatch();
 const [numVerify,setNumVerify] = useState(false);
 const [mobNumber,setMobNumber] = useState(null);
@@ -30,18 +28,27 @@ const [message , setmessage] = useState();
     setMobileNumber(false)
   }
   const onSubmit = async(data) => {
+    console.log(data.phone_no);
     if(data.phone_no != ""){
-      setMobileNumber(false);
+      setNumVerify(false);
       setMobNumber(data.phone_no)
-      const result = await dispatch(checkMobile({mobile:data.phone_no}));
-      if(result.payload.status_code != "NE"){
-        Toast.show('This mobile no. is registered with us', Toast.LONG);
-      }else{
-        setNumVerify(true);
-
-      }  
+      const result = await dispatch(Edit_ProfileOTP({email:data.phone_no, id:userId}));
+      console.log(result.payload);
+      if(result?.payload?.status == 'Success'){
+          Toast.show(result.payload.message, Toast.LONG);
+          setNumVerify(true);
+        }else{
+          Toast.show(result.payload.message,Toast.LONG);
+        }  
+      }
     }
-  }
+
+  useEffect(()=>{
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setuserId(reData?.id)
+    });
+  })
 
   return (
     <>

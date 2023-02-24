@@ -33,6 +33,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
       setVerifying("Verifying...")
         if(otpInput !== ""){
         const result = await dispatch(updateMobileNumber({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
+        console.log(result.payload);
         if(result.payload.status == 'Success'){
           Toast.show(result.payload.message,Toast.LONG);
           navigation.navigate('EditProfileScreen');
@@ -100,8 +101,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
                 <Image source={require('../../../assets/images/Phone_Verification.png')} style={{width:95,height:95}}/>
                 <Text style={styles.OTPtext}>Please enter OTP sent</Text>
                 <View style={styles.NumberEditBox}>
-                    {/* <Text style={styles.NumberText}>+91 {mobNumber}</Text> */}
-                    <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
+                    {/* <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
                         autoCapitalize="none"
                         value={editNumber ? phone: mobNumber}
                         onChangeText={e => setPhone(e)}
@@ -119,7 +119,7 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
                     <TouchableOpacity onPress={() => handleSubmit()}>
                         <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
                     </TouchableOpacity>
-                    }
+                    } */}
                 </View>
                 <OTPTextView 
                     handleTextChange={(text) => setotpInput(text)}

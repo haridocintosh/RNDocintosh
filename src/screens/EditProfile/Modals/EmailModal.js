@@ -36,20 +36,18 @@ const EmailModal = ({emailid,setemailid}) => {
       }
  
       const onSubmitEmail = async() => {
-         console.log('jnfjsdnj',email);
-         console.log('userID',userId);
-        if(email != ""){
-          setemailid(false);
-          const result = await dispatch(Edit_ProfileOTP({email:email, id:userId}));
-          console.log(result.payload);
-          if(result?.payload?.status == 'Success'){
-            Toast.show(result.payload.message, Toast.LONG);
-            setemailVerify(true);
-         }else{
-          Toast.show(result.payload.message,Toast.LONG);
-          }  
+          if(email != ""){
+            setemailid(false);
+            const result = await dispatch(Edit_ProfileOTP({email:email, id:userId}));
+            console.log(result.payload);
+            if(result?.payload?.status == 'Success'){
+              Toast.show(result.payload.message, Toast.LONG);
+              setemailVerify(true);
+          }else{
+            Toast.show(result.payload.message,Toast.LONG);
+            }  
+          }
         }
-      }
 
       useEffect(()=>{
         getLocalData('USER_INFO').then((res) => {

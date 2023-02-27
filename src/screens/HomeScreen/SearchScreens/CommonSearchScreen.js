@@ -30,6 +30,7 @@ const CommonSearchScreen = () => {
     { key: 'third',  title: 'Speciality' },
     // { key: 'fourth', title: 'page' },
   ]); 
+
   const [item, setItem] = useState();
   const [filteredDataSource, setFilteredDataSource] = useState();
 
@@ -41,8 +42,10 @@ const CommonSearchScreen = () => {
   const GetsearchData =  () => {
     getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
-      setUserData(reData)
-      const postData = {pageCounter:1,user_id:reData.id,type:"doctor",search:''};
+      setUserData(reData);
+      const tabData = index == 0 ? 'doctor' : 'speciality';
+      console.log(tabData);
+      const postData = {pageCounter:1,user_id:reData.id,type:tabData,search:''};
       const result = await dispatch(getsearchSplData(postData));
       setCurrentPage(result?.payload?.pageCounter);
       setItem(result?.payload?.result);
@@ -53,10 +56,10 @@ const CommonSearchScreen = () => {
   const onChangeText = async (text) =>{
     if (text) {
         setInputText(text);
-        const postData = {pageCounter:1,user_id:userData.id,type:"doctor",search:text}
-        console.log(postData);
+        const tabData = index == 0 ? 'doctor' : 'speciality';
+        console.log(tabData);
+        const postData = {pageCounter:1,user_id:userData.id,type:tabData,search:text}
         const result = await dispatch(getsearchSplData(postData));
-        console.log(result.payload.result);
         setFilteredDataSource(result?.payload?.result);
       } else {
         setInputText(text);
@@ -68,19 +71,18 @@ const CommonSearchScreen = () => {
     if(endNull !== null){
       LoadPost(currentPage + 1);
     }
-    console.log("filteredDataSource",filteredDataSource);
   };
 
   const LoadPost = async (page) => {
     setBottumLoader(true);
-    const postData = {pageCounter:page,user_id:userData.id,type:"doctor",search:''};
+    const tabData = index == 0 ? 'doctor' : 'speciality';
+    console.log(tabData);
+    const postData = {pageCounter:page,user_id:userData.id,type:tabData,search:''};
     const result = await dispatch(getsearchSplData(postData));
     setEndNull(result?.payload?.result)
     if(result?.payload?.result !== null){
-      console.log(result?.payload);
       setCurrentPage(result?.payload?.pageCounter);
       setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
-      // setItem([...filteredDataSource, ...result?.payload?.result])
     }
     setBottumLoader(false);
   }
@@ -169,7 +171,7 @@ const CommonSearchScreen = () => {
     // return () => {
     //   Voice.destroy().then(Voice.removeAllListeners);
     // }
-  }, []);
+  }, [index]);
 
   const onSpeechResults = (result) => {
     setResults(result.value);

@@ -144,9 +144,11 @@ const HomeScreen = ({navigation,route})=> {
   // },[isFocused]);
 
   useEffect(()=>{
+    if(isFocused){
       asyncFetchDailyData();
       getStorageData();
-  },[]);
+    }
+  },[isFocused]);
 
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) => {
@@ -165,12 +167,11 @@ const HomeScreen = ({navigation,route})=> {
       }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
       const result = await dispatch(userPostData(postDetails));
-      console.log("result",result.payload.pageCounter);
       setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
-      setRefresh(false)
+      setRefresh(false);
     })
   }
  

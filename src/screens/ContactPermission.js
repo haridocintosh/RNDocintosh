@@ -93,7 +93,7 @@ export default function ContactPermission({navigation}) {
     }
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Invite Peers'});
+    navigation.setOptions({ title: 'Invite Fellow Doctors Only'});
     getPrermission();
     getLocalData("USER_INFO")
   }, []);
@@ -116,11 +116,9 @@ export default function ContactPermission({navigation}) {
           if(contacts.length > 0) { 
             const contactlist =  contacts.map(element=> {return{...element,isSelected:false}});
             const sortName = contactlist.sort((a,b) => a.givenName.localeCompare(b.givenName));
-            console.log("sortName",sortName);
             setTotalSlice(sortName.length)  
             setContact(sortName);
             setItem(sortName)
-            // setLoading(false);
           }
         })
             .catch((e) => {
@@ -133,8 +131,6 @@ export default function ContactPermission({navigation}) {
         }
       })
   }
-  
-  
 
  const onChangeText =  (text) =>{
   if (text) {

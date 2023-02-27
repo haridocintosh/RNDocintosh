@@ -20,7 +20,7 @@ const CommentsScreen = ({route,navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const dispatch = useDispatch();
 
-    const getData = async() => {
+    const getData = async(send) => {
       navigation.setOptions({ title: 'Comments'});
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
@@ -30,7 +30,12 @@ const CommentsScreen = ({route,navigation}) => {
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
         setInstData(sentResult.payload.getallcomment);
-        setLoader(false)
+        // console.log(sentResult.payload.getallcomment.length);
+        setLoader(false);
+        // if(send == "send"){
+        //   // console.log("done---");
+        //   navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
+        // }
     }
 
     const handleComment = async () => {
@@ -38,9 +43,8 @@ const CommentsScreen = ({route,navigation}) => {
       const sentResult = await dispatch(commentData(postDetails));
       const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
-      getData();
+      getData("send");
       onChangeText();
-      navigation.navigate("HomeScreen",{commentCount: instData.length})
     }
 
     useEffect(()=>{

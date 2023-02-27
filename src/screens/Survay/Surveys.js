@@ -31,7 +31,7 @@ const Surveys = ({ route,navigation }) => {
     navigation.setOptions({ title: `Surveys`});
     getLocalData("USER_INFO").then(async (res)=>{
       const resData = res?.data;
-      const postDetails = {speciality_id: null,city_id: null,assoc_id: resData?.assoc_id,earntype: 0,id: resData?.id};
+      const postDetails = {speciality_id:resData?.speciality_id,city_id: null,assoc_id:resData?.assoc_id,earntype: 0,id: resData?.id};
       const result = await dispatch(survayList(postDetails));
       setSurvayData(result.payload);
       setLoader(false);
@@ -138,11 +138,12 @@ const Surveys = ({ route,navigation }) => {
                         />
                       </Svg>
                       <Text style={styles.ParticipantsText}>
-                      {data.totalcount} Participants
+                      {data.totalcount} Participants 
                       </Text>
                     </View>
 
                     <View style={styles.ScoreContainer}>
+                    {data?.earntype == 0 ?
                       <View style={styles.doccoin}>
                         <View style={styles.d}>
                           <Image
@@ -152,6 +153,7 @@ const Surveys = ({ route,navigation }) => {
                           <Text>25</Text>
                         </View>
                       </View>
+                      :
                       <View style={styles.doccoin}>
                         <View style={styles.d}>
                           <Image
@@ -161,6 +163,7 @@ const Surveys = ({ route,navigation }) => {
                           <Text>1</Text>
                         </View>
                       </View>
+                    }
                     </View>
                   </Card>
                 </View>

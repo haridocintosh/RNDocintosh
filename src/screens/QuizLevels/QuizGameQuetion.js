@@ -65,7 +65,7 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
     borderRadius: 10,
   };
 
-  const outOff = currentQuestionIndex / TotalMcq;
+  // const outOff = currentQuestionIndex / TotalMcq;
   // useEffect(() => {
   // if (isTop == false) {
   //   setIsOptionsDisabled(true);
@@ -76,7 +76,7 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
       <View>
         <View style={{ flexDirection: "row"}}>
         <CircularProgress
-          value={currentQuestionIndex ?currentQuestionIndex :0}
+          value={currentQuestionIndex}
           radius={35}
           duration={1000}
           progressValueColor={'#000'}

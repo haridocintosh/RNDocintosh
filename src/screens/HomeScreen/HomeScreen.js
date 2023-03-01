@@ -11,7 +11,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -28,6 +28,7 @@ import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Pressable } from 'native-base';
+
 
 const HomeScreen = ({navigation,route})=> {
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
@@ -133,22 +134,22 @@ const HomeScreen = ({navigation,route})=> {
      setBottumLoader(false);
   }
 
-  // useEffect(()=>{
-  //   if(isFocused){
-  //     asyncFetchDailyData();
-  //     getStorageData();
-  //     // if(ref.current) {
-  //     //   ref.current.scrollToOffset({offset: 0})
-  //     // }
-  //   }
-  // },[isFocused]);
-
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
       getStorageData();
+      if(ref.current) {
+        ref.current.scrollToOffset({offset: 0})
+      }
     }
   },[isFocused]);
+
+  // useEffect(()=>{
+  //   if(isFocused){
+  //     asyncFetchDailyData();
+  //     getStorageData();
+  //   }
+  // },[isFocused]);
 
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) => {
@@ -187,7 +188,7 @@ const HomeScreen = ({navigation,route})=> {
 
   const onViewableItemsChanged = ({viewableItems}) => {
     viewableItems.map((data) => {
-      setCurrentIndex(data.index)
+      setCurrentIndex(data.index);
     });
   };
 
@@ -204,6 +205,9 @@ const HomeScreen = ({navigation,route})=> {
       asyncFetchDailyData();
     }
   }, [refresh])
+
+
+  
 
     const renderItem = ({item,index}) => {
       return(
@@ -306,7 +310,7 @@ const HomeScreen = ({navigation,route})=> {
           onPress={() => navigation.navigate('Sharepost')}>
           <View style={styles.whatsMindConatiner} >
             <View style={{flexDirection:'row'}}>
-            <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
+            <Image source={userdata.profile && {uri:userdata.profile}}  style={{width:32, height:32, borderRadius:50}}/>
             <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
             </View>
               <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>

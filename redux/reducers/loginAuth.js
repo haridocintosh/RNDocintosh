@@ -134,7 +134,8 @@ export const loginAuth = createSlice({
         error       : false,
         usertoken   : null,
         registerData: {},
-        registerTwoData : {}
+        registerTwoData : {},
+        localData : {}
 
     },
     reducers : {
@@ -143,6 +144,9 @@ export const loginAuth = createSlice({
             currentState.usertoken  = null;
             currentState.loading    = false;
         },
+        addLocal(state,action){
+            state.localData = action.payload;
+        }
     },
     extraReducers : builder =>{
         //-------------------------userLogin-----------------------------
@@ -197,4 +201,6 @@ export const loginAuth = createSlice({
 
 
 export const { reducer : userresult} = loginAuth;
-export const { logout } = loginAuth.actions
+export const { logout, addLocal } = loginAuth.actions;
+
+export default loginAuth.reducer;

@@ -69,6 +69,23 @@ export const getsearchSplData = createAsyncThunk("searchSplData", async (data)=>
      }
 })
 
+export const getDoctorsDetails = createAsyncThunk("DoctorsDetails", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_profile`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 
 export const deviceVersion = createAsyncThunk("getVersion", async ()=>{
     try{
@@ -221,7 +238,22 @@ export const savePost = createSlice({
             state.loading       = false;
             state.error         = true
         })
+
+        //-------------------------getDoctorsDetails----------------------------------
+        builder.addCase(getDoctorsDetails.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getDoctorsDetails.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.singlePostDataResult    = action.payload;
+        })
+        builder.addCase(getDoctorsDetails.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
     },
 });
+
+console.log("savePost",savePost.reducer);
 
 export const { reducer : SavePostResult } = savePost;

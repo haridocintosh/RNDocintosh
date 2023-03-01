@@ -40,7 +40,7 @@
     const [awards, setAwards] = useState(false);
     const [editAwards, setEditAwards] = useState(false);
     const [publication, setPublication] = useState(false);
-    const [achievement, setAchievement] = useState(false);
+    // const [achievement, setAchievement] = useState(false);
     const [Interests, setInterests] = useState(false);
     const [profile, setProfile] = useState(false);
     const [interestsData, setInterestsData] = useState(null);
@@ -88,9 +88,9 @@
     const publicationModal = () => {
       setPublication(!publication);
     };
-    const AchievementModal = () => {
-      setAchievement(!achievement);
-    };
+    // const AchievementModal = () => {
+    //   setAchievement(!achievement);
+    // };
     const InterestsModal = () => {
       setInterests(!Interests);
     };
@@ -134,6 +134,7 @@
     const handleAward = () => {
       getLocalData('USER_INFO').then(async (res) => {
         const reData = res?.data;
+        console.log("reData",reData);
         const getAwardResult = await dispatch(getAwardAPI({user_id : reData.id}));
         setGetAward(getAwardResult.payload)
       })
@@ -372,7 +373,7 @@
               </View>
           </Card>
 
-          <AchievementsModal achievement={achievement} setAchievement={setAchievement}/>
+          {/* <AchievementsModal achievement={achievement} setAchievement={setAchievement}/>
           <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Achievements</Text>
@@ -391,7 +392,7 @@
               </View>
               <Entypo name="edit" size={23} color="#2C8892"  onPress={() => AchievementModal()}/>    
             </View>
-          </Card>
+          </Card> */}
           
           <IntrestsModal setInterests={setInterests} Interests={Interests} allInterestsData={allInterestsData}/>
           <Card style={styles.CartContainer}>

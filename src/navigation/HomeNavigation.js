@@ -45,6 +45,8 @@ import SinglePost from '../screens/SinglePost';
 import ProfilePictureCrop from '../screens/EditProfile/ProfilePictureCrop';
 import Sharepost from '../screens/HomeScreen/postScreen/SharePost';
 import PublicReactions from '../screens/HomeScreen/PublicReactions';
+import UserDetailsPage from '../screens/HomeScreen/SearchScreens/UserDetailsPage';
+
 
 
 const HomeNavigation = () => {
@@ -101,6 +103,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="Rewards" component={Rewards} options={showHeaderItem} />
         <Stack.Screen name="SinglePost" component={SinglePost} options={showHeaderItem}/>
         <Stack.Screen name="ProfilePictureCrop" component={ProfilePictureCrop} options={showHeaderItem}/>
+        <Stack.Screen name="UserDetailsPage" component={UserDetailsPage} options={showHeaderItem}/>
         {/* <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={showHeaderItem}/> 

@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
         alignSelf:'center',
         fontSize:20,
         fontWeight:'600',
-        color:'#071B36'
+        color:'#071B36',
+        alignItems:'center'
     },
     imageTick:{width:16.16,height:16.16},
     userCategoryContainer:{justifyContent:'center',alignItems:'center',flexDirection:'row'},

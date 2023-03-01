@@ -9,6 +9,7 @@ import {
 import {
   DrawerContentScrollView,
   DrawerItemList,
+  useDrawerStatus,
 } from '@react-navigation/drawer';
 // import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
@@ -20,10 +21,11 @@ import Feather from 'react-native-vector-icons/Feather';
 import { Button } from 'react-native-elements';
 import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
-import { useDispatch } from 'react-redux';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { useDispatch, useSelector } from 'react-redux';
+// import {createDrawerNavigator} from '@react-navigation/drawer';
 import { getLocalData } from '../apis/GetLocalData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const CustomDrawer = (props) => { 
   const navigation = useNavigation();
@@ -36,8 +38,12 @@ const CustomDrawer = (props) => {
     profile:"",
     speciality:"",
   });
-  const isFocused = useIsFocused();
-  const Drawer = createDrawerNavigator();
+  // const isFocused = useIsFocused();
+  // const Drawer = createDrawerNavigator();
+  const drawerStatus = useDrawerStatus();
+
+  // const userInfo = useSelector((state) => state.userLocalData.localData);
+  // console.log("userInfo",userInfo);
 
   const asyncFetchDailyData = async () => {
     const value = await AsyncStorage.getItem('profileImage');
@@ -54,10 +60,10 @@ const CustomDrawer = (props) => {
     }
   
   useEffect(() => {
-    // if(isFocused){
+    if(drawerStatus == "open"){
       asyncFetchDailyData();
-    // }
-  }, [isFocused])
+    }
+  }, [drawerStatus])
   
   const removeData = async () => {
     setLoader(true)
@@ -75,6 +81,7 @@ const CustomDrawer = (props) => {
     setLoader(false)
   }
 
+  
   return (
     <View style={styles.DrowerContainer}>
         <View style={styles.DocLogo}>

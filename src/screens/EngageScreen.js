@@ -55,6 +55,31 @@ useEffect(() => {
             </ImageBackground>
         </View>
 
+        <View style={styles.container}>
+            <View style={styles.titleDtails}>
+                <View>
+                <Text style={styles.CartTitlePolls}>Polls</Text>
+                <View style={styles.cartOffers}>
+                    <Text style={styles.cartOffersText}>Earn</Text>
+                    <Image source={require("../assets/dr-icon/dcoin.png")} style={styles.docCoin}/>
+                    <Text style={styles.cartOffersText}>100</Text>
+                </View>
+                
+                </View>
+                <TouchableOpacity>
+                <Image source={require('../assets/images/polls.png')} style={styles.cartImages}/>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.trendTitle}>COVID-19 and its Effects</Text>
+
+            <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
+            <ImageBackground source={require('../assets/images/PollsWave.png')} style={styles.CartWave} >
+                <TouchableOpacity style={styles.ButtonContainer} onPress={()=> navigation.navigate('Polls')}>
+                    <Text style={styles.buttonText}>Participate</Text>
+                </TouchableOpacity>
+            </ImageBackground>
+        </View>
+
         {userdata.role <='4' && <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>

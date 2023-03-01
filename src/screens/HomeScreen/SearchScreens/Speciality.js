@@ -33,7 +33,7 @@ const Speciality = ({handleRemove,filteredDataSource,handleLoadeMore,renderLoade
             keyExtractor={(item, index) => index.toString()}
             renderItem={ItemView}
             showsVerticalScrollIndicator={false}
-            onEndReached={() => handleLoadeMore()}
+            onEndReached={handleLoadeMore}
             ListFooterComponent={renderLoader}
         />
     </SafeAreaView>

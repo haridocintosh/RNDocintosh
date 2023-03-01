@@ -517,5 +517,11 @@ backgroundColor:"#606060",
       color:'#51668A',
       fontSize:12
     },
+    userSearchContainer:{
+      display:"flex",
+      flexDirection:"row",
+      alignItems:"flex-start",
+      alignItems:'center'
+  },
 
 });

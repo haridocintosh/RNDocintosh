@@ -1,4 +1,4 @@
-import React,{useEffect, useState,useRef} from 'react'
+import React,{useEffect, useState,useRef, useMemo} from 'react'
 import{ View, ActivityIndicator ,useWindowDimensions,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'; 
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 import { getLocalData } from '../../../apis/GetLocalData';
 
+
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
@@ -23,40 +24,44 @@ const CommonSearchScreen = () => {
   const [endNull, setEndNull] = useState();
   const [currentPage, setCurrentPage] = useState();
   const [bottumLoader, setBottumLoader] = useState(false);
-
+  
   const [routes] = useState([
     { key: 'first',  title: 'Doctor'},
-    // { key: 'second', title: 'Community' },
+    // { key: 'second', title: 'Community'},
     { key: 'third',  title: 'Speciality' },
-    // { key: 'fourth', title: 'page' },
+    // { key: 'fourth', title: 'page'},
   ]); 
+
   const [item, setItem] = useState();
   const [filteredDataSource, setFilteredDataSource] = useState();
 
   const handleRemove = (id) => {
-      const removed = filteredDataSource?.filter(o => o.id != id)
-      setFilteredDataSource(removed);
+    console.log(id);
+      // const removed = filteredDataSource?.filter(o => o.id != id)
+      // setFilteredDataSource(removed);
   }
 
   const GetsearchData =  () => {
     getLocalData('USER_INFO').then(async (res) => {
+      setBottumLoader(true);
       const reData = res?.data;
-      setUserData(reData)
-      const postData = {pageCounter:1,user_id:reData.id,type:"doctor",search:''};
+      setUserData(reData);
+      const tabData = index == 0 ? 'doctor' : 'speciality';
+      const postData = {pageCounter:1,user_id:reData.id,type:tabData};
       const result = await dispatch(getsearchSplData(postData));
       setCurrentPage(result?.payload?.pageCounter);
       setItem(result?.payload?.result);
       setFilteredDataSource(result?.payload?.result);
-    })
+      setBottumLoader(false);
+    });
   }
 
-  const onChangeText = async (text) =>{
+  const onChangeText = async (text) => {
     if (text) {
         setInputText(text);
-        const postData = {pageCounter:1,user_id:userData.id,type:"doctor",search:text}
-        console.log(postData);
+        const tabData = index == 0 ? 'doctor' : 'speciality';
+        const postData = {pageCounter:1,user_id:userData.id,type:tabData,search:text}
         const result = await dispatch(getsearchSplData(postData));
-        console.log(result.payload.result);
         setFilteredDataSource(result?.payload?.result);
       } else {
         setInputText(text);
@@ -64,36 +69,29 @@ const CommonSearchScreen = () => {
       }
   }
 
-  const handleLoadeMore = () => {
-    if(endNull !== null){
-      LoadPost(currentPage + 1);
+  const handleLoadeMore = async () => {
+    if(endNull !== null && currentPage){
+      const page  = currentPage + 1;
+      const tabData = index == 0 ? 'doctor' : 'speciality';
+      const postData = {pageCounter:page,user_id:userData?.id,type:tabData};
+      const result = await dispatch(getsearchSplData(postData));
+      // console.log(result?.payload);
+      if(result?.payload?.result !== null){
+        setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
+        setCurrentPage(result?.payload?.pageCounter);
+      }
+      setEndNull(result?.payload?.result);
     }
-    console.log("filteredDataSource",filteredDataSource);
   };
-
-  const LoadPost = async (page) => {
-    setBottumLoader(true);
-    const postData = {pageCounter:page,user_id:userData.id,type:"doctor",search:''};
-    const result = await dispatch(getsearchSplData(postData));
-    setEndNull(result?.payload?.result)
-    if(result?.payload?.result !== null){
-      console.log(result?.payload);
-      setCurrentPage(result?.payload?.pageCounter);
-      setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
-      // setItem([...filteredDataSource, ...result?.payload?.result])
-    }
-    setBottumLoader(false);
-  }
   
   const renderLoader = () => {
     return (
-      bottumLoader ?
+      bottumLoader &&
         <View style={styelcss.loaderStyle}>
-          <ActivityIndicator size="small" color="#1A7078" />
-        </View> : null
+          <ActivityIndicator size="small" color="#1A7078"/>
+        </View> 
     );
   };
-
   
   const FirstRoute = () => {
     return(
@@ -105,11 +103,13 @@ const CommonSearchScreen = () => {
       />
     )
   };
+
   const SecondRoute = () => { 
     return(
       <Community/>
     )
   };
+  
   const ThirdRoute = () => {
     return(
       <Speciality 
@@ -120,6 +120,7 @@ const CommonSearchScreen = () => {
       />
     )
   };
+  
   const fourthRoute = () => {
     return(
       <Page/>
@@ -150,7 +151,7 @@ const CommonSearchScreen = () => {
             <TouchableOpacity
               style={styelcss.tabItem}
               onPress={() => setIndex(i)}>
-                <Animated.Text style={{ opacity,fontFamily:"Inter-SemiBold"}}>
+                <Animated.Text style={{opacity,fontFamily:"Inter-SemiBold"}}>
                   {route.title}
                 </Animated.Text>
             </TouchableOpacity>
@@ -169,7 +170,7 @@ const CommonSearchScreen = () => {
     // return () => {
     //   Voice.destroy().then(Voice.removeAllListeners);
     // }
-  }, []);
+  }, [index]);
 
   const onSpeechResults = (result) => {
     setResults(result.value);

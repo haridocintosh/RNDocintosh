@@ -6,15 +6,18 @@ import { otpSlice } from "./reducers/otpSlice";
 import { result } from "./reducers/forgotPass";
 // import { surveyData } from "./reducers/survaySlice";
 import { surveyDatalist } from "./reducers/survaySlice";
+import localReducer from './reducers/loginAuth'
 
 const store = configureStore({
     reducer : {
         // myallUsers : allUsersData,
+        userLocalData: localReducer,
         mylogin: userresult,
         myspeciality : allSpeciality,
         forgotpass:result,
         surveyGetList : surveyDatalist,
         myOtp: otpSlice,
+        
     }
 })
 

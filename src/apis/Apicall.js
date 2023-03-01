@@ -20,7 +20,6 @@ const singlestoreData = async (key,value) => {
   }
 }
 
-
 const login = (email,password) =>
 new Promise((resolve, reject) => {
   axios({

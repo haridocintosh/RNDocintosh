@@ -15,9 +15,10 @@ import CustomButton from '../components/CustomButton';
 import CheckBox from "react-native-check-box";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData, singlestoreData } from '../apis/Apicall';
-import { userLogin } from '../../redux/reducers/loginAuth';
+import { addLocal, userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import OneSignal from 'react-native-onesignal';
+
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -54,23 +55,22 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
-    console.log(register);
-    console.log(device_id);
-    
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const uploadData = {register,device_id};
-      console.log(uploadData);
       const token = await dispatch(userLogin(uploadData));
       if(token?.payload?.status == 'Success'){
-        // console.log(token.payload.session_data.profileimage);
           setloader(false)
-          await storeData('USER_INFO',JSON.stringify({
+          console.log("token.payload.session_data",token.payload.session_data);
+          dispatch(addLocal(token.payload.session_data));
+        await storeData('USER_INFO',JSON.stringify({
           login:true,
-          data:token.payload.session_data
-        }));
+          data:token.payload.session_data,
+        },
+        ));
+        
         singlestoreData('profileImage',token.payload.session_data.profileimage); 
         if(isChecked){
             storeData('rememberme',JSON.stringify({
@@ -121,11 +121,10 @@ const LoginScreen = () => {
 
   useEffect(() => {
     getData('USER_INFO');
-
     const getdeviceId = () => {
       var userId = OneSignal.getDeviceState()
         userId.then((deviceUUid)=>{
-        console.log(deviceUUid.userId);
+       // console.log(deviceUUid.userId);
         const deviceId  = deviceUUid.userId
           setdevice_id({deviceId})
       }).catch(()=>{
@@ -153,7 +152,7 @@ const LoginScreen = () => {
       <View style={{marginTop:40}}>
         <Text  style={styles.headingtexts}>Welcome</Text>
         <Text  style={styles.headingtext}>
-         {data?((data.data.role<='4')?'Dr. ':''):''}{data?data.data.first_name+' '+data.data.last_name:''}
+         {data?((data?.data?.role<='4')?'Dr. ':''):''}{data? data?.data?.first_name+' '+data?.data?.last_name:''}
         </Text>
         <Text style={styles.headingpara}>Log in to your own personal space in one of the fastest growing professional network for doctors.</Text>
     

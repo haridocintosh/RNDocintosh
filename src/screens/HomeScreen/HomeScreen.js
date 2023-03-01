@@ -47,7 +47,11 @@ const HomeScreen = ({navigation,route})=> {
   const ref = useRef(null);
   const { width, height} = Dimensions.get('window');
 
-
+  //    const list = useRef(null);
+    const press = () => {
+      //scroll to the 12th item in the index.
+      ref.current.scrollToIndex({ animated: true, index: 5 });
+    };
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100;
@@ -312,8 +316,10 @@ const HomeScreen = ({navigation,route})=> {
           </View>
           </Card>
         <View>
+
+  
             <View style={styles.marginten}>
-                <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}>Suggested Post</Text>
+                <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}  onPress={() => press()} >Suggested Post</Text>
                 <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
             </View>
             <View style={{paddingBottom:550}}>

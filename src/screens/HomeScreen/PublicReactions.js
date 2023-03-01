@@ -10,6 +10,7 @@ import { getLocalData } from '../../apis/GetLocalData';
 
 
 const PublicReactions = ({item,getStorageData}) => {
+  // console.log('postIndex', postIndex);
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
@@ -19,10 +20,11 @@ const PublicReactions = ({item,getStorageData}) => {
  const navigation = useNavigation();
 
   const localStorageData = () => {
-    getLocalData('USER_INFO').then( async (res) => {
+    getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResult(reData);
       const getallLikesData = await dispatch(getallLikes({postid:item?.post_id}));
+      console.log(getallLikesData.payload);
       setAllLikeData(getallLikesData.payload);
     })
   }
@@ -52,7 +54,7 @@ const PublicReactions = ({item,getStorageData}) => {
  },[])
 
  const GotoComments =(post_id,comments_list ) => {
-  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
+  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
  }
 
  const onShare = async (post_id) => {
@@ -98,7 +100,7 @@ const PublicReactions = ({item,getStorageData}) => {
                 </View> */}
                 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list)}>
+                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list, postIndex)}>
                         <Image source={require('../../assets/dr-icon/socialComment.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item?.commentcount}</Text>

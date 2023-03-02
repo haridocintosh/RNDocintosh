@@ -254,6 +254,5 @@ export const savePost = createSlice({
     },
 });
 
-console.log("savePost",savePost.reducer);
 
 export const { reducer : SavePostResult } = savePost;

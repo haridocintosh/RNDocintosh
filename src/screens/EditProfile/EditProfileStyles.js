@@ -207,7 +207,7 @@ export const styles = StyleSheet.create({
     AddedDetails:{flexDirection:'row',padding:20,justifyContent:'space-between',borderColor:'#D5DEED'},
     AddedDetailsTitle:{fontSize:16,color:"#071B36",fontFamily:"PlusJakartaSans-Regular",fontWeight:'500'},
     AddedDetailsDate:{fontSize:12,color:"#51668A",fontFamily:"Inter-Regular"},
-    AddedDetailsSubTitle:{color:"#51668A",fontFamily:"Inter-Regular"},
+    AddedDetailsSubTitle:{color:"#51668A",fontFamily:"Inter-Regular",width:Dimensions.get('window').width/2},
     SingleLetter:{width:50,height:50,borderRadius:50,justifyContent:'center',alignItems:'center',backgroundColor:'#45B5C0'},
     SingleLetterText:{color:'#fff',fontFamily:"Inter-SemiBold"},
     devider:{backgroundColor:'#D5DEED',width:"90%", alignSelf:'center',height:1,marginTop:10},

@@ -21,10 +21,11 @@
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
   import { useIsFocused } from '@react-navigation/native';
-  import { getWorkExpAPI, userInfo, getAwardAPI } from '../../../redux/reducers/profileSlice';
+  import { getWorkExpAPI, userInfo, getAwardAPI, getQualificationAPI } from '../../../redux/reducers/profileSlice';
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
+  
   
   
   const EditProfileScreen = ({route,navigation}) => {
@@ -50,6 +51,8 @@
     const [workShowAll, setWorkShowAll] = useState(2);
     const [getAward, setGetAward] = useState(null);
     const [passAwardData, setPassAwardData] = useState(null);
+    const [getQualificationData, setGetQualificationData] = useState();
+    const [qualificationShowAll, setQualificationShowAll] = useState(2);
     
     const dispatch = useDispatch();
 
@@ -128,13 +131,14 @@
         const reData = res?.data;
         const getWorkResult = await dispatch(getWorkExpAPI({user_id : reData.id}));
         setWorkResult(getWorkResult.payload);
+
+        
       })
     }
 
     const handleAward = () => {
       getLocalData('USER_INFO').then(async (res) => {
         const reData = res?.data;
-        console.log("reData",reData);
         const getAwardResult = await dispatch(getAwardAPI({user_id : reData.id}));
         setGetAward(getAwardResult.payload)
       })
@@ -142,6 +146,13 @@
 
     const handleWorkloadMore = () => {
       setWorkShowAll()
+    }
+    const getQualification = () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        const reData = res?.data;
+        const getQualificationResult = await dispatch(getQualificationAPI({user_id : reData.id}));
+        setGetQualificationData(getQualificationResult.payload);
+      })
     }
     
     useEffect(()=>{
@@ -157,6 +168,7 @@
       asyncFetchDailyData();
       handleWorkReload();
       handleAward();
+      getQualification();
     },[])
     
 
@@ -266,7 +278,6 @@
                         <Text style={styles.AddedDetailsDate}>
                           {moment(data.start_date).format("MMM YYYY")} - {
                           String(data.end_date).includes(1970) ? "Present" : moment(data.end_date).format("MMM YYYY")}
-                          {/* {console.log("data.end_date",data.end_date)} */}
                         </Text>
                       </View>  
                     </View>
@@ -284,33 +295,49 @@
               </TouchableOpacity>}
           </Card>
           
-          <QualificationModal qualification={qualification} setQualification={setQualification}/>
+          <QualificationModal 
+            qualification={qualification} 
+            setQualification={setQualification}/>
           <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Qualification</Text>
-              <Text style={styles.AddInfo}>
-                <Entypo name="plus" size={15} color="#2376E5" /> 
-                Add Qualification
-              </Text>
-            </View>
-            <View style={styles.AddedDetails}>
-              <View style={{flexDirection:'row'}}>
-              <Image source={require('../../assets/images/mbbsimg.png')}/>
-                <View style={{paddingLeft:10}}>
-                  <Text style={styles.AddedDetailsTitle}>MBBS</Text>
-                  <Text style={styles.AddedDetailsSubTitle}>Ramaiah Medical College</Text>
-                  <Text style={styles.AddedDetailsDate}>June 2019 - June 2024</Text>
-                </View>
-              </View> 
-              <TouchableOpacity onPress={qualificationModal}>  
-                <Entypo name="edit" size={23} color="#2C8892"/>  
-              </TouchableOpacity>  
-            </View>
-              <View style={styles.devider}/>
-              <TouchableOpacity style={styles.showMoreContainer}>
-                <Text style={styles.showMore}>Show all 4 Qualification</Text>
-                <Feather name="arrow-right" size={19} color="#2376E5" />
+              <TouchableOpacity onPress={() => setQualification(!qualification)}>
+                <Text style={styles.AddInfo}>
+                  <Entypo name="plus" size={15} color="#2376E5" /> 
+                  Add Qualification
+                </Text>
               </TouchableOpacity>
+            </View>
+            {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {
+              return(
+                <View style={styles.AddedDetails} key={i}>
+                  <View style={{flexDirection:'row'}}>
+                  <View style={styles.SingleLetter}>
+                      <Text style={styles.SingleLetterText}>{data?.qualification[0].toUpperCase()}</Text>
+                  </View>
+                    <View style={{paddingLeft:10}}>
+                      <Text style={styles.AddedDetailsTitle}>{data?.qualification}</Text>
+                      <Text style={styles.AddedDetailsSubTitle}>{data?.collegename}</Text>
+                      <Text style={styles.AddedDetailsDate}>
+                        {moment(data.startyear).format("MMM YYYY")} - {moment(data.completionyear).format("MMM YYYY")}
+                      </Text>
+                    </View>
+                  </View> 
+                  <TouchableOpacity onPress={qualificationModal}>  
+                    <Entypo name="edit" size={23} color="#2C8892"/>  
+                  </TouchableOpacity>  
+                </View>
+              )
+            })}
+              {qualificationShowAll !== undefined &&
+              getQualificationData?.length > 2 &&
+              <>
+                <View style={styles.devider}/>
+                <TouchableOpacity style={styles.ShowAllContainer} onPress={() => setQualificationShowAll()}>
+                  <Text style={styles.ShowAllText}>Show all {getQualificationData?.length-2} Qualification</Text>
+                  <Feather name="arrow-right" size={19} color="#2376E5" />
+                </TouchableOpacity>
+              </>}
           </Card>
 
           <AwardsModal awards={awards} setAwards={setAwards}/>

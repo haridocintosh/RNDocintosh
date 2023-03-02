@@ -62,6 +62,21 @@ export const getAwardAPI = createAsyncThunk("getAward", async(data)=>{
     }
 })
 
+export const getQualificationAPI = createAsyncThunk("getQualification", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/get_ug_qualification`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(data)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/UpdateMobileNo`, {
@@ -149,6 +164,7 @@ export const profileSlice= createSlice({
         workExp     : {},
         award       : {},
         editAward   : {},
+        getQualification   : {},
         updateData  : {},
         user_data   : {},
         updateEmail : {}
@@ -294,6 +310,22 @@ export const profileSlice= createSlice({
             state.editAward      =  action.payload;
         })
         builder.addCase(Edit_ProfileOTP.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================getQualificationAPI===============================
+
+        builder.addCase(getQualificationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getQualificationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.getQualification      =  action.payload;
+        })
+        builder.addCase(getQualificationAPI.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

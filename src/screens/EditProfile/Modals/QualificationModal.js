@@ -4,8 +4,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
+import {useForm, Controller} from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { DatePickerInput } from 'react-native-paper-dates';
+
 
 const QualificationModal = ({qualification,setQualification}) => {
+    const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
+    const dispatch = useDispatch();
+
+    const onSubmit = (data) => {
+        console.log(data);
+    }
+
   return (
     <Modal
         style={{}}
@@ -17,27 +28,64 @@ const QualificationModal = ({qualification,setQualification}) => {
                 <Pressable style={styles.closebtn} onPress={() => setQualification(!qualification)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
-                <Text style={styles.modalText}>Edit Qualification</Text>
+                <Text style={styles.modalText}>Add Qualification</Text>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Course*</Text>
-                    <TextInput 
-                        autoCapitalize="none" 
-                        placeholder="write about you..."/>
+                    <Controller
+                        control={control}        
+                        name="designation"      
+                        rules={{
+                        required: true,
+                        }}  
+                        render={({field: {onChange, value, onBlur}}) => (
+                        <TextInput
+                            value={value}            
+                            onBlur={onBlur}            
+                            onChangeText={value => onChange(value)} 
+                        />
+                        )}  
+                    />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>College Name*</Text>
-                    <TextInput 
-                        autoCapitalize="none" 
-                        placeholder="write your College Name..."/>
+                    <Controller
+                        control={control}        
+                        name="designation"      
+                        rules={{
+                        required: true,
+                        }}  
+                        render={({field: {onChange, value, onBlur}}) => (
+                        <TextInput
+                            value={value}            
+                            onBlur={onBlur}            
+                            onChangeText={value => onChange(value)} 
+                        />
+                        )}  
+                    />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Year of Completion*</Text>
-                    <TextInput 
-                        autoCapitalize="none" 
-                        placeholder="write your College Name..."/>
+                    <Controller
+                        control={control}        
+                        name="designation"      
+                        rules={{
+                        required: true,
+                        }}  
+                        render={({field: {onChange, value, onBlur}}) => (
+                        <DatePickerInput
+                            locale="en"
+                            value={value}
+                            onChange={(d) => onChange(d)}
+                            style={{backgroundColor:'#fff'}}
+                        />
+                        )}  
+                    />
                 </View>
                 <View style={styles.modalBtnContainer}>
-                    <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
+                    <Button 
+                        onPress={handleSubmit(onSubmit)}
+                        title="Save" 
+                        buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
                         titleStyle={{ color:'#fff', textAlign:"center"}}/>
                 </View>
             </View>

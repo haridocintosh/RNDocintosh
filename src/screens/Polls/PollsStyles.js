@@ -15,11 +15,68 @@ export const styles = StyleSheet.create({
         paddingHorizontal:10,
         paddingVertical:4,
         borderRadius:50,
-        backgroundColor:'rgba(248, 184, 78, 0.2)'
+        backgroundColor:'rgba(248, 184, 78, 0.2)',
     },
     popularText:{
         fontSize:12,
         color:'#071B36',
-        fontFamily:'Inter-Regular'
+        fontFamily:'Inter-Regular',
+    },
+    Question:{
+        fontSize:16,
+        color:'#071B36',
+        fontFamily:'Inter-SemiBold',
+        marginTop:10
+    },
+    expireTimeContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center'
+    },
+    expireTime:{
+        flexDirection:'row',
+        marginTop:10,
+        alignItems:'center',
+    },
+    expireTimeText:{
+        fontSize:12,
+        color:'#FF3131',
+        marginLeft:5,
+        fontFamily:'Inter-Regular',
+        // marginTop:10
+    },
+    mcqOption:{
+        borderWidth:2,
+        marginTop:15,
+        borderRadius:4,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingVertical:10,
+        borderColor:"rgba(81, 102, 138, 0.3)",
+    },
+    mcqOptionText:{
+        color:'#071B36',
+        fontFamily:'Inter-Regular',
+    },
+    ToggleIcons:{
+        padding:5
+    },
+    NoPollsContainer:{
+        padding:15,
+        alignItems:'center',
+    },
+    NoPollImage:{
+        width:Dimensions.get('window').width/1.5,
+        resizeMode:'contain',
+    },
+    NoPollsTitle:{
+        color:'#071B36',
+        fontFamily:'Inter-Regular',
+        fontSize:20,
+    },
+    NoPollsSubTitle:{
+        color:'#51668A',
+        fontFamily:'Inter-Regular',
+        marginTop:15,
     },
 });

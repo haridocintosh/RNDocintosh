@@ -105,6 +105,7 @@ const ThankYouPage = ({ route,navigation }) => {
                 fontSize: 14,
                 textAlign: "center",
                 fontFamily: "Inter-Regular",
+                color:"#071B36"
               }}
             >
               for your time and response.

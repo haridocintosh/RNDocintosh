@@ -408,6 +408,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: "center",
     fontFamily: "Inter-SemiBold",
+    color: "#071B36",
   },
   imaguser: {
     width: 15,

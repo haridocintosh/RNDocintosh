@@ -18,6 +18,7 @@ const AwardsEditModal = ({editAwards,setEditAwards,passAwardData,handleAward}) =
 
     const onSubmit = async (data) => {
         const awardyear =  format(inputDate, 'yyyy-MM-dd');
+        console.log(awardyear, data);
         const postParams = {
             id:passAwardData.userID,
             award_id:passAwardData.award_id,
@@ -25,7 +26,6 @@ const AwardsEditModal = ({editAwards,setEditAwards,passAwardData,handleAward}) =
             award:data.award
         }
         const editAward = await dispatch(EditProfileAwardAPI(postParams));
-        console.log("editAward",editAward.payload);
         handleAward();
         setInputDate();
         setEditAwards(false);
@@ -35,6 +35,9 @@ const AwardsEditModal = ({editAwards,setEditAwards,passAwardData,handleAward}) =
         setEditAwards(!editAwards);
         reset();
     }
+    useEffect(() => {
+        setInputDate(passAwardData?.awardyear)
+    },[passAwardData])
     
   return (
     <Modal
@@ -69,14 +72,12 @@ const AwardsEditModal = ({editAwards,setEditAwards,passAwardData,handleAward}) =
                 {errors.award && <Text style={styles.errorMsg}>Award field is required!</Text>}
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Date*</Text>
-                    
                         <DatePickerInput
                             locale="en"
                             value={inputDate ? inputDate : passAwardData?.awardyear}
                             onChange={(d) => setInputDate(d)}
                             style={{backgroundColor:'#fff'}}
                         />
-                      
                 </View>
                 {errors.awardyear && <Text style={styles.errorMsg}>Award field is required!</Text>}
                 <View style={styles.modalBtnContainer}>

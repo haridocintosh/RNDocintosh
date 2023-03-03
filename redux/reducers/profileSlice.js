@@ -62,6 +62,34 @@ export const getAwardAPI = createAsyncThunk("getAward", async(data)=>{
     }
 })
 
+export const getPublicationAPI = createAsyncThunk("getPublication", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/publish`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+export const addPublicationAPI = createAsyncThunk("addPublication", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/addpublish`, {            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 export const getQualificationAPI = createAsyncThunk("getQualification", async(data)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/get_ug_qualification`, {
@@ -123,6 +151,21 @@ export const userInfo = createAsyncThunk("userInfo", async(data)=>{
     }
 })
 
+export const updateUserInfoAPI = createAsyncThunk("updateUser", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/about_profileupdate`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
     export const EditProfileAwardAPI = createAsyncThunk("editAward", async(data)=>{
         try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileAward`, {
@@ -165,6 +208,8 @@ export const profileSlice= createSlice({
         award       : {},
         editAward   : {},
         getQualification   : {},
+        updateUserInfo   : {},
+        publicationInfo   : {},
         updateData  : {},
         user_data   : {},
         updateEmail : {}
@@ -326,6 +371,54 @@ export const profileSlice= createSlice({
             state.getQualification      =  action.payload;
         })
         builder.addCase(getQualificationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================updateUserInfoAPI===============================
+
+        builder.addCase(updateUserInfoAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(updateUserInfoAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.updateUserInfo      =  action.payload;
+        })
+        builder.addCase(updateUserInfoAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================getPublicationAPI===============================
+
+        builder.addCase(getPublicationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getPublicationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.publicationInfo      =  action.payload;
+        })
+        builder.addCase(getPublicationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+        
+    //===================addPublicationAPI===============================
+
+        builder.addCase(addPublicationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(addPublicationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.publicationInfo      =  action.payload;
+        })
+        builder.addCase(addPublicationAPI.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

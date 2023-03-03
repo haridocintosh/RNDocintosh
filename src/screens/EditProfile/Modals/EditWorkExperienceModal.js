@@ -4,7 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
-import {useForm, Controller} from 'react-hook-form'
+import {useForm, Controller} from 'react-hook-form';
 import { DatePickerInput } from 'react-native-paper-dates';
 import { format } from 'date-fns';
 import { getLocalData } from '../../../apis/GetLocalData';

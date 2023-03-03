@@ -204,9 +204,6 @@ const HomeScreen = ({navigation,route})=> {
     }
   }, [refresh])
 
-
-  
-
     const renderItem = ({item,index}) => {
       return(
         <Card style={styles.cardOfPosts}>

@@ -7,15 +7,27 @@ import {styles} from '../EditProfileStyles';
 import { DatePickerInput } from 'react-native-paper-dates';
 import {useForm, Controller} from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { format } from 'date-fns';
 
 const AwardsModal = ({awards,setAwards}) => {
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const dispatch = useDispatch();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        data.awardyear = format(data?.awardyear, 'yyyy-MM-dd');
+        console.log("data",data);
+        // console.log(awardyear, data);
+        // const postParams = {
+        //     id:passAwardData.userID,
+        //     award_id:passAwardData.award_id,
+        //     awardyear:awardyear,
+        //     award:data.award
+        // }
+        // const editAward = await dispatch(EditProfileAwardAPI(postParams));
+        // handleAward();
+        // setInputDate();
+        // setEditAwards(false);
     }
-
   return (
     <Modal
         style={{}}
@@ -32,7 +44,7 @@ const AwardsModal = ({awards,setAwards}) => {
                     <Text style={styles.modalSubText}>Name of Award*</Text>
                     <Controller
                         control={control}        
-                        name="designation"      
+                        name="award"      
                         rules={{
                         required: true,
                         }}  
@@ -45,11 +57,12 @@ const AwardsModal = ({awards,setAwards}) => {
                         )}  
                     />
                 </View>
+                {errors.award && <Text style={styles.errorMsg}>Award field is required!</Text>}
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Date*</Text>
                     <Controller
                         control={control}        
-                        name="startdate"      
+                        name="awardyear"      
                         rules={{
                         required: true,
                         }}  
@@ -63,6 +76,7 @@ const AwardsModal = ({awards,setAwards}) => {
                         )}  
                     />
                 </View>
+                {errors.awardyear && <Text style={styles.errorMsg}>Date field is required!</Text>}
                 <View style={styles.modalBtnContainer}>
                     <Button 
                         onPress={handleSubmit(onSubmit)}

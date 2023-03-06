@@ -89,7 +89,6 @@ useEffect(() => {
                     <Image source={require("../assets/dr-icon/dcoin.png")} style={styles.docCoin}/>
                     <Text style={styles.cartOffersText}>100</Text>
                 </View>
-                
                 </View>
                 <TouchableOpacity>
                 <Image source={require('../assets/images/Surveys.png')} style={styles.cartImages}/>
@@ -123,7 +122,7 @@ useEffect(() => {
 
             <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
             <ImageBackground source={require('../assets/images/SentimetrixWave.png')} style={styles.CartWave}>
-                <TouchableOpacity style={styles.ButtonContainer}>
+                <TouchableOpacity style={styles.ButtonContainer} onPress={()=>{ navigation.navigate('Sentimetrix') }}>
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>

@@ -30,7 +30,9 @@
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
-import PublicationEditModal from './Modals/PublicationEditModal';
+  import PublicationEditModal from './Modals/PublicationEditModal';
+import QualificationEditModal from './Modals/QualificationEditModal';
+  
   
   
   
@@ -47,6 +49,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
     const [passWorkExp, setPassWorkExp] = useState(undefined);
     const [aboutMe, setaboutMe] = useState(false);
     const [qualification, setQualification] = useState(false);
+    const [editQualification, setEditQualification] = useState(false);
     const [awards, setAwards] = useState(false);
     const [editAwards, setEditAwards] = useState(false);
     const [publication, setPublication] = useState(false);
@@ -66,6 +69,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
     const [qualificationShowAll, setQualificationShowAll] = useState(2);
     const [publicationShowAll, setPublicationShowAll] = useState(2);
     const [propPublication, setPropPublication] = useState();
+    const [awardShowAll, setAwardShowAll] = useState(2);
     
     const dispatch = useDispatch();
 
@@ -324,7 +328,14 @@ import PublicationEditModal from './Modals/PublicationEditModal';
           
           <QualificationModal 
             qualification={qualification} 
-            setQualification={setQualification}/>
+            setQualification={setQualification}
+            getQualification={getQualification}
+          />
+          <QualificationModal 
+            setEditQualification={setEditQualification}
+            editQualification={editQualification}
+            getQualification={getQualification}
+          />
           <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Qualification</Text>
@@ -367,7 +378,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
               </>}
           </Card>
 
-          <AwardsModal awards={awards} setAwards={setAwards}/>
+          <AwardsModal awards={awards} setAwards={setAwards} handleAward={handleAward}/>
           <AwardsEditModal 
             editAwards={editAwards} 
             setEditAwards={setEditAwards} 
@@ -384,7 +395,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
                   </Text>
                 </TouchableOpacity>
               </View>
-              {getAward?.map((data,i) => {
+              {getAward?.slice(0, awardShowAll)?.map((data,i) => {
                 return(
                   <View style={styles.AddedDetails} key={i}>
                     <View style={{flexDirection:'row'}}>
@@ -403,6 +414,15 @@ import PublicationEditModal from './Modals/PublicationEditModal';
                   </View>
                 )
               })}
+              {awardShowAll !== undefined &&
+                getAward?.length > 2 &&
+                <>
+                  <View style={styles.devider}/>
+                  <TouchableOpacity style={styles.ShowAllContainer} onPress={() => setAwardShowAll()}>
+                    <Text style={styles.ShowAllText}>Show all {getAward?.length-2} Awards</Text>
+                    <Feather name="arrow-right" size={19} color="#2376E5" />
+                  </TouchableOpacity>
+                </>}
           </Card>
 
           <PublicationModal publication={publication} setPublication={setPublication} getPublication={getPublication}/>

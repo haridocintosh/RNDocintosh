@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text,Image,SafeAreaView,ScrollView,StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
-import Layer_2 from '../assets/images/Layer_2.png';
+// import Layer_2 from '../assets/images/Layer_2.png';
 
 const Polls = () => {
   const navigation = useNavigation();
@@ -14,7 +14,7 @@ const Polls = () => {
     style={{}}>
     <View style={{padding:10}}>
     <View style={{ alignSelf:'center', marginTop:80, marginBottom:'10%'}}>
-        <Image source={require('../assets/images/Layer_2.png')}/>
+        {/* <Image source={require('../assets/images/Layer_2.png')}/> */}
     </View>
     <View>
         <Text style={{alignSelf:'center', fontSize:20, fontWeight:'600'}}>You have attemped all Polls.</Text>

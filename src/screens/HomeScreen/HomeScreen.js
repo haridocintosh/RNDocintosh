@@ -8,7 +8,6 @@ import {
   Dimensions,
   Animated,
   ActivityIndicator,
-  TouchableHighlight
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +26,6 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Pressable } from 'native-base';
 
 
 const HomeScreen = ({navigation,route})=> {
@@ -209,9 +207,6 @@ const HomeScreen = ({navigation,route})=> {
       asyncFetchDailyData();
     }
   }, [refresh])
-
-
-  
 
     const renderItem = ({item,index}) => {
       return(

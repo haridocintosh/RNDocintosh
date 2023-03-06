@@ -13,6 +13,7 @@ import { showHeaderItem ,showHeaderItemBackless} from './ReuseLogics';
 import SavedPost from '../screens/Settings/SavedPost/SavedPost';
 import BlockList from '../screens/Settings/BlockList/BlockList';
 import Polls from '../screens/Polls/Polls';
+import PollsThankYouPage from '../screens/Polls/PollsThankYouPage';
 
 
 
@@ -31,6 +32,7 @@ const EngageNavigation = () => {
         <Stack.Screen name="Surveys" component={Surveys} options={showHeaderItem}/>
         <Stack.Screen name="Polls" component={Polls} options={showHeaderItem}/>
         <Stack.Screen name="ThankYouPage" component={ThankYouPage} options={showHeaderItemBackless}/>
+        <Stack.Screen name="PollsThankYouPage" component={PollsThankYouPage} options={showHeaderItemBackless}/>
         <Stack.Screen name="SavedPost" component={SavedPost} options={showHeaderItem} />
         <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
     </Stack.Navigator>

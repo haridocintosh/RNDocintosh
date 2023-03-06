@@ -63,7 +63,6 @@ const LoginScreen = () => {
       const token = await dispatch(userLogin(uploadData));
       if(token?.payload?.status == 'Success'){
           setloader(false)
-          console.log("token.payload.session_data",token.payload.session_data);
           dispatch(addLocal(token.payload.session_data));
         await storeData('USER_INFO',JSON.stringify({
           login:true,
@@ -124,7 +123,7 @@ const LoginScreen = () => {
     const getdeviceId = () => {
       var userId = OneSignal.getDeviceState()
         userId.then((deviceUUid)=>{
-       // console.log(deviceUUid.userId);
+        // console.log(deviceUUid.userId);
         const deviceId  = deviceUUid.userId
           setdevice_id({deviceId})
       }).catch(()=>{

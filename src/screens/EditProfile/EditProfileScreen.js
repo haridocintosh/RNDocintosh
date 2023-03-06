@@ -21,14 +21,24 @@
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
   import { useIsFocused } from '@react-navigation/native';
-  import { getWorkExpAPI, userInfo, getAwardAPI } from '../../../redux/reducers/profileSlice';
+  import { getWorkExpAPI,
+    userInfo,
+    getAwardAPI,
+    getQualificationAPI,
+    getPublicationAPI 
+  } from '../../../redux/reducers/profileSlice';
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
+import PublicationEditModal from './Modals/PublicationEditModal';
+  
+  
+  
   
   
   const EditProfileScreen = ({route,navigation}) => {
     const [userdata,setuserdata] = useState([]);
+    const [localData,setLocalData] = useState();
     const [locationModal, setLocationModal] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [emailid, setemailid] = useState(false);
@@ -40,6 +50,7 @@
     const [awards, setAwards] = useState(false);
     const [editAwards, setEditAwards] = useState(false);
     const [publication, setPublication] = useState(false);
+    const [editPublication, setEditPublication] = useState(false);
     // const [achievement, setAchievement] = useState(false);
     const [Interests, setInterests] = useState(false);
     const [profile, setProfile] = useState(false);
@@ -50,6 +61,11 @@
     const [workShowAll, setWorkShowAll] = useState(2);
     const [getAward, setGetAward] = useState(null);
     const [passAwardData, setPassAwardData] = useState(null);
+    const [getQualificationData, setGetQualificationData] = useState();
+    const [publicationData, setGetPublicationData] = useState();
+    const [qualificationShowAll, setQualificationShowAll] = useState(2);
+    const [publicationShowAll, setPublicationShowAll] = useState(2);
+    const [propPublication, setPropPublication] = useState();
     
     const dispatch = useDispatch();
 
@@ -85,8 +101,14 @@
       setPassAwardData(data);
       setEditAwards(!editAwards);
     };
-    const publicationModal = () => {
-      setPublication(!publication);
+    // const publicationModal = () => {
+    //   setPublication(!publication);
+    // };
+    const publicationEditModal = async (data) => {
+      data.publishedyear = await new Date(moment(data?.publishedyear).format("MM/DD/YYYY"))
+      // console.log(data);
+      setPropPublication(data)
+      setEditPublication(!editPublication);
     };
     // const AchievementModal = () => {
     //   setAchievement(!achievement);
@@ -99,23 +121,19 @@
     };
 
     const changeProfile = (arg) => {
-      // console.log('EditScreen',arg);
       SingleImage(arg).then((res) => {
         setProfile(!profile)
         navigation.navigate("ProfilePictureCrop",{pucUrl : res.assets[0], user_ID: userdata.id})
       })
     }
 
-    const asyncFetchDailyData = () => {
+    const asyncFetchDailyData = async () => {
       navigation.setOptions({title:'Edit Profile'});
       getLocalData('USER_INFO').then(async (res) => {
         setLoader(true);
-        const reData = res?.data;
-        // setuserdata(reData);
-        const uresult = await dispatch(userInfo({user_id : reData.id}));
-        // console.log(uresult?.payload[0]);
+        const uresult = await dispatch(userInfo({user_id : res.data.id}));
         setuserdata(uresult?.payload[0]);
-        const result = await dispatch(getSelectedInterest({user_id : reData.id}));
+        const result = await dispatch(getSelectedInterest({user_id : res.data.id}));
         setAllInterestsData(result?.payload)
         const TrueData = result.payload.filter(data => data.isSelected == true)
         setInterestsData(TrueData);
@@ -123,25 +141,36 @@
       });
     }
 
-    const handleWorkReload = () => {
+    const handleWorkReload = async () => {
       getLocalData('USER_INFO').then(async (res) => {
-        const reData = res?.data;
-        const getWorkResult = await dispatch(getWorkExpAPI({user_id : reData.id}));
+        const getWorkResult = await dispatch(getWorkExpAPI({user_id : res.data.id}));
         setWorkResult(getWorkResult.payload);
       })
     }
 
-    const handleAward = () => {
+    const handleAward = async () => {
       getLocalData('USER_INFO').then(async (res) => {
-        const reData = res?.data;
-        console.log("reData",reData);
-        const getAwardResult = await dispatch(getAwardAPI({user_id : reData.id}));
-        setGetAward(getAwardResult.payload)
+        const getAwardResult = await dispatch(getAwardAPI({user_id : res.data.id}));
+        setGetAward(getAwardResult.payload);
       })
     }
 
     const handleWorkloadMore = () => {
       setWorkShowAll()
+    }
+
+    const getQualification = async () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        const getQualificationResult = await dispatch(getQualificationAPI({user_id : res?.data.id}));
+        setGetQualificationData(getQualificationResult.payload);
+      })
+    }
+
+    const getPublication =  () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        const getPublicationResult = await dispatch(getPublicationAPI({user_id : res?.data.id}));
+        setGetPublicationData(getPublicationResult.payload);
+      })
     }
     
     useEffect(()=>{
@@ -154,9 +183,11 @@
     },[route?.params])
 
     useEffect(()=>{
-      asyncFetchDailyData();
-      handleWorkReload();
-      handleAward();
+        asyncFetchDailyData();
+        handleWorkReload();
+        handleAward();
+        getQualification();
+        getPublication();
     },[])
     
 
@@ -169,6 +200,7 @@
           <LocationModal locationModal={locationModal} setLocationModal={setLocationModal}/>
           <MobileNumberModal mobileNumber={mobileNumber} currentmobileno= {userdata.mobilenumber} setMobileNumber={setMobileNumber}/>
           <EmailModal emailid={emailid} setemailid={setemailid}/>
+          
           <Card style={styles.CartContainer}>
 
             <View style={styles.ProfileImageContainer}>
@@ -226,13 +258,20 @@
             </View>
           </Card>  
 
-          <AboutMeModal aboutMe={aboutMe} setaboutMe={setaboutMe}/>
+          <AboutMeModal 
+            asyncFetchDailyData={asyncFetchDailyData} 
+            aboutMe={aboutMe} 
+            setaboutMe={setaboutMe} 
+            userdata={userdata}
+          />
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>About Me</Text>
                 <Entypo name="edit" size={23} color="black" style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={aboutMeModal} />
               </View>
-              <Text style={{paddingHorizontal:20,color:'#51668A',lineHeight:20,marginBottom:20}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquet cursus pellentesque. Mauris gravida libero nec sapien ultricies blandit. </Text>
+              <Text style={{paddingHorizontal:20,color:'#51668A',lineHeight:20,marginBottom:20}}>
+              {userdata?.summary}  
+              </Text>
           </Card>
 
           <WorkExperienceModal workExp={workExp} setWorkExp={setWorkExp} handleWorkReload={handleWorkReload}/>
@@ -266,7 +305,6 @@
                         <Text style={styles.AddedDetailsDate}>
                           {moment(data.start_date).format("MMM YYYY")} - {
                           String(data.end_date).includes(1970) ? "Present" : moment(data.end_date).format("MMM YYYY")}
-                          {/* {console.log("data.end_date",data.end_date)} */}
                         </Text>
                       </View>  
                     </View>
@@ -284,33 +322,49 @@
               </TouchableOpacity>}
           </Card>
           
-          <QualificationModal qualification={qualification} setQualification={setQualification}/>
+          <QualificationModal 
+            qualification={qualification} 
+            setQualification={setQualification}/>
           <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Qualification</Text>
-              <Text style={styles.AddInfo}>
-                <Entypo name="plus" size={15} color="#2376E5" /> 
-                Add Qualification
-              </Text>
-            </View>
-            <View style={styles.AddedDetails}>
-              <View style={{flexDirection:'row'}}>
-              <Image source={require('../../assets/images/mbbsimg.png')}/>
-                <View style={{paddingLeft:10}}>
-                  <Text style={styles.AddedDetailsTitle}>MBBS</Text>
-                  <Text style={styles.AddedDetailsSubTitle}>Ramaiah Medical College</Text>
-                  <Text style={styles.AddedDetailsDate}>June 2019 - June 2024</Text>
-                </View>
-              </View> 
-              <TouchableOpacity onPress={qualificationModal}>  
-                <Entypo name="edit" size={23} color="#2C8892"/>  
-              </TouchableOpacity>  
-            </View>
-              <View style={styles.devider}/>
-              <TouchableOpacity style={styles.showMoreContainer}>
-                <Text style={styles.showMore}>Show all 4 Qualification</Text>
-                <Feather name="arrow-right" size={19} color="#2376E5" />
+              <TouchableOpacity onPress={() => setQualification(!qualification)}>
+                <Text style={styles.AddInfo}>
+                  <Entypo name="plus" size={15} color="#2376E5" /> 
+                  Add Qualification
+                </Text>
               </TouchableOpacity>
+            </View>
+            {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {
+              return(
+                <View style={styles.AddedDetails} key={i}>
+                  <View style={{flexDirection:'row'}}>
+                  <View style={styles.SingleLetter}>
+                      <Text style={styles.SingleLetterText}>{data?.qualification[0].toUpperCase()}</Text>
+                  </View>
+                    <View style={{paddingLeft:10}}>
+                      <Text style={styles.AddedDetailsTitle}>{data?.qualification}</Text>
+                      <Text style={styles.AddedDetailsSubTitle}>{data?.collegename}</Text>
+                      <Text style={styles.AddedDetailsDate}>
+                        {moment(data.startyear).format("MMM YYYY")} - {moment(data.completionyear).format("MMM YYYY")}
+                      </Text>
+                    </View>
+                  </View> 
+                  <TouchableOpacity onPress={qualificationModal}>  
+                    <Entypo name="edit" size={23} color="#2C8892"/>  
+                  </TouchableOpacity>  
+                </View>
+              )
+            })}
+              {qualificationShowAll !== undefined &&
+              getQualificationData?.length > 2 &&
+              <>
+                <View style={styles.devider}/>
+                <TouchableOpacity style={styles.ShowAllContainer} onPress={() => setQualificationShowAll()}>
+                  <Text style={styles.ShowAllText}>Show all {getQualificationData?.length-2} Qualification</Text>
+                  <Feather name="arrow-right" size={19} color="#2376E5" />
+                </TouchableOpacity>
+              </>}
           </Card>
 
           <AwardsModal awards={awards} setAwards={setAwards}/>
@@ -346,31 +400,56 @@
                     <TouchableOpacity onPress={() => awardsEditModal(data)}>
                       <Entypo name="edit" size={23} color="#2C8892"  /> 
                     </TouchableOpacity>
-                       
                   </View>
                 )
               })}
           </Card>
 
-          <PublicationModal publication={publication} setPublication={setPublication}/>
+          <PublicationModal publication={publication} setPublication={setPublication} getPublication={getPublication}/>
+          <PublicationEditModal 
+            editPublication={editPublication} 
+            setEditPublication={setEditPublication} 
+            getPublication={getPublication}
+            propPublication={propPublication}
+          />
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>Publications</Text>
-                <Text style={styles.AddInfo}>
-                  <Entypo name="plus" size={15} color="#2376E5" /> 
-                  Add Publications
-                </Text>
+                <TouchableOpacity onPress={() => setPublication(true)}>
+                  <Text style={styles.AddInfo}>
+                    <Entypo name="plus" size={15} color="#2376E5"/> 
+                    Add Publications
+                  </Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.AddedDetails}>
-                <View style={{flexDirection:'row'}}>
-                  <Image source={require('../../assets/dr-icon/trofee.png')}/>
-                  <View style={{paddingLeft:10}}>
-                    <Text style={styles.AddedDetailsTitle}>Lorem ipsum dolor sit amet</Text>
-                    <Text style={styles.AddedDetailsDate}>June 2021</Text>
-                  </View>  
-                </View>
-                <Entypo name="edit" size={23} color="#2C8892"  onPress={publicationModal}/>    
-              </View>
+
+              {publicationData?.slice(0, publicationShowAll)?.map((data,i) => {
+                return(
+                  <View style={styles.AddedDetails} key={i}>
+                    <View style={{flexDirection:'row'}}>
+                    <View style={styles.SingleLetter}>
+                        <Text style={styles.SingleLetterText}>{data?.title[0].toUpperCase()}</Text>
+                    </View>
+                      <View style={{paddingLeft:10}}>
+                        <Text style={styles.AddedDetailsTitle}>{data?.title}</Text>
+                        <Text style={styles.AddedDetailsDate}>
+                          {moment(data.publishedyear).format("MMM YYYY")}
+                        </Text>
+                      </View>  
+                    </View>
+                    <Entypo name="edit" size={23} color="#2C8892"  onPress={() => publicationEditModal(data)}/>    
+                  </View>
+                )
+              })}
+              {publicationShowAll !== undefined &&
+              publicationData?.length > 2 &&
+              <>
+                <View style={styles.devider}/>
+                <TouchableOpacity style={styles.ShowAllContainer} onPress={() => setPublicationShowAll()}>
+                  <Text style={styles.ShowAllText}>Show all {publicationData?.length-2} Qualification</Text>
+                  <Feather name="arrow-right" size={19} color="#2376E5" />
+                </TouchableOpacity>
+              </>}
           </Card>
 
           {/* <AchievementsModal achievement={achievement} setAchievement={setAchievement}/>

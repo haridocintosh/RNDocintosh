@@ -182,7 +182,6 @@ const renderItem = (item) => {
   )
 }
 
-
   return (
     <View style={{paddingHorizontal:20,flex:1,height:"100%"}}>
     <Text>{(loading)?'Loading Data....':<Text></Text>}</Text> 

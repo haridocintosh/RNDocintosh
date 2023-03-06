@@ -30,7 +30,9 @@
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
-import PublicationEditModal from './Modals/PublicationEditModal';
+  import PublicationEditModal from './Modals/PublicationEditModal';
+import QualificationEditModal from './Modals/QualificationEditModal';
+  
   
   
   
@@ -47,6 +49,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
     const [passWorkExp, setPassWorkExp] = useState(undefined);
     const [aboutMe, setaboutMe] = useState(false);
     const [qualification, setQualification] = useState(false);
+    const [editQualification, setEditQualification] = useState(false);
     const [awards, setAwards] = useState(false);
     const [editAwards, setEditAwards] = useState(false);
     const [publication, setPublication] = useState(false);
@@ -325,7 +328,14 @@ import PublicationEditModal from './Modals/PublicationEditModal';
           
           <QualificationModal 
             qualification={qualification} 
-            setQualification={setQualification}/>
+            setQualification={setQualification}
+            getQualification={getQualification}
+          />
+          <QualificationModal 
+            setEditQualification={setEditQualification}
+            editQualification={editQualification}
+            getQualification={getQualification}
+          />
           <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Qualification</Text>

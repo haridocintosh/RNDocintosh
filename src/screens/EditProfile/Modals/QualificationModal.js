@@ -7,15 +7,53 @@ import {styles} from '../EditProfileStyles';
 import {useForm, Controller} from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { DatePickerInput } from 'react-native-paper-dates';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { AddQualificationAPI, QlifnCollegeAPI, QlifnCourseAPI } from '../../../../redux/reducers/qualificationSlice';
+import { format } from 'date-fns';
 
-
-const QualificationModal = ({qualification,setQualification}) => {
+const QualificationModal = ({qualification,setQualification,getQualification}) => {
+    const [openCourse, setOpenCourse] = useState(false);
+    const [openCollege, setOpenCollege] = useState(false);
+    const [valueCourse, setValueCourse] = useState(null);
+    const [valueCollege, setValueCollege] = useState(null);
+    const [itemsCourse, setItemsCourse] = useState([]);
+    const [itemsCollege, setItemsCollege] = useState([]);
+    const [userId, setUserId] = useState([]);
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const dispatch = useDispatch();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        data.collegeenddate = format(data?.collegeenddate, 'yyyy-MM-dd')
+        const postData = {
+            coursetype :"",
+            collegeid : valueCollege,
+            courseid : valueCourse,
+            collegestartdate : "",
+            collegeenddate : data.collegeenddate,
+            userid : userId,
+            pg_id : ""
+        }
+        console.log("postData",postData);
+        const addQuaResult = await dispatch(AddQualificationAPI(postData));
+        console.log(addQuaResult);
+        getQualification();
+        setQualification(false);
     }
+
+    const GetDropList = () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        setUserId(res?.data?.id);
+        const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
+        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id}}));
+        const collegeResult = await dispatch(QlifnCollegeAPI());
+        setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
+      })
+    }
+    
+    useEffect(() => {
+        GetDropList()
+    },[])
 
   return (
     <Modal
@@ -28,46 +66,38 @@ const QualificationModal = ({qualification,setQualification}) => {
                 <Pressable style={styles.closebtn} onPress={() => setQualification(!qualification)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
-                <Text style={styles.modalText}>Add Qualification</Text>
-                <View style={styles.input}>
+                <Text style={styles.modalText}>Edit Qualification</Text>
+                <View style={styles.inputDropDown}>
                     <Text style={styles.modalSubText}>Course*</Text>
-                    <Controller
-                        control={control}        
-                        name="designation"      
-                        rules={{
-                        required: true,
-                        }}  
-                        render={({field: {onChange, value, onBlur}}) => (
-                        <TextInput
-                            value={value}            
-                            onBlur={onBlur}            
-                            onChangeText={value => onChange(value)} 
-                        />
-                        )}  
-                    />
+                        <DropDownPicker
+                            style={styles.DropDownField}
+                            open={openCourse}
+                            value={valueCourse}
+                            items={itemsCourse}
+                            setOpen={setOpenCourse}
+                            setValue={setValueCourse}
+                            setItems={setItemsCourse}
+                            dropDownDirection={'TOP'}
+                          />
                 </View>
-                <View style={styles.input}>
+                <View style={styles.inputDropDown}>
                     <Text style={styles.modalSubText}>College Name*</Text>
-                    <Controller
-                        control={control}        
-                        name="designation"      
-                        rules={{
-                        required: true,
-                        }}  
-                        render={({field: {onChange, value, onBlur}}) => (
-                        <TextInput
-                            value={value}            
-                            onBlur={onBlur}            
-                            onChangeText={value => onChange(value)} 
-                        />
-                        )}  
-                    />
+                        <DropDownPicker
+                            style={styles.DropDownField}
+                            open={openCollege}
+                            value={valueCollege}
+                            items={itemsCollege}
+                            setOpen={setOpenCollege}
+                            setValue={setValueCollege}
+                            setItems={setItemsCollege}
+                            dropDownDirection={'TOP'}
+                          />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.modalSubText}>Year of Completion*</Text>
                     <Controller
                         control={control}        
-                        name="designation"      
+                        name="collegeenddate"      
                         rules={{
                         required: true,
                         }}  

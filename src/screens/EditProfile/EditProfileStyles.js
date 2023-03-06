@@ -40,6 +40,13 @@ export const styles = StyleSheet.create({
         width:'100%',
         marginBottom:20
     },
+    inputDropDown:{
+        alignSelf:'center',
+        // borderBottomColor:'#071B36',
+        // borderBottomWidth:0.7,
+        width:'100%',
+        marginBottom:20
+    },
     pickFrom:{
         flexDirection:'row',
         alignItems:'center',
@@ -155,8 +162,18 @@ export const styles = StyleSheet.create({
     modalSubText: {
         fontSize:12,
         color:'#071B36',
-        fontFamily:"PlusJakartaSans-Regular"
+        fontFamily:"PlusJakartaSans-Regular",
+        marginBottom:5
     },
+    // searchContainerStyle: {
+    //     borderColor: '#cc0000'
+    // },
+    // dropDownContainerStyle: {
+    //     borderColor: '#cc0000'
+    // },
+    // searchTextInputStyle: {
+    //     borderColor: '#cc0000'
+    // },
     errorMsg:{
         color:'#cc0000'
     },

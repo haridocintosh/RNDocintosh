@@ -89,7 +89,6 @@ useEffect(() => {
                     <Image source={require("../assets/dr-icon/dcoin.png")} style={styles.docCoin}/>
                     <Text style={styles.cartOffersText}>100</Text>
                 </View>
-                
                 </View>
                 <TouchableOpacity>
                 <Image source={require('../assets/images/Surveys.png')} style={styles.cartImages}/>

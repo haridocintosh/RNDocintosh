@@ -66,6 +66,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
     const [qualificationShowAll, setQualificationShowAll] = useState(2);
     const [publicationShowAll, setPublicationShowAll] = useState(2);
     const [propPublication, setPropPublication] = useState();
+    const [awardShowAll, setAwardShowAll] = useState(2);
     
     const dispatch = useDispatch();
 
@@ -367,7 +368,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
               </>}
           </Card>
 
-          <AwardsModal awards={awards} setAwards={setAwards}/>
+          <AwardsModal awards={awards} setAwards={setAwards} handleAward={handleAward}/>
           <AwardsEditModal 
             editAwards={editAwards} 
             setEditAwards={setEditAwards} 
@@ -384,7 +385,7 @@ import PublicationEditModal from './Modals/PublicationEditModal';
                   </Text>
                 </TouchableOpacity>
               </View>
-              {getAward?.map((data,i) => {
+              {getAward?.slice(0, awardShowAll)?.map((data,i) => {
                 return(
                   <View style={styles.AddedDetails} key={i}>
                     <View style={{flexDirection:'row'}}>
@@ -403,6 +404,15 @@ import PublicationEditModal from './Modals/PublicationEditModal';
                   </View>
                 )
               })}
+              {awardShowAll !== undefined &&
+                getAward?.length > 2 &&
+                <>
+                  <View style={styles.devider}/>
+                  <TouchableOpacity style={styles.ShowAllContainer} onPress={() => setAwardShowAll()}>
+                    <Text style={styles.ShowAllText}>Show all {getAward?.length-2} Awards</Text>
+                    <Feather name="arrow-right" size={19} color="#2376E5" />
+                  </TouchableOpacity>
+                </>}
           </Card>
 
           <PublicationModal publication={publication} setPublication={setPublication} getPublication={getPublication}/>

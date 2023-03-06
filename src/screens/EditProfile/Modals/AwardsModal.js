@@ -8,25 +8,25 @@ import { DatePickerInput } from 'react-native-paper-dates';
 import {useForm, Controller} from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { format } from 'date-fns';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { EditProfileAwardAPI } from '../../../../redux/reducers/profileSlice';
 
-const AwardsModal = ({awards,setAwards}) => {
+
+const AwardsModal = ({awards,setAwards,handleAward}) => {
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     const dispatch = useDispatch();
 
     const onSubmit = async (data) => {
-        data.awardyear = format(data?.awardyear, 'yyyy-MM-dd');
-        console.log("data",data);
-        // console.log(awardyear, data);
-        // const postParams = {
-        //     id:passAwardData.userID,
-        //     award_id:passAwardData.award_id,
-        //     awardyear:awardyear,
-        //     award:data.award
-        // }
-        // const editAward = await dispatch(EditProfileAwardAPI(postParams));
-        // handleAward();
-        // setInputDate();
-        // setEditAwards(false);
+        getLocalData('USER_INFO').then(async (res) => {
+            data.awardyear = format(data?.awardyear, 'yyyy-MM-dd');
+            const postParams = { ...data, id:res?.data?.id, award_id:""}
+            const editAward = await dispatch(EditProfileAwardAPI(postParams));
+            console.log("editAward",editAward);
+            handleAward();
+            setAwards(false);
+            reset();
+        })
+       
     }
   return (
     <Modal

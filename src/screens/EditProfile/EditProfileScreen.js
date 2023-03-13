@@ -60,6 +60,7 @@
     const [workShowAll, setWorkShowAll] = useState(2);
     const [getAward, setGetAward] = useState(null);
     const [passAwardData, setPassAwardData] = useState(null);
+    const [passQualification, setPassQualification] = useState(null);
     const [getQualificationData, setGetQualificationData] = useState();
     const [publicationData, setGetPublicationData] = useState();
     const [qualificationShowAll, setQualificationShowAll] = useState(2);
@@ -90,8 +91,11 @@
     const aboutMeModal = () => {
       setaboutMe(!aboutMe);
     };
-    const qualificationModal = () => {
-      setQualification(!qualification);
+    const handleEditQualification = async (data) => {
+      data.completionyear = await new Date(moment(data?.completionyear).format("MM/DD/YYYY"));
+      setPassQualification(data);
+      console.log("data",data);
+      setEditQualification(!editQualification);
     };
     const awardsModal = () => {
       setAwards(!awards);
@@ -106,7 +110,6 @@
     // };
     const publicationEditModal = async (data) => {
       data.publishedyear = await new Date(moment(data?.publishedyear).format("MM/DD/YYYY"))
-      // console.log(data);
       setPropPublication(data)
       setEditPublication(!editPublication);
     };
@@ -331,6 +334,7 @@
             setEditQualification={setEditQualification}
             editQualification={editQualification}
             getQualification={getQualification}
+            passQualification={passQualification}
           />
 
           <Card style={styles.CartContainer}>
@@ -348,17 +352,18 @@
                 <View style={styles.AddedDetails} key={i}>
                   <View style={{flexDirection:'row'}}>
                   <View style={styles.SingleLetter}>
-                      <Text style={styles.SingleLetterText}>{data?.qualification?.toUpperCase()}</Text>
+                      <Text style={styles.SingleLetterText}>{data?.qualification[0]?.toUpperCase()}</Text>
                   </View>
                     <View style={{paddingLeft:10}}>
                       <Text style={styles.AddedDetailsTitle}>{data?.qualification}</Text>
                       <Text style={styles.AddedDetailsSubTitle}>{data?.collegename}</Text>
                       <Text style={styles.AddedDetailsDate}>
-                        {moment(data.startyear).format("MMM YYYY")} - {moment(data.completionyear).format("MMM YYYY")}
+                        {/* {moment(data.startyear).format("MMM YYYY")} -  */}
+                        {moment(data.completionyear).format("MMM YYYY")}
                       </Text>
                     </View>
                   </View> 
-                  <TouchableOpacity onPress={qualificationModal}>  
+                  <TouchableOpacity onPress={() => handleEditQualification(data)}>  
                     <Entypo name="edit" size={23} color="#2C8892"/>  
                   </TouchableOpacity>  
                 </View>

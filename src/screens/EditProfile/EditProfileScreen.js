@@ -91,7 +91,7 @@
       setaboutMe(!aboutMe);
     };
     const qualificationModal = () => {
-      setQualification(!aboutMe);
+      setQualification(!qualification);
     };
     const awardsModal = () => {
       setAwards(!awards);

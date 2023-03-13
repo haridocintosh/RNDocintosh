@@ -347,6 +347,7 @@
                 </Text>
               </TouchableOpacity>
             </View>
+            <Text> {console.log(getQualificationData)} </Text>
             {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {
               return(
                 <View style={styles.AddedDetails} key={i}>

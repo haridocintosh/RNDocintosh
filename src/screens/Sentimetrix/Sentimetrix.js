@@ -33,6 +33,7 @@ const Sentimetrix = () => {
         setValue={setValue}
         setItems={setItems}
         autoScroll={true}
+        disableBorderRadius={true}
       />
        <Button
           title="Start Survey"

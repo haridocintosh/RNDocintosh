@@ -34,9 +34,9 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
             userid : userId,
             pg_id : ""
         }
-        console.log("postData",postData);
+        // console.log("postData",postData);
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
-        console.log(addQuaResult);
+        // console.log(addQuaResult);
         getQualification();
         setQualification(false);
     }
@@ -65,7 +65,7 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
                 <Pressable style={styles.closebtn} onPress={() => setQualification(!qualification)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
-                <Text style={styles.modalText}>Edit Qualification</Text>
+                <Text style={styles.modalText}>Add Qualification</Text>
                 <View style={styles.inputDropDown}>
                     <Text style={styles.modalSubText}>Course*</Text>
                         <DropDownPicker

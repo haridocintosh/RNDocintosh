@@ -194,12 +194,12 @@ const form_submit = async() =>{
       ref.current.scrollTo({ y: 0, animated: true })
     }
     }else if(!register.university){
-    setuniversityerr("Please Select University ");
+    setuniversityerr("Please select university ");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
     }else if(!register.college){
-    setclgerr("Please Select College");
+    setclgerr("Please select college");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
@@ -211,9 +211,9 @@ const form_submit = async() =>{
   if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-    setprofilErr("Please Upload your Profile Photo");
+    setprofilErr("Please upload your profile photo");
   }else if(!register.mrnproof){
-    setmrnproofErr("Please Upload CollegeId/Library Card");
+    setmrnproofErr("Please upload collegeid/library card");
   }else{
     // setsubmitbtn(true);
     setloader(true);

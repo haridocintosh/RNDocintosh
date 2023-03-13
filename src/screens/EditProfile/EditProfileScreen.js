@@ -31,11 +31,7 @@
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
   import PublicationEditModal from './Modals/PublicationEditModal';
-import QualificationEditModal from './Modals/QualificationEditModal';
-  
-  
-  
-  
+  import QualificationEditModal from './Modals/QualificationEditModal';
   
   
   const EditProfileScreen = ({route,navigation}) => {
@@ -336,6 +332,7 @@ import QualificationEditModal from './Modals/QualificationEditModal';
             editQualification={editQualification}
             getQualification={getQualification}
           />
+
           <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Qualification</Text>
@@ -351,7 +348,7 @@ import QualificationEditModal from './Modals/QualificationEditModal';
                 <View style={styles.AddedDetails} key={i}>
                   <View style={{flexDirection:'row'}}>
                   <View style={styles.SingleLetter}>
-                      <Text style={styles.SingleLetterText}>{data?.qualification[0].toUpperCase()}</Text>
+                      <Text style={styles.SingleLetterText}>{data?.qualification?.toUpperCase()}</Text>
                   </View>
                     <View style={{paddingLeft:10}}>
                       <Text style={styles.AddedDetailsTitle}>{data?.qualification}</Text>

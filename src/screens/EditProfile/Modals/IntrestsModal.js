@@ -4,12 +4,29 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
+import { useDispatch } from 'react-redux';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { addCircle } from '../../../../redux/reducers/circleSlice';
 
 const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
 
-    const handleSelect = (id) => {
+    const dispatch              = useDispatch()
+    const [userId, setuserId]   = useState();
+
+
+    const handleSelect = async (id) => {
         console.log("id",id);
+        const postDetails = {speciality_id:id,id:userId}
+        const result = await dispatch(addCircle(postDetails));
+        console.log(result);
     }
+
+    useEffect(()=>{
+        getLocalData('USER_INFO').then((res) => {
+          const reData = res?.data;
+          setuserId(reData?.id)
+        });
+      })
   return (
     <Modal
         animationType="slide"
@@ -26,7 +43,7 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
                         {allInterestsData?.map((data, index) => {
                             return(
                                 <TouchableOpacity style={data.isSelected ? styles.InterestsSelected :styles.InterestsNotSelected} key={index} onPress={() => handleSelect(data.speciality_id)}>
-                                    <Text>{data.speciality}</Text>
+                                    <Text  >{data.speciality}</Text>
                                     {data.isSelected && <AntDesign name="closecircle" size={20} color="#45B5C0" style={styles.selectedIcons}/>}
                                 </TouchableOpacity>
                             )
@@ -34,10 +51,10 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
                     </View>
                 </ScrollView>
                 
-                <View style={styles.modalBtnContainer}>
+                {/* <View style={styles.modalBtnContainer}>
                     <Button title="Save" buttonStyle={{ backgroundColor:'#2C8892',width:'100%'}}
                         titleStyle={{ color:'#fff', textAlign:"center"}}/>
-                </View>
+                </View> */}
             </View>
         </View>
     </Modal>

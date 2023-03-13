@@ -26,16 +26,15 @@ export default function ContactPermission({navigation}) {
   const [spinner, setSpinner]  = useState(false);
   const dispatch = useDispatch();
 
-
-
   getLocalData("USER_INFO").then((res) => {
+    // console.log('checkLogin', res?.login);
     if(res?.login){
-      setDefaultRoute("HomeScreen");
+      setDefaultRoute('HomeScreen');
     }else{
-      setDefaultRoute("Login");
+      setDefaultRoute('Login');
+      // console.log('Login');
     }
   })
-
 
   const handleChange = (phoneNumbers) => {
     // setSpinner(true);
@@ -94,8 +93,8 @@ export default function ContactPermission({navigation}) {
 
   useEffect(() => {
     navigation.setOptions({ title: 'Invite Fellow Doctors Only'});
+    getLocalData("USER_INFO");
     getPrermission();
-    getLocalData("USER_INFO")
   }, []);
 
 
@@ -125,9 +124,18 @@ export default function ContactPermission({navigation}) {
                 console.log(e)
             })
         }else{
-          
-          navigation.navigate({defaultRoute});
-         Toast.show('Permission deny',Toast.LONG);
+
+          getLocalData("USER_INFO").then((res) => {
+            if(res?.login){
+              navigation.goBack();
+            }else{
+              navigation.navigate("Login");
+            }
+          })
+          // console.log('checkdefaultpermission',defaultRoute);
+         // Toast.show('Permission deny',Toast.LONG);
+         // navigation.navigate('Login');
+         
         }
       })
   }

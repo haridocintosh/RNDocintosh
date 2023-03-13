@@ -95,7 +95,7 @@ import QualificationEditModal from './Modals/QualificationEditModal';
       setaboutMe(!aboutMe);
     };
     const qualificationModal = () => {
-      setQualification(!aboutMe);
+      setQualification(!qualification);
     };
     const awardsModal = () => {
       setAwards(!awards);
@@ -331,7 +331,7 @@ import QualificationEditModal from './Modals/QualificationEditModal';
             setQualification={setQualification}
             getQualification={getQualification}
           />
-          <QualificationModal 
+          <QualificationEditModal 
             setEditQualification={setEditQualification}
             editQualification={editQualification}
             getQualification={getQualification}

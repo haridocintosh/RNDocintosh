@@ -57,7 +57,6 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
 
   return (
     <Modal
-        style={{}}
         animationType="slide"
         transparent={true}
         visible={qualification}>

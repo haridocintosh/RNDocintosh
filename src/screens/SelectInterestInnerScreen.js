@@ -118,13 +118,10 @@ import {  View,
       );
     };
   
-    const handleSubmit = ()=>{
-      // if(selectitem == ''){
-      //   Toast.show('Please Select Your Interest',Toast.LONG);
-      // }else{ 
-      //}
-      navigation.navigate('SelectInterestInnerScreen'); 
-    }
+    // const handleSubmit = ()=>{
+    
+    //   navigation.navigate('SelectInterestInnerScreen'); 
+    // }
   
       if(loader){
         return(
@@ -162,7 +159,7 @@ import {  View,
         </View>
   
         <View style={{marginTop:0,zIndex:1,width:"100%",backgroundColor:"#fff",position:"absolute",bottom:0,paddingHorizontal:20}}>
-            <CustomButton label={'Continue'} onPress={() => handleSubmit()}   />
+            {/* <CustomButton label={'Continue'} onPress={() => handleSubmit()} /> */}
         </View>
         </View>
     );

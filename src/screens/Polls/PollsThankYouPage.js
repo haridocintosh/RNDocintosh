@@ -14,7 +14,7 @@ const PollsThankYouPage = ({navigation}) => {
     const [showOffer, setShowOffer] = useState(true);
 
   useEffect(() =>{
-    navigation.setOptions({ title: `Surveys`});
+    navigation.setOptions({ title: `Poll`});
   },[])
   return (
     <SafeAreaView
@@ -47,9 +47,9 @@ const PollsThankYouPage = ({navigation}) => {
               title="Back"
               buttonStyle={styles.buttonStyle}
               titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
-            //   onPress={() =>
-            //     // navigation.navigate("Surveys", { surveyid: surveyid })
-            //   }
+              onPress={() =>
+                navigation.goBack()
+              }
             />
           </View>
          

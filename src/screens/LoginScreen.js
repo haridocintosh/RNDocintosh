@@ -45,7 +45,7 @@ const LoginScreen = () => {
 
   const  updateEmail = (text)=>{
     if(!isValidemailRegex.test(text)){
-        setmessage("Please Enter valid Email address or Phone number.");
+        setmessage("Please enter valid emailId address or phone number.");
     }else{
         setmessage('');
     }

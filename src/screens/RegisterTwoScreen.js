@@ -233,17 +233,17 @@ useEffect(()=>{
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.mrn){
-      setmrnId("Please enter MRN");
+      setmrnId("Please enter mrn id");
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.mry){
-      setmrnYear("Please enter MRN Year");
+      setmrnYear("Please enter mrn year");
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.medicalcouncil_id){
-      setStateErr("Please enter State Council");
+      setStateErr("Please enter state council");
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
@@ -258,7 +258,7 @@ useEffect(()=>{
       }
     }
     else if(!register.mrnproof){
-      setmrnproofErr("Please upload MRN document");
+      setmrnproofErr("Please upload mrn document");
     }
     else{
       // setsubmitbtn(true);

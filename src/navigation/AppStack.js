@@ -8,6 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import TabNavigator from './TabNavigator';
 import CustomDrawer from '../components/CustomDrawer';
 import LoginScreen from '../screens/LoginScreen';
+
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {

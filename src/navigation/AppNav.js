@@ -42,7 +42,7 @@ const navigation  = useNavigation();
         setDefaultRoute("HomeScreen");
       }else{
       setDefaultRoute("Intro");
-        // setDefaultRoute("RegisterTwoScreen");
+      // setDefaultRoute("ContactPermission");
       }
       setStatusKeyLoaded(true);
     } catch(e) {
@@ -73,8 +73,8 @@ const handleMessage = () => {
             <Stack.Screen name="Register" component={RegisterScreen}  options={{ title: 'Register', headerShown: true}}/>
             <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
             <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  
-            <Stack.Screen name="RegisterTwoScreen" component={RegisterTwoScreen} options={{ title: 'Register', headerShown: true}} />
-            <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} />
+            <Stack.Screen name="RegisterTwoScreen" component={RegisterTwoScreen} options={{ title: 'Professional Information', headerShown: true}} />
+            <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Professional Information', headerShown: true}} />
             <Stack.Screen name="Congratulation" component={Congratulation} />
             <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
               headerRight: () => (

@@ -28,8 +28,8 @@ const HandleBack = () => {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.textBold}>Hold on!,</Text>
-                <Text style={styles.textNormal}>Are you sure you want to exit app?</Text>
+                <Text style={styles.textBold}>We hate goodbyes</Text>
+                <Text style={styles.textNormal}>Do you want to exit app?</Text>
                 <View style={styles.buttonsContainer}>
                   <TouchableOpacity 
                     style={[styles.buttonsDesign,styles.leftButtonsDesign]} 

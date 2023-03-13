@@ -4,7 +4,7 @@ import { styles } from './SentimetrixStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button } from "react-native-elements";
 
-const Sentimetrix = () => {
+const Sentimetrix = ({navigation}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -14,6 +14,10 @@ const Sentimetrix = () => {
     {label: 'Between 16-20', value: 'between 16-20'},
     {label: 'More than 20', value: 'more than 20'},
   ]);
+
+  const handleRedirect = () => {
+    navigation.navigate("SentimetrixList");
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
@@ -39,9 +43,7 @@ const Sentimetrix = () => {
           title="Start Survey"
           buttonStyle={styles.buttonStyle}
           titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold"}}
-        //   onPress={() =>
-        //     // navigation.navigate("Surveys", { surveyid: surveyid })
-        //   }
+          onPress={() => handleRedirect()}
         />
       </View>
     </SafeAreaView>

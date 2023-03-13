@@ -45,4 +45,70 @@ export const styles = StyleSheet.create({
         backgroundColor: "#ecf2f6"
 
     },
+    surveyOptionsContainer: {
+        justifyContent:'space-between',
+        alignItems:'center',
+        flexDirection:'row',
+        backgroundColor:'#fff',
+        padding:15,
+        borderRadius:10,
+        marginBottom:15
+    },
+    optionTitle: {
+        fontSize:16,
+        fontFamily:'Inter-SemiBold',
+        color:'#212121',
+    },
+    optionSubTitle: {
+        fontFamily:'Inter-Regular',
+        color:'#51668A',
+        marginTop:5,
+    },
+    couponConatiner: {
+        borderWidth:2,
+        borderColor:'#45B5C0',
+        borderRadius:50,
+        width:52,
+        height:34,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'rgba(69, 181, 192, 0.05)'
+    },
+    imageIcon: {
+        width:20,
+        height:20,
+    },
+    
+    //------------------------------------- SentimetrixMcq -------------------------------------------
+
+    SurvayOutOff: {
+        fontSize: 20,
+        fontWeight: "700",
+        fontFamily: "Inter-SemiBold",
+      },
+      OutOffTotal: {
+        fontSize: 20,
+        fontFamily: "Inter-Regular",
+      },
+      NexrPrevIcons: {
+        flexDirection: "row",
+      },
+      TopScoreContainer: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginVertical: 15,
+      },
+      Progressbar: {
+        width: "100%",
+        borderRadius: 7,
+        height: 6,
+      },
+      SurvayQuestion: {
+        marginTop: 40,
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#071B36",
+        lineHeight: 24,
+        fontFamily: "Inter-SemiBold",
+      },
 });

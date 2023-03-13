@@ -15,7 +15,8 @@ import BlockList from '../screens/Settings/BlockList/BlockList';
 import Polls from '../screens/Polls/Polls';
 import PollsThankYouPage from '../screens/Polls/PollsThankYouPage';
 import Sentimetrix from '../screens/Sentimetrix/Sentimetrix';
-
+import SentimetrixList from '../screens/Sentimetrix/SentimetrixList';
+import SentimetrixMcq from '../screens/Sentimetrix/SentimetrixMcq';
 
 
 const EngageNavigation = () => {
@@ -37,6 +38,8 @@ const EngageNavigation = () => {
         <Stack.Screen name="Sentimetrix" component={Sentimetrix} options={showHeaderItem}/>
         <Stack.Screen name="SavedPost" component={SavedPost} options={showHeaderItem} />
         <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
+        <Stack.Screen name="SentimetrixList" component={SentimetrixList} options={showHeaderItem} />
+        <Stack.Screen name="SentimetrixMcq" component={SentimetrixMcq} options={showHeaderItem} />
     </Stack.Navigator>
     </>
   )

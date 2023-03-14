@@ -43,8 +43,8 @@ const BlockList = ({navigation}) => {
     }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",paddingHorizontal:15,paddingVertical:10 }}>
-        <Text style={styles.BlockedTitle}>Blocked People</Text>
-        <Text style={styles.BlockedSubtitle}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
+        <Text style={styles.BlockedTitle}>Blocked accounts</Text>
+        {/* <Text style={styles.BlockedSubtitle}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text> */}
         {item?.data?.map((data,i) => {
             return(
             <View style={styles.communitySubDiv} key={i}>

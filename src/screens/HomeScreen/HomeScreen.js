@@ -215,17 +215,17 @@ const HomeScreen = ({navigation,route})=> {
             <View  style={{flexDirection:'row',alignItems:'center'}}>
               <Image source={{uri:item?.profileimage}} 
                style={{width:38, height:38,marginRight:5,borderRadius:50}}/>
-              <View >
+              <View style={{marginLeft:5}}>
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
                   { item?.utitle} {item?.first_name} {item?.last_name} 
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69"/>
                 </Text>
-                <View style={{flexDirection:'row',alignItems:'flex-start',}}>
-                  <Text style={{marginLeft:5}}>
+                <View style={{flexDirection:'row',alignItems:'flex-start'}}>
+                  {/* <Text style={{marginLeft:5}}>
                     <FontAwesome5 name="users" size={17} color="#45B5C0" />  
                   </Text>
-                  <View style={styles.dot}/>
-                  <Text style={{fontSize:12, fontWeight:'400',color:'#51668A', fontFamily:"Inter-Regular",maxWidth:130,marginTop:1}}>
+                  <View style={styles.dot}/> */}
+                  <Text style={{fontSize:12, fontWeight:'400',color:'#51668A', fontFamily:"Inter-Regular",marginTop:1}}>
                     {item?.speciality}
                   </Text>
                   <Text style={{marginHorizontal:4}}>

@@ -39,7 +39,6 @@ const EmailModal = ({emailid,setemailid}) => {
           if(email != ""){
             setemailid(false);
             const result = await dispatch(Edit_ProfileOTP({email:email, id:userId}));
-            console.log(result.payload);
             if(result?.payload?.status == 'Success'){
               Toast.show(result.payload.message, Toast.LONG);
               setemailVerify(true);

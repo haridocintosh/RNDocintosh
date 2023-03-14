@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 const SentimetrixList = ({navigation}) => {
     const [listData, setListData] = useState();
     const dispatch = useDispatch();
+
     const getSentimetrixList = () => {
         getLocalData('USER_INFO').then(async (res) => {
             const data = res?.data
@@ -22,6 +23,7 @@ const SentimetrixList = ({navigation}) => {
             setListData(getList?.payload)
         })
     }
+
     const handleSelectMcq = (data) => {
         navigation.navigate("SentimetrixMcq",{basicId :data?.basic_id});
     }
@@ -36,7 +38,7 @@ const SentimetrixList = ({navigation}) => {
                 <TouchableOpacity style={styles.surveyOptionsContainer} key={i} onPress={() => handleSelectMcq(data)}>
                     <View>
                         <Text style={styles.optionTitle}>{data?.title}</Text>
-                        {/* <Text style={styles.optionSubTitle}>Docintosh Sentimetrix</Text> */}
+                        <Text style={styles.optionSubTitle}>Docintosh Sentimetrix</Text>
                     </View>
                     <View style={styles.couponConatiner}>
                         <Image source={require('../../assets/dr-icon/coupon1.png')} style={styles.imageIcon}/>

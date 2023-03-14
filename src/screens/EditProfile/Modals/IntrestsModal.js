@@ -15,10 +15,8 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
 
 
     const handleSelect = async (id) => {
-        console.log("id",id);
         const postDetails = {speciality_id:id,id:userId}
         const result = await dispatch(addCircle(postDetails));
-        console.log(result);
     }
 
     useEffect(()=>{

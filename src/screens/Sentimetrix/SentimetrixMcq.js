@@ -1,10 +1,12 @@
-import { View, Text, SafeAreaView } from 'react-native'
-import React, { useEffect,useState,TouchableOpacity } from 'react'
+import { View, Text, SafeAreaView,TouchableOpacity } from 'react-native'
+import React, { useEffect,useState } from 'react'
 import { styles } from './SentimetrixStyles';
 import { useDispatch } from 'react-redux';
 import { ProgressBar } from "react-native-paper";
 import { SentimetrixGetByIdAPI } from '../../../redux/reducers/SentimetrixSlice';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { getLocalData } from '../../apis/GetLocalData';
+import TypoMcq from '../Survay/TypoMcq';
 
 
 const SentimetrixMcq = ({route}) => {
@@ -14,24 +16,54 @@ const SentimetrixMcq = ({route}) => {
     const [liftUpCheckData, setLiftUpCheckData] = useState([]);
     const [error, setError] = useState();
     const {basicId} = route?.params;
-    console.log(basicId);
 
     const dispatch = useDispatch();
 
     const getAllMcq = async () => {
         const getList = await dispatch(SentimetrixGetByIdAPI({basicId:basicId}));
-        console.log("getList",getList?.payload);
-        // setListData()
+        console.log(getList?.payload);
         setAllMCQs(getList?.payload)
     }
+
     const prevMcq = async () => {
+      if (currentQuestionIndex > 0) {
+        setCurrentQuestionIndex(currentQuestionIndex - 1);
+        setLiftUpData(null);
+      }
     }
+    const nextMcq = async (basicId, sqid, type) => {
+      getLocalData("USER_INFO").then((res) =>{
+        const resData = res?.data;
+        // console.log("resData",resData);
+        if(type == 1){
+          console.log("resData 1",resData);
+        }
+        if(type == 2){
+          console.log("resData 2",resData);
+        }
+        if(type == 3){
+          if (liftUpData) {
+            PosData(resData?.id, basicId, sqid, liftUpData, resData?.profileimage);
+          }else{
+            setError("Please type your answer");
+        }
+        }
+      })
+    }
+
+    const PosData = async (id, basic_id, qid, opt_id, profileimage) => {
+      const postDetails = {id: id, basic_id: basic_id, qid: qid, opt_id: opt_id,profileimage: profileimage};
+      console.log("postDetails",postDetails);
+
+      // const result = await dispatch(saveSurveyAnswers(postDetails));
+    };
 
     useEffect(() => {
         getAllMcq()
     },[])
 
-  const outOff = currentQuestionIndex / allMCQs.length;
+  const outOff = currentQuestionIndex / allMCQs?.length;
+  
   return (
     <SafeAreaView style={{ backgroundColor:"#ecf2f6",flex:1}}>
       <View style={{ padding: 15 }}>
@@ -45,17 +77,17 @@ const SentimetrixMcq = ({route}) => {
             <Text style={styles.OutOffTotal}>/{allMCQs.length}</Text>
           </View>
           <View style={styles.NexrPrevIcons}>
-            {/* <TouchableOpacity style={{ marginRight: 15 }} onPress={() => prevMcq()} >
+            <TouchableOpacity style={{ marginRight: 15 }} onPress={() => prevMcq()} >
               <AntDesign name="leftcircle" size={32} color="#2C8892" />
-            </TouchableOpacity> */}
-            {/* <TouchableOpacity
+            </TouchableOpacity>
+            <TouchableOpacity
               onPress={() => 
                 nextMcq(
-                  allMCQs[currentQuestionIndex]?.basic_id, 
-                  allMCQs[currentQuestionIndex]?.qid,
-                  allMCQs[currentQuestionIndex]?.question_type)} >
+                  allMCQs[currentQuestionIndex]?.basicId, 
+                  allMCQs[currentQuestionIndex]?.sqid,
+                  allMCQs[currentQuestionIndex]?.type)}>
               <AntDesign name="rightcircle" size={32} color="#2C8892" />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
         <ProgressBar
@@ -64,9 +96,29 @@ const SentimetrixMcq = ({route}) => {
           progress={outOff ? outOff : 0}
         />
         <Text style={styles.SurvayQuestion}>
-          {allMCQs[currentQuestionIndex]?.question_title}
+          {allMCQs[currentQuestionIndex]?.question}
         </Text>
       </View>
+
+      {allMCQs[currentQuestionIndex]?.type == 1 && (
+        <RadioMcq
+          setLiftUpData={setLiftUpData}
+          liftUpData={liftUpData}
+          currentIndex={currentQuestionIndex}
+          allMCQs={allMCQs}
+          error={error}
+        />
+      )}
+
+      {allMCQs[currentQuestionIndex]?.type == 3 && (
+        <TypoMcq
+          setLiftUpData={setLiftUpData}
+          currentIndex={currentQuestionIndex}
+          allMCQs={allMCQs}
+          length={liftUpData}
+          error={error}
+        />
+      )}
     </SafeAreaView>
   )
 }

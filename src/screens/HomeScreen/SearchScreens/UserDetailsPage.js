@@ -24,7 +24,6 @@ const UserDetailsPage = ({route}) => {
 
     const GetDoctorDetails = async() => {
         const result = await dispatch(getDoctorsDetails({id:item?.id}));
-        console.log("result",result.payload);
         setUserDetails(result.payload)
     }
 

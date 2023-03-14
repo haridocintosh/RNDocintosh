@@ -226,7 +226,6 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
-    console.log(register.password);
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
       if(ref.current){

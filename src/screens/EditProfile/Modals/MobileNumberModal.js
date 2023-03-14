@@ -28,12 +28,10 @@ const [message , setmessage] = useState();
     setMobileNumber(false)
   }
   const onSubmit = async(data) => {
-    console.log(data.phone_no);
     if(data.phone_no != ""){
       setNumVerify(false);
       setMobNumber(data.phone_no)
       const result = await dispatch(Edit_ProfileOTP({email:data.phone_no, id:userId}));
-      console.log(result.payload);
       if(result?.payload?.status == 'Success'){
           Toast.show(result.payload.message, Toast.LONG);
           setNumVerify(true);

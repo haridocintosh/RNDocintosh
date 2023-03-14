@@ -34,7 +34,6 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
             userid : passQualification?.id,
             pg_id : passQualification?.pg_id
         }
-        console.log("postData",postData);
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
         console.log(addQuaResult);
         getQualification();

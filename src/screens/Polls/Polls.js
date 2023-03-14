@@ -34,7 +34,6 @@ const Polls = () => {
   const handleAnswer = async (data) => {
     const PostData = {qid:data?.qid,id:userData?.id,opt_id:data?.opt_id,basic_id:pollsData?.basic_id};
     const result = await dispatch(SavePollAns(PostData));
-    console.log("result",result);
     navigation.navigate("PollsThankYouPage")
   }
 

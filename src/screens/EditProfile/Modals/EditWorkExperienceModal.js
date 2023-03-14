@@ -33,7 +33,6 @@ const EditWorkExperienceModal = ({handleWorkReload,editWorkExp,setEditWorkExp,pa
             enddate :endingDate,
             workexp_id :passWorkExp.workexp_id
         }
-        console.log("postParams",postParams);
         const allCoinsResult = await dispatch(addworkexperianceAPI(postParams));
         handleWorkReload();
         setEditWorkExp(false);

@@ -18,7 +18,6 @@ const AwardsEditModal = ({editAwards,setEditAwards,passAwardData,handleAward}) =
 
     const onSubmit = async (data) => {
         const awardyear =  format(inputDate, 'yyyy-MM-dd');
-        console.log(awardyear, data);
         const postParams = {
             id:passAwardData.userID,
             award_id:passAwardData.award_id,

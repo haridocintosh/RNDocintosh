@@ -14,6 +14,6 @@ export const resetPasswordAPI = createAsyncThunk("resetPassword", async (data)=>
         return result;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })

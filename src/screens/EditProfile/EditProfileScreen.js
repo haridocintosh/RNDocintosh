@@ -94,7 +94,6 @@
     const handleEditQualification = async (data) => {
       data.completionyear = await new Date(moment(data?.completionyear).format("MM/DD/YYYY"));
       setPassQualification(data);
-      console.log("data",data);
       setEditQualification(!editQualification);
     };
     const awardsModal = () => {

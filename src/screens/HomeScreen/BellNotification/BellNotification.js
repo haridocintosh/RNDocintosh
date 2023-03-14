@@ -26,7 +26,7 @@ const BellNotification = ({navigation}) => {
                 <View style={styles.userName}>
                     <Text style={styles.userNameText}>Dr.Shalani</Text>
                     <Text style={styles.userTimeText}>
-                        Share you a Gift card 
+                        Shared a Gift card 
                         <Text style={styles.dot}> . </Text>
                         2 hrs ago
                     </Text>
@@ -42,7 +42,7 @@ const BellNotification = ({navigation}) => {
                 <View style={styles.userName}>
                     <Text style={styles.userNameText}>Dr.Shalani</Text>
                     <Text style={styles.userTimeText}>
-                        Share you a Gift card 
+                        Shared a Gift card 
                         <Text style={styles.dot}> . </Text>
                         2 hrs ago
                     </Text>
@@ -61,7 +61,7 @@ const BellNotification = ({navigation}) => {
                 <View style={styles.userName}>
                     <Text style={styles.userNameText}>Dr.Shalani</Text>
                     <Text style={styles.userTimeText}>
-                        Share you a Gift card 
+                        Shared a Gift card 
                         <Text style={styles.dot}> . </Text>
                         2 hrs ago
                     </Text>
@@ -77,7 +77,7 @@ const BellNotification = ({navigation}) => {
                 <View style={styles.userName}>
                     <Text style={styles.userNameText}>Dr.Shalani</Text>
                     <Text style={styles.userTimeText}>
-                        Share you a Gift card 
+                        Shared a Gift card 
                         <Text style={styles.dot}> . </Text>
                         2 hrs ago
                     </Text>

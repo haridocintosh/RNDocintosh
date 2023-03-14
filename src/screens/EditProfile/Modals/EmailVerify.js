@@ -67,7 +67,6 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
       setVerifying("Verifying...")
         if(otpInput !== ""){
         const result = await dispatch(updateEmailID({otp:otpInput, user_id:userId, email:emailID}));
-        console.log(result);
         if(result.payload.status == 'Success'){
           Toast.show(result.payload.message,Toast.LONG);
           navigation.navigate('EditProfileScreen');

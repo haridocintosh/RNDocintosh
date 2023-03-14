@@ -33,7 +33,6 @@ const MobileVerify = ({numVerify,setNumVerify,mobNumber}) => {
       setVerifying("Verifying...")
         if(otpInput !== ""){
         const result = await dispatch(updateMobileNumber({otp:otpInput, user_id:userId, mobilenumber:mobileNumb}));
-        console.log(result.payload);
         if(result.payload.status == 'Success'){
           Toast.show(result.payload.message,Toast.LONG);
           navigation.navigate('EditProfileScreen');

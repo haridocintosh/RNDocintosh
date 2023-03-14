@@ -73,7 +73,7 @@ const checkConfirmpassword= async(e)=>{
     keyboardShouldPersistTaps='handled'
   >
     <View style={styelcss.forgetmainPara}>
-      <Text style={styelcss.forgetPara}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Text>
+      <Text style={styelcss.forgetPara}>Enter New Password. </Text>
     </View>
     <TextInput style={styelcss.customInputVerifyFull} 
       placeholder="Password"

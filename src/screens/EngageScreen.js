@@ -70,9 +70,9 @@ useEffect(() => {
                 <Image source={require('../assets/images/polls.png')} style={styles.cartImages}/>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.trendTitle}>COVID-19 and its Effects</Text>
+            <Text style={styles.trendTitle}>COVID-19 and its effects</Text>
 
-            <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
+            <Text style={styles.trendTitleContent}>Help us understand COVID better</Text>
             <ImageBackground source={require('../assets/images/PollsWave.png')} style={styles.CartWave} >
                 <TouchableOpacity style={styles.ButtonContainer} onPress={()=> navigation.navigate('Polls')}>
                     <Text style={styles.buttonText}>Participate</Text>
@@ -94,7 +94,7 @@ useEffect(() => {
                 <Image source={require('../assets/images/Surveys.png')} style={styles.cartImages}/>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.trendTitle}>COVID-19 and its Effects</Text>
+            <Text style={styles.trendTitle}>Surveys for HCP's</Text>
 
             <Text style={styles.trendTitleContent}>We appreciate your feedback.</Text>
             <ImageBackground source={require('../assets/images/SurveysWave.png')} style={styles.CartWave}>
@@ -104,7 +104,7 @@ useEffect(() => {
             </ImageBackground>
         </View>}
 
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                     <Text style={styles.CartTitleSentimetrix}>Sentimetrix</Text>
@@ -118,7 +118,7 @@ useEffect(() => {
                 <Image source={require('../assets/images/Sentimetrix.png')} style={styles.cartImages}/>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.trendTitle}>COVID-19 and its Effects</Text>
+            <Text style={styles.trendTitle}>Tell us want you think</Text>
 
             <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
             <ImageBackground source={require('../assets/images/SentimetrixWave.png')} style={styles.CartWave}>
@@ -126,7 +126,7 @@ useEffect(() => {
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>
-        </View>
+        </View> */}
 
    </ScrollView>
   </SafeAreaView>

@@ -252,7 +252,7 @@ const HomeScreen = ({navigation,route})=> {
               resData={resData} 
           />}
           <View style={item?.description &&{paddingBottom:10}}>
-            <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
+            <Text style={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>

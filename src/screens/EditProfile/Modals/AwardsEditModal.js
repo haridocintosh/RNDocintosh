@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 
 const AwardsEditModal = ({editAwards,setEditAwards,passAwardData,handleAward}) => {
     const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
-    const [inputDate,setInputDate] = useState(passAwardData?.awardyear);
+    const [inputDate, setInputDate] = useState(passAwardData?.awardyear);
     const dispatch = useDispatch();
 
     const onSubmit = async (data) => {

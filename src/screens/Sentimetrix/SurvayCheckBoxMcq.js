@@ -7,7 +7,7 @@ import {
   ScrollView
 } from "react-native";
 import CheckBox from "react-native-check-box";
-import { styles } from "./SurvayStyle";
+import { styles } from "../Survay/SurvayStyle";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 

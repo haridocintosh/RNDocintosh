@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import { styles } from "./SurvayStyle";
+import { styles } from "../Survay/SurvayStyle";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useIsFocused } from "@react-navigation/native";
+
 
 const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
   const [optId, setOptId] = useState(null);
+  const isFocused = useIsFocused();
 
+  useEffect(() => {
+      setOptId(null);
+  },[currentIndex])
+
+  
   const validateAnswer = async (ans) => {
     setLiftUpData(ans.opt_id);
     setOptId(ans.opt_id);

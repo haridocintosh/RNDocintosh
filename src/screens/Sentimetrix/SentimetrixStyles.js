@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     },
     sentimetrixImage:{
         width:Dimensions.get('window').width/1.5,
-        height:Dimensions.get('window').height/2,
+        height:Dimensions.get('window').height/2.2,
         resizeMode:'contain',
     },
     sentimetrixTitle:{
@@ -27,23 +27,30 @@ export const styles = StyleSheet.create({
         color:'#071B36',
         fontFamily:'Inter-Regular',
         fontSize:12,
-        marginBottom:10
-    },
-    buttonStyle: {
+        marginBottom:10,
         marginTop: 30,
-        bottom: 10,
+    },
+    blueButtonStyle: {
+        marginTop: 10,
         width: "100%",
-        height: 48,
         alignSelf: "center",
         borderColor: "#fff",
         borderRadius: 15 / 2,
         backgroundColor: "#2C8892",
     },
+    whiteButtonStyle: {
+        marginTop: 10,
+        width: "100%",
+        alignSelf: "center",
+        borderColor: "#2C8892",
+        borderWidth:2,
+        borderRadius: 15 / 2,
+        backgroundColor: "#fff",
+    },
     DropDownField: {
         border:0,
         borderBottomWidth:1,
         backgroundColor: "#ecf2f6"
-
     },
     surveyOptionsContainer: {
         justifyContent:'space-between',
@@ -80,10 +87,13 @@ export const styles = StyleSheet.create({
     },
     
     //------------------------------------- SentimetrixMcq -------------------------------------------
-
-    SurvayOutOff: {
+      bannerStyle:{
+        width:"100%",
+        height:Dimensions.get('window').height/3,
+        resizeMode:'contain',
+      },
+      SurvayOutOff: {
         fontSize: 20,
-        fontWeight: "700",
         fontFamily: "Inter-SemiBold",
       },
       OutOffTotal: {
@@ -109,6 +119,36 @@ export const styles = StyleSheet.create({
         fontWeight: "600",
         color: "#071B36",
         lineHeight: 24,
+        fontFamily: "Inter-Regular",
+      },
+      inputText: {
+        fontSize: 14,
+        color: "#071B36",
+        height: 48,
+        width: "100%",
+        borderBottomWidth: 1,
+        paddingRight: 19,
+        borderColor: "#51668A",
+        marginVertical: 12,
+        paddingLeft: 8,
+      },
+      typoHeadings: {
+        fontSize: 16,
+        color: "#071B36",
         fontFamily: "Inter-SemiBold",
       },
+      limitationTextContainer: {
+        // borderWidth:1,
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+        flexDirection: "row",
+      },
+      limitationText: {
+        color: "#51668A",
+        fontFamily: "Inter-Regular",
+      },
+      errorMsg:{
+        color:'#cc0000',
+        fontFamily: "Inter-Regular",
+    },
 });

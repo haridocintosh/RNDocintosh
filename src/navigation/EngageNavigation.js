@@ -17,7 +17,8 @@ import PollsThankYouPage from '../screens/Polls/PollsThankYouPage';
 import Sentimetrix from '../screens/Sentimetrix/Sentimetrix';
 import SentimetrixList from '../screens/Sentimetrix/SentimetrixList';
 import SentimetrixMcq from '../screens/Sentimetrix/SentimetrixMcq';
-
+import CongratulationPage from '../screens/Sentimetrix/CongratulationPage';
+import SentimetrixThankYouPage from '../screens/Sentimetrix/SentimetrixThankYouPage';
 
 const EngageNavigation = () => {
     const Stack = createNativeStackNavigator();
@@ -40,6 +41,8 @@ const EngageNavigation = () => {
         <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
         <Stack.Screen name="SentimetrixList" component={SentimetrixList} options={showHeaderItem} />
         <Stack.Screen name="SentimetrixMcq" component={SentimetrixMcq} options={showHeaderItem} />
+        <Stack.Screen name="CongratulationPage" component={CongratulationPage} options={showHeaderItem} />
+        <Stack.Screen name="SentimetrixThankYouPage" component={SentimetrixThankYouPage} options={showHeaderItem} />
     </Stack.Navigator>
     </>
   )

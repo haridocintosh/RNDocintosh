@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView,TouchableOpacity,Image,ScrollView } from 'react-native'
+import { View, Text, SafeAreaView,TouchableOpacity } from 'react-native'
 import React, { useEffect,useState } from 'react'
 import { styles } from './SentimetrixStyles';
 import { useDispatch } from 'react-redux';
@@ -6,46 +6,35 @@ import { ProgressBar } from "react-native-paper";
 import { SentimetrixGetByIdAPI, SentimetrixSaveAPI } from '../../../redux/reducers/SentimetrixSlice';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from '../../apis/GetLocalData';
-import TypoMcq from './TypoMcq';
-import SurvayCheckBoxMcq from './SurvayCheckBoxMcq';
-import RadioMcq from './RadioMcq';
+import TypoMcq from '../Survay/TypoMcq';
+import SurvayCheckBoxMcq from '../Survay/SurvayCheckBoxMcq';
+import RadioMcq from '../Survay/RadioMcq';
 import MultipleTypoMcq from './MultipleTypoMcq';
 
-const num3Content = 'Sentimetrix is a paid market research survey and an online communication testing tool. The survey will take anywhere between 10-12 minutes to be completed.';
 
-const SentimetrixMcq = ({navigation,route}) => {
+
+const SentimetrixMcq = ({route}) => {
     const [allMCQs, setAllMCQs] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [liftUpData, setLiftUpData] = useState(null);
     const [liftUpCheckData, setLiftUpCheckData] = useState([]);
     const [error, setError] = useState();
-    const basicId = route?.params?.basicId;
-    // const ImgPrevPath  = route?.params?.ImgPrevPath;
+    const {basicId} = route?.params;
+
     const dispatch = useDispatch();
-    
+
     const getAllMcq = () => {
       getLocalData("USER_INFO").then(async(res) =>{
         const resData = res?.data;
+        console.log("resData",resData.assoc_id);
         const getList = await dispatch(SentimetrixGetByIdAPI({basicId:basicId,assoc_id:resData?.assoc_id}));
+        console.log(getList?.payload);
         setAllMCQs(getList?.payload)
       })
-    }
-
-    const forwardFunction = () => {
-      setLiftUpData(null);
-      if(currentQuestionIndex == 2){
-        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num3Content, prev:setCurrentQuestionIndex});
-      }
-      if(currentQuestionIndex == 7){
-        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num3Content, prev:setCurrentQuestionIndex });
-      }
-      if(currentQuestionIndex == 13){
-        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num3Content, prev:setCurrentQuestionIndex });
-      }
+        
     }
 
     const MCQsLength = parseInt(allMCQs?.length);
-    // console.log("undefined", liftUpCheckData?.filter(d => d !== undefined).length);
 
     const prevMcq = async () => {
       if (currentQuestionIndex > 0) {
@@ -53,20 +42,19 @@ const SentimetrixMcq = ({navigation,route}) => {
         setLiftUpData(null);
       }
     }
-
-    const nextMcq = async (basic_id, sqid, type) => {
+    const nextMcq = async (basicId, sqid, type) => {
       getLocalData("USER_INFO").then((res) =>{
         const resData = res?.data;
+        // console.log("resData",resData);
         if(type == 1){
           if (liftUpData) {
-            forwardFunction();
-            PosData(resData?.id, basic_id, sqid, liftUpData);
+            PosData(resData?.id, basicId, sqid, liftUpData);
             setLiftUpData(null);
-            if (currentQuestionIndex !== MCQsLength - 2) {
+            if (currentQuestionIndex !== MCQsLength - 1) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
-              setError(null);
+              setError(null)
             } else {
-              navigation.navigate("SentimetrixThankYouPage");
+              // navigation.navigate("ThankYouPage", { surveyid: surveyid });
             }
           }else{
               setError("Please Select your answer");
@@ -74,16 +62,15 @@ const SentimetrixMcq = ({navigation,route}) => {
         }
         if(type == 2){
           if (liftUpCheckData && (liftUpCheckData.length != 0)) {
-            forwardFunction();
             liftUpCheckData.map((data) =>
-              PosData(resData?.id, basic_id, sqid, data)
+              PosData(resData?.id, basicId, sqid, data)
             );
             setLiftUpCheckData(null);
-            if (currentQuestionIndex !== MCQsLength - 2) {
+            if (currentQuestionIndex !== MCQsLength - 1) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
-              setError(null);
-            }else{
-              navigation.navigate("SentimetrixThankYouPage");
+              setError(null)
+            } else {
+              // navigation.navigate("ThankYouPage", { surveyid: surveyid });
             }
           }else{
               setError("Please Select your answer");
@@ -91,84 +78,63 @@ const SentimetrixMcq = ({navigation,route}) => {
         }
         if(type == 3){
           if (liftUpData) {
-            forwardFunction();
-            PosData(resData?.id, basic_id, sqid, liftUpData );
+            PosData(resData?.id, basicId, sqid, liftUpData );
+            
             setLiftUpData(null);
-            if (currentQuestionIndex !== MCQsLength - 2) {
+            if (currentQuestionIndex !== MCQsLength - 1) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
-              setError(null);
+              setError(null)
             } else {
-              navigation.navigate("SentimetrixThankYouPage");
+              // navigation.navigate("ThankYouPage", { surveyid: surveyid });
             }
           }else{
-              setError("Please type your answer");
-          }
+            setError("Please type your answer");
+        }
         }
         if(type == 5){
-          if (liftUpCheckData && (liftUpCheckData?.filter(d => d !== undefined).length == 3)) {
-            forwardFunction();
-            liftUpCheckData.map((data) =>
-              PosData(resData?.id, basic_id, sqid, data)
-            );
-            setLiftUpCheckData(null);
+          if (liftUpData) {
+            PosData(resData?.id, basicId, sqid, liftUpData );
             
-            if (currentQuestionIndex !== MCQsLength - 2) {
+            setLiftUpData(null);
+            if (currentQuestionIndex !== MCQsLength - 1) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
-              setError(null);
+              setError(null)
             } else {
-              navigation.navigate("SentimetrixThankYouPage");
+              // navigation.navigate("ThankYouPage", { surveyid: surveyid });
             }
           }else{
-              setError("Please type all 3 your answer");
-          }
+            setError("Please type your answer");
+        }
         }
       })
     }
 
     const PosData = async (id, basic_id, sqid, opt_id) => {
-      const postDetails = {userId: id, basicId: basic_id, subquestionId: sqid, optionId: opt_id, ans: ""};
-      console.log("postDetails",postDetails);
+    const postDetails = {userId: id, basicId: basic_id, subquestionId: sqid, optionId: opt_id, ans: ""};
+      // console.log("postDetails",postDetails);
       const result = await dispatch(SentimetrixSaveAPI(postDetails));
-      console.log("result",result);
+      // console.log("result",result);
     };
 
     useEffect(() => {
-        navigation.setOptions({ title: `Sentimetrix`});
         getAllMcq()
     },[])
-
-    // useEffect(() => {
-    //   if(ImgPrevPath){
-    //     setCurrentQuestionIndex(ImgPrevPath);
-    //   }
-    // },[])
 
   const outOff = currentQuestionIndex / allMCQs?.length;
   
   return (
     <SafeAreaView style={{ backgroundColor:"#ecf2f6",flex:1}}>
-      <ScrollView
-        keyboardShouldPersistTaps={"handled"}
-        showsVerticalScrollIndicator={false}
-        nestedScrollEnable={true}
-      >
       <View style={{ padding: 15 }}>
-        {currentQuestionIndex < 8 &&
-        <View>
-          <Image  source={{uri:allMCQs[currentQuestionIndex]?.file_name}} style={styles.bannerStyle}/>
-        </View>
-        }
-        
         <View style={styles.TopScoreContainer}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.SurvayOutOff}>
-              {currentQuestionIndex > 8
+              {currentQuestionIndex > 9
                 ? currentQuestionIndex + 1
                 : `0${currentQuestionIndex + 1}`}
             </Text>
             <Text style={styles.OutOffTotal}>/{allMCQs?.length}</Text>
           </View>
-          {/* <Text>{allMCQs[currentQuestionIndex]?.type}</Text> */}
+          <Text>{allMCQs[currentQuestionIndex]?.type}</Text>
           <View style={styles.NexrPrevIcons}>
             <TouchableOpacity style={{ marginRight: 15 }} onPress={() => prevMcq()} >
               <AntDesign name="leftcircle" size={32} color="#2C8892" />
@@ -196,7 +162,7 @@ const SentimetrixMcq = ({navigation,route}) => {
       {allMCQs[currentQuestionIndex]?.type == 1 && (
         <RadioMcq
           setLiftUpData={setLiftUpData}
-          // liftUpData={liftUpData}
+          liftUpData={liftUpData}
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
           error={error}
@@ -224,14 +190,13 @@ const SentimetrixMcq = ({navigation,route}) => {
       )}
       {allMCQs[currentQuestionIndex]?.type == 5 && (
         <MultipleTypoMcq
-          setLiftUpData={setLiftUpCheckData}
-          // currentIndex={currentQuestionIndex}
-          // liftUpData={allMCQs}
-          liftUpData={liftUpCheckData}
+          setLiftUpData={setLiftUpData}
+          currentIndex={currentQuestionIndex}
+          allMCQs={allMCQs}
+          length={liftUpData}
           error={error}
         />
       )}
-      </ScrollView>
     </SafeAreaView>
   )
 }

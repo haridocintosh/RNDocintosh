@@ -41,7 +41,7 @@ const Sentimetrix = ({navigation}) => {
       />
        <Button
           title="Start Survey"
-          buttonStyle={styles.buttonStyle}
+          buttonStyle={styles.blueButtonStyle}
           titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold"}}
           onPress={() => handleRedirect()}
         />

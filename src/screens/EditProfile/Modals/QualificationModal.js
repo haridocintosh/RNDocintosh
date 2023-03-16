@@ -17,6 +17,7 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
     const [openCollege, setOpenCollege] = useState(false);
     const [valueCourse, setValueCourse] = useState(null);
     const [valueCollege, setValueCollege] = useState(null);
+    const [Coursetype, setCoursetype] = useState(null);
     const [itemsCourse, setItemsCourse] = useState([]);
     const [itemsCollege, setItemsCollege] = useState([]);
     const [userId, setUserId] = useState([]);
@@ -26,7 +27,7 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
     const onSubmit = async (data) => {
         data.collegeenddate = format(data?.collegeenddate, 'yyyy-MM-dd')
         const postData = {
-            coursetype :"",
+            coursetype :Coursetype,
             collegeid : valueCollege,
             courseid : valueCourse,
             collegestartdate : "",
@@ -34,7 +35,7 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
             userid : userId,
             pg_id : ""
         }
-        // console.log("postData",postData);
+         console.log("postData",postData);
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
         // console.log(addQuaResult);
         getQualification();
@@ -45,7 +46,7 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
       getLocalData('USER_INFO').then(async (res) => {
         setUserId(res?.data?.id);
         const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
-        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id}}));
+        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id, coursetype : data?.type }}));
         const collegeResult = await dispatch(QlifnCollegeAPI());
         setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
       })
@@ -73,10 +74,38 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
                             open={openCourse}
                             value={valueCourse}
                             items={itemsCourse}
+                            itemKey={Coursetype}
                             setOpen={setOpenCourse}
                             setValue={setValueCourse}
                             setItems={setItemsCourse}
+                            setCoursetype={setCoursetype}
                             dropDownDirection={'TOP'}
+                            listMode="MODAL"
+                            searchable={true}
+                            containerStyle={{
+                            zIndex: 9999
+                            }}
+                            textStyle={{
+                                fontSize: 16,
+                                color:"#687690",
+                                fontFamily: 'PlusJakartaSans-Regular',
+                              }}
+                              listItemLabelStyle={{
+                                color: "#687690",
+                                fontWeight:"800",
+                                borderBottomWidth:1,
+                                borderBottomColor:"#687690",
+                                textAlign:"center",
+                                paddingBottom:10,
+                              }}
+                              selectedItemLabelStyle={{
+                                fontWeight: "900",
+                                color:"#45B5C0",
+                                fontSize:18
+                              }}
+                              searchContainerStyle={{
+                                borderBottomColor: "#687690"
+                              }}
                           />
                 </View>
                 <View style={styles.inputDropDown}>
@@ -89,7 +118,34 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
                             setOpen={setOpenCollege}
                             setValue={setValueCollege}
                             setItems={setItemsCollege}
+                            autoScroll={true}
                             dropDownDirection={'TOP'}
+                            listMode="MODAL"
+                            searchable={true}
+                            containerStyle={{
+                                zIndex: 9999
+                            }}
+                            textStyle={{
+                                fontSize: 16,
+                                color:"#687690",
+                                fontFamily: 'PlusJakartaSans-Regular',
+                              }}
+                              listItemLabelStyle={{
+                                color: "#687690",
+                                fontWeight:"800",
+                                borderBottomWidth:1,
+                                borderBottomColor:"#687690",
+                                textAlign:"center",
+                                paddingBottom:10,
+                              }}
+                              selectedItemLabelStyle={{
+                                fontWeight: "900",
+                                color:"#45B5C0",
+                                fontSize:18
+                              }}
+                              searchContainerStyle={{
+                                borderBottomColor: "#687690"
+                              }}
                           />
                 </View>
                 <View style={styles.input}>

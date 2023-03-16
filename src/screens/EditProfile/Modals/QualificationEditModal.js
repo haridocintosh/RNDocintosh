@@ -12,6 +12,7 @@ import { getLocalData } from '../../../apis/GetLocalData';
 import { AddQualificationAPI, QlifnCollegeAPI, QlifnCourseAPI} from '../../../../redux/reducers/qualificationSlice';
 import { format } from 'date-fns';
 
+
 const QualificationEditModal = ({setEditQualification,editQualification,getQualification,passQualification}) => {
     const [openCourse, setOpenCourse] = useState(false);
     const [openCollege, setOpenCollege] = useState(false);
@@ -86,6 +87,33 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                                 setValue={setValueCourse}
                                 setItems={setItemsCourse}
                                 dropDownDirection={'TOP'}
+                                autoScroll={true}
+                                listMode="MODAL"
+                                searchable={true}
+                                containerStyle={{
+                                    zIndex: 9999
+                                }}
+                                textStyle={{
+                                    fontSize: 16,
+                                    color:"#687690",
+                                    fontFamily: 'PlusJakartaSans-Regular',
+                                  }}
+                                  listItemLabelStyle={{
+                                    color: "#687690",
+                                    fontWeight:"800",
+                                    borderBottomWidth:1,
+                                    borderBottomColor:"#687690",
+                                    textAlign:"center",
+                                    paddingBottom:10,
+                                  }}
+                                  selectedItemLabelStyle={{
+                                    fontWeight: "900",
+                                    color:"#45B5C0",
+                                    fontSize:18
+                                  }}
+                                  searchContainerStyle={{
+                                    borderBottomColor: "#687690"
+                                  }}
                             />
                     </View>
                     <View style={styles.inputDropDown}>
@@ -99,6 +127,33 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                                 setValue={setValueCollege}
                                 setItems={setItemsCollege}
                                 dropDownDirection={'TOP'}
+                                autoScroll={true}
+                                listMode="MODAL"
+                                searchable={true}
+                                containerStyle={{
+                                    zIndex: 9999
+                                }}
+                            textStyle={{
+                                fontSize: 16,
+                                color:"#687690",
+                                fontFamily: 'PlusJakartaSans-Regular',
+                              }}
+                              listItemLabelStyle={{
+                                color: "#687690",
+                                fontWeight:"800",
+                                borderBottomWidth:1,
+                                borderBottomColor:"#687690",
+                                textAlign:"center",
+                                paddingBottom:10,
+                              }}
+                              selectedItemLabelStyle={{
+                                fontWeight: "900",
+                                color:"#45B5C0",
+                                fontSize:18
+                              }}
+                              searchContainerStyle={{
+                                borderBottomColor: "#687690"
+                              }}
                               />
                     </View>
                     <View style={styles.input}>

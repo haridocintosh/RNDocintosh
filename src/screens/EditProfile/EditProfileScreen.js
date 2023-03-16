@@ -164,7 +164,11 @@
     const getQualification = async () => {
       getLocalData('USER_INFO').then(async (res) => {
         const getQualificationResult = await dispatch(getQualificationAPI({user_id : res?.data.id}));
-        setGetQualificationData(getQualificationResult.payload);
+        console.log(getQualificationResult);
+        if(getQualificationResult.payload.status == 'Success'){
+          console.log(getQualificationResult.payload.data);
+          setGetQualificationData(getQualificationResult.payload.data);
+        }
       })
     }
 

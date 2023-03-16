@@ -24,7 +24,7 @@ const PublicReactions = ({item,getStorageData}) => {
       const reData = res?.data;
       setResult(reData);
       const getallLikesData = await dispatch(getallLikes({postid:item?.post_id}));
-      console.log(getallLikesData.payload);
+      // console.log(getallLikesData.payload);
       setAllLikeData(getallLikesData.payload);
     })
   }

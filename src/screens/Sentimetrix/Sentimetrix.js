@@ -4,7 +4,8 @@ import { styles } from './SentimetrixStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button } from "react-native-elements";
 
-const Sentimetrix = ({navigation}) => {
+const Sentimetrix = ({navigation,route}) => {
+  const basicId = route?.params?.basicId;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -16,7 +17,8 @@ const Sentimetrix = ({navigation}) => {
   ]);
 
   const handleRedirect = () => {
-    navigation.navigate("SentimetrixList");
+    // navigation.navigate("SentimetrixList");
+    navigation.navigate("SentimetrixMcq",{basicId});
   }
 
   return (

@@ -378,9 +378,12 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     elevation: 2,
     // zIndex: 99999,
-    position: "absolute",
+    // position: "absolute",
     width: "100%",
     bottom: 0,
+    flex:1,
+    marginTop:-10
+    // height:Dimensions.get("window").height/1.68
   },
   cardheading: {
     alignSelf: "center",
@@ -463,13 +466,13 @@ export const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginTop: 30,
-    bottom: 10,
     width: "100%",
-    height: 48,
-    alignSelf: "center",
     borderColor: "#fff",
     borderRadius: 15 / 2,
     backgroundColor: "#2C8892",
+    // position:'relative',
+    // zIndex:99999,
+    // bottom:90,
   },
   levelText: {
     fontFamily: "Inter-Regular",

@@ -10,7 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused } from "@react-navigation/native";
 
 
-const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
+const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error,setError }) => {
   const [optId, setOptId] = useState(null);
   const isFocused = useIsFocused();
 
@@ -20,7 +20,9 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
 
   
   const validateAnswer = async (ans) => {
-    setLiftUpData(ans.opt_id);
+    console.log(ans);
+    setError(null)
+    setLiftUpData(ans);
     setOptId(ans.opt_id);
   };
   return (

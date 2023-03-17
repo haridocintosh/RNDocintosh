@@ -104,7 +104,7 @@ useEffect(() => {
             </ImageBackground>
         </View>}
 
-        {/* <View style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                     <Text style={styles.CartTitleSentimetrix}>Sentimetrix</Text>
@@ -122,11 +122,11 @@ useEffect(() => {
 
             <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
             <ImageBackground source={require('../assets/images/SentimetrixWave.png')} style={styles.CartWave}>
-                <TouchableOpacity style={styles.ButtonContainer} onPress={()=>{ navigation.navigate('Sentimetrix') }}>
+                <TouchableOpacity style={styles.ButtonContainer} onPress={()=>{ navigation.navigate('SentimetrixList') }}>
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>
-        </View> */}
+        </View>
 
    </ScrollView>
   </SafeAreaView>

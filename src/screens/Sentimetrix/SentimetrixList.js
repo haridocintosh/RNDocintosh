@@ -28,7 +28,7 @@ const SentimetrixList = ({navigation}) => {
     }
 
     const handleSelectMcq = (data) => {
-        navigation.navigate("SentimetrixMcq",{basicId :data?.basic_id});
+        navigation.navigate("Sentimetrix",{basicId :data?.basic_id});
     }
 
     useEffect(() => {

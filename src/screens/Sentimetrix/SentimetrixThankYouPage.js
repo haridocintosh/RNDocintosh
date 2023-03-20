@@ -24,11 +24,11 @@ const SentimetrixThankYouPage = ({navigation}) => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
+      style={{ flex: 1, backgroundColor: "#2C8892"}}
     >
       {showOffer && <ScratchOffer setShowOffer={setShowOffer} />}
-      <Card style={styles.cardbody}>
-        <View>
+      <Image source={require('../../assets/images/KnowYourHeartBI.png')}/>
+      <View style={styles.cardbody}>
           <View style={styles.tankyouCelebration}>
             <Lottie
                 source={require('../../assets/intro/ThankYou_FireBlast.json')}
@@ -55,18 +55,19 @@ const SentimetrixThankYouPage = ({navigation}) => {
             <Text style={styles.wonCoinMsg}>
               You have earned <Text style={styles.wonCoins}>300</Text> DocCoins.
             </Text>
-
-            <Button
-              title="Back"
-              buttonStyle={styles.buttonStyle}
-              titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
-              onPress={() =>
-                navigation.navigate("SentimetrixList")
-              }
-            />
+            
           </View>
-        </View>
-      </Card>
+          <View style={{position:'absolute',bottom:0,padding:10,width:'100%'}}>
+              <Button
+                title="Back"
+                buttonStyle={styles.buttonStyle}
+                titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
+                onPress={() =>
+                  navigation.navigate("SentimetrixList")
+                }
+              />
+            </View>
+      </View>
     </SafeAreaView>
   )
 }

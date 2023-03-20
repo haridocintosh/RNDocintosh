@@ -10,6 +10,7 @@ import TypoMcq from './TypoMcq';
 import SurvayCheckBoxMcq from './SurvayCheckBoxMcq';
 import RadioMcq from './RadioMcq';
 import MultipleTypoMcq from './MultipleTypoMcq';
+import { Button } from "react-native-elements";
 
 const num3Content = 'Sentimetrix is a paid market research survey and an online communication testing tool. The survey will take anywhere between 10-12 minutes to be completed.';
 
@@ -60,7 +61,7 @@ const SentimetrixMcq = ({navigation,route}) => {
         if(type == 1){
           if (liftUpData) {
             forwardFunction();
-            PosData(resData?.id, basic_id, sqid, liftUpData);
+            PosData(resData?.id, basic_id, "" , liftUpData.opt_id, "",liftUpData.qid)
             setLiftUpData(null);
             if (currentQuestionIndex !== MCQsLength - 2) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -76,7 +77,8 @@ const SentimetrixMcq = ({navigation,route}) => {
           if (liftUpCheckData && (liftUpCheckData.length != 0)) {
             forwardFunction();
             liftUpCheckData.map((data) =>
-              PosData(resData?.id, basic_id, sqid, data)
+              PosData(resData?.id, basic_id, "" , data.opt_id, "",data.qid)
+              // userId, basicId, subquestionId, optionId, ans, id
             );
             setLiftUpCheckData(null);
             if (currentQuestionIndex !== MCQsLength - 2) {
@@ -92,7 +94,7 @@ const SentimetrixMcq = ({navigation,route}) => {
         if(type == 3){
           if (liftUpData) {
             forwardFunction();
-            PosData(resData?.id, basic_id, sqid, liftUpData );
+            PosData(resData?.id, basic_id, sqid, "", liftUpData, "");
             setLiftUpData(null);
             if (currentQuestionIndex !== MCQsLength - 2) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -125,8 +127,8 @@ const SentimetrixMcq = ({navigation,route}) => {
       })
     }
 
-    const PosData = async (id, basic_id, sqid, opt_id) => {
-      const postDetails = {userId: id, basicId: basic_id, subquestionId: sqid, optionId: opt_id, ans: ""};
+    const PosData = async (userId, basicId, subquestionId, optionId, ans, id) => {
+      const postDetails = {userId, basicId, subquestionId, optionId, ans, id};
       console.log("postDetails",postDetails);
       const result = await dispatch(SentimetrixSaveAPI(postDetails));
       console.log("result",result);
@@ -134,7 +136,7 @@ const SentimetrixMcq = ({navigation,route}) => {
 
     useEffect(() => {
         navigation.setOptions({ title: `Sentimetrix`});
-        getAllMcq()
+        getAllMcq();
     },[])
 
     // useEffect(() => {
@@ -153,12 +155,11 @@ const SentimetrixMcq = ({navigation,route}) => {
         nestedScrollEnable={true}
       >
       <View style={{ padding: 15 }}>
-        {currentQuestionIndex < 8 &&
-        <View>
-          <Image  source={{uri:allMCQs[currentQuestionIndex]?.file_name}} style={styles.bannerStyle}/>
-        </View>
+        {(currentQuestionIndex < 8 && currentQuestionIndex > 2) &&
+          <View>
+            <Image  source={{uri:allMCQs[currentQuestionIndex]?.file_name}} style={styles.bannerStyle}/>
+          </View>
         }
-        
         <View style={styles.TopScoreContainer}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.SurvayOutOff}>
@@ -200,6 +201,7 @@ const SentimetrixMcq = ({navigation,route}) => {
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
           error={error}
+          setError={setError}
         />
       )}
 
@@ -231,6 +233,18 @@ const SentimetrixMcq = ({navigation,route}) => {
           error={error}
         />
       )}
+        <View style={styles.ButtonsContainer}>
+          <TouchableOpacity style={styles.prevButton} onPress={() => prevMcq()}>
+            <Text style={{ fontSize:16, color:"#2C8892", fontFamily: "PlusJakartaSans-Bold"}}>Previous</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.nextButton}onPress={() => 
+                  nextMcq(
+                    allMCQs[currentQuestionIndex]?.basicId, 
+                    allMCQs[currentQuestionIndex]?.sqid,
+                    allMCQs[currentQuestionIndex]?.type)}>
+            <Text style={{ fontSize:16,color: "#fff", fontFamily: "PlusJakartaSans-Bold"}}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

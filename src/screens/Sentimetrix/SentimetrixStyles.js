@@ -30,6 +30,33 @@ export const styles = StyleSheet.create({
         marginBottom:10,
         marginTop: 30,
     },
+    ButtonsContainer:{
+      padding:15,
+      marginTop:15,
+      flexDirection:'row',
+      justifyContent:'space-between'
+    },
+    prevButton: {
+        width: "49%",
+        height:50,
+        borderColor: "#2C8892",
+        borderWidth:2,
+        borderRadius: 15 / 2,
+        backgroundColor: "#fff",
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    nextButton: {
+        width: "49%",
+        height:50,
+        borderColor: "#2C8892",
+        borderWidth:2,
+        borderRadius: 15 / 2,
+        backgroundColor: "#2C8892",
+        justifyContent:'center',
+        alignItems:'center'
+    },
+
     blueButtonStyle: {
         marginTop: 10,
         width: "100%",
@@ -38,6 +65,7 @@ export const styles = StyleSheet.create({
         borderRadius: 15 / 2,
         backgroundColor: "#2C8892",
     },
+    
     whiteButtonStyle: {
         marginTop: 10,
         width: "100%",

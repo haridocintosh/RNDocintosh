@@ -12,9 +12,22 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
 
     const dispatch              = useDispatch()
     const [userId, setuserId]   = useState();
-
+    const [interestsData, setinterestsData]   = useState();
+// console.log('intersetModal',allInterestsData);
 
     const handleSelect = async (id) => {
+        console.log(id);
+        let temp = allInterestsData.map((data) => {
+            if (id === data.speciality_id) {
+              return { ...data, isSelected: !data.isSelected };
+            }
+            return data;
+          });
+          setinterestsData(temp);
+        //   const trueVal = temp
+        //     .filter((val) => val.isSelected == true)
+        //     .map((temp) => temp?.phoneNumbers?.[0].number);
+        //   setSelectedList(trueVal)
         const postDetails = {speciality_id:id,id:userId}
         const result = await dispatch(addCircle(postDetails));
     }
@@ -41,7 +54,7 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
                         {allInterestsData?.map((data, index) => {
                             return(
                                 <TouchableOpacity style={data.isSelected ? styles.InterestsSelected :styles.InterestsNotSelected} key={index} onPress={() => handleSelect(data.speciality_id)}>
-                                    <Text  >{data.speciality}</Text>
+                                    <Text>{data.speciality}</Text>
                                     {data.isSelected && <AntDesign name="closecircle" size={20} color="#45B5C0" style={styles.selectedIcons}/>}
                                 </TouchableOpacity>
                             )

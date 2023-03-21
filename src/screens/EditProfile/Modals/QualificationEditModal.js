@@ -1,14 +1,12 @@
 import React,{useState, useEffect} from 'react';
-import { View, Text ,TextInput,Pressable} from 'react-native';
+import { View, Text ,Pressable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
-import {useForm, Controller} from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { DatePickerInput } from 'react-native-paper-dates';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { getLocalData } from '../../../apis/GetLocalData';
 import { AddQualificationAPI, QlifnCollegeAPI, QlifnCourseAPI} from '../../../../redux/reducers/qualificationSlice';
 import { format } from 'date-fns';
 

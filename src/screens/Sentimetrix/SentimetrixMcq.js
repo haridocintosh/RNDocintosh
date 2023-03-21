@@ -110,10 +110,9 @@ const SentimetrixMcq = ({navigation,route}) => {
           if (liftUpCheckData && (liftUpCheckData?.filter(d => d !== undefined).length == 3)) {
             forwardFunction();
             liftUpCheckData.map((data) =>
-              PosData(resData?.id, basic_id, sqid, data)
+              PosData(resData?.id, basic_id, sqid, "", data.main, "",data.key, data.x_val)
             );
             setLiftUpCheckData(null);
-            
             if (currentQuestionIndex !== MCQsLength - 2) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
               setError(null);
@@ -127,8 +126,8 @@ const SentimetrixMcq = ({navigation,route}) => {
       })
     }
 
-    const PosData = async (userId, basicId, subquestionId, optionId, ans, id) => {
-      const postDetails = {userId, basicId, subquestionId, optionId, ans, id};
+    const PosData = async (userId, basicId, subquestionId, optionId, ans, id, key, x_val ) => {
+      const postDetails = {userId, basicId, subquestionId, optionId, ans, id, key, x_val};
       console.log("postDetails",postDetails);
       const result = await dispatch(SentimetrixSaveAPI(postDetails));
       console.log("result",result);
@@ -228,7 +227,7 @@ const SentimetrixMcq = ({navigation,route}) => {
         <MultipleTypoMcq
           setLiftUpData={setLiftUpCheckData}
           // currentIndex={currentQuestionIndex}
-          // liftUpData={allMCQs}
+          currentData={allMCQs[currentQuestionIndex]}
           liftUpData={liftUpCheckData}
           error={error}
         />

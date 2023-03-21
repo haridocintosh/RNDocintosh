@@ -4,14 +4,18 @@ import { styles } from './SentimetrixStyles';
 import {useForm, Controller} from 'react-hook-form';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const MultipleTypoMcq = ({setLiftUpData, liftUpData,error, allMCQs,navigation}) => {
+const MultipleTypoMcq = ({setLiftUpData, liftUpData,error, currentData,navigation}) => {
   // const [mainMessage,] = useState();
   const { control, handleSubmit, reset, watch, formState: { errors }} = useForm({mode: 'onBlur'});
   
   const mainMessage = watch("main_message");
   const otherMessage = watch("other_message");
   const anyOtherMessage = watch("any_other_message");
-  const allData = [mainMessage,otherMessage,anyOtherMessage];
+  const allData = [
+    {main:mainMessage,key:1,x_val:mainMessage},
+    {main:mainMessage,key:2,x_val:otherMessage},
+    {main:mainMessage,key:3,x_val:anyOtherMessage},
+  ];
 
 
   useEffect(() => {
@@ -19,7 +23,7 @@ const MultipleTypoMcq = ({setLiftUpData, liftUpData,error, allMCQs,navigation}) 
   },[mainMessage,otherMessage,anyOtherMessage]);
 
   // const handleOnChange = (data) => {
-  //   // setLiftUpData(mainMessage,otherMessage,anyOtherMessage)
+  //   setLiftUpData(mainMessage,otherMessage,anyOtherMessage)
   // }
 
   return (

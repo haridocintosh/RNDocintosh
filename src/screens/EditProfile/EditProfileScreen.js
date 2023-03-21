@@ -92,7 +92,9 @@
       setaboutMe(!aboutMe);
     };
     const handleEditQualification = async (data) => {
+      // console.log("before",data);
       data.completionyear = await new Date(moment(data?.completionyear).format("MM/DD/YYYY"));
+      console.log("after",data);
       setPassQualification(data);
       setEditQualification(!editQualification);
     };
@@ -100,6 +102,7 @@
       setAwards(!awards);
     };
     const awardsEditModal = async (data) => {
+      // console.log("data");
       data.awardyear = await new Date(moment(data?.awardyear).format("MM/DD/YYYY"))
       setPassAwardData(data);
       setEditAwards(!editAwards);
@@ -350,7 +353,6 @@
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text> {console.log(getQualificationData)} </Text>
             {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {
               return(
                 <View style={styles.AddedDetails} key={i}>
@@ -396,7 +398,7 @@
                 <Text style={styles.userInfoTitle}>Awards</Text>
                 <TouchableOpacity onPress={() => awardsModal()}>
                   <Text style={styles.AddInfo}>
-                    <Entypo name="plus" size={15} color="#2376E5" /> 
+                    <Entypo name="plus" size={15} color="#2376E5"/> 
                     Add Awards
                   </Text>
                 </TouchableOpacity>

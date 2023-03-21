@@ -14,13 +14,11 @@
   import QualificationModal from './Modals/QualificationModal';
   import AwardsModal from './Modals/AwardsModal';
   import PublicationModal from './Modals/PublicationModal';
-  import AchievementsModal from './Modals/AchievementsModal';
   import IntrestsModal from './Modals/IntrestsModal';
   import { SingleImage } from '../../navigation/ReuseLogics';
   import GetProfile from './Modals/GetProfile';
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
-  import { useIsFocused } from '@react-navigation/native';
   import { getWorkExpAPI,
     userInfo,
     getAwardAPI,
@@ -284,12 +282,14 @@
           </Card>
 
           <WorkExperienceModal workExp={workExp} setWorkExp={setWorkExp} handleWorkReload={handleWorkReload}/>
+          
           <EditWorkExperienceModal 
             editWorkExp={editWorkExp} 
             setEditWorkExp={setEditWorkExp} 
             passWorkExp={passWorkExp}
             handleWorkReload={handleWorkReload}
           />
+
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>Work Experience</Text>
@@ -336,6 +336,7 @@
             setQualification={setQualification}
             getQualification={getQualification}
           />
+
           <QualificationEditModal 
             setEditQualification={setEditQualification}
             editQualification={editQualification}

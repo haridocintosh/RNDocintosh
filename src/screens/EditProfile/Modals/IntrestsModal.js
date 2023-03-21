@@ -13,11 +13,11 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
     const dispatch              = useDispatch()
     const [userId, setuserId]   = useState();
     const [interestsData, setinterestsData]   = useState();
-// console.log('intersetModal',allInterestsData);
 
     const handleSelect = async (id) => {
         console.log(id);
-        let temp = allInterestsData.map((data) => {
+        console.log('intersetModal',interestsData);
+        let temp = interestsData.map((data) => {
             if (id === data.speciality_id) {
               return { ...data, isSelected: !data.isSelected };
             }
@@ -33,11 +33,13 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
     }
 
     useEffect(()=>{
+        setinterestsData(allInterestsData);
         getLocalData('USER_INFO').then((res) => {
           const reData = res?.data;
           setuserId(reData?.id)
         });
-      })
+       
+      },[])
   return (
     <Modal
         animationType="slide"
@@ -51,7 +53,7 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
                 <Text style={styles.modalText}>Edit Interests</Text>
                 <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{height:300}}>
                     <View style={styles.InterestsList}>
-                        {allInterestsData?.map((data, index) => {
+                        {interestsData?.map((data, index) => {
                             return(
                                 <TouchableOpacity style={data.isSelected ? styles.InterestsSelected :styles.InterestsNotSelected} key={index} onPress={() => handleSelect(data.speciality_id)}>
                                     <Text>{data.speciality}</Text>

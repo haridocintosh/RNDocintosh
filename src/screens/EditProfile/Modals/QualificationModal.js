@@ -53,7 +53,8 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
     }
     
     useEffect(() => {
-        GetDropList()
+        GetDropList();
+        console.log("log--------------------(data)");
     },[])
 
   return (

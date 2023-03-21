@@ -90,9 +90,7 @@
       setaboutMe(!aboutMe);
     };
     const handleEditQualification = async (data) => {
-      // console.log("before",data);
       data.completionyear = await new Date(moment(data?.completionyear).format("MM/DD/YYYY"));
-      console.log("after",data);
       setPassQualification(data);
       setEditQualification(!editQualification);
     };
@@ -100,7 +98,6 @@
       setAwards(!awards);
     };
     const awardsEditModal = async (data) => {
-      // console.log("data");
       data.awardyear = await new Date(moment(data?.awardyear).format("MM/DD/YYYY"))
       setPassAwardData(data);
       setEditAwards(!editAwards);
@@ -165,9 +162,7 @@
     const getQualification = async () => {
       getLocalData('USER_INFO').then(async (res) => {
         const getQualificationResult = await dispatch(getQualificationAPI({user_id : res?.data.id}));
-        console.log(getQualificationResult);
         if(getQualificationResult.payload.status == 'Success'){
-          console.log(getQualificationResult.payload.data);
           setGetQualificationData(getQualificationResult.payload.data);
         }
       })

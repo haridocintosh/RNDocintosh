@@ -4,9 +4,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
-import { useDispatch } from 'react-redux';
-import { DatePickerInput } from 'react-native-paper-dates';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useDispatch } from 'react-redux';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { DatePickerInput } from 'react-native-paper-dates';
 import { AddQualificationAPI, QlifnCollegeAPI, QlifnCourseAPI} from '../../../../redux/reducers/qualificationSlice';
 import { format } from 'date-fns';
 
@@ -19,7 +20,8 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
     const [itemsCourse, setItemsCourse] = useState([]);
     const [itemsCollege, setItemsCollege] = useState([]);
     const [completionYear, setCompletionYear]= useState(passQualification?.completionyear);
-
+    const [Coursetype, setCoursetype] = useState(null);
+    const [userId, setUserId] = useState([]);
     const dispatch = useDispatch();
 
     const onSubmit = async () => {
@@ -39,12 +41,24 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
         setEditQualification(false);
     }
 
-    const GetDropList = async () => {
-        const courseResult = await dispatch(QlifnCourseAPI({id : passQualification?.id}));
-        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id}}));
-        const collegeResult = await dispatch(QlifnCollegeAPI());
-        setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
-    }
+    // const GetDropList = async () => {
+    //     const courseResult = await dispatch(QlifnCourseAPI({id : passQualification?.id}));
+    //     setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id}}));
+    //     const collegeResult = await dispatch(QlifnCollegeAPI());
+    //     setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
+    // }
+
+    
+    const GetDropList = () => {
+        getLocalData('USER_INFO').then(async (res) => {
+          setUserId(res?.data?.id);
+          console.log();
+          const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
+          setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id, coursetype : data?.type }}));
+          const collegeResult = await dispatch(QlifnCollegeAPI());
+          setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
+        })
+      }
 
     const handleClose = async () => {
         setEditQualification(!editQualification);
@@ -76,7 +90,9 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                     <Text style={styles.modalText}>Edit Qualification</Text>
                     <View style={styles.inputDropDown}>
                         <Text style={styles.modalSubText}>Course*</Text>
-                            {/* <DropDownPicker
+     
+                    
+                            <DropDownPicker
                                 style={styles.DropDownField}
                                 open={openCourse}
                                 value={valueCourse}
@@ -112,20 +128,11 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                                   searchContainerStyle={{
                                     borderBottomColor: "#687690"
                                   }}
-                            /> */}
-                            {/* <DropDownPicker
-                                style={styles.DropDownField}
-                                open={openCourse}
-                                value={valueCourse}
-                                items={itemsCourse}
-                                setOpen={setOpenCourse}
-                                setValue={setValueCourse}
-                                setItems={setItemsCourse}
-                            /> */}
+                            />
                     </View>
                     <View style={styles.inputDropDown}>
                         <Text style={styles.modalSubText}>College Name*</Text>
-                            {/* <DropDownPicker
+                            <DropDownPicker
                                 style={styles.DropDownField}
                                 open={openCollege}
                                 value={valueCollege}
@@ -161,7 +168,7 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                               searchContainerStyle={{
                                 borderBottomColor: "#687690"
                               }}
-                              /> */}
+                              />
                     </View>
                     <View style={styles.input}>
                         <Text style={styles.modalSubText}>Year of Completion*</Text>

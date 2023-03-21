@@ -4,9 +4,13 @@ import {
   Text,
   SafeAreaView,
   Image,
+  ImageBackground,
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  Modal,
+  Pressable,
+  Dimensions
 } from "react-native";
 import beginnerBadge from "../../assets/dr-icon/beginnerBadge.png";
 import intermediateBadge from "../../assets/dr-icon/intermediateBadge.png";
@@ -23,10 +27,11 @@ import { Card } from "react-native-paper";
 import axios from "axios";
 import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const KnowYourHeart = ({ route,navigation }) => {
   const { score, seconds ,TotalMcq} = route?.params;
-
+  const [modalVisible, setModalVisible] = useState(true);
   const [userData, setUserData] = useState([]);
   const [loader, setLoader] = useState(true);
   const [sliceData, setSliceData] = useState(10);
@@ -41,7 +46,7 @@ const KnowYourHeart = ({ route,navigation }) => {
   };
   useEffect(() => {
     getLeaderboardData();
-  }, []);
+  },[]);
   
   const handleAlldata = () => {
     setSliceData();
@@ -50,9 +55,10 @@ const KnowYourHeart = ({ route,navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
     >
-      <Card style={styles.cardbody}>
+      <Image source={require('../../assets/images/KnowYourHeartBI.png')} style={styles.ThankYouBgImage}/>
+      <View style={styles.cardbody}>
         <View style={styles.scoreboard}>
-          <Image source={outoffWhiteBadge} style={styles.outoffBadge} />
+          <Image source={outoffWhiteBadge} style={styles.outoffBadge}/>
           <Text style={styles.scoreboardText}>
             {score}/{TotalMcq}
           </Text>
@@ -130,7 +136,7 @@ const KnowYourHeart = ({ route,navigation }) => {
             </View>
           </View>
           <View style={{ backgroundColor: "#ffff", padding: 15 }}>
-            <View style={{ height: 300 }}>
+            <View style={{ height: Dimensions.get('window').height/2.6 }}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnable={true}
@@ -226,7 +232,23 @@ const KnowYourHeart = ({ route,navigation }) => {
             
           </View>
         </View>
-      </Card>
+      </View>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Pressable style={styles.closebtn} onPress={() => setModalVisible(!modalVisible)}>
+                    <AntDesign name="close" size={20} color="#51668A" />
+                </Pressable>
+                <Text style={styles.textBold}>WELL DONE!</Text>
+                <Text style={styles.textNormal}>{score} out of {TotalMcq} correct answers in {60-seconds} seconds.</Text>
+              </View>
+            </View>
+        </Modal>  
     </SafeAreaView>
   );
 };

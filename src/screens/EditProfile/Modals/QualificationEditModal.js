@@ -25,11 +25,11 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
     const onSubmit = async () => {
         const collegeenddate = format(completionYear, 'yyyy-MM-dd');
         const postData = {
-            coursetype  :"",
-            collegeid   : valueCollege ? valueCollege : passQualification?.pcollege_id,
-            courseid    : valueCourse ? valueCourse : passQualification?.postgradution_id,
-            collegestartdate    : "",
-            collegeenddate      : collegeenddate,
+            coursetype :"",
+            collegeid : valueCollege ? valueCollege : passQualification?.pcollege_id,
+            courseid : valueCourse ? valueCourse : passQualification?.postgradution_id,
+            collegestartdate : "",
+            collegeenddate : collegeenddate,
             userid : passQualification?.id,
             pg_id : passQualification?.pg_id
         }
@@ -76,7 +76,7 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                     <Text style={styles.modalText}>Edit Qualification</Text>
                     <View style={styles.inputDropDown}>
                         <Text style={styles.modalSubText}>Course*</Text>
-                            <DropDownPicker
+                            {/* <DropDownPicker
                                 style={styles.DropDownField}
                                 open={openCourse}
                                 value={valueCourse}
@@ -112,11 +112,20 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                                   searchContainerStyle={{
                                     borderBottomColor: "#687690"
                                   }}
-                            />
+                            /> */}
+                            {/* <DropDownPicker
+                                style={styles.DropDownField}
+                                open={openCourse}
+                                value={valueCourse}
+                                items={itemsCourse}
+                                setOpen={setOpenCourse}
+                                setValue={setValueCourse}
+                                setItems={setItemsCourse}
+                            /> */}
                     </View>
                     <View style={styles.inputDropDown}>
                         <Text style={styles.modalSubText}>College Name*</Text>
-                            <DropDownPicker
+                            {/* <DropDownPicker
                                 style={styles.DropDownField}
                                 open={openCollege}
                                 value={valueCollege}
@@ -152,7 +161,7 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                               searchContainerStyle={{
                                 borderBottomColor: "#687690"
                               }}
-                              />
+                              /> */}
                     </View>
                     <View style={styles.input}>
                         <Text style={styles.modalSubText}>Year of Completion*</Text>

@@ -10,11 +10,14 @@ export const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.3,
     elevation: 2,
-    // zIndex: 99999,
-    position: "absolute",
     width: "100%",
-    bottom: 0,
-    // padding: 15,
+    flex:1,
+    marginTop:-10
+  },
+  ThankYouBgImage:{
+    width:Dimensions.get('window').width,
+    resizeMode:'contain',
+    borderWidth:1
   },
   cardheading: {
     alignSelf: "center",
@@ -92,8 +95,7 @@ export const styles = StyleSheet.create({
   levelsBadge: {
     justifyContent: "center",
     alignItems: "center",
-    // borderWidth:1,
-    width: 90,
+    flex:1
   },
   levelText: {
     color: "#51668A",
@@ -414,4 +416,42 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 5,
   },
-});
+
+  // ------------------------   PopUp score Modal --------------------
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:'rgba(0,0,0,0.4)'  
+  },
+  modalView: {
+    margin: 20,
+    width:'60%',
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 30,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  closebtn: {
+    backgroundColor: "#FFFF",
+    alignSelf:'flex-end',
+  },
+  textBold:{
+    fontFamily:'Inter-SemiBold',
+    color:'#071B36'
+  },
+  textNormal:{
+    fontFamily:"Inter-Regular",
+    color:'#071B36',
+    textAlign:'center',
+    marginTop:10
+  },
+  });

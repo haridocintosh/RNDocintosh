@@ -9,10 +9,10 @@ import { getLocalData } from '../../../apis/GetLocalData';
 import { addCircle } from '../../../../redux/reducers/circleSlice';
 
 const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
-
+    const [interestsData, setinterestsData] = useState(allInterestsData);
     const dispatch              = useDispatch()
     const [userId, setuserId]   = useState();
-    const [interestsData, setinterestsData]   = useState();
+    
 
     const handleSelect = async (id) => {
         console.log(id);
@@ -24,22 +24,15 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
             return data;
           });
           setinterestsData(temp);
-        //   const trueVal = temp
-        //     .filter((val) => val.isSelected == true)
-        //     .map((temp) => temp?.phoneNumbers?.[0].number);
-        //   setSelectedList(trueVal)
-        const postDetails = {speciality_id:id,id:userId}
-        const result = await dispatch(addCircle(postDetails));
+          getLocalData('USER_INFO').then(async(res) => {
+            const postDetails = {speciality_id:id,id:res?.data?.id}
+            const result = await dispatch(addCircle(postDetails));
+          });
     }
 
     useEffect(()=>{
         setinterestsData(allInterestsData);
-        getLocalData('USER_INFO').then((res) => {
-          const reData = res?.data;
-          setuserId(reData?.id)
-        });
-       
-      },[])
+    },[allInterestsData])
   return (
     <Modal
         animationType="slide"

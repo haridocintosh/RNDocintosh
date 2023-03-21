@@ -64,7 +64,7 @@ const SentimetrixThankYouPage = ({navigation}) => {
                   navigation.navigate("SentimetrixList")
                 }
               />
-            </View>
+          </View>
       </View>
     </SafeAreaView>
   )

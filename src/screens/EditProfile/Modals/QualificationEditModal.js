@@ -27,11 +27,11 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
     const onSubmit = async () => {
         const collegeenddate = format(completionYear, 'yyyy-MM-dd');
         const postData = {
-            coursetype :"",
-            collegeid : valueCollege ? valueCollege : passQualification?.pcollege_id,
-            courseid : valueCourse ? valueCourse : passQualification?.postgradution_id,
-            collegestartdate : "",
-            collegeenddate : collegeenddate,
+            coursetype  :"",
+            collegeid   : valueCollege ? valueCollege : passQualification?.pcollege_id,
+            courseid    : valueCourse ? valueCourse : passQualification?.postgradution_id,
+            collegestartdate    : "",
+            collegeenddate      : collegeenddate,
             userid : passQualification?.id,
             pg_id : passQualification?.pg_id
         }

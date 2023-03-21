@@ -281,12 +281,14 @@
           </Card>
 
           <WorkExperienceModal workExp={workExp} setWorkExp={setWorkExp} handleWorkReload={handleWorkReload}/>
+          
           <EditWorkExperienceModal 
             editWorkExp={editWorkExp} 
             setEditWorkExp={setEditWorkExp} 
             passWorkExp={passWorkExp}
             handleWorkReload={handleWorkReload}
           />
+
           <Card style={styles.CartContainer}>
               <View>
                 <Text style={styles.userInfoTitle}>Work Experience</Text>
@@ -333,6 +335,7 @@
             setQualification={setQualification}
             getQualification={getQualification}
           />
+
           <QualificationEditModal 
             setEditQualification={setEditQualification}
             editQualification={editQualification}
@@ -350,7 +353,7 @@
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text> {console.log(getQualificationData)} </Text>
+            {/* <Text> {console.log(getQualificationData)} </Text> */}
             {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {
               return(
                 <View style={styles.AddedDetails} key={i}>

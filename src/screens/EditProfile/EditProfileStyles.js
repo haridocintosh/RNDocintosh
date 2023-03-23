@@ -222,7 +222,7 @@ export const styles = StyleSheet.create({
     userInfoTitle:{fontSize:16,fontWeight:'600',color:"#071B36",fontFamily:"PlusJakartaSans-Bold"},
     AddInfo:{fontSize:16,marginVertical:20, color:'#2376E5',fontFamily:"Inter-Regular"},
     AddedDetails:{flexDirection:'row',padding:20,justifyContent:'space-between',borderColor:'#D5DEED'},
-    AddedDetailsTitle:{fontSize:16,color:"#071B36",fontFamily:"PlusJakartaSans-Regular",fontWeight:'500'},
+    AddedDetailsTitle:{fontSize:16,color:"#071B36",fontFamily:"PlusJakartaSans-Regular",fontWeight:'500',width:Dimensions.get('window').width/2},
     AddedDetailsDate:{fontSize:12,color:"#51668A",fontFamily:"Inter-Regular"},
     AddedDetailsSubTitle:{color:"#51668A",fontFamily:"Inter-Regular",width:Dimensions.get('window').width/2},
     SingleLetter:{width:50,height:50,borderRadius:50,justifyContent:'center',alignItems:'center',backgroundColor:'#45B5C0'},

@@ -1,14 +1,13 @@
 import React,{useState, useEffect} from 'react';
-import { View, Text ,TextInput,Pressable} from 'react-native';
+import { View, Text ,Pressable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
 import {styles} from '../EditProfileStyles';
-import {useForm, Controller} from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { DatePickerInput } from 'react-native-paper-dates';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useDispatch } from 'react-redux';
 import { getLocalData } from '../../../apis/GetLocalData';
+import { DatePickerInput } from 'react-native-paper-dates';
 import { AddQualificationAPI, QlifnCollegeAPI, QlifnCourseAPI} from '../../../../redux/reducers/qualificationSlice';
 import { format } from 'date-fns';
 
@@ -21,32 +20,38 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
     const [itemsCourse, setItemsCourse] = useState([]);
     const [itemsCollege, setItemsCollege] = useState([]);
     const [completionYear, setCompletionYear]= useState(passQualification?.completionyear);
-
+    const [Coursetype, setCoursetype] = useState(null);
+    // const [userId, setUserId] = useState([]);
     const dispatch = useDispatch();
 
     const onSubmit = async () => {
         const collegeenddate = format(completionYear, 'yyyy-MM-dd');
+        const type = Coursetype?.filter(d => d.qualification_id == valueCourse)
         const postData = {
-            coursetype  :"",
-            collegeid   : valueCollege ? valueCollege : passQualification?.pcollege_id,
-            courseid    : valueCourse ? valueCourse : passQualification?.postgradution_id,
-            collegestartdate    : "",
-            collegeenddate      : collegeenddate,
+            coursetype : type[0].type,
+            collegeid : valueCollege ? valueCollege : passQualification?.pcollege_id,
+            courseid : valueCourse ? valueCourse : passQualification?.postgradution_id,
+            collegestartdate : "",
+            collegeenddate : collegeenddate,
             userid : passQualification?.id,
             pg_id : passQualification?.pg_id
         }
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
-        console.log(addQuaResult);
         getQualification();
         setEditQualification(false);
     }
 
-    const GetDropList = async () => {
-        const courseResult = await dispatch(QlifnCourseAPI({id : passQualification?.id}));
-        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id}}));
-        const collegeResult = await dispatch(QlifnCollegeAPI());
-        setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
+    const GetDropList = () => {
+        getLocalData('USER_INFO').then(async (res) => {
+        //   setUserId(res?.data?.id);
+          const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
+          setCoursetype(courseResult?.payload)
+          setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value:data?.qualification_id }}));
+          const collegeResult = await dispatch(QlifnCollegeAPI());
+          setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
+        })
     }
+    
 
     const handleClose = async () => {
         setEditQualification(!editQualification);
@@ -78,6 +83,7 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                     <Text style={styles.modalText}>Edit Qualification</Text>
                     <View style={styles.inputDropDown}>
                         <Text style={styles.modalSubText}>Course*</Text>
+     
                             <DropDownPicker
                                 style={styles.DropDownField}
                                 open={openCourse}

@@ -14,13 +14,11 @@
   import QualificationModal from './Modals/QualificationModal';
   import AwardsModal from './Modals/AwardsModal';
   import PublicationModal from './Modals/PublicationModal';
-  import AchievementsModal from './Modals/AchievementsModal';
   import IntrestsModal from './Modals/IntrestsModal';
   import { SingleImage } from '../../navigation/ReuseLogics';
   import GetProfile from './Modals/GetProfile';
   import { useDispatch } from 'react-redux';
   import { getSelectedInterest } from '../../../redux/reducers/postData';
-  import { useIsFocused } from '@react-navigation/native';
   import { getWorkExpAPI,
     userInfo,
     getAwardAPI,
@@ -164,9 +162,7 @@
     const getQualification = async () => {
       getLocalData('USER_INFO').then(async (res) => {
         const getQualificationResult = await dispatch(getQualificationAPI({user_id : res?.data.id}));
-        console.log(getQualificationResult);
         if(getQualificationResult.payload.status == 'Success'){
-          console.log(getQualificationResult.payload.data);
           setGetQualificationData(getQualificationResult.payload.data);
         }
       })
@@ -258,7 +254,7 @@
               </View>
               <View style={styles.userInfoContainer}>
                   <Text style={styles.userInfoText}>
-                  MRN Reg: <Text style={styles.userInfoTextResult}>{userdata?.mry}</Text>
+                  MRN Reg : <Text style={styles.userInfoTextResult}>{userdata?.mry}</Text>
                   </Text>
               </View>
             </View>
@@ -353,7 +349,6 @@
                 </Text>
               </TouchableOpacity>
             </View>
-            {/* <Text> {console.log(getQualificationData)} </Text> */}
             {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {
               return(
                 <View style={styles.AddedDetails} key={i}>
@@ -399,7 +394,7 @@
                 <Text style={styles.userInfoTitle}>Awards</Text>
                 <TouchableOpacity onPress={() => awardsModal()}>
                   <Text style={styles.AddInfo}>
-                    <Entypo name="plus" size={15} color="#2376E5" /> 
+                    <Entypo name="plus" size={15} color="#2376E5"/> 
                     Add Awards
                   </Text>
                 </TouchableOpacity>

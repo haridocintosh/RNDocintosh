@@ -104,10 +104,6 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
-              <Entypo name="trophy" size={25} style={{color:'#ffff'}} />
-              <Text style={styles.sideDrawerName}>Leaderboard</Text>
-            </TouchableOpacity> */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>

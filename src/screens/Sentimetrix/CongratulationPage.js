@@ -14,11 +14,11 @@ const CongratulationPage = ({route,navigation}) => {
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
       <View style={styles.sentiContainer}>
         {
-          ImgPath == 2 ? <Image source={require('../../assets/images/sentimetrixFpage.png')} style={styles.sentimetrixImage}/>
+          ImgPath == 2 ? <Image source={require('../../assets/images/congratulationsLevelOne.png')} style={styles.sentimetrixImage}/>
           :
-          ImgPath == 7 ? <Image source={require('../../assets/images/sentimetrixFpage.png')} style={styles.sentimetrixImage}/>
+          ImgPath == 7 ? <Image source={require('../../assets/images/congratulationsLevelTwo.png')} style={styles.sentimetrixImage}/>
           :
-          ImgPath == 13 && <Image source={require('../../assets/images/sentimetrixFpage.png')} style={styles.sentimetrixImage}/>
+          ImgPath == 13 && <Image source={require('../../assets/images/congratulationsLevelThree.png')} style={styles.sentimetrixImage}/>
         }
         <Text style={styles.sentimetrixSubTitle}>{Content}</Text>
       </View>

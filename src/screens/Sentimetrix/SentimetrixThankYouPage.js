@@ -23,11 +23,9 @@ const SentimetrixThankYouPage = ({navigation}) => {
     },[]);
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#2C8892"}}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#2C8892"}}>
       {showOffer && <ScratchOffer setShowOffer={setShowOffer} />}
-      <Image source={require('../../assets/images/KnowYourHeartBI.png')}/>
+      <Image source={require('../../assets/images/KnowYourHeartBI.png')} style={styles.CongratulationBgImage}/>
       <View style={styles.cardbody}>
           <View style={styles.tankyouCelebration}>
             <Lottie
@@ -66,7 +64,7 @@ const SentimetrixThankYouPage = ({navigation}) => {
                   navigation.navigate("SentimetrixList")
                 }
               />
-            </View>
+          </View>
       </View>
     </SafeAreaView>
   )

@@ -20,7 +20,6 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error,setError }) => {
 
   
   const validateAnswer = async (ans) => {
-    console.log(ans);
     setError(null)
     setLiftUpData(ans);
     setOptId(ans.opt_id);

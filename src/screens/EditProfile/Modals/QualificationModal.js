@@ -27,33 +27,31 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
     const onSubmit = async (data) => {
         data.collegeenddate = format(data?.collegeenddate, 'yyyy-MM-dd')
         const postData = {
-            coursetype :Coursetype,
+            coursetype :valueCourse[1],
             collegeid : valueCollege,
-            courseid : valueCourse,
+            courseid : valueCourse[0],
             collegestartdate : "",
             collegeenddate : data.collegeenddate,
             userid : userId,
             pg_id : ""
         }
-         console.log("postData",postData);
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
         // console.log(addQuaResult);
         getQualification();
         setQualification(false);
     }
-
     const GetDropList = () => {
       getLocalData('USER_INFO').then(async (res) => {
         setUserId(res?.data?.id);
         const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
-        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id, coursetype : data?.type }}));
+        setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: [data?.qualification_id, data?.type]}}));
         const collegeResult = await dispatch(QlifnCollegeAPI());
         setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
       })
     }
     
     useEffect(() => {
-        GetDropList()
+        GetDropList();
     },[])
 
   return (

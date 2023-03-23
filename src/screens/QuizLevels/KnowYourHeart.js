@@ -135,8 +135,7 @@ const KnowYourHeart = ({ route,navigation }) => {
               </View>
             </View>
           </View>
-          <View style={{ backgroundColor: "#ffff", padding: 15 }}>
-            <View style={{ height: Dimensions.get('window').height/2.6 }}>
+            <View style={{ height: Dimensions.get('window').height/2.7,backgroundColor: "#ffff", padding: 15 }}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnable={true}
@@ -230,7 +229,6 @@ const KnowYourHeart = ({ route,navigation }) => {
               </ScrollView>
             </View>
             
-          </View>
         </View>
       </View>
 

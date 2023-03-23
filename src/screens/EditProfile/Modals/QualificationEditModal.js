@@ -21,13 +21,14 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
     const [itemsCollege, setItemsCollege] = useState([]);
     const [completionYear, setCompletionYear]= useState(passQualification?.completionyear);
     const [Coursetype, setCoursetype] = useState(null);
-    const [userId, setUserId] = useState([]);
+    // const [userId, setUserId] = useState([]);
     const dispatch = useDispatch();
 
     const onSubmit = async () => {
         const collegeenddate = format(completionYear, 'yyyy-MM-dd');
+        const type = Coursetype?.filter(d => d.qualification_id == valueCourse)
         const postData = {
-            coursetype :"",
+            coursetype : type[0].type,
             collegeid : valueCollege ? valueCollege : passQualification?.pcollege_id,
             courseid : valueCourse ? valueCourse : passQualification?.postgradution_id,
             collegestartdate : "",
@@ -36,29 +37,21 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
             pg_id : passQualification?.pg_id
         }
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
-        console.log(addQuaResult);
         getQualification();
         setEditQualification(false);
     }
 
-    // const GetDropList = async () => {
-    //     const courseResult = await dispatch(QlifnCourseAPI({id : passQualification?.id}));
-    //     setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id}}));
-    //     const collegeResult = await dispatch(QlifnCollegeAPI());
-    //     setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
-    // }
-
-    
     const GetDropList = () => {
         getLocalData('USER_INFO').then(async (res) => {
-          setUserId(res?.data?.id);
-          console.log();
+        //   setUserId(res?.data?.id);
           const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
-          setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value: data?.qualification_id, coursetype : data?.type }}));
+          setCoursetype(courseResult?.payload)
+          setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value:data?.qualification_id }}));
           const collegeResult = await dispatch(QlifnCollegeAPI());
           setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
         })
-      }
+    }
+    
 
     const handleClose = async () => {
         setEditQualification(!editQualification);
@@ -91,7 +84,6 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                     <View style={styles.inputDropDown}>
                         <Text style={styles.modalSubText}>Course*</Text>
      
-                    
                             <DropDownPicker
                                 style={styles.DropDownField}
                                 open={openCourse}

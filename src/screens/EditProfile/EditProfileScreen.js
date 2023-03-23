@@ -254,7 +254,7 @@
               </View>
               <View style={styles.userInfoContainer}>
                   <Text style={styles.userInfoText}>
-                  MRN Reg: <Text style={styles.userInfoTextResult}>{userdata?.mry}</Text>
+                  MRN Reg : <Text style={styles.userInfoTextResult}>{userdata?.mry}</Text>
                   </Text>
               </View>
             </View>

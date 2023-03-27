@@ -9,7 +9,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
 
   // const [isPlaying, setIsPlaying] = React.useState(false); 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [carouselItems] = useState(items?.attach_array)
+  const [carouselItems,SetCarouselItems] = useState(items?.attach_array)
   const videoPlayer = useRef(null);
   const [imgHeight, setImgHeight] = useState();
 
@@ -63,6 +63,10 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
     // setPostId(items.post_id);
     // setPaused(!paused);
   };
+
+  useEffect(() => {
+    SetCarouselItems(items?.attach_array)
+  },[items?.attach_array])
   // const onSeek = (seek) => {
   //   //Handler for change in seekbar
   //   videoPlayer.current.seek(seek);

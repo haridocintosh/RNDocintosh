@@ -15,18 +15,18 @@ const KnowledgeScreen = () => {
             {playv1?
               <Image source={{uri:'https://docintosh.com/medico_video/3.jpg'}} style={{width:'100%',height:300}}/>
             :
-            <Video
-              paused={playv1}
-              ref={videoPlayer}
-              resizeMode={"contain"}
-              source={{uri:'https://docintosh.com/medico_video/zoom_0.mp4'}} 
-              style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',height:300}}
-              volume={10}
-              useTextureView={false}
-              playInBackground={false}
-              disableFocus={true}
-              playWhenInactive={false}
-            />
+              <Video
+                paused={playv1}
+                ref={videoPlayer}
+                resizeMode={"contain"}
+                source={{uri:'https://docintosh.com/medico_video/zoom_0.mp4'}} 
+                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:300}}
+                volume={10}
+                useTextureView={false}
+                playInBackground={false}
+                disableFocus={true}
+                playWhenInactive={false}
+              />
           }
           </TouchableOpacity> 
             <Button
@@ -36,16 +36,13 @@ const KnowledgeScreen = () => {
                 buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, marginTop:10}}
                 titleStyle={{ color:'#fff'}}
               />
-          
         </View>
-
         <View style={styles.container}>
           <Image source={{uri:'https://docintosh.com/homeassets/images/Tele/Telemedicine-M1-1.png'}} style={{width:'100%',height:300}}/>
         </View>
         <View style={styles.container}>
           <Image source={{uri:'https://docintosh.com/homeassets/images/HAR/module-2/Hypertension-Academia-1.png'}} style={{width:'100%',height:300}}/>
         </View>
-        
       </ScrollView>
     </SafeAreaView>
   )

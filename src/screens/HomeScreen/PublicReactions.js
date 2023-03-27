@@ -51,7 +51,9 @@ const PublicReactions = ({item,getStorageData}) => {
 
  useEffect(() => {
   localStorageData();
- },[])
+  setLikeCount(item?.likecount);
+  setHeart(item?.post_like_status?.[0].flag == 1);
+ },[item])
 
  const GotoComments =(post_id,comments_list ) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});

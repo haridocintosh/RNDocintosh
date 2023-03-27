@@ -316,8 +316,6 @@ const HomeScreen = ({navigation,route})=> {
           </View>
           </Card>
         <View>
-
-  
             <View style={styles.marginten}>
                 <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}  onPress={() => press()} >Suggested Post</Text>
                 <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>

@@ -2,9 +2,9 @@ import React,{useRef} from 'react';
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CommunityScreen from '../screens/CommunityScreen';
-import KnowledgeScreen from '../screens/KnowledgeScreen';
 import HomeNavigation from './HomeNavigation';
 import EngageNavigation from './EngageNavigation';
+import KnowledgeScreen from '../screens/Knowledge/KnowledgeScreen';
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {

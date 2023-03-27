@@ -43,15 +43,14 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
 
     const GetDropList = () => {
         getLocalData('USER_INFO').then(async (res) => {
-        //   setUserId(res?.data?.id);
-          const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
-          setCoursetype(courseResult?.payload)
-          setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value:data?.qualification_id }}));
-          const collegeResult = await dispatch(QlifnCollegeAPI());
-          setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
+            // setUserId(res?.data?.id);
+            const courseResult = await dispatch(QlifnCourseAPI({id : res?.data?.id}));
+            setCoursetype(courseResult?.payload);
+            setItemsCourse(courseResult?.payload?.map((data) => {return {label: data?.qualification, value:data?.qualification_id }}));
+            const collegeResult = await dispatch(QlifnCollegeAPI());
+            setItemsCollege(collegeResult?.payload?.map((data) => {return {label: data?.collegename, value: data?.college_id}}));
         })
     }
-    
 
     const handleClose = async () => {
         setEditQualification(!editQualification);
@@ -160,7 +159,7 @@ const QualificationEditModal = ({setEditQualification,editQualification,getQuali
                               searchContainerStyle={{
                                 borderBottomColor: "#687690"
                               }}
-                              />
+                            />
                     </View>
                     <View style={styles.input}>
                         <Text style={styles.modalSubText}>Year of Completion*</Text>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Knowledge2Screen from '../screens/Knowledge2Screen';
+// import Knowledge2Screen from '../screens/Knowledge2Screen';
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
 import SentimentixScreen from '../screens/SentimentixScreen';
@@ -55,7 +55,7 @@ const HomeNavigation = () => {
     return (<>
     <HandleBack/>
         <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="HomeScreen">
-          <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={showHeaderItem} />
+          {/* <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={showHeaderItem} /> */}
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={showHeaderItem}/>
           <Stack.Screen name="HomeScreen" component={HomeScreen}/>
           <Stack.Screen name="PublicReactions" component={PublicReactions}/>

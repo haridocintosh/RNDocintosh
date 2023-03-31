@@ -272,6 +272,8 @@ userUsername:{
 },
 userCommentTexts:{
   fontFamily:'Inter-Regular',
+  width:Dimensions.get('window').width/1.3,
+  textAlign:'justify'
 },
 NoCommentTexts:{
   fontFamily:'Inter-SemiBold',

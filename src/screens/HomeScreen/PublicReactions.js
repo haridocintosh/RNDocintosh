@@ -51,7 +51,9 @@ const PublicReactions = ({item,getStorageData}) => {
 
  useEffect(() => {
   localStorageData();
- },[])
+  setLikeCount(item?.likecount);
+  setHeart(item?.post_like_status?.[0].flag == 1);
+ },[item])
 
  const GotoComments =(post_id,comments_list ) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
@@ -97,7 +99,7 @@ const PublicReactions = ({item,getStorageData}) => {
                 </View> */}
                 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list, postIndex)}>
+                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list)}>
                         <Image source={require('../../assets/dr-icon/socialComment.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item?.commentcount}</Text>

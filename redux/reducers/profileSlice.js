@@ -32,6 +32,21 @@ export const addworkexperianceAPI = createAsyncThunk("addWorkexp", async(data)=>
     }
 })
 
+export const deleteWorkexperianceAPI = createAsyncThunk("deleteworkexp", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/deleteworkexperiance`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 export const getWorkExpAPI = createAsyncThunk("getWorkExp", async(data)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/workexperiance`, {
@@ -104,6 +119,22 @@ export const getQualificationAPI = createAsyncThunk("getQualification", async(da
        console.log(e);
     }
 })
+
+export const deleteQualificationAPI = createAsyncThunk("deleteQualification", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/deletequalification`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
 
 export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(data)=>{
     try{
@@ -181,6 +212,36 @@ export const updateUserInfoAPI = createAsyncThunk("updateUser", async(data)=>{
         }
     })
 
+    export const deleteAwardAPI = createAsyncThunk("deleteaward", async(data)=>{
+        try{
+           const responce = await fetch(`${mainApi.baseUrl}/ApiController/deleteaward`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult =  await responce.json();
+            return userResult;
+        }
+        catch(e){
+           console.log(e);
+        }
+    })
+
+    export const deletePublicationsAPI = createAsyncThunk("deleteaward", async(data)=>{
+        try{
+           const responce = await fetch(`${mainApi.baseUrl}/ApiController/deletepublications`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult =  await responce.json();
+            return userResult;
+        }
+        catch(e){
+           console.log(e);
+        }
+    })
+
     export const Edit_ProfileOTP = createAsyncThunk("Edit_Profile_OTP", async(data)=>{
         try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileOTP`, {
@@ -212,7 +273,11 @@ export const profileSlice= createSlice({
         publicationInfo   : {},
         updateData  : {},
         user_data   : {},
-        updateEmail : {}
+        updateEmail : {},
+        deleteWorkExp: {},
+        deleteQualification: {},
+        deleteAward: {},
+        deletePublications: {},
     },
     reducers : {
       
@@ -376,6 +441,22 @@ export const profileSlice= createSlice({
             state.error = false
         })
 
+    //===================deleteQualificationAPI===============================
+
+        builder.addCase(deleteQualificationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteQualificationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deleteQualification      =  action.payload;
+        })
+        builder.addCase(deleteQualificationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
     //===================updateUserInfoAPI===============================
 
         builder.addCase(updateUserInfoAPI.pending, (state) => {
@@ -419,6 +500,52 @@ export const profileSlice= createSlice({
             state.publicationInfo      =  action.payload;
         })
         builder.addCase(addPublicationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================deleteWorkexperianceAPI===============================
+
+        builder.addCase(deleteWorkexperianceAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteWorkexperianceAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deleteWorkExp      =  action.payload;
+        })
+        builder.addCase(deleteWorkexperianceAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+    //===================deleteAwardAPI===============================
+
+        builder.addCase(deleteAwardAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteAwardAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deleteAward   =  action.payload;
+        })
+        builder.addCase(deleteAwardAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+    //===================deletePublicationsAPI===============================
+
+        builder.addCase(deletePublicationsAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deletePublicationsAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deletePublications   =  action.payload;
+        })
+        builder.addCase(deletePublicationsAPI.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false

@@ -1,10 +1,10 @@
 import React,{useRef} from 'react';
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import CommunityScreen from '../screens/CommunityScreen';
-import KnowledgeScreen from '../screens/KnowledgeScreen';
 import HomeNavigation from './HomeNavigation';
 import EngageNavigation from './EngageNavigation';
+import KnowledgeScreen from '../screens/Knowledge/KnowledgeScreen';
+import CommunityNavigation from './CommunityNavigation';
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
@@ -46,19 +46,13 @@ const TabNavigator = () => {
           <Image source={require('../assets/dr-icon/Engage.png')} style={{width:35,height:35,padding:10}} />),
         }}
       />
-
-
+      
       <Tab.Screen
         name="Community"
-        component={CommunityScreen}
+        component={CommunityNavigation}
         options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: '#071B36',
-          },
-          headerTintColor: '#fff',
+          tabBarLabel:'Community',
           tabBarIcon: ({color, size}) => (
-            // <Feather name="users" color={color} size={size} />
             <Image source={require('../assets/dr-icon/Community.png')} style={{width:30,height:30}} />
           ),
         }}

@@ -4,11 +4,12 @@ import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 
+
 const AutoHeightImage = ({items,currentIndex,postIndex}) => {
 
   // const [isPlaying, setIsPlaying] = React.useState(false); 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [carouselItems] = useState(items?.attach_array)
+  const [carouselItems,SetCarouselItems] = useState(items?.attach_array)
   const videoPlayer = useRef(null);
   const [imgHeight, setImgHeight] = useState();
 
@@ -62,6 +63,10 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
     // setPostId(items.post_id);
     // setPaused(!paused);
   };
+
+  useEffect(() => {
+    SetCarouselItems(items?.attach_array)
+  },[items?.attach_array])
   // const onSeek = (seek) => {
   //   //Handler for change in seekbar
   //   videoPlayer.current.seek(seek);
@@ -77,11 +82,11 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   const actualHeight = (width,height) => {
       const ratio = Dimensions.get("window").width/width;
       const actual = height*ratio;
-      const ActualHeight = actual? actual : 350;
+      const ActualHeight = actual ? actual : 350;
       return ActualHeight;
   }
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
         return (
           <View key={index} style={styles.imageVideoContainer}>
               {item?.filename?.includes("mp4") ?
@@ -133,10 +138,9 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
     )
   }
 
-  // console.log("items?.attach_array",items?.attach_array);
-
   return (
-    <View >
+    // backgroundColor:'rgba(52,119,224,0.3)'
+    <View style={{alignItems:'center',}}>
     {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
     <Carousel
         layout={"default"}
@@ -151,8 +155,8 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
         renderItem={_renderItem}
         pagingEnabled={true}
         onSnapToItem={index => setActiveIndex(index)} 
-      />
-        <View>
+    />
+        <View style={{alignItems:'center',backgroundColor:'#fff',width:'100%'}}>
         <Pagination
           dotsLength={carouselItems?.length}
           activeDotIndex={activeIndex}
@@ -194,15 +198,18 @@ export const styles = StyleSheet.create({
   },
   imageStyle:{
     width:"100%",
-    marginHorizontal:10,
     alignSelf:'center',
     zIndex:0, 
   },  
   multiImageStyle:{
     width:"100%",
-    marginHorizontal:10,
-    alignSelf:'center',
-    zIndex:0, 
-    // aspectRatio:1
+    // marginHorizontal:10,
+    // aspectRatio:1,
+    // borderWidth:1
+  },  
+  imageVideoContainer:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
   },  
 })

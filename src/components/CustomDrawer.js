@@ -18,6 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button } from 'react-native-elements';
 import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
@@ -101,6 +102,7 @@ const CustomDrawer = (props) => {
             <Text style={styles.userProfession}> {userdata['speciality']} |</Text>
           </View>
         </View>
+        {userdata?((userdata.role == '4' )?  
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
@@ -142,7 +144,37 @@ const CustomDrawer = (props) => {
             </TouchableOpacity>
           </View>
         </DrawerContentScrollView>
+        :
+        <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
+        <View style={styles.drowerChilds}>
+          <DrawerItemList {...props} />
+            
+          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
+              <MaterialIcons name="person-add-alt-1" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Invite</Text>
+            </TouchableOpacity>
 
+          {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <MaterialCommunityIcons name="gift" size={25} color="white"/>
+            <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
+            <Ionicons name="md-newspaper" size={25} color="white"/>
+            <Text style={styles.sideDrawerName}>What’s New</Text>
+          </TouchableOpacity>
+       
+          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
+            <Text style={styles.sideDrawerName}>Take a Tour</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
+            <Ionicons name="settings-sharp" size={25} color="white"/>
+            <Text style={styles.sideDrawerName}>Settings</Text>
+          </TouchableOpacity>
+        </View>
+      </DrawerContentScrollView>
+        ): ''}
         <View style={styles.deviderLine}/>
         <View style={{paddingHorizontal: 20,}}>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>

@@ -13,14 +13,14 @@ const KnowledgeScreen = () => {
         <View style={styles.container}>
           <TouchableOpacity onPress={() => setPlayv1(!playv1)}>
             {playv1?
-              <Image source={{uri:'https://docintosh.com/medico_video/3.jpg'}} style={{width:'100%',height:300}}/>
+              <Image source={{uri:'https://docintosh.com/medico_video/3.jpg'}} style={{height:250}}/>
             :
               <Video
                 paused={playv1}
                 ref={videoPlayer}
                 resizeMode={"contain"}
                 source={{uri:'https://docintosh.com/medico_video/zoom_0.mp4'}} 
-                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:300}}
+                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:250}}
                 volume={10}
                 useTextureView={false}
                 playInBackground={false}
@@ -38,10 +38,10 @@ const KnowledgeScreen = () => {
               />
         </View>
         <View style={styles.container}>
-          <Image source={{uri:'https://docintosh.com/homeassets/images/Tele/Telemedicine-M1-1.png'}} style={{width:'100%',height:300}}/>
+          <Image source={{uri:'https://docintosh.com/homeassets/images/Tele/Telemedicine-M1-1.png'}} style={{aspectRatio:2}}/>
         </View>
         <View style={styles.container}>
-          <Image source={{uri:'https://docintosh.com/homeassets/images/HAR/module-2/Hypertension-Academia-1.png'}} style={{width:'100%',height:300}}/>
+          <Image source={{uri:'https://docintosh.com/homeassets/images/HAR/module-2/Hypertension-Academia-1.png'}} style={{aspectRatio:2}}/>
         </View>
       </ScrollView>
     </SafeAreaView>

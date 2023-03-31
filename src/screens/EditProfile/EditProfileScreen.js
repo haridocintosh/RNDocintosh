@@ -23,13 +23,16 @@
     userInfo,
     getAwardAPI,
     getQualificationAPI,
-    getPublicationAPI 
+    getPublicationAPI, 
   } from '../../../redux/reducers/profileSlice';
   import moment from "moment";
   import EditWorkExperienceModal from './Modals/EditWorkExperienceModal';
   import AwardsEditModal from './Modals/AwardsEditModal';
   import PublicationEditModal from './Modals/PublicationEditModal';
   import QualificationEditModal from './Modals/QualificationEditModal';
+  import DeleteModal from './Modals/DeleteModals/DeleteModal';
+  
+
   
   
   const EditProfileScreen = ({route,navigation}) => {
@@ -65,6 +68,8 @@
     const [publicationShowAll, setPublicationShowAll] = useState(2);
     const [propPublication, setPropPublication] = useState();
     const [awardShowAll, setAwardShowAll] = useState(2);
+    const [deleteData, setDeleteData] = useState();
+    const [deleteToggle, setDeleteToggle] = useState(false);
     
     const dispatch = useDispatch();
 
@@ -86,6 +91,12 @@
       setPassWorkExp(data)
       setEditWorkExp(!editWorkExp)
     };
+    const handleDelete = async (data,name) => {
+      // console.log("data",data);
+      console.log({id :data,name:name});
+      setDeleteToggle(true);
+      await setDeleteData({id :data,name:name})
+    };
     const aboutMeModal = () => {
       setaboutMe(!aboutMe);
     };
@@ -102,17 +113,12 @@
       setPassAwardData(data);
       setEditAwards(!editAwards);
     };
-    // const publicationModal = () => {
-    //   setPublication(!publication);
-    // };
     const publicationEditModal = async (data) => {
       data.publishedyear = await new Date(moment(data?.publishedyear).format("MM/DD/YYYY"))
       setPropPublication(data)
       setEditPublication(!editPublication);
     };
-    // const AchievementModal = () => {
-    //   setAchievement(!achievement);
-    // };
+
     const InterestsModal = () => {
       setInterests(!Interests);
     };
@@ -202,6 +208,16 @@
           <LocationModal locationModal={locationModal} setLocationModal={setLocationModal}/>
           <MobileNumberModal mobileNumber={mobileNumber} currentmobileno= {userdata.mobilenumber} setMobileNumber={setMobileNumber}/>
           <EmailModal emailid={emailid} setemailid={setemailid}/>
+
+          <DeleteModal 
+            deleteData={deleteData} 
+            setDeleteToggle={setDeleteToggle} 
+            deleteToggle={deleteToggle}
+            handleWorkReload={handleWorkReload}
+            getQualification={getQualification}
+            handleAward={handleAward}
+            getPublication={getPublication}
+          />
           
           <Card style={styles.CartContainer}>
 
@@ -272,7 +288,7 @@
                 <Entypo name="edit" size={23} color="black" style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={aboutMeModal} />
               </View>
               <Text style={{paddingHorizontal:20,color:'#51668A',lineHeight:20,marginBottom:20}}>
-              {userdata?.summary}  
+                {userdata?.summary}  
               </Text>
           </Card>
 
@@ -314,6 +330,9 @@
                     </View>
                     <TouchableOpacity onPress={() => WorkExpEditModal(data)}>
                       <Entypo name="edit" size={23} color="#2C8892"  />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDelete(data?.workexp_id,"WorkExperience")}>  
+                      <AntDesign name="delete" size={23} color="#D01212"/>  
                     </TouchableOpacity>
                   </View>
                 )
@@ -368,9 +387,13 @@
                   <TouchableOpacity onPress={() => handleEditQualification(data)}>  
                     <Entypo name="edit" size={23} color="#2C8892"/>  
                   </TouchableOpacity>  
+                  <TouchableOpacity onPress={() => handleDelete(data?.pg_id, "Qualification")}>  
+                    <AntDesign name="delete" size={23} color="#D01212"/>  
+                  </TouchableOpacity>  
                 </View>
               )
             })}
+
               {qualificationShowAll !== undefined &&
               getQualificationData?.length > 2 &&
               <>
@@ -414,6 +437,9 @@
                     </View>
                     <TouchableOpacity onPress={() => awardsEditModal(data)}>
                       <Entypo name="edit" size={23} color="#2C8892"  /> 
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDelete(data?.award_id,"Award")}>  
+                      <AntDesign name="delete" size={23} color="#D01212"/>  
                     </TouchableOpacity>
                   </View>
                 )
@@ -461,7 +487,13 @@
                         </Text>
                       </View>  
                     </View>
-                    <Entypo name="edit" size={23} color="#2C8892"  onPress={() => publicationEditModal(data)}/>    
+                        
+                  <TouchableOpacity onPress={() => publicationEditModal(data)}>  
+                    <Entypo name="edit" size={23} color="#2C8892" />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleDelete(data?.paperpublised_id,"Publication")}>  
+                    <AntDesign name="delete" size={23} color="#D01212"/>  
+                  </TouchableOpacity>
                   </View>
                 )
               })}

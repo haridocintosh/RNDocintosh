@@ -29,15 +29,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomDrawer = (props) => { 
   const navigation = useNavigation();
-  const [logoutdata,setlogoutdata]=useState();
+  const [logoutdata,setlogoutdata] = useState();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
   // const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
-  const [userdata,setuserdata]=useState({
-    fullname : "",
-    profile:"",
-    speciality:"",
-  });
+  const [userdata, setuserdata] = useState({fullname : "", profile : "", speciality : ""});
   // const isFocused = useIsFocused();
   // const Drawer = createDrawerNavigator();
   const drawerStatus = useDrawerStatus();
@@ -80,7 +76,6 @@ const CustomDrawer = (props) => {
     }
     setLoader(false)
   }
-
   
   return (
     <View style={styles.DrowerContainer}>
@@ -101,41 +96,50 @@ const CustomDrawer = (props) => {
             <Text style={styles.userProfession}> {userdata['speciality']} |</Text>
           </View>
         </View>
-        <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
+        
+        <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor:'#071B36'}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SelectInterestInnerScreen")}}>
               <AntDesign name="select1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Select Interest</Text>
             </TouchableOpacity>
+
             {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
             </TouchableOpacity> */}
+
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
               <Ionicons name="md-newspaper" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>What’s New</Text>
             </TouchableOpacity>
+
             {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SinglePost")}}>
               <Ionicons name="md-newspaper" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>SinglePost</Text>
             </TouchableOpacity> */}
+
             {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Take a Tour</Text>
             </TouchableOpacity> */}
+
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <Entypo name="text-document-inverted" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Business Page</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Rewards")}}>
               <Ionicons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Rewards</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
               <Ionicons name="settings-sharp" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Settings</Text>
@@ -230,21 +234,21 @@ const styles = StyleSheet.create({
   },
   sideDrawerComp:{
     borderColor:'#ccc',
-    height:45,
+    // height:45,
     marginHorizontal:10,
-    marginVertical:5,
+    marginVertical:4,
     borderRadius:5,
     flexDirection:'row',
     alignItems:'center',
-    padding:10
+    padding:10,
   },
   profoleDetailsContainer:{
     margin:10
   },
   sideDrawerName:{
     color:"#fff",
-    fontFamily:'Inter-SemiBold',
-    fontSize: 15,
+    fontFamily:'Inter-Regular',
+    fontSize: 16,
     marginLeft:10
   },
   forwardIcon:{
@@ -252,8 +256,7 @@ const styles = StyleSheet.create({
     right:0
   },
   drawerText:{
-    fontSize: 15,
-    fontFamily:'Inter-SemiBold',
+    fontFamily:'Inter-Regular',
     marginLeft: 5,
     fontSize:14,
     color:'#FFFFFF'

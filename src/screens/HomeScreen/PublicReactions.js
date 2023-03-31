@@ -99,7 +99,7 @@ const PublicReactions = ({item,getStorageData}) => {
                 </View> */}
                 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list, postIndex)}>
+                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list)}>
                         <Image source={require('../../assets/dr-icon/socialComment.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item?.commentcount}</Text>

@@ -20,36 +20,36 @@ const EngageScreen = () => {
     nestedScrollEnable={true}
     style={{}}>
     <Card style={{marginTop:30,margin:10}}>
-<View style={{ borderRadius:2/20, marginTop:10, }}>
-  <Text style={{margin:10 , fontSize:16, fontWeight:'900',paddingLeft:10}}> <Text>1. </Text>What is this medication called? Medications usually have two names: a brand name and a generic name</Text>
-  <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        multiline 
-        placeholder="Write something with multilines  here.."
-        // keyboardType="numeric"
-      />
-</View>
-<Button
-  title="Next"
- 
-  buttonStyle={{
-                marginTop:30,
-                width:100,
-                borderColor: '#fff',
-                borderRadius:15/2,
-                backgroundColor:'#000',
-                color:'#fff',
-                alignSelf:'flex-end',
-                margin:10
+      <View style={{ borderRadius:2/20, marginTop:10, }}>
+        <Text style={{margin:10 , fontSize:16, fontWeight:'900',paddingLeft:10}}> <Text>1. </Text>What is this medication called? Medications usually have two names: a brand name and a generic name</Text>
+        <TextInput
+              style={styles.input}
+              onChangeText={onChangeNumber}
+              multiline 
+              placeholder="Write something with multilines  here.."
+              // keyboardType="numeric"
+            />
+      </View>
+      <Button
+        title="Next"
+      
+        buttonStyle={{
+                      marginTop:30,
+                      width:100,
+                      borderColor: '#fff',
+                      borderRadius:15/2,
+                      backgroundColor:'#000',
+                      color:'#fff',
+                      alignSelf:'flex-end',
+                      margin:10
 
-              }}
-              titleStyle={{
-                color:'#fff'
-              }}
-             
-              onPress={() => navigation.navigate('Engage1Screen')}
-/>
+                    }}
+                    titleStyle={{
+                      color:'#fff'
+                    }}
+                  
+                    onPress={() => navigation.navigate('Engage1Screen')}
+      />
 </Card>
    </ScrollView>
   </SafeAreaView>

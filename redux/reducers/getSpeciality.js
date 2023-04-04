@@ -31,6 +31,13 @@ export const getAllState = createAsyncThunk("getAllState", async ()=>{
     return allState;
 })
 
+export const getAllNotification = createAsyncThunk("showNotificationList", async ()=>{
+    const response = await fetch(`${mainApi.baseUrl}/ApiController/showNotificationList`);
+    const allNotification = await response.json();
+    return allNotification;
+})
+
+
 export const getSpeciality = createSlice({
     name : "speciality",
     initialState :{
@@ -39,23 +46,7 @@ export const getSpeciality = createSlice({
         error :false,
     },
     reducers : {
-    },
-    // extraReducers :{
-    //    [getAllSpeciality.pending] : (state)=>
-    //     {
-    //         state.loading =  true;
-    //     }, 
-    //     [getAllSpeciality.fulfilled] : (state, action)=>
-    //     {   
-    //         state.loading =  false;
-    //         state.speciality = action.payload;
-    //      }, 
-    //      [getAllSpeciality.rejected] : (state)=>
-    //      {
-    //         state.loading = false;
-    //         state.error = true
-    //       }, 
-    // }
+    }
 });
 
 export const { reducer : allSpeciality } = getSpeciality;

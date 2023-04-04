@@ -64,7 +64,7 @@ const handleMessage = () => {
   return (<>
     {statusKeyLoaded && 
     <>
-    <UpgradeApp/>
+      <UpgradeApp/>
       <HandleBack/>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             <Stack.Screen name="Intro" component={IntroStack} />

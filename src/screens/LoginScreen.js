@@ -55,11 +55,13 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
+  
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const uploadData = {register,device_id};
+      console.log(device_id);
       const token = await dispatch(userLogin(uploadData));
       if(token?.payload?.status == 'Success'){
           setloader(false)

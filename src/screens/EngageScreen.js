@@ -80,7 +80,7 @@ useEffect(() => {
             </ImageBackground>
         </View>
 
-        {userdata.role <='4' && <View style={styles.container}>
+        {userdata.role =='4' && <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                 <Text style={styles.CartTitleSurveys}>Surveys</Text>
@@ -103,8 +103,7 @@ useEffect(() => {
                 </TouchableOpacity>
             </ImageBackground>
         </View>}
-
-        <View style={styles.container}>
+        {userdata.role =='4' && <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                     <Text style={styles.CartTitleSentimetrix}>Sentimetrix</Text>
@@ -126,7 +125,7 @@ useEffect(() => {
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>
-        </View>
+        </View> }
 
    </ScrollView>
   </SafeAreaView>

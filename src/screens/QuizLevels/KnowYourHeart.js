@@ -63,9 +63,7 @@ const KnowYourHeart = ({ route,navigation }) => {
     setSliceData();
   };
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor:"#2C8892", position: "relative" }}>
       <Image source={require('../../assets/images/KnowYourHeartBI.png')} style={styles.ThankYouBgImage}/>
       <View style={styles.cardbody}>
         <View style={styles.scoreboard}>
@@ -216,7 +214,7 @@ const KnowYourHeart = ({ route,navigation }) => {
                         </View>
                         <View style={styles.row}>
                           <Image source={dcoin} style={styles.imaguser} />
-                          <Text style={styles.TotalDCoins}> {data.coinTotal}</Text>
+                          <Text style={styles.TotalDCoins}>{data.coinTotal}.99</Text>
                         </View>
                       </View>
                     );

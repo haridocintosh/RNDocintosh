@@ -27,10 +27,12 @@ const UpgradeApp = () => {
 
       const checkAppUpdate = async()=>{
             const result = await dispatch(deviceVersion());
+            console.log("checkAppUpdate",result);
             let readableVersion = DeviceInfo.getReadableVersion().split('.');
+            console.log("appverion",readableVersion);
             let serverVersion = result?.payload?.current.split('.')
             {serverVersion[0] > readableVersion[0] ? (setmsg(result?.payload?.majorMsg.msg), setapptitle(result?.payload?.majorMsg.title), setModalVisible(!modalVisible)): serverVersion[1] > readableVersion[1]  && (setapptitle(result?.payload?.minorMsg.title), setmsg(result?.payload?.minorMsg.msg), setModalVisible(!modalVisible))}
-        }
+      }
 
     return  (
         <Modal

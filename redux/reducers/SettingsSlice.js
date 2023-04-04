@@ -36,7 +36,6 @@ export const getBlockedUsersApi = createAsyncThunk("blockedUsers", async(data)=>
     }
   });
 
-
   export const circleSlice = createSlice({
     name : "getSavedPost",
     initialState :{

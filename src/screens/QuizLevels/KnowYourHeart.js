@@ -28,8 +28,12 @@ import axios from "axios";
 import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { getLocalData } from "../../apis/GetLocalData";
+import { showLeaderBoard } from "../../../redux/reducers/mcqSlice";
+import { useDispatch } from "react-redux";
 
 const KnowYourHeart = ({ route,navigation }) => {
+  const dispatch = useDispatch();
   const { score, seconds ,TotalMcq} = route?.params;
   const [modalVisible, setModalVisible] = useState(true);
   const [userData, setUserData] = useState([]);
@@ -38,11 +42,18 @@ const KnowYourHeart = ({ route,navigation }) => {
 
   const getLeaderboardData = () => {
     navigation.setOptions({ title: 'Know Your Heart' });
-    axios.get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
-      .then((res) => {
-        setUserData(res.data);
-        setLoader(false);
-      });
+    getLocalData('USER_INFO').then(async (res) => {
+      // console.log(res.data.role);
+      const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
+      // console.log(uresult);
+      setUserData(uresult?.payload);
+      setLoader(false);
+    });
+    // axios.get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
+    //   .then((res) => {
+    //     setUserData(res.data);
+    //     setLoader(false);
+    //   });
   };
   useEffect(() => {
     getLeaderboardData();
@@ -166,7 +177,7 @@ const KnowYourHeart = ({ route,navigation }) => {
                           <View style={styles.picContainer}>
                             <Image
                               style={styles.avtatsize}
-                              source={{ uri: data.profileimage }}
+                              source={{ uri: data.profile }}
                             />
                             <Image
                               style={styles.goldCrown}
@@ -175,37 +186,37 @@ const KnowYourHeart = ({ route,navigation }) => {
                           </View>
                           <View style={styles.marginleft}>
                             <Text style={styles.listitemtst}>
-                              Dr. {data.username}
+                              Dr. {data.first_name} {data.last_name}
                             </Text>
                             <View style={styles.userScoreCount}>
-                              <Image
+                              {/* <Image
                                 source={outoffBadge}
                                 style={styles.outoffBadge}
                               />
                               <Text style={styles.itemlisttxt2}>
-                                {data.mcq_contest}
-                              </Text>
-                              <Text style={styles.devider}> | </Text>
-                              <Image
+                                {data.coinTotal}
+                              </Text> */}
+                              {/* <Text style={styles.devider}> | </Text> */}
+                              {/* <Image
                                 source={Accesstime}
                                 style={styles.Accesstime}
-                              />
+                              /> */}
                               <Text style={styles.itemlisttxt2}>
-                                {parseInt(data.total_time.split(".")[0]) % 60}
+                                {/* {parseInt(data.total_time.split(".")[0]) % 60}
                                 {data.total_time.split(".")[1] &&
                                   `:` +
                                     (parseInt(
                                       data.total_time.split(".")[1]
                                     ).toFixed(2) %
                                       60)}{" "}
-                                min
+                                min */}
                               </Text>
                             </View>
                           </View>
                         </View>
                         <View style={styles.row}>
                           <Image source={dcoin} style={styles.imaguser} />
-                          <Text style={styles.TotalDCoins}>20976</Text>
+                          <Text style={styles.TotalDCoins}> {data.coinTotal}</Text>
                         </View>
                       </View>
                     );

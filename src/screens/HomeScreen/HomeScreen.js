@@ -169,6 +169,7 @@ const HomeScreen = ({navigation,route})=> {
         });
       }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
+      console.log('postDetails', postDetails);
       const result = await dispatch(userPostData(postDetails));
       setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);
@@ -316,6 +317,8 @@ const HomeScreen = ({navigation,route})=> {
           </View>
           </Card>
         <View>
+
+  
             <View style={styles.marginten}>
                 <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}  onPress={() => press()} >Suggested Post</Text>
                 <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>

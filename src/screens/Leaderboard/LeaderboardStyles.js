@@ -31,7 +31,6 @@ export const styles = StyleSheet.create({
     dcoinImag:{
         width:25,
         height:25,
-        marginRight:10,
     },
     achivedText:{
         color:'#fff',
@@ -158,6 +157,7 @@ export const styles = StyleSheet.create({
     },
     winsCoins:{
         fontFamily:'Inter-SemiBold',
+        marginLeft:10
     },
     progressBar:{
         flex:1,

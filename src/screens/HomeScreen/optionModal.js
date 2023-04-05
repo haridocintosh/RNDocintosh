@@ -145,11 +145,11 @@ export default OptionModal;
 export const styles = StyleSheet.create({
   container:{
     width:150,
-    position:'absolute',
-    right:10,
+     position:'absolute',
+    right:20,
     borderRadius:5,
-    zIndex:100,
-    top:40
+    zIndex:2,
+    top:10
   },
   optionModal:{
     width:155,
@@ -165,10 +165,11 @@ export const styles = StyleSheet.create({
     elevation: 3,
   },
   optionList:{
-    paddingVertical:7,
+    paddingVertical:5,
     flexDirection:'row',
     justifyContent:'flex-start',
-    alignItems:'center'
+    alignItems:'center',
+    
   },
   optionListText:{
     color:'#071B36',

@@ -17,6 +17,7 @@ const Leaderboard = ({navigation}) => {
         getLocalData('USER_INFO').then(async (res) => {
           const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
           setUserData(uresult?.payload);
+          console.log(uresult?.payload);
           const rank = uresult?.payload?.findIndex(data => data?.userId == res.data.id)
           setRank(rank+1)
         });
@@ -110,7 +111,11 @@ const Leaderboard = ({navigation}) => {
                             </View>
                         </View>
                     </Progress.Bar>
-                    <Text style={styles.winsCoins}>{data?.coinTotal}</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <Image source={require('../../assets/dr-icon/dcoin.png')} style={styles.dcoinImag}/>
+                        <Text style={styles.winsCoins}>{data?.coinTotal}</Text>
+                    </View>
+                    
                     {index !== userData?.length -1 && <View style={styles.blackLine}/>}
                 </View>
                 )

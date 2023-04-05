@@ -20,6 +20,8 @@ import Accesstime from "../../assets/dr-icon/Accesstime.png";
 import outoffBadge from "../../assets/dr-icon/outoffBadge.png";
 import dcoin from "../../assets/dr-icon/dcoin.png";
 import goldCrown from "../../assets/dr-icon/gold-crown.png";
+import orangeCrown from "../../assets/dr-icon/orange-crown.png";
+import greenCrown from "../../assets/dr-icon/green-crown.png";
 import outoffWhiteBadge from "../../assets/dr-icon/outoffWhiteBadge.png";
 import whiteAccesstime from "../../assets/dr-icon/whiteAccesstime.png";
 import { Button } from "react-native-elements";
@@ -147,15 +149,13 @@ const KnowYourHeart = ({ route,navigation }) => {
             <View style={{ height: Dimensions.get('window').height/2.7,backgroundColor: "#ffff", padding: 15 }}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                nestedScrollEnable={true}
-              >
+                nestedScrollEnable={true} >
                 <Text
                   style={{
                     fontSize: 18,
                     fontWeight: "600",
                     fontFamily: "Inter-SemiBold",
-                  }}
-                >
+                  }}>
                   Winners for this Challenge
                 </Text>
 
@@ -179,7 +179,7 @@ const KnowYourHeart = ({ route,navigation }) => {
                             />
                             <Image
                               style={styles.goldCrown}
-                              source={goldCrown}
+                              source={index == 0 ? goldCrown : index == 1 ? orangeCrown :index == 2 && greenCrown}
                             />
                           </View>
                           <View style={styles.marginleft}>
@@ -201,20 +201,20 @@ const KnowYourHeart = ({ route,navigation }) => {
                               /> */}
                               <Text style={styles.itemlisttxt2}>
                                 {/* {parseInt(data.total_time.split(".")[0]) % 60}
-                                {data.total_time.split(".")[1] &&
-                                  `:` +
-                                    (parseInt(
-                                      data.total_time.split(".")[1]
-                                    ).toFixed(2) %
-                                      60)}{" "}
-                                min */}
+                                  {data.total_time.split(".")[1] &&
+                                    `:` +
+                                      (parseInt(
+                                        data.total_time.split(".")[1]
+                                      ).toFixed(2) %
+                                        60)}{" "}
+                                  min */}
                               </Text>
                             </View>
                           </View>
                         </View>
                         <View style={styles.row}>
                           <Image source={dcoin} style={styles.imaguser} />
-                          <Text style={styles.TotalDCoins}>{data.coinTotal}.99</Text>
+                          <Text style={styles.TotalDCoins}>{data.coinTotal}</Text>
                         </View>
                       </View>
                     );
@@ -237,7 +237,6 @@ const KnowYourHeart = ({ route,navigation }) => {
                   </View>
               </ScrollView>
             </View>
-            
         </View>
       </View>
 

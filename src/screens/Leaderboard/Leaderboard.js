@@ -1,17 +1,38 @@
-import { SafeAreaView, View, Text, Image,  ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { SafeAreaView, View, Text, Image,  ScrollView, TouchableOpacity, Dimensions } from 'react-native'
+import React,{useState, useEffect} from 'react'
 import { styles } from './LeaderboardStyles';
 import { Divider } from 'react-native-elements';
 import * as Progress from "react-native-progress";
+import { showLeaderBoard } from '../../../redux/reducers/mcqSlice';
+import { getLocalData } from '../../apis/GetLocalData';
+import { useDispatch } from 'react-redux';
 
 const Leaderboard = ({navigation}) => {
+    const [userData, setUserData] = useState([]);
+    const [rank, setRank] = useState();
+    const dispatch = useDispatch(); 
+
+    const getLeaderboardData = () => {
+        navigation.setOptions({ title: 'Leaderboard' });
+        getLocalData('USER_INFO').then(async (res) => {
+          const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
+          setUserData(uresult?.payload);
+          const rank = uresult?.payload?.findIndex(data => data?.userId == res.data.id)
+          setRank(rank+1)
+        });
+      };
+
+      useEffect(() => {
+        getLeaderboardData();
+      },[])
+      
     // const gress = 0.3990
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:15}}>
         <View style={styles.ScoreContainer}>
             <View style={styles.rankConatiner}>
-                <Text style={styles.rankText}>#36</Text>
+                <Text style={styles.rankText}>#{rank}</Text>
                 <Text style={styles.ownRankText}>Your Rank</Text>
             </View>
             <View style={styles.achiveConatiner}>
@@ -27,37 +48,39 @@ const Leaderboard = ({navigation}) => {
         <View style={styles.rankersLederboard}>
             <View style={styles.rankersScoreBoad}>
                 <View style={styles.rankerProfileContainer}>
-                    <Image source={require('../../assets/images/grid1.png')} style={styles.rankerProfile}/>
+                    <Image source={{uri:userData[1]?.profile}} style={styles.rankerProfile}/>
                     <View style={styles.rankedNumber}>
                         <Text style={styles.rankedNumberText}>2</Text>
                     </View>
                 </View>
-                <Text style={styles.rankerName}>Dr. Mahesh</Text>
-                <Text style={styles.rankerScore}>1847</Text>
-                <Text style={styles.rankerSpeciality}>Cardiologist</Text>
+                <Text style={styles.rankerName}>Dr. {userData[1]?.first_name} {userData[1]?.last_name}</Text>
+                <Text style={styles.rankerScore}>{userData[1]?.coinTotal}</Text>
+                <Text style={styles.rankerSpeciality}>{userData[1]?.speciality}</Text>
             </View>
+
             <View style={styles.rankersScoreBoad2}>
                 <View style={styles.rankerProfileContainer2}>
                     <Image source={require('../../assets/dr-icon/blueCrown.png')} style={styles.blueCrown}/>
-                    <Image source={require('../../assets/images/grid4.png')} style={styles.rankerProfile2}/>
+                    <Image source={{uri:userData[0]?.profile}} style={styles.rankerProfile2}/>
                     <View style={styles.rankedNumber}>
                         <Text style={styles.rankedNumberText}>1</Text>
                     </View>
                 </View>
-                <Text style={styles.rankerName}>Dr. Kiran</Text>
-                <Text style={styles.rankerScore}>2430</Text>
-                <Text style={styles.rankerSpeciality}>Neurology</Text>
+                <Text style={styles.rankerName}>Dr. {userData[0]?.first_name} {userData[0]?.last_name}</Text>
+                <Text style={styles.rankerScore}>{userData[0]?.coinTotal}</Text>
+                <Text style={styles.rankerSpeciality}>{userData[0]?.speciality}</Text>
             </View>
+
             <View style={styles.rankersScoreBoad}>
                 <View style={styles.rankerProfileContainer}>
-                    <Image source={require('../../assets/images/grid5.png')} style={styles.rankerProfile}/>
+                    <Image source={{uri:userData[2]?.profile}} style={styles.rankerProfile}/>
                     <View style={styles.rankedNumber}>
                         <Text style={styles.rankedNumberText}>3</Text>
                     </View>
                 </View>
-                <Text style={styles.rankerName}>Dr. Suresh</Text>
-                <Text style={styles.rankerScore}>1674</Text>
-                <Text style={styles.rankerSpeciality}>Radiology</Text>
+                <Text style={styles.rankerName}>Dr. {userData[2]?.first_name} {userData[2]?.last_name}</Text>
+                <Text style={styles.rankerScore}>{userData[2]?.coinTotal}</Text>
+                <Text style={styles.rankerSpeciality}>{userData[2]?.speciality}</Text>
             </View>
         </View>
 
@@ -72,104 +95,27 @@ const Leaderboard = ({navigation}) => {
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{paddingVertical:10}}>
-                <View style={styles.progressConatiner} >
-                    <Progress.Bar progress={0.806}  borderWidth={0} color={"#D7E7E7"} height={50} width={280}>
+            {userData?.map((data,index) =>{
+                return(
+                <View style={styles.progressConatiner} key={index}>
+                    <Progress.Bar progress={index == 0? 1 :`0.${userData?.length - index}`}  borderWidth={0} color={"#D7E7E7"} height={50} width={Dimensions.get('window').width/1.4}>
                         <View style={styles.topScorerPerson}>
-                            <Text style={styles.barPrmaryKey}>01</Text>
+                            <Text style={styles.barPrmaryKey}>{index + 1}</Text>
                             <View style={styles.userDetailsContainer}>
-                              <Image source={require('../../assets/images/grid1.png')} style={styles.barProfile}/>
+                              <Image source={{uri:data?.profile}} style={styles.barProfile}/>
                                 <View style={styles.userDetailsText}>
-                                    <Text style={styles.barName}>Dr. Kiran Raj</Text>
-                                    <Text style={styles.barSpeciality}>Cardiologist</Text>
+                                    <Text style={styles.barName}>Dr. {data?.first_name} {data?.last_name}</Text>
+                                    <Text style={styles.barSpeciality}>{data?.speciality}</Text>
                                 </View>
                             </View>
                         </View>
                     </Progress.Bar>
-                    <Text style={styles.winsCoins}>3990</Text>
-                    <View style={styles.blackLine}/>
+                    <Text style={styles.winsCoins}>{data?.coinTotal}</Text>
+                    {index !== userData?.length -1 && <View style={styles.blackLine}/>}
                 </View>
-
-                <View style={styles.progressConatiner}>
-                    <Progress.Bar progress={0.706}  borderWidth={0} color={"#D7E7E7"} height={50} width={280}>
-                        <View style={styles.topScorerPerson}>
-                            <Text style={styles.barPrmaryKey}>01</Text>
-                            <View style={styles.userDetailsContainer}>
-                              <Image source={require('../../assets/images/grid1.png')} style={styles.barProfile}/>
-                                <View style={styles.userDetailsText}>
-                                    <Text style={styles.barName}>Dr. Kiran Raj</Text>
-                                    <Text style={styles.barSpeciality}>Cardiologist</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </Progress.Bar>
-                    <Text style={styles.winsCoins}>3990</Text>
-                    <View style={styles.blackLine}/>
-                </View>
+                )
+            })}
                 
-                <View style={styles.progressConatiner}>
-                    <Progress.Bar progress={0.606}  borderWidth={0} color={"#D7E7E7"} height={50} width={280}>
-                        <View style={styles.topScorerPerson}>
-                            <Text style={styles.barPrmaryKey}>01</Text>
-                            <View style={styles.userDetailsContainer}>
-                              <Image source={require('../../assets/images/grid1.png')} style={styles.barProfile}/>
-                                <View style={styles.userDetailsText}>
-                                    <Text style={styles.barName}>Dr. Kiran Raj</Text>
-                                    <Text style={styles.barSpeciality}>Cardiologist</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </Progress.Bar>
-                    <Text style={styles.winsCoins}>3990</Text>
-                    <View style={styles.blackLine}/>
-                </View>
-                <View style={styles.progressConatiner}>
-                    <Progress.Bar progress={0.506}  borderWidth={0} color={"#D7E7E7"} height={50} width={280}>
-                        <View style={styles.topScorerPerson}>
-                            <Text style={styles.barPrmaryKey}>01</Text>
-                            <View style={styles.userDetailsContainer}>
-                              <Image source={require('../../assets/images/grid1.png')} style={styles.barProfile}/>
-                                <View style={styles.userDetailsText}>
-                                    <Text style={styles.barName}>Dr. Kiran Raj</Text>
-                                    <Text style={styles.barSpeciality}>Cardiologist</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </Progress.Bar>
-                    <Text style={styles.winsCoins}>3990</Text>
-                    <View style={styles.blackLine}/>
-                </View>
-                <View style={styles.progressConatiner}>
-                    <Progress.Bar progress={0.406}  borderWidth={0} color={"#D7E7E7"} height={50} width={280}>
-                        <View style={styles.topScorerPerson}>
-                            <Text style={styles.barPrmaryKey}>01</Text>
-                            <View style={styles.userDetailsContainer}>
-                              <Image source={require('../../assets/images/grid1.png')} style={styles.barProfile}/>
-                                <View style={styles.userDetailsText}>
-                                    <Text style={styles.barName}>Dr. Kiran Raj</Text>
-                                    <Text style={styles.barSpeciality}>Cardiologist</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </Progress.Bar>
-                    <Text style={styles.winsCoins}>3990</Text>
-                    <View style={styles.blackLine}/>
-                </View>
-                <View style={styles.progressConatiner}>
-                    <Progress.Bar progress={0.306}  borderWidth={0} color={"#D7E7E7"} height={50} width={280}>
-                        <View style={styles.topScorerPerson}>
-                            <Text style={styles.barPrmaryKey}>01</Text>
-                            <View style={styles.userDetailsContainer}>
-                              <Image source={require('../../assets/images/grid1.png')} style={styles.barProfile}/>
-                                <View style={styles.userDetailsText}>
-                                    <Text style={styles.barName}>Dr. Kiran Raj</Text>
-                                    <Text style={styles.barSpeciality}>Cardiologist</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </Progress.Bar>
-                    <Text style={styles.winsCoins}>3990</Text>
-                    <View style={styles.blackLine}/>
-                </View>
         </ScrollView>
 
         <TouchableOpacity style={styles.earnButton} onPress={()=>{navigation.navigate("EarnDocCoins")}}>

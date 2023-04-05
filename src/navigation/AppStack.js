@@ -21,7 +21,7 @@ const AppStack = () => {
         drawerActiveTintColor: '#fff',      
         drawerInactiveTintColor: '#fff',
         drawerStyle:{backgroundColor:'#071B36', width: 325},
-        drawerLabelStyle: {marginLeft: -20,fontFamily:'Inter-Regular',fontSize: 15}
+        drawerLabelStyle: {marginLeft: -20, fontFamily:'Inter-Regular',fontSize: 15}
       }}>
       <Drawer.Screen name="Dashboard" component={TabNavigator} options={{headerShown: false,
           drawerIcon: () => (

@@ -128,9 +128,9 @@ const SentimetrixMcq = ({navigation,route}) => {
 
     const PosData = async (userId, basicId, subquestionId, optionId, ans, id, key, x_val ) => {
       const postDetails = {userId, basicId, subquestionId, optionId, ans, id, key, x_val};
-      console.log("postDetails",postDetails);
+      // console.log("postDetails",postDetails);
       const result = await dispatch(SentimetrixSaveAPI(postDetails));
-      console.log("result",result);
+      // console.log("result",result);
     };
 
     useEffect(() => {

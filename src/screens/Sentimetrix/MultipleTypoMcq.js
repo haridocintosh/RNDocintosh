@@ -4,7 +4,7 @@ import { styles } from './SentimetrixStyles';
 import {useForm, Controller} from 'react-hook-form';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const MultipleTypoMcq = ({setLiftUpData, liftUpData,error, currentData,navigation}) => {
+const MultipleTypoMcq = ({setLiftUpData, error, navigation}) => {
   // const [mainMessage,] = useState();
   const { control, handleSubmit, reset, watch, formState: { errors }} = useForm({mode: 'onBlur'});
   

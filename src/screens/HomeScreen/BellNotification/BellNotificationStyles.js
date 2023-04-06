@@ -42,7 +42,8 @@ export const styles = StyleSheet.create({
         fontWeight:'500',
         color: '#51668A',
         fontSize:12,
-        marginTop:5
+        marginTop:5,
+        width:Dimensions.get('window').width/2
     },
     threeDotsContainer:{
         padding:10,

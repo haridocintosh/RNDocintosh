@@ -16,7 +16,8 @@ export const styles = StyleSheet.create({
         paddingHorizontal:25,
         backgroundColor: '#20324A',
         height:42,
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     rankText:{
         fontSize:28,
@@ -35,7 +36,8 @@ export const styles = StyleSheet.create({
     achivedText:{
         color:'#fff',
         fontFamily:'PlusJakartaSans-Regular',
-        fontSize:16
+        fontSize:16,
+        marginLeft:5
     },
     rankersLederboard:{
         flexDirection:'row',

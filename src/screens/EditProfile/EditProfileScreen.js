@@ -32,12 +32,10 @@
   import QualificationEditModal from './Modals/QualificationEditModal';
   import DeleteModal from './Modals/DeleteModals/DeleteModal';
   
-
-  
   
   const EditProfileScreen = ({route,navigation}) => {
     const [userdata,setuserdata] = useState([]);
-    const [localData,setLocalData] = useState();
+    const [localData, setLocalData] = useState();
     const [locationModal, setLocationModal] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [emailid, setemailid] = useState(false);
@@ -122,6 +120,7 @@
     const InterestsModal = () => {
       setInterests(!Interests);
     };
+    
     const handleProfile = () => {
       setProfile(!profile);
     };

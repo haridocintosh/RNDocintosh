@@ -233,7 +233,9 @@ const HomeScreen = ({navigation,route})=> {
                     <Ionicons name="time-outline" size={19} color="#51668A" />  
                   </Text>
                   <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular",marginTop:1.5}}>
-                    {moment(item?.created_at).fromNow()}
+                    {/* {moment(item?.created_at).subtract('h').fromNow(true)} */}
+                    {moment(item?.created_at,).fromNow().split(" ")[0] == 'a' ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
+                    {moment(item?.created_at).fromNow().split(" ")[1].slice(0,1)}
                   </Text>
                 </View>
               </View> 
@@ -302,7 +304,6 @@ const HomeScreen = ({navigation,route})=> {
             <Text style={styles.count}>0</Text>
           </TouchableOpacity>
           </Animated.View>
-
       </Animated.View>
       
       <View style={{padding:10}}>

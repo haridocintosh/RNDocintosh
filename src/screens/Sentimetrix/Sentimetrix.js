@@ -17,7 +17,6 @@ const Sentimetrix = ({navigation,route}) => {
   ]);
 
   const handleRedirect = () => {
-    // navigation.navigate("SentimetrixList");
     navigation.navigate("SentimetrixMcq",{basicId});
   }
 

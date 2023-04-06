@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react'
 import { styles } from './LeaderboardStyles';
 import { Divider } from 'react-native-elements';
 import * as Progress from "react-native-progress";
-import { showLeaderBoard } from '../../../redux/reducers/mcqSlice';
+import { showLeaderBoard, showRankResult } from '../../../redux/reducers/mcqSlice';
 import { getLocalData } from '../../apis/GetLocalData';
 import { useDispatch } from 'react-redux';
 
@@ -16,10 +16,11 @@ const Leaderboard = ({navigation}) => {
         navigation.setOptions({ title: 'Leaderboard' });
         getLocalData('USER_INFO').then(async (res) => {
           const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
+          const userRankResult = await dispatch(showRankResult({user_id : res.data.id}));
+          console.log(userRankResult.payload);
+          setRank(userRankResult.payload)
           setUserData(uresult?.payload);
-          console.log(uresult?.payload);
-          const rank = uresult?.payload?.findIndex(data => data?.userId == res.data.id)
-          setRank(rank+1)
+        //   const rank = uresult?.payload?.findIndex(data => data?.userId == res.data.id)
         });
       };
 
@@ -33,16 +34,16 @@ const Leaderboard = ({navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:15}}>
         <View style={styles.ScoreContainer}>
             <View style={styles.rankConatiner}>
-                <Text style={styles.rankText}>#{rank}</Text>
+                <Text style={styles.rankText}>#{rank?.rank}</Text>
                 <Text style={styles.ownRankText}>Your Rank</Text>
             </View>
             <View style={styles.achiveConatiner}>
                 <Image source={require('../../assets/dr-icon/dcoin.png')} style={styles.dcoinImag}/>
-                <Text style={styles.achivedText}>822</Text>
+                <Text style={styles.achivedText}>{rank?.totalcoins}</Text>
             </View>
             <View style={styles.achiveConatiner}>
                 <Image source={require('../../assets/dr-icon/coupon1.png')} style={styles.dcoinImag}/>
-                <Text style={styles.achivedText}>5</Text>
+                <Text style={styles.achivedText}>0</Text>
             </View>
         </View>
 

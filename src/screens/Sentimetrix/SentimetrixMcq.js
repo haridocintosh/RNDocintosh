@@ -18,7 +18,7 @@ const SentimetrixMcq = ({navigation,route}) => {
     const [allMCQs, setAllMCQs] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [liftUpData, setLiftUpData] = useState(null);
-    const [liftUpCheckData, setLiftUpCheckData] = useState([]);
+    const [liftUpCheckData, setLiftUpCheckData] = useState();
     const [error, setError] = useState();
     const basicId = route?.params?.basicId;
     // const ImgPrevPath  = route?.params?.ImgPrevPath;
@@ -107,7 +107,8 @@ const SentimetrixMcq = ({navigation,route}) => {
           }
         }
         if(type == 5){
-          if (liftUpCheckData && (liftUpCheckData?.filter(d => d !== undefined).length == 3)) {
+          // console.log("liftUpCheckData",liftUpCheckData?.filter(d => d.x_val !== undefined));
+          if (liftUpCheckData && (liftUpCheckData?.filter(d => d.x_val !== undefined).length == 3)) {
             forwardFunction();
             liftUpCheckData.map((data) =>
               PosData(resData?.id, basic_id, sqid, "", data.main, "",data.key, data.x_val)
@@ -189,7 +190,7 @@ const SentimetrixMcq = ({navigation,route}) => {
           progress={outOff ? outOff : 0}
         />
         <Text style={styles.SurvayQuestion}>
-          {allMCQs[currentQuestionIndex]?.question}
+          {allMCQs[currentQuestionIndex]?.question.replace(/(<([^>]+)>)/gi, "")}
         </Text>
       </View>
 

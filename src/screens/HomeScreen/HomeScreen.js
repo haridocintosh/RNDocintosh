@@ -125,11 +125,12 @@ const HomeScreen = ({navigation,route})=> {
 
   const LoadPost = async (page) => {
     setBottumLoader(true);
-    const postDetails = {postType:0,role:resData?.role,city_id:resData?.city_id,assoc_id:resData?.assoc_id, pageCounter:page, id:resData?.id,circle_type:resData?.role == 5 ? 2 : 1,speciality_id:resData?.speciality_id};
+    const postDetails = {postType:0, role:resData?.role, city_id:resData?.city_id,assoc_id:resData?.assoc_id, pageCounter:page, id:resData?.id,circle_type:resData?.role == 5 ? 3 : 1,speciality_id:resData?.speciality_id};
     const result = await dispatch(userPostData(postDetails));
+  
     setEndNull(result.payload.result)
      if(result.payload.result !== null){
-      const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
+      const allPostData = result?.payload.result.filter(Post => Post.user_role == resData?.role);
       setCurrentPage(result?.payload?.pageCounter)
       setallPost([...allPost, ...allPostData]);
      }
@@ -168,12 +169,13 @@ const HomeScreen = ({navigation,route})=> {
           role:reData?.role,
         });
       }
-      const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
-      console.log('postDetails', postDetails);
+      const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 3 : 1,speciality_id:reData?.speciality_id};
+     
       const result = await dispatch(userPostData(postDetails));
       setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);
-      const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
+     // const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
+      const allPostData = result?.payload.result.filter(Post => Post.user_role == reData?.role);
       setallPost(allPostData);
       setRefresh(false);
     })

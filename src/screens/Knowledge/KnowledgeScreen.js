@@ -2,14 +2,10 @@ import { View,Dimensions, Text,SafeAreaView,StyleSheet,Image,ScrollView,Touchabl
 import React,{useRef, useState} from 'react';
 import Video from 'react-native-video';
 import { Button } from 'react-native-elements';
-// import { PdfView,PdfUtil } from 'react-native-pdf-light';
-import Pdf from 'react-native-pdf';
 
 const KnowledgeScreen = ({navigation}) => {
   const [playv1, setPlayv1] = useState(true);
-  const [viewPDF, setViewPDF] = useState(false);
   const videoPlayer = useRef(null);
-  const pdfRef = useRef(null);
 
   const source1 = {uri:'https://docintosh.com/Webinar_pdf/ERAS%20deck%20for%20Surgeons%201607.pdf',cache: true}
   const source2 = {uri:'https://docintosh.com/Webinar_pdf/NST%20deck.pdf',cache: true}

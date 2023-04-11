@@ -144,8 +144,8 @@ export default OptionModal;
 
 export const styles = StyleSheet.create({
   container:{
-    width:150,
-     position:'absolute',
+    // width:150,
+    position:'absolute',
     right:20,
     borderRadius:5,
     zIndex:2,

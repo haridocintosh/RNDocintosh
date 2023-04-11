@@ -64,10 +64,12 @@ const JionCommunity = ({navigation}) => {
                         source={require('../../assets/images/CommunityPPic3.png')} 
                         style={styles.CommunityProfilePic}/>
                         <Text style={styles.communityNameText}>AIMS Hospital</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Members')}>
                         <Text style={styles.communityNameMembers}>
                             <Text style={styles.communityNameMembersCount}>2.2k </Text>
                             Member
                         </Text>
+                        </TouchableOpacity>
                 </View>
                 <Button title={"Join"}
                     buttonStyle={{

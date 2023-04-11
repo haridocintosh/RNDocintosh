@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -33,6 +33,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from "../../apis/GetLocalData";
 import { showLeaderBoard } from "../../../redux/reducers/mcqSlice";
 import { useDispatch } from "react-redux";
+import Lottie from 'lottie-react-native';
 
 const KnowYourHeart = ({ route,navigation }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const KnowYourHeart = ({ route,navigation }) => {
   const [userData, setUserData] = useState([]);
   const [loader, setLoader] = useState(true);
   const [sliceData, setSliceData] = useState(10);
+  const animationRef = useRef(null)
 
   const getLeaderboardData = () => {
     navigation.setOptions({ title: 'Know Your Heart' });
@@ -58,6 +60,7 @@ const KnowYourHeart = ({ route,navigation }) => {
     //   });
   };
   useEffect(() => {
+    animationRef.current?.play()
     getLeaderboardData();
   },[]);
   
@@ -244,12 +247,15 @@ const KnowYourHeart = ({ route,navigation }) => {
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        >
+      >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Pressable style={styles.closebtn} onPress={() => setModalVisible(!modalVisible)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
+                <View style={{height:150,width:'100%'}}>
+                  <Lottie  ref={animationRef} source={require('../../assets/intro/coinBox.json')}/>
+                </View>
                 <Text style={styles.textBold}>WELL DONE!</Text>
                 <Text style={styles.textNormal}>{score} out of {TotalMcq} correct answers in {60-seconds} seconds.</Text>
               </View>

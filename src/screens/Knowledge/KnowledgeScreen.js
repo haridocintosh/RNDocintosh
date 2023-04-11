@@ -1,11 +1,19 @@
-import { View, Text,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity } from 'react-native'
+import { View,Dimensions, Text,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity } from 'react-native'
 import React,{useRef, useState} from 'react';
 import Video from 'react-native-video';
 import { Button } from 'react-native-elements';
+// import { PdfView,PdfUtil } from 'react-native-pdf-light';
+import Pdf from 'react-native-pdf';
 
-const KnowledgeScreen = () => {
+const KnowledgeScreen = ({navigation}) => {
   const [playv1, setPlayv1] = useState(true);
+  const [viewPDF, setViewPDF] = useState(false);
   const videoPlayer = useRef(null);
+  const pdfRef = useRef(null);
+
+  const source1 = {uri:'https://docintosh.com/Webinar_pdf/ERAS%20deck%20for%20Surgeons%201607.pdf',cache: true}
+  const source2 = {uri:'https://docintosh.com/Webinar_pdf/NST%20deck.pdf',cache: true}
+  const source3 = {uri:'https://docintosh.com/Webinar_pdf/ENSURE%20PEPTIDE%20DECK-%20Gastros.pdf',cache: true}
 
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
@@ -43,6 +51,36 @@ const KnowledgeScreen = () => {
         <View style={styles.container}>
           <Image source={{uri:'https://docintosh.com/homeassets/images/HAR/module-2/Hypertension-Academia-1.png'}} style={{aspectRatio:2}}/>
         </View>
+        <View style={styles.container}>
+          <Image source={require('../../assets/images/pdfImage2.png')} style={{width:'100%',height:250,borderRadius:5}}/>
+          <Button
+              onPress={() => navigation.navigate('PdfViewer',{source: source1})}
+              title={'View PDF'}
+              type="outline"
+              buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2,marginTop:10 }}
+              titleStyle={{ color:'#fff'}}
+            />
+        </View>
+        <View style={styles.container}>
+          <Image source={require('../../assets/images/pdfImage3.png')} style={{width:'100%',height:250,borderRadius:5}}/>
+          <Button
+              onPress={() => navigation.navigate('PdfViewer',{source: source2})}
+              title={'View PDF'}
+              type="outline"
+              buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, marginTop:10}}
+              titleStyle={{ color:'#fff'}}
+            />
+        </View>
+        <View style={styles.container}>
+          <Image source={require('../../assets/images/pdfImage.png')} style={{width:'100%',height:250,borderRadius:5}}/>
+          <Button
+              onPress={() => navigation.navigate('PdfViewer',{source: source3})}
+              title={'View PDF'}
+              type="outline"
+              buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, marginTop:10 }}
+              titleStyle={{ color:'#fff'}}
+            />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
@@ -62,6 +100,11 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.30,
     shadowRadius: 4,
     elevation: 3,
-    marginBottom:20
+    marginBottom:20,
   },
+  pdf: {
+    flex:1,
+		width: Dimensions.get('window').width,
+		height: Dimensions.get('window').height/2.5,
+	},
 })

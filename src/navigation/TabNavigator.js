@@ -5,6 +5,8 @@ import HomeNavigation from './HomeNavigation';
 import EngageNavigation from './EngageNavigation';
 import KnowledgeScreen from '../screens/Knowledge/KnowledgeScreen';
 import CommunityNavigation from './CommunityNavigation';
+import KnowledgeNavigation from './KnowledgeNavigation';
+
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
@@ -31,7 +33,6 @@ const TabNavigator = () => {
         name="Home"
         component={HomeNavigation}
         options={() => ({
-            tabBarLabel:'Home',
             tabBarIcon: () => (
             <Image source={require('../assets/images/logo.png')} style={{width: 25, height: 35}} />),
         })} 
@@ -41,7 +42,6 @@ const TabNavigator = () => {
         name="Engage"
         component={EngageNavigation}
         options={{
-          tabBarLabel:'Engage',
           tabBarIcon: () => (
           <Image source={require('../assets/dr-icon/Engage.png')} style={{width:35,height:35,padding:10}} />),
         }}
@@ -51,7 +51,6 @@ const TabNavigator = () => {
         name="Community"
         component={CommunityNavigation}
         options={{
-          tabBarLabel:'Community',
           tabBarIcon: ({color, size}) => (
             <Image source={require('../assets/dr-icon/Community.png')} style={{width:30,height:30}} />
           ),
@@ -60,16 +59,9 @@ const TabNavigator = () => {
       />
        <Tab.Screen
         name="Knowledge"
-        component={KnowledgeScreen}
+        component={KnowledgeNavigation}
         options={{
-          headerShown: true,  
-          headerStyle: {
-            backgroundColor: '#071B36',
-          },
-          headerTintColor: '#fff',
-          title: 'Knowledge',
           tabBarIcon: ({color, size}) => (
-            // <Ionicons name="person-outline" color={color} size={size} />
             <Image source={require('../assets/dr-icon/Knowledge.png')} style={{width:30,height:30}} />
           ),
         }}

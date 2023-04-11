@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,8 @@ import Accesstime from "../../assets/dr-icon/Accesstime.png";
 import outoffBadge from "../../assets/dr-icon/outoffBadge.png";
 import dcoin from "../../assets/dr-icon/dcoin.png";
 import goldCrown from "../../assets/dr-icon/gold-crown.png";
+import orangeCrown from "../../assets/dr-icon/orange-crown.png";
+import greenCrown from "../../assets/dr-icon/green-crown.png";
 import outoffWhiteBadge from "../../assets/dr-icon/outoffWhiteBadge.png";
 import whiteAccesstime from "../../assets/dr-icon/whiteAccesstime.png";
 import { Button } from "react-native-elements";
@@ -31,6 +33,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from "../../apis/GetLocalData";
 import { showLeaderBoard } from "../../../redux/reducers/mcqSlice";
 import { useDispatch } from "react-redux";
+import Lottie from 'lottie-react-native';
 
 const KnowYourHeart = ({ route,navigation }) => {
   const dispatch = useDispatch();
@@ -39,6 +42,7 @@ const KnowYourHeart = ({ route,navigation }) => {
   const [userData, setUserData] = useState([]);
   const [loader, setLoader] = useState(true);
   const [sliceData, setSliceData] = useState(10);
+  const animationRef = useRef(null)
 
   const getLeaderboardData = () => {
     navigation.setOptions({ title: 'Know Your Heart' });
@@ -56,6 +60,7 @@ const KnowYourHeart = ({ route,navigation }) => {
     //   });
   };
   useEffect(() => {
+    animationRef.current?.play()
     getLeaderboardData();
   },[]);
   
@@ -63,9 +68,7 @@ const KnowYourHeart = ({ route,navigation }) => {
     setSliceData();
   };
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor:"#2C8892", position: "relative" }}>
       <Image source={require('../../assets/images/KnowYourHeartBI.png')} style={styles.ThankYouBgImage}/>
       <View style={styles.cardbody}>
         <View style={styles.scoreboard}>
@@ -149,15 +152,13 @@ const KnowYourHeart = ({ route,navigation }) => {
             <View style={{ height: Dimensions.get('window').height/2.7,backgroundColor: "#ffff", padding: 15 }}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                nestedScrollEnable={true}
-              >
+                nestedScrollEnable={true} >
                 <Text
                   style={{
                     fontSize: 18,
                     fontWeight: "600",
                     fontFamily: "Inter-SemiBold",
-                  }}
-                >
+                  }}>
                   Winners for this Challenge
                 </Text>
 
@@ -181,7 +182,7 @@ const KnowYourHeart = ({ route,navigation }) => {
                             />
                             <Image
                               style={styles.goldCrown}
-                              source={goldCrown}
+                              source={index == 0 ? goldCrown : index == 1 ? orangeCrown :index == 2 && greenCrown}
                             />
                           </View>
                           <View style={styles.marginleft}>
@@ -203,20 +204,20 @@ const KnowYourHeart = ({ route,navigation }) => {
                               /> */}
                               <Text style={styles.itemlisttxt2}>
                                 {/* {parseInt(data.total_time.split(".")[0]) % 60}
-                                {data.total_time.split(".")[1] &&
-                                  `:` +
-                                    (parseInt(
-                                      data.total_time.split(".")[1]
-                                    ).toFixed(2) %
-                                      60)}{" "}
-                                min */}
+                                  {data.total_time.split(".")[1] &&
+                                    `:` +
+                                      (parseInt(
+                                        data.total_time.split(".")[1]
+                                      ).toFixed(2) %
+                                        60)}{" "}
+                                  min */}
                               </Text>
                             </View>
                           </View>
                         </View>
                         <View style={styles.row}>
                           <Image source={dcoin} style={styles.imaguser} />
-                          <Text style={styles.TotalDCoins}> {data.coinTotal}</Text>
+                          <Text style={styles.TotalDCoins}>{data.coinTotal}</Text>
                         </View>
                       </View>
                     );
@@ -239,7 +240,6 @@ const KnowYourHeart = ({ route,navigation }) => {
                   </View>
               </ScrollView>
             </View>
-            
         </View>
       </View>
 
@@ -247,12 +247,15 @@ const KnowYourHeart = ({ route,navigation }) => {
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        >
+      >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Pressable style={styles.closebtn} onPress={() => setModalVisible(!modalVisible)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
+                <View style={{height:150,width:'100%'}}>
+                  <Lottie  ref={animationRef} source={require('../../assets/intro/coinBox.json')}/>
+                </View>
                 <Text style={styles.textBold}>WELL DONE!</Text>
                 <Text style={styles.textNormal}>{score} out of {TotalMcq} correct answers in {60-seconds} seconds.</Text>
               </View>

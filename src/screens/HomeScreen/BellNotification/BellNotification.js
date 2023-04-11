@@ -27,30 +27,28 @@ const BellNotification = ({navigation}) => {
         bottomSheetRef.current?.close();
        fetchNotification();
     },[])
+    // var d = new Date()
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
         <ScrollView>
         {/* {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {})} */}
-
        { getNotification?.map((data,i)=>{
         const obj = JSON.parse(data.data)
             return(
                 <View style={styles.userDoesContainer}>
-                <View style={styles.WhatuserDoes}>
-                    <Image source={data?.profileimage && {uri:data?.profileimage}} style={styles.ProfilePic}/>
-                    <View style={styles.userName}>
-                        <Text style={styles.userNameText}>{data?.username}</Text>
-                        <Text style={styles.userTimeText}>
-                            {obj?.message}
-                            <Text style={styles.dot}> . </Text>
-                            {moment(data?.created_at).fromNow()} 
-                        </Text>
+                    <View style={styles.WhatuserDoes}>
+                        <Image source={data?.profileimage && {uri:data?.profileimage}} style={styles.ProfilePic}/>
+                        <View style={styles.userName}>
+                            <Text style={styles.userNameText}>{data?.username}</Text>
+                            <Text style={styles.userTimeText}>
+                                {obj?.message} . {moment(data?.created_at).calendar()}
+                            </Text>
+                        </View>
                     </View>
+                    <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
+                    <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
-                <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
-                </TouchableOpacity>
-            </View>
             )}
         )}
           

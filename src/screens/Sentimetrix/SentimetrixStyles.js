@@ -178,5 +178,6 @@ export const styles = StyleSheet.create({
       errorMsg:{
         color:'#cc0000',
         fontFamily: "Inter-Regular",
+        paddingHorizontal:15
     },
 });

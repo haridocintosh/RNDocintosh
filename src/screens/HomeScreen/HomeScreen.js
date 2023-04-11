@@ -220,7 +220,7 @@ const HomeScreen = ({navigation,route})=> {
                style={{width:38, height:38,marginRight:5,borderRadius:50}}/>
               <View style={{marginLeft:5}}>
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
-                  { item?.utitle} {item?.first_name} {item?.last_name} 
+                  { item?.utitle} {item?.first_name} {item?.last_name } 
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69"/>
                 </Text>
                 <View style={{flexDirection:'row',alignItems:'flex-start'}}>
@@ -235,7 +235,9 @@ const HomeScreen = ({navigation,route})=> {
                     <Ionicons name="time-outline" size={19} color="#51668A" />  
                   </Text>
                   <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular",marginTop:1.5}}>
-                    {moment(item?.created_at).fromNow()}
+                    {/* {moment(item?.created_at).subtract('h').fromNow(true)} */}
+                    {moment(item?.created_at,).fromNow().split(" ")[0] == 'a' ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
+                    {moment(item?.created_at).fromNow().split(" ")[1].slice(0,1)}
                   </Text>
                 </View>
               </View> 
@@ -254,7 +256,7 @@ const HomeScreen = ({navigation,route})=> {
               BlockId={BlockId} 
               resData={resData} 
           />}
-          <View style={item?.description &&{paddingBottom:10}}>
+          <View style={item?.description && {paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
@@ -304,7 +306,6 @@ const HomeScreen = ({navigation,route})=> {
             <Text style={styles.count}>0</Text>
           </TouchableOpacity>
           </Animated.View>
-
       </Animated.View>
       
       <View style={{padding:10}}>
@@ -320,7 +321,6 @@ const HomeScreen = ({navigation,route})=> {
           </Card>
         <View>
 
-  
             <View style={styles.marginten}>
                 <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}  onPress={() => press()} >Suggested Post</Text>
                 <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>

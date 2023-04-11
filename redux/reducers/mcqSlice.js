@@ -76,12 +76,30 @@ import { mainApi } from "../../src/apis/constant";
         }
     });
 
+    export const showRankResult = createAsyncThunk("user_Rank", async (data)=>{
+        try{
+            const responce = await fetch(`${mainApi.baseUrl}/ApiController/userRank`, {
+                method : 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body :JSON.stringify(data)
+            });
+            const result=  await responce.json();
+            return result;
+        }
+        catch(e){
+            console.log(e);;
+        }
+    });
+
 
 
 export const quizData = createSlice({
     name : "quiz",
     initialState :{
         postData : [],
+        rankResult : {},
         loading : false,
         error :false,
     },
@@ -136,6 +154,19 @@ export const quizData = createSlice({
             state.leaderBoard   = action.payload;
         })
         builder.addCase(showLeaderBoard.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //-------------------------showRankResult-----------------------------
+        builder.addCase(showRankResult.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(showRankResult.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.rankResult   = action.payload;
+        })
+        builder.addCase(showRankResult.rejected, (state) => {
             state.loading = false;
             state.error = false
         })

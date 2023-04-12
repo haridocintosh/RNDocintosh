@@ -119,7 +119,7 @@ useEffect(() => {
             </View>
             <Text style={styles.trendTitle}>Tell us want you think</Text>
 
-            <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
+            <Text style={styles.trendTitleContent}>Your Views are deeply valued.</Text>
             <ImageBackground source={require('../assets/images/SentimetrixWave.png')} style={styles.CartWave}>
                 <TouchableOpacity style={styles.ButtonContainer} onPress={()=>{ navigation.navigate('SentimetrixList') }}>
                     <Text style={styles.buttonText}>Participate</Text>

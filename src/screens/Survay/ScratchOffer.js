@@ -44,7 +44,7 @@ const ScratchOffer = ({ setShowOffer }) => {
     setShowOffer(false);
   };
   const fullOfferDetails = () => {
-    setIncreaseHeight(50);
+    setIncreaseHeight(55);
     setfullDetails(true);
     setIntialHeight(200)
   }

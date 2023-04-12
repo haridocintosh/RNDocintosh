@@ -24,7 +24,7 @@ const CongratulationPage = ({route,navigation}) => {
       </View>
       <View style={styles.dopDownContainer}>
         <Button
-          title="Continue Survey"
+          title="Continue Sentimetrix"
           buttonStyle={styles.blueButtonStyle}
           titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold"}}
           onPress={() => navigation.goBack()}

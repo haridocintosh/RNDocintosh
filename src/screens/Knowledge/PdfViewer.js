@@ -1,5 +1,5 @@
-import { View,Dimensions, Text,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity } from 'react-native'
-import React,{useRef, useEffect,useState} from 'react';
+import {Dimensions,SafeAreaView,StyleSheet} from 'react-native'
+import React,{ useEffect} from 'react';
 import Pdf from 'react-native-pdf';
 
 const PdfViewer = ({navigation,route}) => {

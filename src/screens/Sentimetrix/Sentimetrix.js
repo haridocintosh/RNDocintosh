@@ -41,7 +41,7 @@ const Sentimetrix = ({navigation,route}) => {
         disableBorderRadius={true}
       />
        <Button
-          title="Start Survey"
+          title="Start Sentimetrix"
           buttonStyle={styles.blueButtonStyle}
           titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold"}}
           onPress={() => handleRedirect()}

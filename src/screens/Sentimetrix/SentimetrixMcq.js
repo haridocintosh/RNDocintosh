@@ -12,7 +12,9 @@ import RadioMcq from './RadioMcq';
 import MultipleTypoMcq from './MultipleTypoMcq';
 import { Button } from "react-native-elements";
 
-const num3Content = 'Sentimetrix is a paid market research survey and an online communication testing tool. The survey will take anywhere between 10-12 minutes to be completed.';
+const num1Content = `Great job! You've completed the first leg of the Sentimetrix. Keep it up! Keep answering those questions and stay on track.`;
+const num2Content = `Congrats on making it to the second milestone. You're well on your way to achieving the final milestone.`;
+const num3Content = `You did it! Congrats on completing the 3rd milestone. Thank you for your time! Please continue answering the final questions.`;
 
 const SentimetrixMcq = ({navigation,route}) => {
     const [allMCQs, setAllMCQs] = useState([]);
@@ -35,10 +37,10 @@ const SentimetrixMcq = ({navigation,route}) => {
     const forwardFunction = () => {
       setLiftUpData(null);
       if(currentQuestionIndex == 2){
-        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num3Content, prev:setCurrentQuestionIndex});
+        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num1Content, prev:setCurrentQuestionIndex});
       }
       if(currentQuestionIndex == 7){
-        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num3Content, prev:setCurrentQuestionIndex });
+        navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num2Content, prev:setCurrentQuestionIndex });
       }
       if(currentQuestionIndex == 13){
         navigation.navigate("CongratulationPage", {ImgPath:currentQuestionIndex, Content:num3Content, prev:setCurrentQuestionIndex });
@@ -107,7 +109,6 @@ const SentimetrixMcq = ({navigation,route}) => {
           }
         }
         if(type == 5){
-          // console.log("liftUpCheckData",liftUpCheckData?.filter(d => d.x_val !== undefined));
           if (liftUpCheckData && (liftUpCheckData?.filter(d => d.x_val !== undefined).length == 3)) {
             forwardFunction();
             liftUpCheckData.map((data) =>

@@ -41,11 +41,18 @@ const KnowledgeScreen = ({navigation}) => {
                 titleStyle={{ color:'#fff'}}
               />
         </View>
+        {/* <View style={styles.container}>
+          <Image source={{uri:'https://docintosh.com/homeassets/images/HAR/module-2/Hypertension-Academia-1.png'}} style={{aspectRatio:2}}/>
+        </View> */}
         <View style={styles.container}>
           <Image source={{uri:'https://docintosh.com/homeassets/images/Tele/Telemedicine-M1-1.png'}} style={{aspectRatio:2}}/>
-        </View>
-        <View style={styles.container}>
-          <Image source={{uri:'https://docintosh.com/homeassets/images/HAR/module-2/Hypertension-Academia-1.png'}} style={{aspectRatio:2}}/>
+          <Button
+              onPress={() => navigation.navigate('StartModules')}
+              title={'Start Modules'}
+              type="outline"
+              buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2,marginTop:10 }}
+              titleStyle={{ color:'#fff'}}
+            />
         </View>
         <View style={styles.container}>
           <Image source={require('../../assets/images/pdfImage2.png')} style={{width:'100%',height:250,borderRadius:5}}/>

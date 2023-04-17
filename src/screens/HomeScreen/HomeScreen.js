@@ -183,7 +183,7 @@ const HomeScreen = ({navigation,route})=> {
  
   const deletePostID = (postId) =>{
     const deletePost = allPost.filter(pId => pId.post_id != postId);
-    setallPost(deletePost);
+    setallPost(deletePost); 
   }
 
   const BlockId = (id) =>{

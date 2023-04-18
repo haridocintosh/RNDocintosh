@@ -1,14 +1,27 @@
 import { View, Text,SafeAreaView,StyleSheet,TouchableOpacity } from 'react-native'
 import React,{useState,useRef} from 'react';
 import Video from 'react-native-video';
+import { Image } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 const getStartedModule = ({navigation,route}) => {
     const [btnClick, setBtnClick] = useState(true);
-    const {subTitle,video} = route.params;
+    const [nxtImage, setNxtImage ] = useState(1);
+
+    const {subTitle,video,number,module} = route.params;
     const videoPlayer = useRef(null);
 
-    const fullscreen = () => {
-        
+    const slideImage1 = `https://docintosh.com/homeassets/images/Tele/Telemedicine-M1-${nxtImage}.png`;
+    const slideImage2 = `https://docintosh.com/homeassets/images/Tele2/telemedicine-Module-2-${nxtImage}.png`;
+    const slideImage3 = `https://docintosh.com/homeassets/images/Tele3/Telemedicine-Course-Module-3-${nxtImage}.png`;
+
+    const handleNetImg = () => {
+        // console.log(nxtImage,number);
+        setNxtImage(nxtImage + 1);
+    }
+    const handlePrevImg = () => {
+        // console.log(nxtImage,number);
+        setNxtImage(nxtImage - 1);
     }
 
   return (
@@ -26,7 +39,7 @@ const getStartedModule = ({navigation,route}) => {
             </TouchableOpacity>
         </View>
         {btnClick ? 
-        <View style={styles.videoContainer}>
+        <View style={styles.viewContainer}>
             <Text style={styles.modalSubTitle}>{subTitle}</Text>
             <Video
                 paused={false}
@@ -40,11 +53,33 @@ const getStartedModule = ({navigation,route}) => {
                 disableFocus={true}
                 controls={true}
                 playWhenInactive={false}
-                fullscreen={fullscreen}
               />
         </View>
         :
-        <Text>{subTitle}</Text>}
+        <View style={styles.viewContainer}>
+            <Image 
+            source={module == 1 ? {uri:slideImage1} : module == 2 ? {uri:slideImage2}: module == 3 && {uri:slideImage3}} 
+            style={{width:'100%',height:270,borderRadius:5}}/>
+            <View style={{flexDirection:'row',margin:10,justifyContent:'space-between'}}>
+                <Button
+                    onPress={() => handlePrevImg()}
+                    title={'Previous'}
+                    type="outline"
+                    disabled={nxtImage == 1? true : false}
+                    buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2,width:150}}
+                    titleStyle={{ color:'#fff'}}
+                />
+                <View style={{width:20}}/>
+                <Button
+                    onPress={() => handleNetImg()}
+                    title={'Next'}
+                    type="outline"
+                    disabled={number== nxtImage ? true : false}
+                    buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, width:150}}
+                    titleStyle={{ color:'#fff'}}
+                />
+            </View>
+        </View>}
         
     </SafeAreaView>
   )
@@ -97,9 +132,9 @@ export const styles = StyleSheet.create({
         borderRadius:5
     },
     // ------------------------------video container------------------------
-    videoContainer:{
+    viewContainer:{
         marginTop:20,
-        paddingVertical:15,
+        // paddingVertical:15,
         backgroundColor:'#fff',
         borderRadius:5
     },

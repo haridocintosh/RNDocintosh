@@ -9,7 +9,7 @@ const PdfViewer = ({navigation,route}) => {
       navigation.setOptions({ title:'Read PDF'});
   },[])
   return (
-    <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
+    <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",paddingVertical:10}}>
       <Pdf
             trustAllCerts={false}
             source={source}
@@ -33,8 +33,7 @@ const PdfViewer = ({navigation,route}) => {
 export default PdfViewer;
 
 export const styles = StyleSheet.create({
-
-  pdf: {
+  pdf:{
     flex:1,
 		width: Dimensions.get('window').width,
 		height: Dimensions.get('window').height,

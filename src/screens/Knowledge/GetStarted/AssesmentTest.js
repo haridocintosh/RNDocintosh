@@ -54,7 +54,7 @@ const AssesmentTest = ({navigation}) => {
           <View style={styles.Mcqs_quesions}>
             <Text style={styles.Mcqs_quesions_text}>1.WHO defines telemedicine as</Text>
 
-            <View style={styles.Mcqs_options}>
+            <TouchableOpacity style={styles.Mcqs_options}>
                 <View style={styles.optionCount}>
                   <Text style={styles.optionCountText}>1</Text>
                 </View>
@@ -63,9 +63,9 @@ const AssesmentTest = ({navigation}) => {
                   Doctors should maintain a patient record
                   </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.Mcqs_options}>
+            <TouchableOpacity style={styles.Mcqs_options}>
                 <View style={styles.optionCount}>
                   <Text style={styles.optionCountText}>2</Text>
                 </View>
@@ -74,9 +74,9 @@ const AssesmentTest = ({navigation}) => {
                   Doctor must display at every touchpoint with the patient
                   </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.Mcqs_options}>
+            <TouchableOpacity style={styles.Mcqs_options}>
                 <View style={styles.optionCount}>
                   <Text style={styles.optionCountText}>3</Text>
                 </View>
@@ -85,9 +85,9 @@ const AssesmentTest = ({navigation}) => {
                   Patient identification is mandatory
                   </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.Mcqs_options}>
+            <TouchableOpacity style={styles.Mcqs_options}>
                 <View style={styles.optionCount}>
                   <Text style={styles.optionCountText}>4</Text>
                 </View>
@@ -96,7 +96,7 @@ const AssesmentTest = ({navigation}) => {
                     Patients personal data can be disclosed without consent
                   </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
               
             
           </View>

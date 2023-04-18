@@ -17,14 +17,14 @@ const KnowledgeScreen = ({navigation}) => {
         <View style={styles.container}>
           <TouchableOpacity onPress={() => setPlayv1(!playv1)}>
             {playv1?
-              <Image source={{uri:'https://docintosh.com/medico_video/3.jpg'}} style={{height:250}}/>
+              <Image source={{uri:'https://docintosh.com/medico_video/3.jpg'}} style={{height:180}}/>
             :
               <Video
                 paused={playv1}
                 ref={videoPlayer}
                 resizeMode={"contain"}
                 source={{uri:'https://docintosh.com/medico_video/zoom_0.mp4'}} 
-                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:250}}
+                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:180}}
                 volume={10}
                 useTextureView={false}
                 playInBackground={false}
@@ -55,7 +55,7 @@ const KnowledgeScreen = ({navigation}) => {
             />
         </View>
         <View style={styles.container}>
-          <Image source={require('../../assets/images/pdfImage2.png')} style={{width:'100%',height:250,borderRadius:5}}/>
+          <Image source={require('../../assets/images/pdfImage2.png')} style={{width:'100%',height:180,borderRadius:5}}/>
           <Button
               onPress={() => navigation.navigate('PdfViewer',{source: source1})}
               title={'View PDF'}
@@ -65,7 +65,7 @@ const KnowledgeScreen = ({navigation}) => {
             />
         </View>
         <View style={styles.container}>
-          <Image source={require('../../assets/images/pdfImage3.png')} style={{width:'100%',height:250,borderRadius:5}}/>
+          <Image source={require('../../assets/images/pdfImage3.png')} style={{width:'100%',height:180,borderRadius:5}}/>
           <Button
               onPress={() => navigation.navigate('PdfViewer',{source: source2})}
               title={'View PDF'}
@@ -75,7 +75,7 @@ const KnowledgeScreen = ({navigation}) => {
             />
         </View>
         <View style={styles.container}>
-          <Image source={require('../../assets/images/pdfImage.png')} style={{width:'100%',height:250,borderRadius:5}}/>
+          <Image source={require('../../assets/images/pdfImage.png')} style={{width:'100%',height:180,borderRadius:5}}/>
           <Button
               onPress={() => navigation.navigate('PdfViewer',{source: source3})}
               title={'View PDF'}

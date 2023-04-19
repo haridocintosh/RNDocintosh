@@ -46,7 +46,6 @@ const AssesmentTest = ({navigation}) => {
       }
     }, [counter]);
 
-    console.log("counter",counter);
     const handleStart = () => {
       setStartQuiz(true);
       setCounter(60);
@@ -61,14 +60,15 @@ const AssesmentTest = ({navigation}) => {
       setScore(0);
       setCounter(60)
     }
-
-
+    const handleToggle = () => {
+      setScoreBoard(!scoreBoard);
+      setScore(0);
+    }
 
   return(
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
       <View style={styles.mainContainer}>
         <Text style={styles.assesmentText}>Telemedicine Orientation</Text>
-       
         <View style={styles.QuizContainer}>
           <View style={styles.QuizTitleBox}>
             <Text style={styles.QuizTitleBoxText}>Quiz</Text>
@@ -114,7 +114,7 @@ const AssesmentTest = ({navigation}) => {
           </View>
           :
           <View style={styles.Mcqs_quesions} >
-                <View >
+                <View>
                   <Text style={styles.Mcqs_quesions_text}>{nxtQue+1}.{fetchData?.quizQuestion[nxtQue]?.quiz_question}</Text>
                   {fetchData?.quizQuestion[nxtQue]?.options.map((data,index) => {
                   return(
@@ -133,7 +133,6 @@ const AssesmentTest = ({navigation}) => {
                 </View>
             </View>
         }
-            
         </View> }
       </View>
 
@@ -143,7 +142,7 @@ const AssesmentTest = ({navigation}) => {
         visible={scoreBoard}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <TouchableOpacity style={styles.closebtn} onPress={() => setScoreBoard(!scoreBoard)}>
+                <TouchableOpacity style={styles.closebtn} onPress={() => handleToggle()}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </TouchableOpacity>
                 <Text style={styles.textBold}>You got {score} out of 10 correct</Text>
@@ -156,7 +155,6 @@ const AssesmentTest = ({navigation}) => {
                       color: "#fff",
                       fontFamily: "PlusJakartaSans-Bold",
                     }}
-                    // onPress={() => navigation.navigate("QuizLevels")}
                   />
               </View>
             </View>

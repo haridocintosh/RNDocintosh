@@ -85,24 +85,11 @@ const AssesmentTest = ({navigation}) => {
         </View>
 
         {startQuiz && <View style={styles.mcqStartContainer}>
-        {/* <CircularProgress
-            value={counter}
-            radius={35}
-            maxValue={60}
-            initialValue={10}
-            progressValueColor={'#fff'}
-            activeStrokeWidth={15}
-            inActiveStrokeWidth={15}
-            inActiveStrokeColor={'#A7DFCC'}
-            activeStrokeColor={'#046B74'}
-            duration={10000}
-            // titleStyle={{fontWeight: 'bold',color:'#000'}}
-          /> */}
         <CircularProgress
             value={counter}
             radius={35}
             progressValueColor={'#000'}
-            duration={1000}
+            duration={100}
             maxValue={60}
             initialValue={""}
             inActiveStrokeColor={'#A7DFCC'}
@@ -110,6 +97,7 @@ const AssesmentTest = ({navigation}) => {
             titleColor={'white'}
             titleStyle={{fontWeight: 'bold',color:'#000'}}
           />
+
           {counter == 0 ?
           <View style={styles.Mcqs_quesions} >
             <Text style={styles.textBold}>Looks like you’ve run out of time.No worries.</Text>

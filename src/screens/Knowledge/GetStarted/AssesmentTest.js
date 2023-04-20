@@ -1,36 +1,82 @@
-import { View, Text, SafeAreaView,StyleSheet,TouchableOpacity } from 'react-native'
-import React,{useEffect,useState} from 'react';
+import { View, Text, SafeAreaView,StyleSheet,TouchableOpacity,Modal } from 'react-native'
+import React,{useEffect,useState,use} from 'react';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { TsiQuizAPI } from '../../../../redux/reducers/ALL_APIs';
+import { useDispatch } from 'react-redux';
+import { getLocalData } from '../../../apis/GetLocalData';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Button } from "react-native-elements";
+
 
 const AssesmentTest = ({navigation}) => {
     const [counter, setCounter] = useState(null);
     const [startQuiz, setStartQuiz] = useState(false);
+    const [scoreBoard, setScoreBoard] = useState(false);
+    const [fetchData, setFetchData] = useState([]);
+    const [nxtQue, setNxtQue] = useState(0);
+    const [score, setScore] = useState(0);
+    const dispatch = useDispatch();
+    
     navigation.setOptions({ title:'SELF-ASSESSMENT TEST'});
 
     useEffect(() => {
+      getLocalData("USER_INFO").then( async (res) => {
+        const data = await dispatch(TsiQuizAPI({user_id:res.data.id,basic_id:307}));
+        setFetchData(data.payload)
+      })
+    },[])
+
+    const handleSelectAns = (data) => {
+      if (nxtQue !== fetchData?.quizQuestion.length - 1) {
+        setNxtQue(nxtQue+1);
+      }else{
+        setScoreBoard(true);
+        setStartQuiz(false);
+        setNxtQue(0);
+      }
+      if(data?.is_correct == '1'){
+        setScore(score+1);
+      }
+    }
+    
+    useEffect(() => {
+      if(!scoreBoard){
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
         return () => clearInterval(timer);
+      }
     }, [counter]);
 
-    console.log("counter",counter);
     const handleStart = () => {
       setStartQuiz(true);
       setCounter(60);
     }
+    const playAgain = () => {
+      setStartQuiz(true);
+      setScore(0);
+      setScoreBoard(!scoreBoard);
+      setCounter(60);
+    }
+    const handlTimeOut = () => {
+      setScore(0);
+      setCounter(60)
+    }
+    const handleToggle = () => {
+      setScoreBoard(!scoreBoard);
+      setScore(0);
+    }
 
-  return (
+  return(
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
       <View style={styles.mainContainer}>
         <Text style={styles.assesmentText}>Telemedicine Orientation</Text>
-       
         <View style={styles.QuizContainer}>
           <View style={styles.QuizTitleBox}>
             <Text style={styles.QuizTitleBoxText}>Quiz</Text>
           </View>
           <View style={styles.QuizTitleTextBox}>
             <View>
-              <Text style={styles.QuizTitle}>SELF-ASSESSMENT TEST</Text>
-              <Text style={styles.QuizSubtitle}>Have you grasped all the key concepts of telemedicine? Test yourself with this Quiz!</Text>
+              <Text style={styles.QuizTitle}>{fetchData?.quizQ?.title}</Text>
+              <Text style={styles.QuizSubtitle}>{fetchData?.quizQ?.description}</Text>
             </View>
             {!startQuiz &&<TouchableOpacity style={styles.startButton} onPress={() => handleStart()}>
               <Text style={styles.startButtonText}>Start</Text>
@@ -51,58 +97,68 @@ const AssesmentTest = ({navigation}) => {
             titleColor={'white'}
             titleStyle={{fontWeight: 'bold',color:'#000'}}
           />
-          <View style={styles.Mcqs_quesions}>
-            <Text style={styles.Mcqs_quesions_text}>1.WHO defines telemedicine as</Text>
 
-            <TouchableOpacity style={styles.Mcqs_options}>
-                <View style={styles.optionCount}>
-                  <Text style={styles.optionCountText}>1</Text>
-                </View>
-                <View style={{flex:1}}>
-                  <Text style={styles.Mcqs_options_text}>
-                  Doctors should maintain a patient record
-                  </Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.Mcqs_options}>
-                <View style={styles.optionCount}>
-                  <Text style={styles.optionCountText}>2</Text>
-                </View>
-                <View style={{flex:1}}>
-                  <Text style={styles.Mcqs_options_text}>
-                  Doctor must display at every touchpoint with the patient
-                  </Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.Mcqs_options}>
-                <View style={styles.optionCount}>
-                  <Text style={styles.optionCountText}>3</Text>
-                </View>
-                <View style={{flex:1}}>
-                  <Text style={styles.Mcqs_options_text}>
-                  Patient identification is mandatory
-                  </Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.Mcqs_options}>
-                <View style={styles.optionCount}>
-                  <Text style={styles.optionCountText}>4</Text>
-                </View>
-                <View style={{flex:1}}>
-                  <Text style={styles.Mcqs_options_text}>
-                    Patients personal data can be disclosed without consent
-                  </Text>
-                </View>
-            </TouchableOpacity>
-              
-            
+          {counter == 0 ?
+          <View style={styles.Mcqs_quesions} >
+            <Text style={styles.textBold}>Looks like you’ve run out of time.No worries.</Text>
+            <Text style={styles.textNormal}>Score 7 or more to avail the certificate. Give it another go!</Text>
+            <Button
+              onPress={() => handlTimeOut()}
+              title="Play Again"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={{
+                color: "#fff",
+                fontFamily: "PlusJakartaSans-Bold",
+              }}
+            />
           </View>
-
+          :
+          <View style={styles.Mcqs_quesions} >
+                <View>
+                  <Text style={styles.Mcqs_quesions_text}>{nxtQue+1}.{fetchData?.quizQuestion[nxtQue]?.quiz_question}</Text>
+                  {fetchData?.quizQuestion[nxtQue]?.options.map((data,index) => {
+                  return(
+                    <TouchableOpacity style={styles.Mcqs_options} key={index} onPress={() => handleSelectAns(data)}>
+                        <View style={styles.optionCount}>
+                          <Text style={styles.optionCountText}>{index + 1}</Text>
+                        </View>
+                        <View style={{flex:1}}>
+                          <Text style={styles.Mcqs_options_text}>
+                           {data?.options}
+                          </Text>
+                        </View>
+                    </TouchableOpacity>
+                    )
+                  })}
+                </View>
+            </View>
+        }
         </View> }
       </View>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={scoreBoard}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TouchableOpacity style={styles.closebtn} onPress={() => handleToggle()}>
+                    <AntDesign name="close" size={20} color="#51668A" />
+                </TouchableOpacity>
+                <Text style={styles.textBold}>You got {score} out of 10 correct</Text>
+                <Text style={styles.textNormal}>Score 7 or more to avail the certificate. Give it another go!</Text>
+                <Button
+                    onPress={() => playAgain()}
+                    title="Play Again"
+                    buttonStyle={[styles.buttonStyle,{alignSelf:"center"}]}
+                    titleStyle={{
+                      color: "#fff",
+                      fontFamily: "PlusJakartaSans-Bold",
+                    }}
+                  />
+              </View>
+            </View>
+        </Modal>  
         
     </SafeAreaView>
   )
@@ -187,7 +243,7 @@ export const styles = StyleSheet.create({
     fontSize:16
   },
   Mcqs_options:{
-    marginBottom:5,
+    marginBottom:10,
     backgroundColor:'#3eb5c147',
     borderRadius:50,
     padding:5,
@@ -209,5 +265,50 @@ export const styles = StyleSheet.create({
   optionCountText:{
     color:'#fff'
   },
+  buttonStyle: {
+    marginTop: 10,
+    width: 150,
+    
+    borderColor: "#fff",
+    borderRadius: 15 / 2,
+    backgroundColor: "#2C8892",
+  },
+    // ------------------------   PopUp score Modal --------------------
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor:'rgba(0,0,0,0.4)'  
+    },
+    modalView: {
+      margin: 20,
+      width:'60%',
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 30,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    closebtn: {
+      backgroundColor: "#FFFF",
+      alignSelf:'flex-end',
+    },
+    textBold:{
+      fontFamily:'Inter-SemiBold',
+      color:'#071B36'
+    },
+    textNormal:{
+      fontFamily:"Inter-Regular",
+      color:'#071B36',
+      // textAlign:'center',
+      marginTop:10
+    },
 
 })

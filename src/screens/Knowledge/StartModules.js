@@ -26,7 +26,7 @@ const StartModules = ({navigation}) => {
                 </View>
             </View>
         <Button
-            onPress={() => navigation.navigate('getStartedModule',{subTitle: subTitleM1,video: video1, number:26,module:1})}
+            onPress={() => navigation.navigate('GetStartedModule',{subTitle: subTitleM1,video: video1, number:26,module:1})}
             title={"Get Started"}
             type="outline"
             buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, marginTop:10}}
@@ -58,7 +58,7 @@ const StartModules = ({navigation}) => {
                 </View>
             </View>
         <Button
-            onPress={() => navigation.navigate('getStartedModule',{subTitle: subTitleM3,video: video3,number:42,module:3})}
+            onPress={() => navigation.navigate('GetStartedModule',{subTitle: subTitleM3,video: video3,number:42,module:3})}
             title={"Get Started"}
             type="outline"
             buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, marginTop:10}}

@@ -4,7 +4,8 @@ import Video from 'react-native-video';
 import { Image } from 'react-native-elements';
 import { Button } from 'react-native-elements';
 
-const getStartedModule = ({navigation,route}) => {
+
+const GetStartedModule = ({navigation,route}) => {
     const [btnClick, setBtnClick] = useState(true);
     const [nxtImage, setNxtImage ] = useState(1);
 
@@ -23,70 +24,68 @@ const getStartedModule = ({navigation,route}) => {
         // console.log(nxtImage,number);
         setNxtImage(nxtImage - 1);
     }
-
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
-        <View style={styles.rewardsContainer}>
-            <TouchableOpacity style={styles.rewardsBtnsConatiner} onPress={() => setBtnClick(true)}>
-                <View style={btnClick ? styles.rewardsBtnActive : styles.rewardsBtnInActive}>
-                   <Text style={btnClick ? styles.rewardsTextActive :styles.rewardsTextInActive}>Video</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rewardsBtnsConatiner} onPress={() => setBtnClick(false)}>
-                <View style={btnClick ? styles.rewardsBtnInActive :styles.rewardsBtnActive}>
-                   <Text style={btnClick ? styles.rewardsTextInActive:styles.rewardsTextActive}>Slide Desk</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-        {btnClick ? 
-        <View style={styles.viewContainer}>
-            <Text style={styles.modalSubTitle}>{subTitle}</Text>
-            <Video
-                paused={false}
-                ref={videoPlayer}
-                resizeMode={"contain"}
-                source={{uri:video}} 
-                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:250,}}
-                volume={10}
-                useTextureView={false}
-                playInBackground={false}
-                disableFocus={true}
-                controls={true}
-                playWhenInactive={false}
-              />
-        </View>
-        :
-        <View style={styles.viewContainer}>
-            <Image 
-            source={module == 1 ? {uri:slideImage1} : module == 2 ? {uri:slideImage2}: module == 3 && {uri:slideImage3}} 
-            style={{width:'100%',height:270,borderRadius:5}}/>
-            <View style={{flexDirection:'row',margin:10,justifyContent:'space-between'}}>
-                <Button
-                    onPress={() => handlePrevImg()}
-                    title={'Previous'}
-                    type="outline"
-                    disabled={nxtImage == 1? true : false}
-                    buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2,width:150}}
-                    titleStyle={{ color:'#fff'}}
-                />
-                <View style={{width:20}}/>
-                <Button
-                    onPress={() => handleNetImg()}
-                    title={'Next'}
-                    type="outline"
-                    disabled={number== nxtImage ? true : false}
-                    buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, width:150}}
-                    titleStyle={{ color:'#fff'}}
-                />
+    <View style={styles.rewardsContainer}>
+        <TouchableOpacity style={styles.rewardsBtnsConatiner} onPress={() => setBtnClick(true)}>
+            <View style={btnClick ? styles.rewardsBtnActive : styles.rewardsBtnInActive}>
+               <Text style={btnClick ? styles.rewardsTextActive :styles.rewardsTextInActive}>Video</Text>
             </View>
-        </View>}
-        
-    </SafeAreaView>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.rewardsBtnsConatiner} onPress={() => setBtnClick(false)}>
+            <View style={btnClick ? styles.rewardsBtnInActive :styles.rewardsBtnActive}>
+               <Text style={btnClick ? styles.rewardsTextInActive:styles.rewardsTextActive}>Slide Desk</Text>
+            </View>
+        </TouchableOpacity>
+    </View>
+    {btnClick ? 
+    <View style={styles.viewContainer}>
+        <Text style={styles.modalSubTitle}>{subTitle}</Text>
+        <Video
+            paused={false}
+            ref={videoPlayer}
+            resizeMode={"contain"}
+            source={{uri:video}} 
+            style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:250,}}
+            volume={10}
+            useTextureView={false}
+            playInBackground={false}
+            disableFocus={true}
+            controls={true}
+            playWhenInactive={false}
+          />
+    </View>
+    :
+    <View style={styles.viewContainer}>
+        <Image 
+        source={module == 1 ? {uri:slideImage1} : module == 2 ? {uri:slideImage2}: module == 3 && {uri:slideImage3}} 
+        style={{width:'100%',height:270,borderRadius:5}}/>
+        <View style={{flexDirection:'row',margin:10,justifyContent:'space-between'}}>
+            <Button
+                onPress={() => handlePrevImg()}
+                title={'Previous'}
+                type="outline"
+                disabled={nxtImage == 1? true : false}
+                buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2,width:150}}
+                titleStyle={{ color:'#fff'}}
+            />
+            <View style={{width:20}}/>
+            <Button
+                onPress={() => handleNetImg()}
+                title={'Next'}
+                type="outline"
+                disabled={number== nxtImage ? true : false}
+                buttonStyle={{backgroundColor:'#2C8892', borderRadius:15/2, width:150}}
+                titleStyle={{ color:'#fff'}}
+            />
+        </View>
+    </View>}
+    
+</SafeAreaView>
   )
 }
 
-export default getStartedModule;
-
+export default GetStartedModule
 
 export const styles = StyleSheet.create({
     rewardsContainer:{

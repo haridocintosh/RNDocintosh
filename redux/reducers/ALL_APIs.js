@@ -1,6 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
+export const TsiQuizAPI = createAsyncThunk("isiQuiz", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/tsiQuiz`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const SavePostApi = createAsyncThunk("savePost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/savepost`, {
@@ -136,6 +153,7 @@ export const singlePostDataAPI = createAsyncThunk("singlePostData", async (data)
 export const savePost = createSlice({
     name : "savePost",
     initialState :{
+        tsiQuiz       : {},
         savePostResult   : {},
         blockUserResult   : {},
         getsearchResult   : {},
@@ -148,6 +166,18 @@ export const savePost = createSlice({
     reducers : {},
 
     extraReducers: builder => {
+        //-------------------------TsiQuizAPI----------------------------------
+        builder.addCase(TsiQuizAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(TsiQuizAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.tsiQuiz    = action.payload;
+        })
+        builder.addCase(TsiQuizAPI.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
         //-------------------------SavePostApi----------------------------------
         builder.addCase(SavePostApi.pending, (state) => {
             state.loading       =  true;

@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView,StyleSheet,TouchableOpacity,Modal } from 'react-native'
 import React,{useEffect,useState,use} from 'react';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { TsiQuizAPI } from '../../../../redux/reducers/ALL_APIs';
+import { TsiQuizAPI, TsiQuizSaveAPI } from '../../../../redux/reducers/ALL_APIs';
 import { useDispatch } from 'react-redux';
 import { getLocalData } from '../../../apis/GetLocalData';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -15,18 +15,25 @@ const AssesmentTest = ({navigation}) => {
     const [fetchData, setFetchData] = useState([]);
     const [nxtQue, setNxtQue] = useState(0);
     const [score, setScore] = useState(0);
+    const [userData, setUserData] = useState(0);
     const dispatch = useDispatch();
     
     navigation.setOptions({ title:'SELF-ASSESSMENT TEST'});
 
     useEffect(() => {
       getLocalData("USER_INFO").then( async (res) => {
+        const resData = res?.data;
+        setUserData(resData);
         const data = await dispatch(TsiQuizAPI({user_id:res.data.id,basic_id:307}));
         setFetchData(data.payload)
       })
     },[])
 
     const handleSelectAns = (data) => {
+      console.log("data",data?.is_correct);
+      if(data?.is_correct == '1'){
+        setScore(score+1);
+      }
       if (nxtQue !== fetchData?.quizQuestion.length - 1) {
         setNxtQue(nxtQue+1);
       }else{
@@ -34,11 +41,10 @@ const AssesmentTest = ({navigation}) => {
         setStartQuiz(false);
         setNxtQue(0);
       }
-      if(data?.is_correct == '1'){
-        setScore(score+1);
-      }
+      
     }
     
+    // console.log("score",score);
     useEffect(() => {
       if(!scoreBoard){
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -60,9 +66,12 @@ const AssesmentTest = ({navigation}) => {
       setScore(0);
       setCounter(60)
     }
-    const handleToggle = () => {
+    const handleToggle = async () => {
       setScoreBoard(!scoreBoard);
       setScore(0);
+      console.log("score==score",score);
+      const data = await dispatch(TsiQuizSaveAPI({user_id:userData?.id,basic_id:307,score:score}));
+      console.log("data",data.payload);
     }
 
   return(
@@ -96,7 +105,7 @@ const AssesmentTest = ({navigation}) => {
             activeStrokeColor={'#046B74'}
             titleColor={'white'}
             titleStyle={{fontWeight: 'bold',color:'#000'}}
-          />
+        />
 
           {counter == 0 ?
           <View style={styles.Mcqs_quesions} >
@@ -117,17 +126,17 @@ const AssesmentTest = ({navigation}) => {
                 <View>
                   <Text style={styles.Mcqs_quesions_text}>{nxtQue+1}.{fetchData?.quizQuestion[nxtQue]?.quiz_question}</Text>
                   {fetchData?.quizQuestion[nxtQue]?.options.map((data,index) => {
-                  return(
-                    <TouchableOpacity style={styles.Mcqs_options} key={index} onPress={() => handleSelectAns(data)}>
-                        <View style={styles.optionCount}>
-                          <Text style={styles.optionCountText}>{index + 1}</Text>
-                        </View>
-                        <View style={{flex:1}}>
-                          <Text style={styles.Mcqs_options_text}>
-                           {data?.options}
-                          </Text>
-                        </View>
-                    </TouchableOpacity>
+                    return(
+                      <TouchableOpacity style={styles.Mcqs_options} key={index} onPress={() => handleSelectAns(data)}>
+                          <View style={styles.optionCount}>
+                            <Text style={styles.optionCountText}>{index + 1}</Text>
+                          </View>
+                          <View style={{flex:1}}>
+                            <Text style={styles.Mcqs_options_text}>
+                            {data?.options}
+                            </Text>
+                          </View>
+                      </TouchableOpacity>
                     )
                   })}
                 </View>

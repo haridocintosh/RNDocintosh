@@ -18,6 +18,23 @@ export const TsiQuizAPI = createAsyncThunk("isiQuiz", async (data)=>{
      }
 })
 
+export const TsiQuizSaveAPI = createAsyncThunk("tsiQuizScore", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/tsiQuizScore`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const SavePostApi = createAsyncThunk("savePost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/savepost`, {
@@ -154,6 +171,7 @@ export const savePost = createSlice({
     name : "savePost",
     initialState :{
         tsiQuiz       : {},
+        tsiQuizSave       : {},
         savePostResult   : {},
         blockUserResult   : {},
         getsearchResult   : {},
@@ -175,6 +193,18 @@ export const savePost = createSlice({
             state.tsiQuiz    = action.payload;
         })
         builder.addCase(TsiQuizAPI.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+        //-------------------------TsiQuizSaveAPI----------------------------------
+        builder.addCase(TsiQuizSaveAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(TsiQuizSaveAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.tsiQuizSave    = action.payload;
+        })
+        builder.addCase(TsiQuizSaveAPI.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })

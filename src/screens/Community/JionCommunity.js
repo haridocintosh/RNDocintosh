@@ -103,7 +103,7 @@ const JionCommunity = ({navigation}) => {
         </ScrollView>
 
 
-        <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('Sharepost')}>
+        <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
             <View style={styles.UserInnerComments}>
                 <View style={styles.inputCont} >
                 <Image source={require('../../assets/images/CommunityPPic3.png')} style={{width:50,height:50, borderRadius:50}}/>

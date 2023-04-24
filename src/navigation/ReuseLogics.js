@@ -1,6 +1,15 @@
 import React from 'react';
 import { Text,PermissionsAndroid } from 'react-native';
 const ImagePicker = require('react-native-image-picker');
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Octicons from 'react-native-vector-icons/Octicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
+import Foundation from 'react-native-vector-icons/Foundation';
+import Entypo from 'react-native-vector-icons/Entypo';
+
 
 export const showHeaderItem = {
       headerShown: true,  
@@ -13,6 +22,29 @@ export const showHeaderItemBackless = {
       headerTintColor: '#fff',
       headerLeft: () => <Text/>
 };
+
+export const Icon = (provider, name, size, color) => {
+      console.log(provider, name, size, color);
+    if(provider == "Ionicons"){
+      return <Ionicons name={name} size={size} color={color}/>
+    }else if(provider == "Fontisto"){
+      return <Fontisto name={name} size={size} color={color}/>
+    }else if(provider == "MaterialCommunityIcons"){
+      return <MaterialCommunityIcons name={name} size={size} color={color}/>
+    }else if(provider == "Octicons"){
+      return <Octicons name={name} size={size} color={color}/>
+    }else if(provider == "AntDesign"){
+      return <AntDesign name={name} size={size} color={color}/>
+    }else if(provider == "Feather"){
+      return <Feather name={name} size={size} color={color}/>
+    }else if(provider == "Foundation"){
+      return <Foundation name={name} size={size} color={color}/>
+    }else if(provider == "Entypo"){
+      return <Entypo name={name} size={size} color={color}/>
+    }
+}
+
+
 export const PickImage = async (arg) => {
       let options = {
             storageOptions: {

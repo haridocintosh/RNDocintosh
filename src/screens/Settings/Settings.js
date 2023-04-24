@@ -4,12 +4,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from './SettingsStyles';
+import { Icon } from '../../navigation/ReuseLogics';
+
 
 const Settings = ({navigation}) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ecf2f6",paddingHorizontal:15 }}>
         <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('ProfileNPrivacySettings')}>
             <Fontisto name="locked" size={20} color={'#51668A'} style={{marginLeft:3}}/>
+            <Icon provider={"Fontisto"} name={"locked"} size={20} color={'#51668A'}/>
             <Text style={styles.SettingText}>Profile & Privacy Settings</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('AccountSettings')}>

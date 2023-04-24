@@ -215,26 +215,7 @@ const Threads = () => {
           </Text>
         </View>
       </Card>
-      <Card>
-        <View style={styles.ThreadPostUserDetailsContainer}>
-          <View style={styles.ThreadPostUserDetails}>
-            <Image source={require('../../assets/images/CommunityPPic3.png')} style={{borderRadius:50,width:50,height:50}}/>
-            <View style={styles.ThreadPostUserDetailsTextContainer}>
-              <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <Text style={styles.ThreadPostPostName}>Dr. Milan</Text>
-                  <Image source={require('../../assets/images/celTick.png')} style={{height:20,width:20,marginLeft:10}}/>
-              </View>
-                <Text style={styles.ThreadPostPostSplty}>Cardiologist</Text>
-            </View>
-          </View>
-          <Entypo name='dots-three-vertical' size={25} color={'#51668A'}/>
-        </View>
-        <View style={styles.ThreadPostDescriptionContainer}>
-          <Text style={styles.ThreadPostDescription}>
-              {description}<Text onPress={() => clock("1")} style={styles.ThreadPostDescriptionViewAll}>View more</Text>
-          </Text>
-        </View>
-      </Card>
+        
     </>
   )
 }

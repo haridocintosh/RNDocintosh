@@ -2,28 +2,22 @@ import { View, Text, StyleSheet, TouchableOpacity,Image } from 'react-native'
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+// import { useNavigation } from '@react-navigation/native';
 
-
-const MemberOptionsModal = ({modalVisible,setModalVisible}) => {
-    const navigation = useNavigation();
-
-    const handleMessage = () => {
-        navigation.navigate('MessageScreen');
-        setModalVisible(false)
-    }
+const CommunityPageOptionsModal = ({modalVisible}) => {
   return (
     <View style={styles.container}>
         {modalVisible &&
         <View style={styles.optionModal}>
         <View>
-            <TouchableOpacity style={styles.optionList} onPress={() => handleMessage()} >
-            <MaterialIcons name={'messenger'} size={24} color={"#45B5C0"} style={styles.optionListIcon}/>
-                <Text style={styles.optionListText}>Message</Text>
+            <TouchableOpacity style={styles.optionList} >
+                <Entypo name="info-with-circle" size={24} color="#45B5C0" style={styles.optionListIcon}/>
+                <Text style={styles.optionListText}>About</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.optionList}>
-                <Image source={require('../../assets/dr-icon/optionDcoin.png')} style={{width:25,height:25,marginRight:5}}/>
-                <Text style={styles.optionListText}>Send Coins</Text>
+                <Ionicons name="exit-outline" size={24} color="#45B5C0" style={styles.optionListIcon}/>
+                <Text style={styles.optionListText}>Exit Community</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.optionList}>
                 <MaterialIcons name="report-problem" size={24} color="#45B5C0" style={styles.optionListIcon}/>
@@ -39,18 +33,16 @@ const MemberOptionsModal = ({modalVisible,setModalVisible}) => {
   )
 }
 
-export default MemberOptionsModal;
+export default CommunityPageOptionsModal;
 
 export const styles = StyleSheet.create({
     container:{
-    //   width:150,
       position:'absolute',
-      right:40,
+      right:50,
       borderRadius:5,
-      zIndex:1,
+      top:35
     },
     optionModal:{
-      width:155,
       backgroundColor:'#fff',
       borderRadius:5,
       justifyContent:"center",

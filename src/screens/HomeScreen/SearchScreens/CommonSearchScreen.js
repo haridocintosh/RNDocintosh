@@ -133,7 +133,6 @@ const CommonSearchScreen = () => {
     third  : ThirdRoute,
     fourth : fourthRoute,
   });
-  
 
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);

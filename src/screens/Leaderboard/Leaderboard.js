@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, Image,  ScrollView, TouchableOpacity, Dimensions } from 'react-native'
+import { SafeAreaView, View, Text, Image,  ScrollView, TouchableOpacity, Dimensions,ActivityIndicator } from 'react-native'
 import React,{useState, useEffect} from 'react'
 import { styles } from './LeaderboardStyles';
 import { Divider } from 'react-native-elements';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 const Leaderboard = ({navigation}) => {
     const [userData, setUserData] = useState([]);
     const [rank, setRank] = useState();
+    const [loader, setLoader] = useState(true);
     const dispatch = useDispatch(); 
 
     const getLeaderboardData = () => {
@@ -20,6 +21,7 @@ const Leaderboard = ({navigation}) => {
           console.log(userRankResult.payload);
           setRank(userRankResult.payload)
           setUserData(uresult?.payload);
+          setLoader(false)
         //   const rank = uresult?.payload?.findIndex(data => data?.userId == res.data.id)
         });
       };
@@ -27,6 +29,13 @@ const Leaderboard = ({navigation}) => {
       useEffect(() => {
         getLeaderboardData();
       },[])
+
+      if(loader){
+        return(
+        <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+            <ActivityIndicator size={'large'} color={"#2C8892"}/>
+        </View>)
+      }
       
     // const gress = 0.3990
 

@@ -17,7 +17,6 @@ const AccountSettings = ({navigation}) => {
             <Text style={styles.SettingText}>How can people contact you</Text>
             <Entypo name="chevron-thin-right" size={24} color="black" />
         </TouchableOpacity> */}
-        
     </SafeAreaView>
   )
 }

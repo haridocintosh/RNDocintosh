@@ -9,11 +9,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Button } from 'react-native-elements';
 import Threads from './Threads';
 import FocusGroup from './FocusGroup';
+import CommunityPageOptionsModal from './CommunityPageOptionsModal';
+
 
 const JionCommunity = ({navigation}) => {
-    
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
+    const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
+
+
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
     const maxHeaderHeight = 270;
@@ -33,12 +37,16 @@ const JionCommunity = ({navigation}) => {
     const handleTab = (val) => {
         console.log(val);
     }
+    const handleCommunityModal = () => {
+        console.log("val");
+        setCmtyPageOptions(!cmtyPageOptions);
+    }
     // useEffect(() => {
     //     navigation.setOptions({ title: ''});
     // },[])
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
             <ImageBackground source={require("../../assets/images/RectangleBgImage.png")} style={[styles.RectangleBgImage]}>
                 <LinearGradient colors={["#000", "transparent"]}>
@@ -50,13 +58,14 @@ const JionCommunity = ({navigation}) => {
                             <TouchableOpacity>
                             <AntDesign name='search1' size={25} color={'#fff'} style={{marginRight:15}}/>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity  onPress={() => handleCommunityModal()}>
                             <Entypo name='dots-three-vertical' size={25} color={'#fff'}/>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </LinearGradient>
             </ImageBackground>
+           
 
             <View style={styles.communityName}>
                 <View>
@@ -65,10 +74,10 @@ const JionCommunity = ({navigation}) => {
                         style={styles.CommunityProfilePic}/>
                         <Text style={styles.communityNameText}>AIMS Hospital</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('Members')}>
-                        <Text style={styles.communityNameMembers}>
-                            <Text style={styles.communityNameMembersCount}>2.2k </Text>
-                            Member
-                        </Text>
+                            <Text style={styles.communityNameMembers}>
+                                <Text style={styles.communityNameMembersCount}>2.2k </Text>
+                                Member
+                            </Text>
                         </TouchableOpacity>
                 </View>
                 <Button title={"Join"}
@@ -79,11 +88,11 @@ const JionCommunity = ({navigation}) => {
                         color:'#fff',
                     }}
                     titleStyle={{
-                        color:'#fff'
+                        color:'#fff',
                     }}/>
             </View>
         </Animated.View>
-
+        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions}/>
         <View style={styles.CommunityTabContainer}>
             <TouchableOpacity onPress={() => setIndex(true)}>
                 <Text style={index ? styles.CommunityActiveTabText : styles.CommunityTabText}>Threads</Text>
@@ -96,7 +105,7 @@ const JionCommunity = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} onScroll={Animated.event(
                   [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
                   {useNativeDriver: false},
-                )}>
+                )} onScrollBeginDrag={() => setCmtyPageOptions(false)}>
             <View style={{padding:15,marginBottom:80}}>
                 {index ? <Threads/> : <FocusGroup/>}
             </View>

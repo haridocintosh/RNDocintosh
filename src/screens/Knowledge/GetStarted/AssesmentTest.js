@@ -7,7 +7,6 @@ import { getLocalData } from '../../../apis/GetLocalData';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from "react-native-elements";
 
-
 const AssesmentTest = ({navigation}) => {
     const [counter, setCounter] = useState(null);
     const [startQuiz, setStartQuiz] = useState(false);
@@ -41,7 +40,6 @@ const AssesmentTest = ({navigation}) => {
         setStartQuiz(false);
         setNxtQue(0);
       }
-      
     }
     
     // console.log("score",score);
@@ -69,7 +67,7 @@ const AssesmentTest = ({navigation}) => {
     const handleToggle = async () => {
       setScoreBoard(!scoreBoard);
       setScore(0);
-      console.log("score==score",score);
+      // console.log("score==score",score);
       const data = await dispatch(TsiQuizSaveAPI({user_id:userData?.id,basic_id:307,score:score}));
       console.log("data",data.payload);
     }

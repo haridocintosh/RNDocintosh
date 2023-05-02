@@ -11,22 +11,15 @@ import {
   DrawerItemList,
   useDrawerStatus,
 } from '@react-navigation/drawer';
-// import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Foundation from 'react-native-vector-icons/Foundation';
 import { Button } from 'react-native-elements';
-import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
+import { useNavigation,DrawerActions} from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
 import { useDispatch, useSelector } from 'react-redux';
-// import {createDrawerNavigator} from '@react-navigation/drawer';
 import { getLocalData } from '../apis/GetLocalData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Icon } from '../navigation/ReuseLogics';
+import { CDrawerDoctor,CDrawerUser } from './CustomDrawerJson';
 
 
 const CustomDrawer = (props) => { 
@@ -39,6 +32,8 @@ const CustomDrawer = (props) => {
   // const isFocused = useIsFocused();
   // const Drawer = createDrawerNavigator();
   const drawerStatus = useDrawerStatus();
+
+  // console.log("CDrawer",CDrawer);
 
   // const userInfo = useSelector((state) => state.userLocalData.localData);
   // console.log("userInfo",userInfo);
@@ -84,14 +79,14 @@ const CustomDrawer = (props) => {
         <View style={styles.DocLogo}>
           <Image source={require('../assets/dr-icon/docintoshlogo.png')} style={styles.logoImg}></Image>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
-            <AntDesign name="close" color={'#fff'} size={25} />
+            {Icon("AntDesign",'close',25,'#fff')}
           </TouchableOpacity>
         </View>
 
         <View style={styles.profoleDetailsContainer}>
           <View style={styles.profoleDetails}>
-            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
-              <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
+            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')} style={styles.forwardIcon}>
+              {Icon("MaterialIcons","arrow-forward-ios",16,'#fff')}
             </TouchableOpacity>
             <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
             <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']}</Text>
@@ -99,106 +94,46 @@ const CustomDrawer = (props) => {
           </View>
         </View>
         {userdata?((userdata.role == '4' )?  
-        <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor : '#071B36'}}>
-          <View style={styles.drowerChilds}>
-            <DrawerItemList {...props} />
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
-              <Foundation name="trophy" size={25} color="white" />
-              <Text style={styles.sideDrawerName}>Leaderboard</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
-              <MaterialIcons name="person-add-alt-1" size={25} color="white" />
-              <Text style={styles.sideDrawerName}>Invite</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SelectInterestInnerScreen")}}>
-              <AntDesign name="select1" size={25} color="white" />
-              <Text style={styles.sideDrawerName}>Select Interest</Text>
-            </TouchableOpacity>
-
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
-              <MaterialCommunityIcons name="gift" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
-            </TouchableOpacity> */}
-
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
-              <Ionicons name="md-newspaper" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>What’s New</Text>
-            </TouchableOpacity>
-
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SinglePost")}}>
-              <Ionicons name="md-newspaper" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>SinglePost</Text>
-            </TouchableOpacity> */}
-
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
-              <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>Take a Tour</Text>
-            </TouchableOpacity> */}
-
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
-              <Entypo name="text-document-inverted" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>Business Page</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Rewards")}}>
-              <Ionicons name="gift" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>Rewards</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
-              <Ionicons name="settings-sharp" size={25} color="white"/>
-              <Text style={styles.sideDrawerName}>Settings</Text>
-            </TouchableOpacity>
-          </View>
-        </DrawerContentScrollView>
+          <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor : '#071B36'}}>
+            <View style={styles.drowerChilds}>
+              <DrawerItemList {...props} />
+              {CDrawerDoctor?.map((data,i) => {
+                return(
+                  <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate(data.redirect)}} key={i}>
+                    {Icon(data?.provider,data?.icon,25,'#fff')}
+                    <Text style={styles.sideDrawerName}>{data.name}</Text>
+                  </TouchableOpacity>
+                )
+              })}
+            </View>
+          </DrawerContentScrollView>
         :
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
         <View style={styles.drowerChilds}>
           <DrawerItemList {...props} />
-            
-          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
-              <MaterialIcons name="person-add-alt-1" size={25} color="white" />
-              <Text style={styles.sideDrawerName}>Invite</Text>
-            </TouchableOpacity>
-
-          {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
-            <MaterialCommunityIcons name="gift" size={25} color="white"/>
-            <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
-            <Ionicons name="md-newspaper" size={25} color="white"/>
-            <Text style={styles.sideDrawerName}>What’s New</Text>
-          </TouchableOpacity>
-       
-          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
-            <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
-            <Text style={styles.sideDrawerName}>Take a Tour</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
-            <Ionicons name="settings-sharp" size={25} color="white"/>
-            <Text style={styles.sideDrawerName}>Settings</Text>
-          </TouchableOpacity>
+          {CDrawerUser?.map((data,i) => {
+              return(
+                <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate(data.redirect)}} key={i}>
+                  {Icon(data?.provider,data?.icon,25,'#fff')}
+                  <Text style={styles.sideDrawerName}>{data.name}</Text>
+                </TouchableOpacity>
+              )
+            })}
         </View>
       </DrawerContentScrollView>
         ): ''}
         <View style={styles.deviderLine}/>
         <View style={{paddingHorizontal: 20,}}>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Feather name="phone" size={20} style={{color:'#fff',paddingRight:10}} />
-              <Text style={styles.drawerText}> Contact us </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center',paddingRight:10}}>
+              {Icon('Feather','phone',20,'#fff')}
+              <Text style={styles.drawerText}> Contact us</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15,}}>
-            <View style={{flexDirection: 'row', alignItems:'center'}}>
-              <Feather name="info" size={20} style={{color:'#fff',paddingRight:10}} />
-              <Text
-                style={styles.drawerText}>
-                Support
-              </Text>
+            <View style={{flexDirection: 'row', alignItems:'center',paddingRight:10}}>
+              {Icon('Feather','info',20,'#fff')}
+              <Text style={styles.drawerText}> Support </Text>
             </View>
           </TouchableOpacity>
             <View style={{marginVertical:15}}>
@@ -290,7 +225,8 @@ const styles = StyleSheet.create({
   },
   forwardIcon:{
     position:'absolute',
-    right:0
+    right:0,
+    padding:20
   },
   drawerText:{
     fontFamily:'Inter-Regular',

@@ -10,14 +10,12 @@
    import {useDispatch, useSelector} from 'react-redux';
    import { useNavigation } from '@react-navigation/native';
    import CustomButton from '../components/CustomButton';
-   import FontAwesome from 'react-native-vector-icons/FontAwesome';
-   import Ionicons from 'react-native-vector-icons/Ionicons';
-   import AntDesign from 'react-native-vector-icons/AntDesign';
    import OTPTextView from 'react-native-otp-textinput';
    import Toast from 'react-native-simple-toast';
    import { forgotPassword_ } from '../../redux/reducers/forgotPass';
    import { resendOTP } from '../../redux/reducers/loginAuth';
    import { forgotverifyOtp } from '../../redux/reducers/loginAuth';
+   import { Icon } from '../navigation/ReuseLogics';
 
    const ForgotPasswordOTP = ({route}) => {
     const navigation = useNavigation();
@@ -127,16 +125,16 @@
 
 
    <View style={styles.InputSendIcons}>
-    <TouchableOpacity onPress={() => handleEdit()}>
+    <TouchableOpacity onPress={() => handleEdit()} style={{margin:5}}>
         {editNumber ? 
-          <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
-        :
-          <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+            Icon('AntDesign','closecircleo',20,'#2c9dd1')
+         :
+            Icon('FontAwesome','pencil',20,'#2c9dd1')
         }
     </TouchableOpacity>
     {editNumber &&
-    <TouchableOpacity onPress={() => handleSubmit()}>
-        <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+    <TouchableOpacity onPress={() => handleSubmit()} style={{margin:5,paddingLeft:7}} >
+        {Icon('Ionicons','send-outline',20,'#2c9dd1')}
     </TouchableOpacity>
     }
    </View>

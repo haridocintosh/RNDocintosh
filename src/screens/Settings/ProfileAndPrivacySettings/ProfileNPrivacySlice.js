@@ -19,3 +19,19 @@ export const privacySettingsAPI = createAsyncThunk("privacySettings", async (dat
         console.log(e);
      }
 })
+export const privacySettingListAPI = createAsyncThunk("privacySettingList", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/privacySettingList`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result=  await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);
+     }
+})

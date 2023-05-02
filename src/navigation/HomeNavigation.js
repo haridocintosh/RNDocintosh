@@ -19,12 +19,11 @@ import ContactPermission from '../screens/ContactPermission';
 import ReportPost from '../screens/HomeScreen/ReportPost/ReportPost';
 import ReportTrack from '../screens/HomeScreen/ReportPost/ReportTrack';
 import { TouchableOpacity} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import HandleBack from './HandleBack';
 import BellNotification from '../screens/HomeScreen/BellNotification/BellNotification';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
-import { showHeaderItem, showHeaderItemBackless } from './ReuseLogics';
+import { Icon, showHeaderItem, showHeaderItemBackless } from './ReuseLogics';
 import QuizGame from '../screens/QuizLevels/QuizGame';
 import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
 import Surveys from '../screens/Survay/Surveys';
@@ -84,8 +83,8 @@ const HomeNavigation = () => {
              headerStyle: {backgroundColor: '#071B36'},
              headerTintColor: '#fff',
              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-                   <AntDesign name="close" size={25} style={{color:"#fff",marginRight:5}} />
+                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={{marginRight:5}} >
+                   {Icon('AntDesign','close',25,'#fff')}
                  </TouchableOpacity>
                 )
             }}/>

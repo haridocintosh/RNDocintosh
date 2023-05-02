@@ -11,9 +11,6 @@ import { View,
   import React, { useState, useEffect } from 'react';
   import { useNavigation } from '@react-navigation/native';
   import CustomButton from '../components/CustomButton';
-  import AntDesign from 'react-native-vector-icons/AntDesign';
-  import Ionicons from 'react-native-vector-icons/Ionicons';
-  import FontAwesome from 'react-native-vector-icons/FontAwesome';
   import OTPTextView from 'react-native-otp-textinput';
   import { useDispatch } from 'react-redux';
   import Toast from 'react-native-simple-toast';
@@ -171,16 +168,16 @@ import { View,
             clearTextOnFocus={true}
             />
         <View style={styles.InputSendIcons}>
-            <TouchableOpacity onPress={() => handleEdit()}>
+            <TouchableOpacity onPress={() => handleEdit()} style={{margin:5}}>
               {editNumber ? 
-                  <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
+                  Icon('AntDesign','closecircleo',20,'#2c9dd1')
                 :
-                  <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+                  Icon('FontAwesome','pencil',20,'#2c9dd1')
               }
             </TouchableOpacity>
             {editNumber &&
-            <TouchableOpacity onPress={() => handleSubmit()}>
-                <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+            <TouchableOpacity onPress={() => handleSubmit()} style={{margin:5,paddingLeft:7}}>
+              {Icon('Ionicons','send-outline',20,'#2c9dd1')}
             </TouchableOpacity>
             }
         </View>

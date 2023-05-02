@@ -1,13 +1,8 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Entypo from 'react-native-vector-icons/Entypo';
-// import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
-// import MessagesScreen from '../screens/MessagesScreen';
-// import MomentsScreen from '../screens/MomentsScreen';
-// import SettingsScreen from '../screens/SettingsScreen';
 import TabNavigator from './TabNavigator';
 import CustomDrawer from '../components/CustomDrawer';
-import LoginScreen from '../screens/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 

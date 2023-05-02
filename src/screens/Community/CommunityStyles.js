@@ -225,7 +225,8 @@ export const styles = StyleSheet.create({
       ThreadPostDescription:{
         color:'#51668A',
         fontFamily:'Inter-Regular',
-        marginTop:15
+        marginTop:15,
+        marginBottom:10
       },
       ThreadPostDescriptionViewAll:{
         color:'#2376E5',
@@ -274,4 +275,53 @@ export const styles = StyleSheet.create({
         marginTop:-15,
         fontSize:10
       },
+      
+// =================================Message Screen=====================================
+
+headerContainer:{
+  height:55,
+  backgroundColor:'#071B36',
+  paddingHorizontal:10,
+  justifyContent:'space-between',
+  alignItems:'center',
+  flexDirection:'row'
+},
+headerTitleText:{
+  color:'#fff',
+},
+chatContainer:{
+  paddingHorizontal:10,
+  marginBottom:60
+},
+OtherChatContainer:{
+  flexDirection:'row',
+  alignItems:'flex-end',
+  marginVertical:10
+},
+OtherChatText:{
+  padding:10,
+  maxWidth:Dimensions.get('window').width/1.5,
+  borderRadius:5,
+  backgroundColor:'#F2FAFA',
+  marginLeft:5
+},
+OwnChatContainer:{
+  justifyContent:'flex-end',
+  alignItems:'flex-end',
+  flexDirection:'row'
+},
+OwnChatText:{
+  flexDirection:'row',
+  padding:10,
+  maxWidth:Dimensions.get('window').width/1.5,
+  borderRadius:5,
+  backgroundColor:'#A0C5C5',
+  marginRight:5
+},
+ImagePic:{
+  borderRadius:50,
+  height:40,
+  width:40
+},
+
 });

@@ -13,51 +13,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   const videoPlayer = useRef(null);
   const [imgHeight, setImgHeight] = useState();
 
-  // const [currentTime, setCurrentTime] = useState(0);
-  // const [duration, setDuration] = useState(0);
-  // const [isFullScreen, setIsFullScreen] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [paused, setPaused] = useState(true);
-  // const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING);
-  // const [screenType, setScreenType] = useState('content');
-  // const [postId, setPostId] = useState();
 
-  // console.log("carouselItems",carouselItems?.length);
-
-  // const videoBuffer = (isBuffer) =>{
-  //   //here you could set the isBuffer value to the state and then do something with it
-  //   //such as show a loading icon
-  // }
-  // const onEnd = () => setPlayerState(PLAYER_STATES.ENDED);
-  // const onLoad = (data) => {
-  //   setDuration(data.duration);
-  //   setIsLoading(false);
-  // };
-  // const onLoadStart = (data) => {
-  //   setIsLoading(true)
-  // };
-  // const onProgress = (data) => {
-  //   // Video Player will progress continue even if it ends
-  //   if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
-  //     setCurrentTime(data.currentTime);
-  //   }
-  // };
-  // const onFullScreen = () => {
-  //   setIsFullScreen(isFullScreen);
-  //   if (screenType == 'content') setScreenType('cover');
-  //   else setScreenType('content');
-  // };
-  // const onPaused = (playerState) => {
-  //   //Handler for Video Pause
-  //   console.log('idhvhjjh===',videoPlayer.current.state.showPoster = true);
-  //   setPaused(!paused);
-  //   setPostId(items.post_id);
-  //   setPlayerState(playerState);
-  // };
-  // const onReplay = () => {
-  //   setPlayerState(PLAYER_STATES.PLAYING);
-  //   videoPlayer.current.seek(0);
-  // };
   const onPlayVideo = (id) => {
     console.log('id',id);
     // setPostId(items.post_id);
@@ -67,16 +23,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   useEffect(() => {
     SetCarouselItems(items?.attach_array)
   },[items?.attach_array])
-  // const onSeek = (seek) => {
-  //   //Handler for change in seekbar
-  //   videoPlayer.current.seek(seek);
-  // };
-  // const onSeeking = (currentTime) => setCurrentTime(currentTime);
-  // const renderToolbar = () => (
-  //   <View>
-  //     <Text style={styles.toolbar}>toolbar</Text>
-  //   </View>
-  // );
+
 
 
   const actualHeight = (width,height) => {

@@ -15,11 +15,11 @@ const Members = ({navigation}) => {
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1,padding:15}}>
         <View style={styles.recomandedUsers}>
             <View style={styles.recomandedUsersPic}>
-            <Image source={require('../../assets/images/CommunityPPic2.png')} style={styles.UsersProfilePic}/>
-            <View style={styles.userInfo}>
-                <Text style={styles.hospitalName}>Dr. Sudeep Bhatra</Text>
-                <Text style={styles.groupsText}>Pediatric Surgeon</Text>
-            </View>
+                <Image source={require('../../assets/images/CommunityPPic2.png')} style={styles.UsersProfilePic}/>
+                <View style={styles.userInfo}>
+                    <Text style={styles.hospitalName}>Dr. Sudeep Bhatra</Text>
+                    <Text style={styles.groupsText}>Pediatric Surgeon</Text>
+                </View>
             </View>
             <View>
                 <TouchableOpacity onPress={() => openOption("JionCommunity")}>
@@ -28,7 +28,6 @@ const Members = ({navigation}) => {
                 <MemberOptionsModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
             </View>
         </View>
-
     </SafeAreaView>
   )
 }

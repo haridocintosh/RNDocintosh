@@ -282,6 +282,7 @@ const publishCheck1 = (e, text)=>{
           const uploadData = {userdata,post,uploadImage:uniqueData};
         // setloader(true);
           const result = await dispatch(postCreate(uploadData));
+          console.log(result.payload);
           if(result.payload.status == 'Success'){
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);

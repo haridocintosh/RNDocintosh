@@ -16,7 +16,7 @@ const JionCommunity = ({navigation}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
-
+    const [threadOptionModal,setThreadOptionModal] = useState(false);
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
@@ -45,6 +45,10 @@ const JionCommunity = ({navigation}) => {
     //     navigation.setOptions({ title: ''});
     // },[])
 
+    const handleOnScroll = () => {
+        setCmtyPageOptions(false);
+        setThreadOptionModal(false);
+    } 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
@@ -56,17 +60,16 @@ const JionCommunity = ({navigation}) => {
                         </TouchableOpacity>
                         <View style={{flexDirection:'row'}}>
                             <TouchableOpacity>
-                            <AntDesign name='search1' size={25} color={'#fff'} style={{marginRight:15}}/>
+                                <AntDesign name='search1' size={25} color={'#fff'} style={{marginRight:15}}/>
                             </TouchableOpacity>
                             <TouchableOpacity  onPress={() => handleCommunityModal()}>
-                            <Entypo name='dots-three-vertical' size={25} color={'#fff'}/>
+                                <Entypo name='dots-three-vertical' size={25} color={'#fff'}/>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </LinearGradient>
             </ImageBackground>
            
-
             <View style={styles.communityName}>
                 <View>
                     <Image 
@@ -105,9 +108,16 @@ const JionCommunity = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} onScroll={Animated.event(
                   [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
                   {useNativeDriver: false},
-                )} onScrollBeginDrag={() => setCmtyPageOptions(false)}>
+                )} onScrollBeginDrag={() => handleOnScroll()}>
             <View style={{padding:15,marginBottom:80}}>
-                {index ? <Threads/> : <FocusGroup/>}
+                {index ? 
+                    <Threads 
+                        modalVisible={threadOptionModal}
+                        setModalVisible={setThreadOptionModal}
+                    /> 
+                : 
+                    <FocusGroup/>
+                }
             </View>
         </ScrollView>
 

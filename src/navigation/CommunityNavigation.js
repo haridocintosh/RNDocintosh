@@ -9,7 +9,6 @@ import Members from '../screens/Community/Members';
 import MessageScreen from '../screens/Community/MessageScreen';
 
 
-
 const CommunityNavigation = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -20,7 +19,7 @@ const CommunityNavigation = () => {
         <Stack.Screen name="JionCommunity" component={JionCommunity} />
         <Stack.Screen name="Sharepost" component={Sharepost} options={showHeaderItem} />
         <Stack.Screen name="Members" component={Members} options={showHeaderItem} />
-        <Stack.Screen name="MessageScreen" component={MessageScreen} options={showHeaderItem} />
+        <Stack.Screen name="MessageScreen" component={MessageScreen}/>
     </Stack.Navigator>
     </>
   )

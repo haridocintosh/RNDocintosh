@@ -5,75 +5,10 @@ import { getLocalData } from '../../../apis/GetLocalData';
 import { privacySettingListAPI, privacySettingsAPI } from './ProfileNPrivacySlice';
 import { useDispatch } from 'react-redux';
 
-
-const PPData = [
-  {
-    name:'Email-ID',
-    source:require('../../../assets/dr-icon/Ic_Email.png'),
-    isEnable:true,
-    column : "email",
-  },
-  {
-    name:'Following list',
-    source:require('../../../assets/dr-icon/Ic_Following.png'),
-    isEnable:false,
-    column : "following",
-  },
-  {
-    name:'Followers list',
-    source:require('../../../assets/dr-icon/Ic_Followers.png'),
-    isEnable:true,
-    column : "follower",
-  },
-  {
-    name:'Earned Doc-Coins',
-    source:require('../../../assets/dr-icon/Ic_Coin.png'),
-    isEnable:false,
-    column : "earned_coins",
-  },
-  {
-    name:'Qualification',
-    source:require('../../../assets/dr-icon/Ic_Qualification.png'),
-    isEnable:true,
-    column : "qualification",
-  },
-  {
-    name:'Work Experience',
-    source:require('../../../assets/dr-icon/Ic_Work_Experience.png'),
-    isEnable:false,
-    column : "work_exp",
-  },
-  {
-    name:'Award',
-    source:require('../../../assets/dr-icon/Ic_Award.png'),
-    isEnable:true,
-    column : "award",
-  },
-  {
-    name:'Paper Published',
-    source:require('../../../assets/dr-icon/Ic_Paper_Published.png'),
-    isEnable:false,
-    column : "paper_published",
-  },
-  {
-    name:'Achievement',
-    source:require('../../../assets/dr-icon/Ic_Achievement.png'),
-    isEnable:true,
-    column:"achievement",
-  },
-  {
-    name:'Special Skills',
-    source:require('../../../assets/dr-icon/Ic_Skills.png'),
-    isEnable:false,
-    column : "special_skills",
-  }
-]
-
 const ProfileNPrivacySettings = ({navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const [ppData, setPPData] = useState(PPData);
+  const [ppData, setPPData] = useState([]);
   const [userData, setUserData] = useState();
-
   const dispatch = useDispatch();
 
   const getPPdata = () =>{
@@ -81,30 +16,20 @@ const ProfileNPrivacySettings = ({navigation}) => {
       const resData = res?.data;
       setUserData(resData)
       const resetResult = await dispatch(privacySettingListAPI({id:resData?.id}));
-      console.log("resetResult",resetResult.payload);
       setPPData(resetResult.payload);
-      
     });
   }
 
-
   useEffect(() => {
     navigation.setOptions({ title: 'Profile & Privacy Settings'});
-    getPPdata()
+    getPPdata();
   },[])
 
   const handleSelect =  async (val,bool) => {
-    console.log("val,bool",val,bool);
-      const result = ppData?.map(data => data.field_column == val ? {
-        ...data,
-        isEnable:!data.isEnable
-      }: data)
-      console.log(val,bool);
+      const result = ppData?.map(data => data.field_column == val ? {...data, isEnable:!data.isEnable}: data);
       setPPData(result);
       const postData = {id:userData?.id,column:val,value:bool? 1:0}
-      console.log(postData);
       const resetResult = await dispatch(privacySettingsAPI(postData));
-      console.log("resetResult",resetResult.payload);
   }
 
   return (
@@ -131,4 +56,4 @@ const ProfileNPrivacySettings = ({navigation}) => {
   )
 }
 
-export default ProfileNPrivacySettings
+export default ProfileNPrivacySettings;

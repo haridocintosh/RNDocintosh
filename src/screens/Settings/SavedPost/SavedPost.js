@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
-  ScrollView,
   FlatList,
   ActivityIndicator
 } from 'react-native';

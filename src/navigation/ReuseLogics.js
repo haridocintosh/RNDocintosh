@@ -9,7 +9,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const showHeaderItem = {
       headerShown: true,  
@@ -24,7 +26,6 @@ export const showHeaderItemBackless = {
 };
 
 export const Icon = (provider, name, size, color) => {
-      console.log(provider, name, size, color);
     if(provider == "Ionicons"){
       return <Ionicons name={name} size={size} color={color}/>
     }else if(provider == "Fontisto"){
@@ -41,6 +42,12 @@ export const Icon = (provider, name, size, color) => {
       return <Foundation name={name} size={size} color={color}/>
     }else if(provider == "Entypo"){
       return <Entypo name={name} size={size} color={color}/>
+    }else if(provider == "MaterialIcons"){
+      return <MaterialIcons name={name} size={size} color={color}/>
+    }else if(provider == "FontAwesome5"){
+      return <FontAwesome5 name={name} size={size} color={color}/>
+    }else if(provider == "FontAwesome"){
+      return <FontAwesome name={name} size={size} color={color}/>
     }
 }
 
@@ -50,7 +57,6 @@ export const PickImage = async (arg) => {
             storageOptions: {
               skipBackup: true,
               path: 'images',
-              
             },
             selectionLimit:3,
             mediaType: 'photo',

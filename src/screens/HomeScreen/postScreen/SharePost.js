@@ -114,9 +114,10 @@ const  Sharepost = () => {
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
       const result  = res.assets;
+      console.log("result",result);
       // setloader(true);
-      const addIndex = [...pickedData, result[0]]
-      // console.log("addIndex",addIndex);
+      const addIndex = [...pickedData, ...result]
+      console.log("addIndex",addIndex);
       const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
       
       setData(dataId);
@@ -129,14 +130,14 @@ const  Sharepost = () => {
     })
   };
 
-  console.log('pickedData',pickedData.length);
+  // console.log('pickedData',pickedData.length);
 
   const pickVideo =  () => {
     setDocument(null);
     PickVideos(setloader).then(async (res) => {
       const result  = res.assets;
       // setloader(true);
-      const addIndex = [...pickedData, result[0]]
+      const addIndex = [...pickedData, ...result]
       const data = addIndex?.map((data,i) => {return {...data, id:i}})
       setData(data);
       setPost({...post,  type:'v' });

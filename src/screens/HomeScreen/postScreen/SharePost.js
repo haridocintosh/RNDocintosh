@@ -54,7 +54,7 @@ const  Sharepost = () => {
   const navigation  = useNavigation();
   const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
-  const [pickedData, setData]   = useState(null);
+  const [pickedData, setData]   = useState([]);
   const [document, setDocument]   = useState(null);
   const [circlespeciality, setSpl] = useState([]);
   const [post ,setPost] = useState({
@@ -110,29 +110,35 @@ const  Sharepost = () => {
   }
 
   const pickImage =  () => {
-    setData(null)
+    // setData(null)
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
       const result  = res.assets;
+      console.log("result",result);
       // setloader(true);
-      const data = result?.map((data,i) => {return {...data, id:i}})
-      setData(data);
+      const addIndex = [...pickedData, ...result]
+      console.log("addIndex",addIndex);
+      const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
+      
+      setData(dataId);
       setPost({...post, 
           type:'i'
       });
-      setCountData(data.length);
+      setCountData(dataId.length);
       setMedia('images');
       setloader(false);
     })
   };
 
+  // console.log('pickedData',pickedData.length);
+
   const pickVideo =  () => {
-    
     setDocument(null);
     PickVideos(setloader).then(async (res) => {
       const result  = res.assets;
-      setloader(true);
-      const data = result?.map((data,i) => {return {...data, id:i}})
+      // setloader(true);
+      const addIndex = [...pickedData, ...result]
+      const data = addIndex?.map((data,i) => {return {...data, id:i}})
       setData(data);
       setPost({...post,  type:'v' });
       setCountData(data.length);
@@ -499,9 +505,9 @@ setSpecialNames(specialityName)
         // showTabs={emojiTab}
       /> */}
         <View style={styles.bottomTabBar}>
-          <TouchableOpacity onPress={pickEmoji}>
+          {/* <TouchableOpacity onPress={pickEmoji}>
             <Fontisto name="smiley" size={24} color="#51668A" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity  onPress={pickImage}>
             <FontAwesome5 name="image" size={24} color="#51668A" />
           </TouchableOpacity>
@@ -511,8 +517,9 @@ setSpecialNames(specialityName)
           {/* <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
             <MaterialIcons name="keyboard-voice" size={24} color="#51668A" />
           </TouchableOpacity> */}
-          <TouchableOpacity onPress={handleDocPicker}>
-            <MaterialCommunityIcons name="file-document-multiple" size={24} color="#51668A" />
+          <TouchableOpacity onPress={handleDocPicker} disabled={pickedData.length !== 0 ? true : false}>
+            <MaterialCommunityIcons name="file-document-multiple" size={24} 
+              color={pickedData.length !== 0 ?"#ccc" :'#51668A'} />
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => handlePresentModal()}>
             <MaterialCommunityIcons name="dots-horizontal-circle" size={26} color="#51668A"    />
@@ -541,7 +548,8 @@ setSpecialNames(specialityName)
           <View style={{flexDirection:'row',}}>
           <FontAwesome name="bullhorn" size={20} color="#45B5C0" />
           <Text style={{marginLeft:15, fontSize:16, fontWeight:'600',color:'#071B36'}}>Announce Your Clinic</Text>
-          </View></TouchableOpacity>
+          </View>
+          </TouchableOpacity>
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(3) }}>
           <View style={{flexDirection:'row'}}>

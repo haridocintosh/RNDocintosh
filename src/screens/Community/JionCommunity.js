@@ -116,7 +116,10 @@ const JionCommunity = ({navigation}) => {
                         setModalVisible={setThreadOptionModal}
                     /> 
                 : 
-                    <FocusGroup/>
+                    <FocusGroup
+                        modalVisible={threadOptionModal}
+                        setModalVisible={setThreadOptionModal}
+                    />
                 }
             </View>
         </ScrollView>

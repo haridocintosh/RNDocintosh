@@ -275,6 +275,23 @@ export const styles = StyleSheet.create({
         marginTop:-15,
         fontSize:10
       },
+
+      ListEmptyComponent:{
+        flex:1,
+        // backgroundColor:'#fff',
+        justifyContent:'center',
+        alignItems:'center'
+      },
+      subTitle:{
+        fontFamily:"Inter-Regular",
+        color:'#071B36'
+      },
+      Title:{
+        fontFamily:"Inter-SemiBold",
+        color:'#071B36',
+        fontSize:18,
+        marginTop:15,
+      },
       
 // =================================Message Screen=====================================
 

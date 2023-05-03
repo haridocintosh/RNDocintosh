@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   UserDataConatiner: {
     flexDirection: "row",
     backgroundColor: "#F2FAFA",
-    height: 42,
+    height: 45,
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     color: "#000",
   },
   UserDataNameCont: {
-    height: 40,
+    height: 43,
     borderBottomWidth: 2,
     borderBottomColor: "#45B5C0",
     justifyContent: "center",
@@ -231,4 +231,20 @@ userInfo: {
   flexDirection: "row",
   alignItems: "center",
 },
+ListEmptyComponent:{
+  flex:1,
+  // backgroundColor:'#fff',
+  justifyContent:'center',
+  alignItems:'center'
+},
+subTitle:{
+  fontFamily:"Inter-Regular",
+  color:'#071B36'
+},
+Title:{
+  fontFamily:"Inter-SemiBold",
+  color:'#071B36',
+  fontSize:18,
+  marginTop:15
+}
 });

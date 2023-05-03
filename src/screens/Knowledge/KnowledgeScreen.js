@@ -11,11 +11,17 @@ const KnowledgeScreen = ({navigation}) => {
   const source2 = {uri:'https://docintosh.com/Webinar_pdf/NST%20deck.pdf',cache: true}
   const source3 = {uri:'https://docintosh.com/Webinar_pdf/ENSURE%20PEPTIDE%20DECK-%20Gastros.pdf',cache: true}
 
+  const onBuffer = (data) =>{
+    console.log("data",data);
+
+  }
+  console.log("playv1",playv1);
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => setPlayv1(!playv1)}>
+          {/* <TouchableOpacity onPress={() => setPlayv1(!playv1)}> */}
+
             {playv1?
               <Image source={{uri:'https://docintosh.com/medico_video/3.jpg'}} style={{height:180}}/>
             :
@@ -24,15 +30,16 @@ const KnowledgeScreen = ({navigation}) => {
                 ref={videoPlayer}
                 resizeMode={"contain"}
                 source={{uri:'https://docintosh.com/medico_video/zoom_0.mp4'}} 
-                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:180}}
+                style={{width:"100%",marginHorizontal:10,alignSelf:'center',height:180,backgroundColor:'#000'}}
                 volume={10}
                 useTextureView={false}
                 playInBackground={false}
                 disableFocus={true}
                 playWhenInactive={false}
+                onBuffer={onBuffer} 
               />
           }
-          </TouchableOpacity> 
+          {/* </TouchableOpacity> */}
             <Button
               onPress={() => setPlayv1(!playv1)}
                 title={playv1 ? "Play": "pause"}

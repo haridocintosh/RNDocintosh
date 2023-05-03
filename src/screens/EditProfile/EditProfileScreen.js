@@ -135,14 +135,10 @@
     const asyncFetchDailyData = async () => {
       navigation.setOptions({title:'Edit Profile'});
       getLocalData('USER_INFO').then(async (res) => {
-        setLoader(true);
+        
         const uresult = await dispatch(userInfo({user_id : res.data.id}));
         setuserdata(uresult?.payload[0]);
-        const result = await dispatch(getSelectedInterest({user_id : res.data.id}));
-        setAllInterestsData(result?.payload)
-        const TrueData = result.payload.filter(data => data.isSelected == true)
-        setInterestsData(TrueData);
-        setLoader(false);
+        
       });
     }
 
@@ -179,6 +175,16 @@
         setGetPublicationData(getPublicationResult.payload);
       })
     }
+    const getSelectIntrest =  () => {
+      getLocalData('USER_INFO').then(async (res) => {
+        setLoader(true);
+        const result = await dispatch(getSelectedInterest({user_id : res.data.id}));
+        setAllInterestsData(result?.payload)
+        const TrueData = result.payload.filter(data => data.isSelected == true)
+        setInterestsData(TrueData);
+        setLoader(false);
+      })
+    }
     
     useEffect(()=>{
       if(route?.params) {
@@ -195,6 +201,8 @@
         handleAward();
         getQualification();
         getPublication();
+        getSelectIntrest();
+        
     },[])
     
 
@@ -286,7 +294,7 @@
                 <Text style={styles.userInfoTitle}>About Me</Text>
                 <Entypo name="edit" size={23} color="black" style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={aboutMeModal} />
               </View>
-              <Text style={{paddingHorizontal:20,color:'#51668A',lineHeight:20,marginBottom:20}}>
+              <Text style={{color:'#51668A',lineHeight:20,marginBottom:20}}>
                 {userdata?.summary}  
               </Text>
           </Card>
@@ -507,28 +515,7 @@
               </>}
           </Card>
 
-          {/* <AchievementsModal achievement={achievement} setAchievement={setAchievement}/>
-          <Card style={styles.CartContainer}>
-            <View>
-              <Text style={styles.userInfoTitle}>Achievements</Text>
-              <Text style={styles.AddInfo}>
-                <Entypo name="plus" size={15} color="#2376E5" /> 
-                Add Achievements
-              </Text>
-            </View>
-            <View style={styles.AddedDetails}>
-              <View style={{flexDirection:'row'}}>
-                <Image source={require('../../assets/dr-icon/trofee.png')}></Image>
-                <View style={{paddingLeft:10}}>
-                  <Text style={styles.AddedDetailsTitle}>Lorem ipsum dolor sit amet</Text>
-                  <Text style={styles.AddedDetailsDate}>June 2021</Text>
-                </View>  
-              </View>
-              <Entypo name="edit" size={23} color="#2C8892"  onPress={() => AchievementModal()}/>    
-            </View>
-          </Card> */}
-          
-          <IntrestsModal setInterests={setInterests} Interests={Interests} allInterestsData={allInterestsData}/>
+          <IntrestsModal setInterests={setInterests} Interests={Interests} allInterestsData={allInterestsData} getSelectIntrest={getSelectIntrest}/>
           <Card style={styles.CartContainer}>
             <View style={styles.InterestsContainer}>
               <Text style={styles.userInfoTitle}>Interests</Text>

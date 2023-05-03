@@ -51,7 +51,6 @@ const ProfileScreenPost = ({postLength}) => {
       setBottumLoader(false)
       setMyPost(allPostResult.payload.result);
       await postLength(allPostResult.payload.count);
-     
     });
   }
 
@@ -114,6 +113,16 @@ const ProfileScreenPost = ({postLength}) => {
   var _viewabilityConfig = {
     itemVisiblePercentThreshold: 50
   };
+
+  const ListEmptyComponent = () => {
+    return(
+      <View style={styles.ListEmptyComponent}>
+        <Text style={styles.Title}>Opps!</Text>
+        <Text style={styles.subTitle}>Looks Like no post uploaded.</Text>
+      </View>
+    )
+
+  }
 
   const renderItem = ({item,index}) => {
     return(
@@ -180,6 +189,7 @@ const ProfileScreenPost = ({postLength}) => {
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         viewabilityConfig={_viewabilityConfig}
         onScrollBeginDrag={() => setModalVisible(false)}
+        ListEmptyComponent={ListEmptyComponent}
     />
     </View>
   )

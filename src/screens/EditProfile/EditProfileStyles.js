@@ -40,6 +40,15 @@ export const styles = StyleSheet.create({
         width:'100%',
         marginBottom:20
     },
+    inputTextArea:{
+        alignSelf:'center',
+        borderColor:'#071B36',
+        borderWidth:0.7,
+        width:'100%',
+        marginVertical:20,
+        borderRadius:5,
+        height:120
+    },
     inputDropDown:{
         alignSelf:'center',
         // borderBottomColor:'#071B36',
@@ -212,30 +221,143 @@ export const styles = StyleSheet.create({
         width:72,
         height:72,
     },
-    profileEditBtnTouch:{position:'absolute',backgroundColor:"#fff",right:0,bottom:0,borderRadius:4,padding:1},
-    profileEditBtn:{color:'#51668A'},
+    profileEditBtnTouch: {
+        position:'absolute',
+        backgroundColor:"#fff",
+        right:0,
+        bottom:0,
+        borderRadius:4,
+        padding:1
+    },
+    profileEditBtn:{
+        color:'#51668A'
+    },
     basicInfoConatiner:{padding:20},
-    basicInfoTitle:{fontSize:20,color:"#071B36",fontFamily:"PlusJakartaSans-Bold"},
-    userInfoContainer:{flexDirection:'row',paddingTop:16, justifyContent:'space-between'},
-    userInfoTextResult:{paddingLeft:10,color:'#51668A'},
+    basicInfoTitle:{
+        fontSize:20,
+        color:"#071B36",
+        fontFamily:"PlusJakartaSans-Bold"
+    },
+    userInfoContainer:{
+        flexDirection:'row',
+        paddingTop:16, 
+        justifyContent:'space-between'
+    },
+    userInfoTextResult:{
+        paddingLeft:10,
+        color:'#51668A'
+    },
     userInfoText:{color:'#071B36'},
-    userInfoTitle:{fontSize:16,fontWeight:'600',color:"#071B36",fontFamily:"PlusJakartaSans-Bold"},
-    AddInfo:{fontSize:16,marginVertical:20, color:'#2376E5',fontFamily:"Inter-Regular"},
-    AddedDetails:{flexDirection:'row',padding:20,justifyContent:'space-between',borderColor:'#D5DEED'},
-    AddedDetailsTitle:{fontSize:16,color:"#071B36",fontFamily:"PlusJakartaSans-Regular",fontWeight:'500',width:Dimensions.get('window').width/2},
-    AddedDetailsDate:{fontSize:12,color:"#51668A",fontFamily:"Inter-Regular"},
-    AddedDetailsSubTitle:{color:"#51668A",fontFamily:"Inter-Regular",width:Dimensions.get('window').width/2},
-    SingleLetter:{width:50,height:50,borderRadius:50,justifyContent:'center',alignItems:'center',backgroundColor:'#45B5C0'},
-    SingleLetterText:{color:'#fff',fontFamily:"Inter-SemiBold"},
-    devider:{backgroundColor:'#D5DEED',width:"90%", alignSelf:'center',height:1,marginTop:10},
-    showMore:{fontSize:16, color:'#2376E5',marginRight:5},
-    showMoreContainer:{justifyContent:'center',alignItems:'center',flexDirection:'row',paddingVertical:12},
-    InterestsContainer:{flexDirection:'row',justifyContent:'space-between',marginBottom:15},
-    InterestsList:{flexDirection:'row',flexWrap:'wrap'},
-    InterestsSelected:{backgroundColor : 'rgba(69, 181, 192, 0.05)',borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
-    InterestsNotSelected:{borderRadius:50,borderWidth:2,borderColor:'#45B5C0',paddingVertical:8,paddingHorizontal:15,margin:5,flexDirection:'row',alignItems:'center'},
+    userInfoTitle:{
+        fontSize:16,
+        fontWeight:'600',
+        color:"#071B36",
+        fontFamily:"PlusJakartaSans-Bold"
+    },
+    AddInfo:{
+        fontSize:16,
+        marginVertical:20, 
+        color:'#2376E5',
+        fontFamily:"Inter-Regular"
+    },
+    AddedDetails:{
+        flexDirection:'row',
+        padding:20,
+        justifyContent:'space-between',
+        borderColor:'#D5DEED'
+    },
+    AddedDetailsTitle:{
+        fontSize:16,
+        color:"#071B36",
+        fontFamily:"PlusJakartaSans-Regular",
+        fontWeight:'500',
+        width:Dimensions.get('window').width/2
+    },
+    AddedDetailsDate:{
+        fontSize:12,
+        color:"#51668A",
+        fontFamily:"Inter-Regular"
+    },
+    AddedDetailsSubTitle:{
+        color:"#51668A",
+        fontFamily:"Inter-Regular",
+        width:Dimensions.get('window').width/2
+    },
+    SingleLetter:{
+        width:50,
+        height:50,
+        borderRadius:50,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#45B5C0'
+    },
+    SingleLetterText:{
+        color:'#fff',
+        fontFamily:"Inter-SemiBold"
+    },
+    devider:{
+        backgroundColor:'#D5DEED',
+        width:"90%", 
+        alignSelf:'center',
+        height:1,
+        marginTop:10
+    },
+    showMore:{
+        fontSize:16, 
+        color:'#2376E5',
+        marginRight:5},
+    showMoreContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row',
+        paddingVertical:12
+    },
+    InterestsContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginBottom:15
+    },
+    InterestsList:{
+        flexDirection:'row',
+        flexWrap:'wrap'
+    },
+    InterestsSelected:{
+        backgroundColor : 'rgba(69, 181, 192, 0.05)',
+        borderRadius:50,
+        borderWidth:2,
+        borderColor:'#45B5C0',
+        paddingVertical:8,
+        paddingHorizontal:15,
+        margin:5,
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    InterestsNotSelected:{
+        borderRadius:50,
+        borderWidth:2,
+        borderColor:'#45B5C0',
+        paddingVertical:8,
+        paddingHorizontal:15,
+        margin:5,
+        flexDirection:'row',
+        alignItems:'center'
+    },
     selectedIcons:{marginLeft:10},
-    loaderContainer:{flex:1,justifyContent:'center',alignItems:'center'},
-    ShowAllContainer:{justifyContent:'center',alignItems:'center',padding:7,marginTop:5,flexDirection:'row'},
-    ShowAllText:{color:'#2376E5',fontSize:16,marginRight:5},
+    loaderContainer:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    ShowAllContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+        padding:7,
+        marginTop:5,
+        flexDirection:'row'
+    },
+    ShowAllText:{
+        color:'#2376E5',
+        fontSize:16,
+        marginRight:5
+    },
 });

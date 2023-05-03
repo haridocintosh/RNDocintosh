@@ -259,6 +259,7 @@ const HomeScreen = ({navigation,route})=> {
           <View style={item?.description && {paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
+              
             </Text>
           </View>
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>

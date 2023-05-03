@@ -31,9 +31,9 @@ const AboutMeModal = ({aboutMe,setaboutMe,asyncFetchDailyData,userdata}) => {
                 <Pressable style={styles.closebtn} onPress={() => setaboutMe(!aboutMe)}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
-                <Text style={styles.modalText}>Edit About Me</Text>
-                <View style={styles.input}>
-                    <Text style={styles.modalSubText}>About Me*</Text>
+                {/* <Text style={styles.modalText}>Edit About Me</Text> */}
+                <View style={styles.inputTextArea}>
+                    {/* <Text style={styles.modalSubText}>About Me*</Text> */}
                     <Controller
                         control={control}        
                         name="summary"      
@@ -44,7 +44,8 @@ const AboutMeModal = ({aboutMe,setaboutMe,asyncFetchDailyData,userdata}) => {
                         render={({field: {onChange, value, onBlur}}) => (
                         <TextInput
                             value={value}            
-                            onBlur={onBlur}            
+                            onBlur={onBlur}       
+                            placeholder='About Me*'     
                             onChangeText={value => onChange(value)}
                             multiline={true} 
                         />

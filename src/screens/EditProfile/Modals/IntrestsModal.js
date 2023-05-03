@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { addCircle } from '../../../../redux/reducers/circleSlice';
 
-const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
+const IntrestsModal = ({Interests, setInterests, allInterestsData,getSelectIntrest}) => {
     const [interestsData, setinterestsData] = useState(allInterestsData);
     const dispatch              = useDispatch()
     const [userId, setuserId]   = useState();
@@ -30,6 +30,11 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
           });
     }
 
+    const handleClose = () => {
+        setInterests(!Interests);
+        getSelectIntrest();
+    }
+
     useEffect(()=>{
         setinterestsData(allInterestsData);
     },[allInterestsData])
@@ -40,7 +45,7 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData}) => {
         visible={Interests}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
-                <Pressable style={styles.closebtn} onPress={() => setInterests(!Interests)}>
+                <Pressable style={styles.closebtn} onPress={() => handleClose()}>
                     <AntDesign name="close" size={20} color="#51668A" />
                 </Pressable>
                 <Text style={styles.modalText}>Edit Interests</Text>

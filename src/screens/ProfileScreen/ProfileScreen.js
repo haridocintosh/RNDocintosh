@@ -54,8 +54,6 @@ const ProfileScreen = ({navigation}) => {
   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
-  
-
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
       <View>
@@ -70,7 +68,6 @@ const ProfileScreen = ({navigation}) => {
       </TouchableOpacity>
       </View>
     </View>
-
       <View style={{flexDirection:'row', marginTop:20}}>
           <View style={styles.ScoreContainer}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
@@ -82,10 +79,9 @@ const ProfileScreen = ({navigation}) => {
           </View>
       </View>
     </Card>
-
     <View style={styles.UserDataConatiner}>
           <View style={styles.UserDataNameCont}>
-            <Text style={styles.UserDataName}>Post ({totalPost})</Text>
+            <Text style={styles.UserDataName}>Post ({totalPost?totalPost:0})</Text>
           </View>
          <TouchableOpacity style={styles.UserDataName} 
             onPress={() => navigation.navigate('ProfileScreenFollowers', {followersData})}>
@@ -96,7 +92,6 @@ const ProfileScreen = ({navigation}) => {
             <Text style={styles.UserDataName}>Following ({followingData?.length})</Text>
           </TouchableOpacity>
     </View>
-
      <ProfileScreenPost postLength={postLength}/>
  </SafeAreaView>
   )

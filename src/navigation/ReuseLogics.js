@@ -140,6 +140,7 @@ export const PickImageAll = async (setloader) => {
                 skipBackup: true,
                 path: 'images',
               },
+              multiple: true,
               selectionLimit:3,
               mediaType: 'photo',
             };
@@ -182,13 +183,14 @@ export const PickVideos = async (setloader) => {
                 skipBackup: true,
                 path: 'video',
               },
+              multiple: true,
               selectionLimit:3,
               mediaType: 'video',
             };
             const result = ImagePicker.launchImageLibrary(options, (response) => {
                   if(response.didCancel) {
-                        console.log('User cancelled image picker');
                         setloader(false)
+                        console.log('User cancelled image picker');
                   } else if (response.error) {
                         return response.error;
                   } else if (response.customButton) {

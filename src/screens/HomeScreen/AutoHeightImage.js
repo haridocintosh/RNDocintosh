@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
+import FastImage from 'react-native-fast-image'
 
 
 const AutoHeightImage = ({items,currentIndex,postIndex}) => {
@@ -27,8 +28,8 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
 
 
   const actualHeight = (width,height) => {
-      const ratio = Dimensions.get("window").width/width;
-      const actual = height*ratio;
+      const ratio = Dimensions.get('window').width/width;
+      const actual = height * ratio;
       const ActualHeight = actual ? actual : 350;
       return ActualHeight;
   }
@@ -36,6 +37,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
   const _renderItem = ({item, index}) => {
         return (
           <View key={index} style={styles.imageVideoContainer}>
+            {/* <Text>{item?.fileheight}</Text> */}
               {item?.filename?.includes("mp4") ?
               <TouchableOpacity onPress={() => onPlayVideo(items.post_id)}>
                 <Video 
@@ -72,13 +74,21 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
                </TouchableOpacity>
               :
               <>
-              {/* {autoHeight(item?.filename)} */}
               
-              <Image 
+              {/* <Image 
                   source={{uri:item?.filename}}
                   style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
                   // style={carouselItems?.length > 1 ? styles.multiImageStyle: [styles.imageStyle,{height:imgHeight}]} 
-                  resizeMode={"contain"}/>
+                  resizeMode={"contain"}/> */}
+              <FastImage
+                  style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
+                  source={{
+                      uri: item?.filename,
+                      // headers: { Authorization: 'someAuthToken' },
+                      priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+              />
               </>
               }
           </View>
@@ -87,7 +97,7 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
 
   return (
     // backgroundColor:'rgba(52,119,224,0.3)'
-    <View style={{alignItems:'center',}}>
+    <View style={{alignItems:'center'}}>
     {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
     <Carousel
         layout={"default"}

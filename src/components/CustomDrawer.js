@@ -20,6 +20,7 @@ import { getLocalData } from '../apis/GetLocalData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '../navigation/ReuseLogics';
 import { CDrawerDoctor,CDrawerUser } from './CustomDrawerJson';
+import FastImage from 'react-native-fast-image'
 
 
 const CustomDrawer = (props) => { 
@@ -77,7 +78,7 @@ const CustomDrawer = (props) => {
   return (
     <View style={styles.DrowerContainer}>
         <View style={styles.DocLogo}>
-          <Image source={require('../assets/dr-icon/docintoshlogo.png')} style={styles.logoImg}></Image>
+          <Image source={require('../assets/dr-icon/docintoshlogo.png')} style={styles.logoImg}/>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
             {Icon("AntDesign",'close',25,'#fff')}
           </TouchableOpacity>
@@ -88,7 +89,14 @@ const CustomDrawer = (props) => {
             <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')} style={styles.forwardIcon}>
               {Icon("MaterialIcons","arrow-forward-ios",16,'#fff')}
             </TouchableOpacity>
-            <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
+            <FastImage
+                  style={styles.profilePic}
+                  source={userdata.profile && {
+                      uri:userdata.profile,
+                      priority: FastImage.priority.normal,
+                  }}
+              />
+            {/* <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/> */}
             <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']}</Text>
             <Text style={styles.userProfession}> {userdata['speciality']} |</Text>
           </View>

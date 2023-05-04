@@ -8,7 +8,7 @@ import { getLocalData } from '../../apis/GetLocalData';
 import { getAllCoins, getFollowersDataApi, getFollowingDataApi } from '../../../redux/reducers/postData';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import FastImage from 'react-native-fast-image'
 
 const ProfileScreen = ({navigation}) => {
   const [allcoins, setAllcoins] = useState(0);
@@ -57,7 +57,14 @@ const ProfileScreen = ({navigation}) => {
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
       <View>
-        <Image source={{uri:userdata?.profile}} style={styles.profileScreenimg}/>
+        {/* <Image source={{uri:userdata?.profile}} style={styles.profileScreenimg}/> */}
+        <FastImage
+            style={styles.profileScreenimg}
+            source={userdata.profile && {
+                uri:userdata.profile,
+                priority: FastImage.priority.normal,
+            }}
+        />
       </View>
       <View style={styles.profileDetails}>
         <Text style={styles.profilescreenName}>Dr.{userdata?.fullname} <Image source={icon}/></Text>    

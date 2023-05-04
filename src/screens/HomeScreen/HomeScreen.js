@@ -26,6 +26,7 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image'
 
 
 const HomeScreen = ({navigation,route})=> {
@@ -216,8 +217,13 @@ const HomeScreen = ({navigation,route})=> {
         <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
             <View  style={{flexDirection:'row',alignItems:'center'}}>
-              <Image source={{uri:item?.profileimage}} 
-               style={{width:38, height:38,marginRight:5,borderRadius:50}}/>
+               <FastImage
+                  style={{width:38, height:38,marginRight:5,borderRadius:50}} 
+                  source={{
+                      uri: item?.profileimage,
+                      priority: FastImage.priority.normal,
+                  }}
+              />
               <View style={{marginLeft:5}}>
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
                   { item?.utitle} {item?.first_name} {item?.last_name } 
@@ -314,7 +320,13 @@ const HomeScreen = ({navigation,route})=> {
           onPress={() => navigation.navigate('Sharepost')}>
           <View style={styles.whatsMindConatiner} >
             <View style={{flexDirection:'row'}}>
-            <Image source={userdata.profile && {uri:userdata.profile}}  style={{width:32, height:32, borderRadius:50}}/>
+            <FastImage
+                  style={{width:32, height:32, borderRadius:50}}
+                  source={userdata.profile && {
+                      uri:userdata.profile,
+                      priority: FastImage.priority.normal,
+                  }}
+              />
             <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
             </View>
               <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>

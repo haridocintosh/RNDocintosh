@@ -56,8 +56,8 @@ const LoginScreen = () => {
 
   const authLogin = async ()=>{
   
-    register.email = register.email? register.email : datarm?.data.email;
-    register.password = register.password ? register.password :datarm?.data.password ;
+    register.email = register.email? register.email : datarm?.email ;
+    register.password = register.password ? register.password :datarm?.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const uploadData = {register,device_id};
@@ -109,7 +109,8 @@ const LoginScreen = () => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
       const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      setdatarm(result)
+      console.log('result',result.data.register);
+      setdatarm(result?.data?.register)
       setChecked(result?.data.isChecked);
       if(result == null){
         setregister({email: "",password:""});
@@ -163,7 +164,7 @@ const LoginScreen = () => {
           placeholder='Email ID / Mobile Number*'
           placeholderTextColor='#51668A'
           onChangeText={(text)=>updateEmail(text)}
-          defaultValue={datarm?.data.email}
+          defaultValue={datarm?.email}
           blurOnSubmit={true}
           autoComplete={"off"}
          />
@@ -178,7 +179,7 @@ const LoginScreen = () => {
           inputType="password"
           placeholderTextColor='#51668A'
           hideShow={showeye}
-          defaultValue={datarm?.data.password}
+          defaultValue={datarm?.password}
           blurOnSubmit={true}
           autoComplete={"off"}
         />

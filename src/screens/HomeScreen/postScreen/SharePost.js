@@ -22,6 +22,7 @@ import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
+import Fontisto from 'react-native-vector-icons/Fontisto';
 // import ImageCompressor  from 'react-native-compressor';
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
@@ -224,9 +225,13 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Select PostType",Toast.LONG);
       bottomSheetModalRef.current?.present();
     }else{
-      if(pickedData.length != 0){
+      // console.log(pickedData);
+      if(pickedData != null){
+        console.log(pickedData.length);
       if(media == 'images'){
         pickedData?.map(async(data) => {
+        console.log(pickedData.length);
+
           let localUri = data.uri
           // const localUri1 = await ImageCompressor.compress(localUri, {
           //   compressionMethod: 'auto',

@@ -8,6 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from "react-native-gesture-handler";
@@ -15,14 +16,15 @@ import { List } from 'react-native-paper';
 import CheckBox from "react-native-check-box";
 import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
-import { postCreate } from "../../../../redux/reducers/postData";
+// import { postCreate } from "../../../../redux/reducers/postData";
+import { postCreate } from "../../../redux/reducers/postData";
 import { useNavigation } from "@react-navigation/native";
-import { getMycircle } from "../../../../redux/reducers/postData";
-import { mainApi } from "../../../apis/constant";
-import { getLocalData } from "../../../apis/GetLocalData";
-import { coinTransfer } from "../../../../redux/reducers/coinSlice";
-import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import { getMycircle } from "../../../redux/reducers/postData";
+import { mainApi } from "../../apis/constant";
+import { getLocalData } from "../../apis/GetLocalData";
+import { coinTransfer } from "../../../redux/reducers/coinSlice";
+import { PickImageAll, PickVideos } from "../../navigation/ReuseLogics";
+
 // import ImageCompressor  from 'react-native-compressor';
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
@@ -58,11 +60,11 @@ const  Sharepost = () => {
   const [document, setDocument]   = useState(null);
   const [circlespeciality, setSpl] = useState([]);
   const [post ,setPost] = useState({
-      publishto:"",
+      publishto:8,
       description :"",
       status:"1",
       broadcast_to:"",
-      postType:"",
+      postType:16,
       postImage:[],
       type:"",
       custspeciality:""
@@ -93,16 +95,16 @@ const  Sharepost = () => {
   const snapPoints = ["60%","60%"];
 
   function handlePresentModal() {
-    bottomSheetModalRef.current?.present();
+   // bottomSheetModalRef.current?.present();
     setTimeout(() => {
-      setIsOpen(true);
+      setIsOpen(false);
     }, 100);
   }
 
   function handlePresentModalSecond() {
-    bottomSheetModalRefSecond.current?.present();
+//bottomSheetModalRefSecond.current?.present();
     setTimeout(() => {
-      setIsOpen(true);
+      setIsOpen(false);
     }, 100);
   }
   const pickEmoji =  () => {
@@ -115,11 +117,8 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const result  = res.assets;
       // setloader(true);
-      const addIndex = [...pickedData, ...result]
-      // console.log("addIndex",addIndex);
-      const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
-      
-      setData(dataId);
+      const data = result?.map((data,i) => {return {...data, id:i}})
+      setData(data);
       setPost({...post, 
           type:'i'
       });
@@ -141,47 +140,19 @@ const  Sharepost = () => {
       setCountData(data.length);
       setMedia('videos');
 
-    //   let filename = localUri.split('/').pop();
-    //   let uriParts = localUri.split('.');
-    //   let fileType = uriParts[uriParts.length - 1];
-    //   let formData = new FormData();
-    //   const imageData = {
-    //     uri : localUri,
-    //     name: filename,
-    //     type: `video/${fileType}`,
-    //   }
-    //   formData.append('postImage', imageData);
-    //   formData.append('post_id', '3032');
-    //   const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-    //     method : 'POST',
-    //     headers:{
-    //         'Content-Type': 'multipart/form-data'
-    //     },
-    //     body :formData
-    //  });
-    // const result1 =  await responce.json();
-    //   setPost({...post, 
-    //     postImage: result1.postImage,
-    //     type:'v'
-    //   });
+   
   setloader(false);
     })
   };
 
-  const handleDocPicker = async () => {
-    // let result = await DocumentPicker.getDocumentAsync({ 
-    //   type: "application/*",
-    //   copyToCacheDirectory: false, 
-    // });
-    // setDocument(result)
-  }
+
 
   const postCheck= (e)=>{
     const name = e;
     setPost({ ...post, 
       postType:name,
     });
-    bottomSheetModalRef.current?.close();
+    // bottomSheetModalRef.current?.close();
   }
 
 const postDesc= (e)=>{
@@ -200,7 +171,7 @@ const publishCheck = (e)=>{
     setPost({...post,
       publishto:e,
     })
-   bottomSheetModalRefSecond.current?.close();
+//    bottomSheetModalRefSecond.current?.close();
 }
 
 
@@ -216,27 +187,20 @@ const publishCheck1 = (e, text)=>{
     if(post.publishto ==''){
       setPostLoad(false);
       Toast.show('Please Select Publish to',Toast.LONG);
-      bottomSheetModalRefSecond.current?.present();
+    //   bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
       setPostLoad(false);
-      Toast.show("Please Write Something About Your Post!",Toast.LONG);
+      Toast.show("Please Write Something About Your Post!!!!!!!",Toast.LONG);
     }else if(!post.postType){
       setPostLoad(false);
       Toast.show("Please Select PostType",Toast.LONG);
-      bottomSheetModalRef.current?.present();
+    //   bottomSheetModalRef.current?.present();
     }else{
-      // console.log(pickedData);
-      if(pickedData != null){
-        console.log(pickedData.length);
+      if(pickedData != undefined){
       if(media == 'images'){
         pickedData?.map(async(data) => {
-        console.log(pickedData.length);
-
           let localUri = data.uri
-          // const localUri1 = await ImageCompressor.compress(localUri, {
-          //   compressionMethod: 'auto',
-          // });
-          // return;
+         
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
@@ -258,7 +222,6 @@ const publishCheck1 = (e, text)=>{
           });
   
           var result1=  await responce.json();
-          // console.log("result1",result1);
             getFun({...uploadImage,
               uploadImage:uploadImage.pimage.push(result1.postImage)
             })
@@ -295,8 +258,10 @@ const publishCheck1 = (e, text)=>{
     }
     }else{
       const uploadData = {userdata,post};
+      console.log(uploadData);
     // setloader(true);
       const result = await dispatch(postCreate(uploadData));
+      console.log(result.payload);
       if(result.payload.status == 'Success'){
       // setloader(false);
         Toast.show(result.payload.message,Toast.LONG);
@@ -304,7 +269,7 @@ const publishCheck1 = (e, text)=>{
         const coinResult  = await dispatch(coinTransfer(coinDetails));
         if(coinResult.payload.status == 'Success')
         {
-          navigation.navigate('HomeScreen');
+          navigation.navigate('Community');
         }
       }
     }
@@ -315,21 +280,21 @@ const publishCheck1 = (e, text)=>{
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
     if(countData == uniqueData.length){
           const uploadData = {userdata,post,uploadImage:uniqueData};
-          // console.log("uploadData",uploadData);
         // setloader(true);
           const result = await dispatch(postCreate(uploadData));
+          console.log(result.payload);
           if(result.payload.status == 'Success'){
-            // console.log("result.payload",result.payload);
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
             const coinResult  = await dispatch(coinTransfer(coinDetails));
             if(coinResult.payload.status == 'Success')
             {
-              navigation.navigate('HomeScreen');
+              navigation.navigate('Community');
             }
           }
         }
+   
     } 
 
   const uploadPostImage = async (post_id) => {
@@ -381,7 +346,7 @@ const publishCheck1 = (e, text)=>{
       });
       fetchSpecialities(reData?.id);
     });
-    bottomSheetModalRef.current?.present();
+    // bottomSheetModalRef.current?.present();
   }, [])
 
   const fetchSpecialities = async (id)=>{
@@ -520,7 +485,7 @@ setSpecialNames(specialityName)
           {/* <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
             <MaterialIcons name="keyboard-voice" size={24} color="#51668A" />
           </TouchableOpacity> */}
-          <TouchableOpacity onPress={handleDocPicker}>
+          <TouchableOpacity>
             <MaterialCommunityIcons name="file-document-multiple" size={24} color="#51668A" />
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => handlePresentModal()}>
@@ -535,7 +500,8 @@ setSpecialNames(specialityName)
           index={1}
           snapPoints={snapPointsOne}
           backgroundStyle={{ borderRadius: 30 }}
-          onDismiss={() => setIsOpen(false)}>
+          onDismiss={() => setIsOpen(true)}>
+          
           <View style={styles.contentContainer}>
           <Text style={[styles.title, { marginBottom: 20 }]}>Suggestions</Text>
           <View style={{margin:10, alignSelf:'flex-start'}}>
@@ -588,7 +554,7 @@ setSpecialNames(specialityName)
           index={1}
           snapPoints={snapPoints}
           backgroundStyle={{ borderRadius: 30 }}
-          onDismiss={() => setIsOpen(false)}>
+          onDismiss={() => setIsOpen(true)}>
 
           <BottomSheetScrollView keyboardShouldPersistTaps='handled'>
             <View style={styles.contentContainer}>
@@ -598,13 +564,13 @@ setSpecialNames(specialityName)
                   <Ionicons name="earth" size={20} color="#45B5C0" />
                   <Text style={{marginLeft:15, fontSize:16,fontFamily:'Inter-Regular',color:'#071B36'}}>Public</Text>
               </TouchableOpacity>
-              <TouchableOpacity  onPress={() => { publishCheck(1)}} style={{flexDirection:'row',marginTop:15}}>   
+              {/* <TouchableOpacity  onPress={() => { publishCheck(1)}} style={{flexDirection:'row',marginTop:15}}>   
                 <MaterialCommunityIcons name="medal-outline" size={20} color="#45B5C0" />
                 <Text style={{marginLeft:15, fontSize:16, fontFamily:'Inter-Regular',color:'#071B36'}}>My Speciality ({ userdata && userdata['speciality']})</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
-              {/* <TouchableOpacity onPress={() => { publishCheck(1)}}>  */}
-              <List.Accordion
+           
+              {/* <List.Accordion
                 style={{
                   marginHorizontal:-10,
                   backgroundColor:'#fff'
@@ -626,8 +592,7 @@ setSpecialNames(specialityName)
                       <Text style={{margin:8, fontSize:15,fontFamily:'Inter-Regular',color:'#51668A' }}>{element.speciality}</Text>
                       </TouchableOpacity>)
                     })}
-                </List.Accordion>
-                {/* </TouchableOpacity> */}
+                </List.Accordion> */}
 
             </View>        
             </View>

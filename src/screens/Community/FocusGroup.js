@@ -27,6 +27,8 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
   const _listEmptyComponent = () => {
     return(
       <View style={styles.ListEmptyComponent}>
+        <Image source={require('../../assets/images/CommingSoon.png')} 
+          style={{width:'70%',height:300}}/>
         <Text style={styles.Title}>Opps!</Text>
         <Text style={styles.subTitle}>Looks Like no group created.</Text>
       </View>

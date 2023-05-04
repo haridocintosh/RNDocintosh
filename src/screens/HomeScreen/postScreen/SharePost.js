@@ -8,7 +8,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from "react-native-gesture-handler";
@@ -117,7 +116,7 @@ const  Sharepost = () => {
       console.log("result",result);
       // setloader(true);
       const addIndex = [...pickedData, ...result]
-      console.log("addIndex",addIndex);
+      // console.log("addIndex",addIndex);
       const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
       
       setData(dataId);
@@ -222,13 +221,13 @@ const publishCheck1 = (e, text)=>{
       bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
       setPostLoad(false);
-      Toast.show("Please Write Something About Your Post!!!!!!!",Toast.LONG);
+      Toast.show("Please Write Something About Your Post!",Toast.LONG);
     }else if(!post.postType){
       setPostLoad(false);
       Toast.show("Please Select PostType",Toast.LONG);
       bottomSheetModalRef.current?.present();
     }else{
-      if(pickedData != undefined){
+      if(pickedData.length != 0){
       if(media == 'images'){
         pickedData?.map(async(data) => {
           let localUri = data.uri
@@ -257,6 +256,7 @@ const publishCheck1 = (e, text)=>{
           });
   
           var result1=  await responce.json();
+          // console.log("result1",result1);
             getFun({...uploadImage,
               uploadImage:uploadImage.pimage.push(result1.postImage)
             })
@@ -313,9 +313,11 @@ const publishCheck1 = (e, text)=>{
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
     if(countData == uniqueData.length){
           const uploadData = {userdata,post,uploadImage:uniqueData};
+          // console.log("uploadData",uploadData);
         // setloader(true);
           const result = await dispatch(postCreate(uploadData));
           if(result.payload.status == 'Success'){
+            // console.log("result.payload",result.payload);
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
@@ -326,7 +328,6 @@ const publishCheck1 = (e, text)=>{
             }
           }
         }
-   
     } 
 
   const uploadPostImage = async (post_id) => {

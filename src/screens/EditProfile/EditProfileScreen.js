@@ -31,6 +31,7 @@
   import PublicationEditModal from './Modals/PublicationEditModal';
   import QualificationEditModal from './Modals/QualificationEditModal';
   import DeleteModal from './Modals/DeleteModals/DeleteModal';
+  import FastImage from 'react-native-fast-image'
   
   
   const EditProfileScreen = ({route,navigation}) => {
@@ -229,7 +230,14 @@
           <Card style={styles.CartContainer}>
 
             <View style={styles.ProfileImageContainer}>
-              <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/>
+              {/* <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/> */}
+              <FastImage
+                  style={styles.profileimg}
+                  source={{
+                     uri:userdata.profileimage,
+                     priority: FastImage.priority.normal,
+                  }}
+              />
               <TouchableOpacity onPress={() => handleProfile()} style={styles.profileEditBtnTouch}>
                 <Entypo name="edit" size={20} color="black"  style={styles.profileEditBtn}  />
               </TouchableOpacity>

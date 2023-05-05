@@ -13,6 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+
 export const showHeaderItem = {
       headerShown: true,  
       headerStyle: { backgroundColor: '#071B36'},

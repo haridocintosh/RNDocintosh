@@ -22,6 +22,7 @@ import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
+import { Video } from 'react-native-compressor';
 // import ImageCompressor  from 'react-native-compressor';
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
@@ -265,6 +266,9 @@ const publishCheck1 = (e, text)=>{
       }else if(media == 'videos'){
         pickedData?.map(async(data) => {
           let localUri = data.uri;
+
+          
+
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];

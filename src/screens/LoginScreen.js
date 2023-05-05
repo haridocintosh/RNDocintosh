@@ -55,7 +55,6 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
-  
     register.email = register.email? register.email : datarm?.email ;
     register.password = register.password ? register.password :datarm?.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
@@ -63,6 +62,7 @@ const LoginScreen = () => {
       const uploadData = {register,device_id};
       console.log(device_id);
       const token = await dispatch(userLogin(uploadData));
+      console.log("token",token);
       if(token?.payload?.status == 'Success'){
           setloader(false)
           dispatch(addLocal(token.payload.session_data));
@@ -109,7 +109,6 @@ const LoginScreen = () => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
       const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      console.log('result',result.data.register);
       setdatarm(result?.data?.register)
       setChecked(result?.data.isChecked);
       if(result == null){

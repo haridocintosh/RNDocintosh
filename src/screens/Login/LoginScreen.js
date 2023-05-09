@@ -8,16 +8,17 @@ import {
   ActivityIndicator,
   } from 'react-native';
 import { useDispatch } from "react-redux";
-const styelcss = require('../assets/css/style');
+const styelcss = require('../../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../../components/CustomButton';
 import CheckBox from "react-native-check-box";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { storeData, singlestoreData } from '../apis/Apicall';
-import { addLocal, userLogin } from '../../redux/reducers/loginAuth';
+import { storeData, singlestoreData } from '../../apis/Apicall';
+import { addLocal, userLogin } from '../../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import OneSignal from 'react-native-onesignal';
+import IncompleteRegistrationModal from './IncompleteRegistrationModal';
 
 
 const LoginScreen = () => {
@@ -27,7 +28,8 @@ const LoginScreen = () => {
   const [showeye, setshoweye] = useState(true);
   const [isChecked, setChecked] = useState(false);
   const [message , setmessage]  = useState();
-  const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
+  const [modalVisible, setModalVisible] = useState(false);
+  const isValidemailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
   const [register,setregister] = useState({
     email:"",
     password:"", 
@@ -41,7 +43,6 @@ const LoginScreen = () => {
   const toggleRememberMe = () => {
     setChecked(!isChecked);
   }
-
 
   const  updateEmail = (text)=>{
     if(!isValidemailRegex.test(text)){
@@ -150,6 +151,7 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={{paddingHorizontal:30}}>
+      <IncompleteRegistrationModal modalVisible={modalVisible}/>
       <View style={{marginTop:40}}>
         <Text  style={styles.headingtexts}>Welcome</Text>
         <Text  style={styles.headingtext}>
@@ -281,7 +283,6 @@ ragistertext:{
   // position:'absolute',
   // bottom:-90,
   alignSelf:'center'
-
 },
 ragistertext2:{
   fontSize: 16,

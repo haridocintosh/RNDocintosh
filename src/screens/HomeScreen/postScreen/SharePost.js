@@ -70,7 +70,7 @@ const  Sharepost = () => {
   const handlePress = () => setExpanded(!expanded);
   const [isOpen, setIsOpen]     = useState(false);
   const [specialNames, setSpecialNames]   = useState();
-  const [countData, setCountData]   = useState();
+  const [countData, setCountData]   = useState(0);
   const [whoCanSee, setWhoCanSee]   = useState();
   const [postLoad, setPostLoad]   = useState(false);
   const [userdata, setuserdata] = useState({
@@ -86,10 +86,10 @@ const  Sharepost = () => {
   });
   const [uploadImage, setuploadImage]   = useState({pimage:[]});
   const [emojiTab, setEmojiTab] = useState(false)
-  const [media, setMedia] = useState('')
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
-  const snapPointsOne = ["1%","48%"];
+
+  const snapPointsOne = ["10%","48%"];
   const snapPoints = ["60%","60%"];
 
   function handlePresentModal() {
@@ -110,66 +110,31 @@ const  Sharepost = () => {
   }
 
   const pickImage =  () => {
-    // setData(null)
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
-      const result  = res.assets;
-      console.log("result",result);
-      // setloader(true);
-      const addIndex = [...pickedData, ...result]
-      // console.log("addIndex",addIndex);
+      const addIndex = [...pickedData, ...res?.assets]
       const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
-      
       setData(dataId);
-      setPost({...post, 
-          type:'i'
-      });
+      setPost({...post,  type:'i' });
       setCountData(dataId.length);
-      setMedia('images');
       setloader(false);
     })
   };
 
-  // console.log('pickedData',pickedData.length);
-
   const pickVideo =  () => {
     setDocument(null);
     PickVideos(setloader).then(async (res) => {
-      const result  = res.assets;
-      // setloader(true);
-      const addIndex = [...pickedData, ...result]
-      const data = addIndex?.map((data,i) => {return {...data, id:i}})
+      const addIndex = [...pickedData, ...res?.assets]
+      const data = addIndex?.map((data,i) => {return {...data, id:i}});
       setData(data);
-      setPost({...post,  type:'v' });
+      setPost({...post, type:'v'});
       setCountData(data.length);
-      setMedia('videos');
-
-    //   let filename = localUri.split('/').pop();
-    //   let uriParts = localUri.split('.');
-    //   let fileType = uriParts[uriParts.length - 1];
-    //   let formData = new FormData();
-    //   const imageData = {
-    //     uri : localUri,
-    //     name: filename,
-    //     type: `video/${fileType}`,
-    //   }
-    //   formData.append('postImage', imageData);
-    //   formData.append('post_id', '3032');
-    //   const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-    //     method : 'POST',
-    //     headers:{
-    //         'Content-Type': 'multipart/form-data'
-    //     },
-    //     body :formData
-    //  });
-    // const result1 =  await responce.json();
-    //   setPost({...post, 
-    //     postImage: result1.postImage,
-    //     type:'v'
-    //   });
-  setloader(false);
+      setloader(false);
     })
   };
+
+  console.log("pickedData",pickedData);
+
 
   const handleDocPicker = async () => {
     // let result = await DocumentPicker.getDocumentAsync({ 
@@ -187,11 +152,11 @@ const  Sharepost = () => {
     bottomSheetModalRef.current?.close();
   }
 
-const postDesc= (e)=>{
-  setPost({ ...post, 
-    description:e,
-  });
-}
+  const postDesc= (e)=>{
+    setPost({ ...post, 
+      description:e,
+    });
+  }
 
 const publishCheck = (e)=>{
   if(e == 8){
@@ -206,17 +171,18 @@ const publishCheck = (e)=>{
    bottomSheetModalRefSecond.current?.close();
 }
 
-
 const publishCheck1 = (e, text)=>{
     setPost({...post,
       publishto:e,
     });
     setWhoCanSee(text)
 }
+  const imageFetch = `${mainApi.baseUrl}/ApiController/postuploadDocsCompress`;
+  const videoFetch = `${mainApi.baseUrl}/ApiController/postuploadDocsReact`;
 
   const handleStudentSubmit = async() =>{
     setPostLoad(true);
-    if(post.publishto ==''){
+    if(post.publishto == ''){
       setPostLoad(false);
       Toast.show('Please Select Publish to',Toast.LONG);
       bottomSheetModalRefSecond.current?.present();
@@ -229,99 +195,57 @@ const publishCheck1 = (e, text)=>{
       bottomSheetModalRef.current?.present();
     }else{
       if(pickedData.length != 0){
-      if(media == 'images'){
         pickedData?.map(async(data) => {
-          let localUri = data.uri
-          // const localUri1 = await ImageCompressor.compress(localUri, {
-          //   compressionMethod: 'auto',
-          // });
-          // return;
-          let filename = localUri.split('/').pop();
-          let uriParts = localUri.split('.');
-          let fileType = uriParts[uriParts.length - 1];
-
-          let formData = new FormData();
-          const imageData = {
-            uri : localUri,
-            name: filename,
-            type: `image/${fileType}`,
-          }
-          formData.append('postImage', imageData);
-          formData.append('post_id', '3032');
-          const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsCompress`, {
-              method : 'POST',
-              headers:{
-                  'Content-Type': 'multipart/form-data'
-              },
-              body :formData
-          });
-  
-          var result1=  await responce.json();
-          // console.log("result1",result1);
-            getFun({...uploadImage,
-              uploadImage:uploadImage.pimage.push(result1.postImage)
-            })
-          });
-
-      }else if(media == 'videos'){
-        pickedData?.map(async(data) => {
-          let localUri = data.uri;
-
-          
-
+          let localUri = data?.uri;
+          console.log("localUri",localUri);
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
-          const imageData = {
-            uri : localUri,
-            name: filename,
-            type: `video/${fileType}`,
+          const checkIncludes = data?.type?.includes("image") ? `image/${fileType}` : `video/${fileType}`;
+            console.log("checkIncludes",checkIncludes);
+            const imageData = { uri : localUri, name: filename, type: checkIncludes}
+            formData.append('postImage', imageData);
+            formData.append('post_id', '3032');
+            const responce = await fetch(data?.type?.includes("image") ? imageFetch : videoFetch,{
+                method : 'POST',
+                headers:{'Content-Type': 'multipart/form-data'},
+                body :formData
+            });
+            var result1 = await responce.json();
+            console.log("result1",result1);
+              getFun({...uploadImage,
+                uploadImage:uploadImage.pimage.push(result1.postImage)
+              })
+        });
+      }else{
+        const uploadData = {userdata,post};
+        const result = await dispatch(postCreate(uploadData));
+        if(result.payload.status == 'Success'){
+          Toast.show(result.payload.message,Toast.LONG);
+          const coinDetails = {task : 4, receiverId:userdata.id } 
+          const coinResult  = await dispatch(coinTransfer(coinDetails));
+          if(coinResult.payload.status == 'Success')
+          {
+            navigation.navigate('HomeScreen');
           }
-          formData.append('postImage', imageData);
-          formData.append('post_id', '3032');
-          const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-            method : 'POST',
-            headers:{
-                'Content-Type': 'multipart/form-data'
-            },
-            body :formData
-          });
-          var result1=  await responce.json();
-
-          getFun({...uploadImage,
-            uploadImage:uploadImage.pimage.push(result1.postImage)
-          })
-      });
-      
-    }
-    }else{
-      const uploadData = {userdata,post};
-    // setloader(true);
-      const result = await dispatch(postCreate(uploadData));
-      if(result.payload.status == 'Success'){
-      // setloader(false);
-        Toast.show(result.payload.message,Toast.LONG);
-        const coinDetails = {task : 4, receiverId:userdata.id } 
-        const coinResult  = await dispatch(coinTransfer(coinDetails));
-        if(coinResult.payload.status == 'Success')
-        {
-          navigation.navigate('HomeScreen');
         }
       }
     }
   }
-}
 
   const getFun = async(data) => {
+    console.log("getFun",data);
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
+    console.log("uniqueData",countData ,uniqueData.length);
+    console.log("uniqueData",uniqueData);
     if(countData == uniqueData.length){
-          const uploadData = {userdata,post,uploadImage:uniqueData};
-          // console.log("uploadData",uploadData);
+          const uploadData = {userdata,post,uploadImage:data.pimage};
+          console.log("uploadData",uploadData);
         // setloader(true);
           const result = await dispatch(postCreate(uploadData));
           if(result.payload.status == 'Success'){
-            // console.log("result.payload",result.payload);
+            console.log("result.payload",result.payload);
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
@@ -337,7 +261,6 @@ const publishCheck1 = (e, text)=>{
   const uploadPostImage = async (post_id) => {
     let localUri = {pickedData};
     let filename = localUri.split('/').pop();
-    log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
     let fileType = uriParts[uriParts.length - 1];
@@ -364,7 +287,6 @@ const publishCheck1 = (e, text)=>{
     navigation.navigate('Home1')
   },3000);
 };
-    
 
   useEffect(() => {
     navigation.setOptions({ title: 'Create Post'});

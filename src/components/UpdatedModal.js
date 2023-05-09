@@ -1,5 +1,5 @@
 import { StyleSheet,TouchableOpacity,View,Text,Modal } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import { useDispatch } from 'react-redux';
 import { deviceVersion } from '../../redux/reducers/ALL_APIs';

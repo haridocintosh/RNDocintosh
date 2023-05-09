@@ -1,7 +1,7 @@
 import { View, Text ,SafeAreaView,TouchableOpacity} from 'react-native'
 import React, { useEffect } from 'react';
 import { styles } from './AccountSettingStyles';
-import { Entypo  } from '@expo/vector-icons';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const AccountSettings = ({navigation}) => {
     useEffect(() => {
@@ -17,7 +17,6 @@ const AccountSettings = ({navigation}) => {
             <Text style={styles.SettingText}>How can people contact you</Text>
             <Entypo name="chevron-thin-right" size={24} color="black" />
         </TouchableOpacity> */}
-        
     </SafeAreaView>
   )
 }

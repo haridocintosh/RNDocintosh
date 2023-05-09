@@ -26,11 +26,9 @@ const SelectInterest = ({route}) => {
   const [loader, setLoader] = useState(true);
 
   // const user_id ='229533';
-  // const specialityId ='59';
-  const {user_id, specialityId} = route.params;
-  console.log(user_id, specialityId)
+  const specialityId ='59';
+  const {user_id } = route.params;
   const getItem = (item) => {
-   // alert(item.speciality);
     // Function for click on an item
     let spl=item.speciality_id;
     let copy=[...selectitem];
@@ -61,6 +59,7 @@ const SelectInterest = ({route}) => {
 
 
  const getInterestSplData = async () => {
+  console.log(specialityId);
   const postDetails = {speciality_id:specialityId}
   const result = await dispatch(getInterestSpl(postDetails));
   setFilteredDataSource(result?.payload);
@@ -122,7 +121,7 @@ const SelectInterest = ({route}) => {
 
   const handleSubmit = ()=>{
     if(selectitem == ''){
-      Toast.show('Please Select Your Interest');
+      Toast.show('Please Select Your Interest', Toast.LONG);
     }else{
       navigation.navigate('ContactPermission'); 
     }

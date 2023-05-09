@@ -48,6 +48,20 @@ export const getMycircle = createAsyncThunk("getCircle", async (data)=>{
     return result;
 })
 
+
+export const getSelectedInterest = createAsyncThunk("getSelectedInterest", async (data)=>{
+    const response = await fetch(`${mainApi.baseUrl}/ApiController/getSelectedInterest`,{
+        method : 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(data)
+    });
+    const result = await response.json();
+    return result;
+})
+
+
 export const getMyPostsApi = createAsyncThunk("MyPosts", async (data)=>{
     const response = await fetch(`${mainApi.baseUrl}/ApiController/getmyPost`,{
         method : 'POST',
@@ -60,7 +74,7 @@ export const getMyPostsApi = createAsyncThunk("MyPosts", async (data)=>{
     return getMyPostsResult;
 })
 
-export const getAllCoins = createAsyncThunk("AllCoins", async (data)=>{
+export const getAllCoins = createAsyncThunk("AllCoins", async (data) => {
     const response = await fetch(`${mainApi.baseUrl}/ApiController/totalCoins`,{
         method : 'POST',
         headers:{
@@ -155,6 +169,20 @@ export const postData = createSlice({
             state.circleData    = action.payload;
         })
         builder.addCase(getMycircle.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //--------------------getSelectedInterest-----------------
+
+        builder.addCase(getSelectedInterest.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getSelectedInterest.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.SelectedInterest    = action.payload;
+        })
+        builder.addCase(getSelectedInterest.rejected, (state) => {
             state.loading = false;
             state.error = false
         })

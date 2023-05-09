@@ -14,7 +14,7 @@ import {
 import RadioMcq from "./RadioMcq";
 import TypoMcq from "./TypoMcq";
 import SurvayCheckBoxMcq from "./SurvayCheckBoxMcq";
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ProgressBar } from "react-native-paper";
 import { styles } from "./SurvayStyle";
 import { getLocalData } from "../../apis/GetLocalData";
@@ -35,7 +35,7 @@ const SurveyMcq = ({ route }) => {
     navigation.setOptions({ title: `Surveys`});
     getLocalData("USER_INFO").then( async (res) =>{
       const resData = res?.data;
-      const postDetails = { surveyid: surveyid, id: resData?.id};
+      const postDetails = {surveyid: surveyid, id: resData?.id};
       const result = await dispatch(getSurveyQuestions(postDetails));
       const data = await result.payload.questions;
       setAllMCQs(data);
@@ -100,16 +100,16 @@ const SurveyMcq = ({ route }) => {
     })
   };
 
+  const PosData = async (id, basic_id, qid, opt_id, profileimage) => {
+    const postDetails = {id: id, basic_id: basic_id, qid: qid, opt_id: opt_id,profileimage: profileimage};
+    const result = await dispatch(saveSurveyAnswers(postDetails));
+  };
+
   const prevMcq = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
       setLiftUpData(null);
     }
-  };
-
-  const PosData = async (id, basic_id, qid, opt_id, profileimage) => {
-    const postDetails = {id: id, basic_id: basic_id, qid: qid, opt_id: opt_id,profileimage: profileimage};
-    const result = await dispatch(saveSurveyAnswers(postDetails));
   };
 
 

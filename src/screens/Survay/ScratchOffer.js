@@ -13,7 +13,7 @@ import Svg, { Path } from "react-native-svg";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { TapGestureHandler, ScrollView } from "react-native-gesture-handler";
-import { styles } from "./SurvayStyle";
+import { styles } from "../Survay/SurvayStyle";
 
 
 const ScratchOffer = ({ setShowOffer }) => {
@@ -44,7 +44,7 @@ const ScratchOffer = ({ setShowOffer }) => {
     setShowOffer(false);
   };
   const fullOfferDetails = () => {
-    setIncreaseHeight(50);
+    setIncreaseHeight(55);
     setfullDetails(true);
     setIntialHeight(200)
   }

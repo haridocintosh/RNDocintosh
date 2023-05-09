@@ -1,7 +1,6 @@
 'use strict';
 import {
   StyleSheet,
-  StatusBar
 } from 'react-native';
 
 module.exports = StyleSheet.create({
@@ -104,6 +103,11 @@ module.exports = StyleSheet.create({
     marginVertical: 12,
     paddingLeft: 8,
 
+  },
+  loaderStyle: {
+    marginVertical: 16,
+    alignItems: "center",
+    // borderWidth:10
   },
   topImgVerify: {
     paddingTop: 50,
@@ -513,5 +517,11 @@ backgroundColor:"#606060",
       color:'#51668A',
       fontSize:12
     },
+    userSearchContainer:{
+      display:"flex",
+      flexDirection:"row",
+      alignItems:"flex-start",
+      alignItems:'center'
+  },
 
 });

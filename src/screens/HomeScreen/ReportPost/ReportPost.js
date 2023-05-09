@@ -1,7 +1,7 @@
 import { View, Text,SafeAreaView,TouchableOpacity ,Modal} from 'react-native'
 import React,{ useState, useEffect } from 'react'
 import { styles } from './ReportPostStyles';
-import { EvilIcons } from '@expo/vector-icons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { useDispatch } from 'react-redux';
 import { reportPost } from '../../../../redux/reducers/postAction';

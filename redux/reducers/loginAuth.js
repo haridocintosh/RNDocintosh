@@ -11,6 +11,7 @@ export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
             },
             body : JSON.stringify(loginData)
         });
+        
         const userresult=  await responce.json();
         return userresult
     }
@@ -105,6 +106,24 @@ export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
     }
 })
 
+
+export const forgotverifyOtp = createAsyncThunk("user/forgotverifyOtp", async(regData)=>
+{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/verifyotp`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(regData)
+        });
+        const result = await responce.json();
+        return result
+    }catch(e){
+       console.log(e);
+    }
+})
+
 export const loginAuth = createSlice({
     name : "auth",
     initialState : {
@@ -115,7 +134,8 @@ export const loginAuth = createSlice({
         error       : false,
         usertoken   : null,
         registerData: {},
-        registerTwoData : {}
+        registerTwoData : {},
+        localData : {}
 
     },
     reducers : {
@@ -124,6 +144,9 @@ export const loginAuth = createSlice({
             currentState.usertoken  = null;
             currentState.loading    = false;
         },
+        addLocal(state,action){
+            state.localData = action.payload;
+        }
     },
     extraReducers : builder =>{
         //-------------------------userLogin-----------------------------
@@ -141,7 +164,6 @@ export const loginAuth = createSlice({
             state.loading = false;
             state.error = false
         })
-
 
         //-------------------------userRegisterOne-----------------------------
         builder.addCase(userRegisterOne.pending, (state) => {
@@ -179,4 +201,6 @@ export const loginAuth = createSlice({
 
 
 export const { reducer : userresult} = loginAuth;
-export const { logout } = loginAuth.actions
+export const { logout, addLocal } = loginAuth.actions;
+
+export default loginAuth.reducer;

@@ -1,12 +1,15 @@
 import { View, Text, StyleSheet, TouchableOpacity,Modal } from 'react-native'
 import React, { useState } from 'react';
-import {MaterialCommunityIcons,Feather,Entypo,MaterialIcons } from '@expo/vector-icons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import { deletePost } from '../../../redux/reducers/postAction';
 import { useDispatch } from 'react-redux';
 import { coinTransfer } from '../../../redux/reducers/coinSlice';
 import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/ALL_APIs';
-import {Ionicons} from '@expo/vector-icons';
 
 const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,resData}) => {
   const [toggle, setToggle] = useState(false);
@@ -63,7 +66,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   const handleUnfollow = async () => {
     const postDetails = {follow_from:resData?.id, follow_to:item?.id};
     const followResult  = await dispatch(followApi(postDetails));
-    console.log("followApi",followResult.payload);
     if(followResult.payload.status){
       setFollow(false);
     }else{
@@ -77,9 +79,8 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     setToggle(true);
   }
 
-// console.log("savedPost",savedPost);
   return (
-    <View>
+    <View style={styles.container}>
     {modalVisible &&
     <View style={styles.optionModal}>
       {resData?.id === item?.id ?
@@ -142,28 +143,33 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
 export default OptionModal;
 
 export const styles = StyleSheet.create({
-optionModal:{
-    width:150,
-    backgroundColor:'#fff',
+  container:{
+    // width:150,
     position:'absolute',
-    right:0,
-    top:-10,
+    right:20,
+    borderRadius:5,
+    zIndex:2,
+    top:10
+  },
+  optionModal:{
+    width:155,
+    backgroundColor:'#fff',
     borderRadius:5,
     justifyContent:"center",
-    // alignItems:'center',
     paddingHorizontal:15,
     paddingVertical:10,
-    zIndex:2,
     shadowColor: 'black',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2},
     shadowRadius: 10,
     elevation: 3,
-    backgroundColor: 'white'
   },
   optionList:{
-    paddingVertical:7,
-    flexDirection:'row'
+    paddingVertical:5,
+    flexDirection:'row',
+    justifyContent:'flex-start',
+    alignItems:'center',
+    
   },
   optionListText:{
     color:'#071B36',

@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
-  ScrollView,
   FlatList,
   ActivityIndicator
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Svg, {Path} from 'react-native-svg';
 import moment from "moment";
 import PublicReactions from '../../HomeScreen/PublicReactions';
@@ -22,6 +23,7 @@ import { useDispatch } from 'react-redux';
 import OptionModal from '../../HomeScreen/optionModal';
 import AutoHeightImage from '../../HomeScreen/AutoHeightImage';
 
+
 const SavedPost = ({navigation}) => {
   const [item, setItem] = useState([]);
   const [postId, setPostId] = useState();
@@ -31,16 +33,17 @@ const SavedPost = ({navigation}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [userData, setUserData] = useState();
   const dispatch = useDispatch();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const ref = useRef(null);
+  const width = Dimensions.get('window').width
 
   const LocalStorage = () => {
     setBottumLoader(true);
     getLocalData('USER_INFO').then(async (res) => {
       setUserData(res?.data)
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
-      setItem(savedResult?.payload.result);
-      console.log("result.payload.result",savedResult.message);
+      setItem(savedResult?.payload?.result);
     });
     setBottumLoader(false);
   }
@@ -69,10 +72,8 @@ const SavedPost = ({navigation}) => {
   };
   
   const LoadPost = async (page) => {
-    console.log(page);
     setBottumLoader(true);
     const result = await dispatch(getSavedPostsApi({user_id:userData?.id,pageCounter:page}));
-    console.log("result.payload.result",result.payload.result);
     setEndNull(result?.payload?.result)
      if(result.payload.result !== null){
       setCurrentPage(prev => prev + 1);
@@ -82,12 +83,9 @@ const SavedPost = ({navigation}) => {
   }
 
   const BlockId = (id) =>{
-    console.log("BlockId",id);
     const BlockId = item?.filter(Uid => Uid.id != id);
     setItem(BlockId);
   }
-
-
   
   const renderLoader = () => {
     return (
@@ -98,8 +96,21 @@ const SavedPost = ({navigation}) => {
     );
   };
 
-  const renderItem = ({item}) => {
-    // console.log("item",item);
+
+  const onViewableItemsChanged = ({viewableItems}) => {
+    viewableItems.map((data) => {
+      setCurrentIndex(data.index)
+    });
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([
+    { onViewableItemsChanged },
+  ]);
+  var _viewabilityConfig = {
+    itemVisiblePercentThreshold: 50
+  };
+
+  const renderItem = ({item,index}) => {
     return(
       <Card style={styles.SavePostsContainer} >
           <View style={styles.userInfo}>
@@ -108,7 +119,7 @@ const SavedPost = ({navigation}) => {
                 style={{width:38, height:38,marginRight:5,borderRadius:50}}
               />
               <View>
-                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
+                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:"#071B36"}}>
                   {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name}
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                 </Text>
@@ -129,27 +140,25 @@ const SavedPost = ({navigation}) => {
                 </View>
               </View>
             </View>
-            <View>
             <TouchableOpacity style={{padding:10,right:-10,top:-10}} onPress={() => handleOption(item?.post_id)}>
               <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
               </Svg>
             </TouchableOpacity>
-                  {item?.post_id == postId && <OptionModal 
-                    modalVisible={modalVisible} 
-                    item={item} 
-                    setModalVisible={setModalVisible}
-                    BlockId={BlockId} 
-                    resData={userData}
-                  />}
-            </View>
           </View>
+             {item?.post_id == postId && <OptionModal 
+                modalVisible={modalVisible} 
+                item={item} 
+                setModalVisible={setModalVisible}
+                BlockId={BlockId} 
+                resData={userData}
+              />}
           <View >
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular"}}>
               {item?.description.replace(/<[^>]+>/g, "")}
             </Text>
           </View>
-          <AutoHeightImage item={item} width={Dimensions.get('window').width}/>
+          <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
           <PublicReactions item={item}/>
       </Card> 
     )
@@ -158,7 +167,7 @@ const SavedPost = ({navigation}) => {
   const _listEmptyComponent = () => {
     return ( 
       <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-          <Text>There is no data available</Text>
+          <Text>There is no post saved</Text>
       </View>
     )
 }
@@ -173,6 +182,8 @@ const SavedPost = ({navigation}) => {
         ListFooterComponent={renderLoader}
         onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        viewabilityConfig={_viewabilityConfig}
         ListEmptyComponent={_listEmptyComponent}
       />
     </SafeAreaView>

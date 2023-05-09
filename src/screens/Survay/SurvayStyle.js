@@ -80,6 +80,8 @@ export const styles = StyleSheet.create({
   ParticipantsText: { marginHorizontal: 10, fontFamily: "Inter-Regular" },
   ScoreContainer: { flexDirection: "row", marginTop: 16 },
 
+  
+
   //   ---------------------------------------------RadioMCQ------------------------------------------
 
   count: {
@@ -377,10 +379,10 @@ export const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.3,
     elevation: 2,
-    // zIndex: 99999,
-    position: "absolute",
     width: "100%",
     bottom: 0,
+    flex:1,
+    marginTop:-10
   },
   cardheading: {
     alignSelf: "center",
@@ -408,6 +410,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: "center",
     fontFamily: "Inter-SemiBold",
+    color: "#071B36",
   },
   imaguser: {
     width: 15,
@@ -462,13 +465,13 @@ export const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginTop: 30,
-    bottom: 10,
     width: "100%",
-    height: 48,
-    alignSelf: "center",
     borderColor: "#fff",
     borderRadius: 15 / 2,
     backgroundColor: "#2C8892",
+    // position:'relative',
+    // zIndex:99999,
+    // bottom:90,
   },
   levelText: {
     fontFamily: "Inter-Regular",
@@ -493,7 +496,12 @@ export const styles = StyleSheet.create({
     color: "#51668A",
     fontFamily: "Inter-Regular",
   },
-  //---------------------TypoMcq---------------------------------------
+  CongratulationBgImage:{
+    width:Dimensions.get('window').width,
+    resizeMode:'contain',
+    borderWidth:1
+  },
+  //-------------------------------TypoMcq--------------------------------
 
   count: {
     borderRadius: 4,

@@ -11,8 +11,14 @@ import {
   Text
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { AntDesign,Ionicons, FontAwesome ,FontAwesome5, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Icon } from '../navigation/ReuseLogics';
 
 
 class BottomSheet extends Component {
@@ -144,7 +150,7 @@ class BottomSheet extends Component {
               : children}
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
-              <AntDesign name="pluscircle" size={16} color="#45B5C0" style={{marginTop:1}} />
+                <View style={{marginTop:1}}>{Icon('AntDesign','pluscircle',16,'#45B5C0')}</View>
                 <Text style={{fontSize:14, fontWeight:'400', marginLeft:14}}>
                 My Circle
                 </Text>
@@ -154,7 +160,6 @@ class BottomSheet extends Component {
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
               <Ionicons name="person" size={16} color="#45B5C0" style={{marginTop:1}}/>
-             
                 <Text style={{fontSize:14, fontWeight:'400', marginLeft:14}}>
                 My Connection
                 </Text>
@@ -164,7 +169,9 @@ class BottomSheet extends Component {
 
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
-              <FontAwesome name="users" size={16} color="#45B5C0" style={{marginTop:1}} />
+                <View style={{marginTop:1}}>
+                  {Icon('FontAwesome','users',16,'#45B5C0')}
+                </View>
                 <Text style={{fontSize:14, fontWeight:'400', marginLeft:14}}>
                 My Community
                 </Text>
@@ -174,35 +181,32 @@ class BottomSheet extends Component {
 
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
-              
-              <FontAwesome5 name="whatsapp-square" size={16} color="#45D354" style={{marginTop:1}} />
+              <View style={{marginTop:1}}>{Icon('FontAwesome5','whatsapp-square',16,'#45D354')}</View>
                 <Text style={{fontSize:14, fontWeight:'400', marginLeft:14}}>
                 Whatsapp
                 </Text>
               </View>
               </TouchableOpacity>
               <View style={{borderColor:'#D5DEED',borderWidth:0.2, width:'100%',  }}></View>
-
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
-              <AntDesign name="facebook-square" size={16} color="#4267B2" style={{marginTop:1}} />
+              <View style={{marginTop:1}}>{Icon('AntDesign','facebook-square',16,'#4267B2')}</View>
                 <Text style={{fontSize:14, fontWeight:'400', marginLeft:14}}>
-                Facebook
+                  Facebook
                 </Text>
               </View>
               </TouchableOpacity>
               <View style={{borderColor:'#D5DEED',borderWidth:0.2, width:'100%',  }}></View>
-
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
-              <FontAwesome5 name="instagram-square" size={16} color="#8C3AAA" style={{marginTop:1}} />
+              <View style={{marginTop:1}}>{Icon('FontAwesome5','instagram-square',16,'#8C3AAA')}</View>
                 <Text style={{fontSize:14, fontWeight:'400', marginLeft:14}}>
-                Instagram Story
+                  Instagram Story
                 </Text>
               </View>
               </TouchableOpacity>
               <View style={{borderColor:'#D5DEED',borderWidth:0.2, width:'100%',  }}></View>
-
+              <View style={{marginTop:1}}>{Icon('AntDesign','facebook-square',16,'#4267B2')}</View>
               <TouchableOpacity style={{margin:10, alignSelf:'flex-start', flex:1, }}>
               <View style={{flexDirection:'row'}}>
               <FontAwesome5 name="instagram-square" size={16} color="#8C3AAA" style={{marginTop:1}} />

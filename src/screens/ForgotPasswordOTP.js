@@ -10,14 +10,12 @@
    import {useDispatch, useSelector} from 'react-redux';
    import { useNavigation } from '@react-navigation/native';
    import CustomButton from '../components/CustomButton';
-   import FontAwesome from 'react-native-vector-icons/FontAwesome';
-   import Ionicons from 'react-native-vector-icons/Ionicons';
-   import AntDesign from 'react-native-vector-icons/AntDesign';
-   import { forgotverifyOtp } from '../apis/Apicall';
    import OTPTextView from 'react-native-otp-textinput';
    import Toast from 'react-native-simple-toast';
    import { forgotPassword_ } from '../../redux/reducers/forgotPass';
    import { resendOTP } from '../../redux/reducers/loginAuth';
+   import { forgotverifyOtp } from '../../redux/reducers/loginAuth';
+   import { Icon } from '../navigation/ReuseLogics';
 
    const ForgotPasswordOTP = ({route}) => {
     const navigation = useNavigation();
@@ -26,29 +24,24 @@
    const [phone ,setPhone] =useState("");
    const [counter, setCounter] = useState(30);
    const [otpInput, setotpInput ] = useState('');
-   const [message , setmessage] = useState();
    const [editNumber , setEditNumber] = useState(false);
    const [loader, setLoader] = useState(false);
    const [verify, setVerifying] = useState('Verify');
 
     
-   const submitOtp = ()=>{
+   const submitOtp = async() =>{
     setVerifying("Verifying...")
-   if(otpInput !== ""){
-   forgotverifyOtp(otpInput,user_id)
-    .then(res => {
-    if(res['status'] == 'Success'){
-      navigation.navigate('CreateNewPass',{user_id})
-    }
-   })
-   .catch(err => {
-   setmessage('Error occured!');
-   console.log(err);
-   });
-   }else{
-   setmessage('Please Enter Otp');
-   }
-   setVerifying("Verify")
+      if(otpInput !== ""){
+      const result = await dispatch(forgotverifyOtp({otp:otpInput, user_id:user_id}));
+      if(result.payload.status == 'Success'){
+        Toast.show(result.payload.message,Toast.LONG);
+        navigation.navigate('CreateNewPass',{user_id})
+      } 
+        Toast.show(result.payload.message,Toast.LONG);
+      }else{
+        Toast.show('Please Enter OTP',Toast.LONG);
+      }
+        setVerifying("Verify");
    };
 
 
@@ -56,7 +49,7 @@
       // setLoader(true);
       setCounter(30)
       const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-      Toast.show(result.payload.message);
+      Toast.show(result.payload.message,Toast.LONG);
    }
 
 
@@ -76,7 +69,7 @@
       const token =await dispatch(forgotPassword_({
         email:phone
       }))
-      Toast.show(token.payload.message);
+      Toast.show(token.payload.message, Toast.LONG);
       if(token?.payload?.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: phone,
@@ -85,7 +78,7 @@
         })
       }
     }else{
-      Toast.show("Please Enter Mobile No. OR Email");
+      Toast.show("Please Enter Mobile No. OR Email",Toast.LONG);
     }   
   }
 
@@ -132,16 +125,16 @@
 
 
    <View style={styles.InputSendIcons}>
-    <TouchableOpacity onPress={() => handleEdit()}>
+    <TouchableOpacity onPress={() => handleEdit()} style={{margin:5}}>
         {editNumber ? 
-          <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
-        :
-          <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+            Icon('AntDesign','closecircleo',20,'#2c9dd1')
+         :
+            Icon('FontAwesome','pencil',20,'#2c9dd1')
         }
     </TouchableOpacity>
     {editNumber &&
-    <TouchableOpacity onPress={() => handleSubmit()}>
-        <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+    <TouchableOpacity onPress={() => handleSubmit()} style={{margin:5,paddingLeft:7}} >
+        {Icon('Ionicons','send-outline',20,'#2c9dd1')}
     </TouchableOpacity>
     }
    </View>
@@ -168,7 +161,7 @@
    </View>
     <View >
    <View style={{paddingHorizontal:6}}>
-   <CustomButton label={verify}onPress={()=>submitOtp()} />
+   <CustomButton label={verify} onPress={()=>submitOtp()} />
    </View>
    </View>
    </ScrollView>

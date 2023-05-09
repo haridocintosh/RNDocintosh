@@ -1,9 +1,8 @@
 import { View, Text,Image,StyleSheet, SafeAreaView, TouchableOpacity, Modal,Dimensions,ImageBackground } from 'react-native';
 import React, { useEffect, useState } from 'react';
-//import * as MediaLibrary from 'expo-media-library';
-//import * as Permissions from 'expo-permissions';
-//import { Audio } from 'expo-av'
-import { Ionicons,AntDesign,MaterialCommunityIcons   } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //import Slider from '@react-native-community/slider';
 
 const AudioScreen = ({navigation}) => {
@@ -63,7 +62,6 @@ const AudioScreen = ({navigation}) => {
        const insert =  media?.assets.map((data) => {
          return {...data, isSelected:false}
       });
-      console.log(insert);
       setContactData(insert)
     };
 
@@ -87,7 +85,6 @@ const AudioScreen = ({navigation}) => {
     };
 
     const selectAudio = async (audioId) => {
-      console.log(audioId);
       // setShouldPlay({...shouldPlay, audioId});
       let temp = contactData?.map((data) => {
         if (audioId === data.id) {
@@ -95,7 +92,6 @@ const AudioScreen = ({navigation}) => {
         }
         return data;
       });
-      console.log(temp);
       setContactData(temp);
       // setSend(true)
     }

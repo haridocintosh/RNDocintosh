@@ -1,6 +1,40 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
+export const TsiQuizAPI = createAsyncThunk("isiQuiz", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/tsiQuiz`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
+export const TsiQuizSaveAPI = createAsyncThunk("tsiQuizScore", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/tsiQuizScore`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const SavePostApi = createAsyncThunk("savePost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/savepost`, {
@@ -52,9 +86,44 @@ export const followApi = createAsyncThunk("follow", async (data)=>{
      }
 })
 
-export const getsearchSplData = createAsyncThunk("searchSplData", async ()=>{
+export const getsearchSplData = createAsyncThunk("searchSplData", async (data)=>{
     try{
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getsearchSplData`);
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getsearchSplData`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
+export const getDoctorsDetails = createAsyncThunk("DoctorsDetails", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_profile`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
+
+export const deviceVersion = createAsyncThunk("getVersion", async ()=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getversion`);
         const result = await responce.json();
         return result;
      }
@@ -101,6 +170,8 @@ export const singlePostDataAPI = createAsyncThunk("singlePostData", async (data)
 export const savePost = createSlice({
     name : "savePost",
     initialState :{
+        tsiQuiz       : {},
+        tsiQuizSave       : {},
         savePostResult   : {},
         blockUserResult   : {},
         getsearchResult   : {},
@@ -113,6 +184,30 @@ export const savePost = createSlice({
     reducers : {},
 
     extraReducers: builder => {
+        //-------------------------TsiQuizAPI----------------------------------
+        builder.addCase(TsiQuizAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(TsiQuizAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.tsiQuiz    = action.payload;
+        })
+        builder.addCase(TsiQuizAPI.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+        //-------------------------TsiQuizSaveAPI----------------------------------
+        builder.addCase(TsiQuizSaveAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(TsiQuizSaveAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.tsiQuizSave    = action.payload;
+        })
+        builder.addCase(TsiQuizSaveAPI.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
         //-------------------------SavePostApi----------------------------------
         builder.addCase(SavePostApi.pending, (state) => {
             state.loading       =  true;
@@ -190,7 +285,34 @@ export const savePost = createSlice({
             state.loading       = false;
             state.error         = true
         })
+
+        //-------------------------DeviceVersion----------------------------------
+        builder.addCase(deviceVersion.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deviceVersion.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.singlePostDataResult    = action.payload;
+        })
+        builder.addCase(deviceVersion.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+
+        //-------------------------getDoctorsDetails----------------------------------
+        builder.addCase(getDoctorsDetails.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getDoctorsDetails.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.singlePostDataResult    = action.payload;
+        })
+        builder.addCase(getDoctorsDetails.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
     },
 });
+
 
 export const { reducer : SavePostResult } = savePost;

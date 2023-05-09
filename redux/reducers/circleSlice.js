@@ -29,7 +29,7 @@ export const addCircle = createAsyncThunk("user/addCircle", async(data)=>{
           body : JSON.stringify(data)
       });
       const result=  await responce.json();
-      console.log('slice',result);
+      // console.log('slice',result);
       return result
   }
   catch(e){
@@ -62,9 +62,7 @@ export const circleSlice = createSlice({
         loading : false,
         error :false,
     },
-    reducers : {
-
-    },
+    reducers : { },
     extraReducers :builder => {
 //---------------------------------getInterestSpl-----------------------------
       builder.addCase(getInterestSpl.pending, (state) => {

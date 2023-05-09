@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Share} from 'react-native'
 import React, { useState,useEffect } from 'react';
-import {AntDesign,} from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
 import { getallLikes, postLikeData } from '../../../redux/reducers/publicReactionSlice';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import { getLocalData } from '../../apis/GetLocalData';
 
 
 const PublicReactions = ({item,getStorageData}) => {
+  // console.log('postIndex', postIndex);
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
@@ -19,10 +20,11 @@ const PublicReactions = ({item,getStorageData}) => {
  const navigation = useNavigation();
 
   const localStorageData = () => {
-    getLocalData('USER_INFO').then( async (res) => {
+    getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResult(reData);
       const getallLikesData = await dispatch(getallLikes({postid:item?.post_id}));
+      // console.log(getallLikesData.payload);
       setAllLikeData(getallLikesData.payload);
     })
   }
@@ -43,15 +45,18 @@ const PublicReactions = ({item,getStorageData}) => {
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(false);
   }
+  
   getStorageData();
  }
 
  useEffect(() => {
   localStorageData();
- },[])
+  setLikeCount(item?.likecount);
+  setHeart(item?.post_like_status?.[0].flag == 1);
+ },[item])
 
  const GotoComments =(post_id,comments_list ) => {
-  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
+  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
  }
 
  const onShare = async (post_id) => {
@@ -79,10 +84,7 @@ const PublicReactions = ({item,getStorageData}) => {
               <View style={{ flexDirection: 'row',marginVertical:5,}}>
                 <View style={styles.socialCount}>
                   <TouchableOpacity onPress={()=> handleLikes(item?.post_id,item?.likecount)} >
-                      <AntDesign
-                        name={ heart ? "heart":"hearto"} 
-                        size={22} color="red"
-                      />
+                      <AntDesign name={heart ? "heart":"hearto"} size={22} color="red"/>
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}>
                     {likeCount}
@@ -107,7 +109,7 @@ const PublicReactions = ({item,getStorageData}) => {
                     <TouchableOpacity onPress={() => onShare(item?.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
-                  <Text style={styles.socialCountText}>4k</Text>
+                  <Text style={styles.socialCountText}>0</Text>
                 </View>
 
               </View>

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { styles } from "./SurvayStyle";
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
   const [optId, setOptId] = useState(null);
@@ -49,7 +49,12 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
                       ? "D"
                       : i == 4
                       ? "E"
-                      : "F"}
+                      : i == 5 
+                      ? "F" 
+                      : i == 6 
+                      ? "G" 
+                      : i == 7 
+                      ? "H": "I"}
                   </Text>
                 </View>
                 <Text style={styles.optionS}> {data.options}</Text>

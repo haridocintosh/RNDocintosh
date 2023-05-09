@@ -3,11 +3,12 @@ import {
   View,
   Text,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { styles } from "./SurvayStyle";
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError }) => {
@@ -32,8 +33,8 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>
-        <View>
-          {allMcq?.options.map((data, i) => {
+        <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{marginBottom:50}}>
+          {allMcq?.options?.map((data, i) => {
             return (
               <TouchableOpacity style={styles.SurvayOptions} key={i} onPress={() => handleChange(data.opt_id)}>
                 <CheckBox
@@ -46,7 +47,7 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError
               </TouchableOpacity>
             );
           })}
-        </View>
+        </ScrollView>
         <Text style={styles.error}>
             {error && <><Ionicons name="warning" size={15} color="#D01212"/> {error}</>}
         </Text>

@@ -41,7 +41,8 @@ const [profilErr,setprofilErr] = useState();
 const [mrnproofErr,setmrnproofErr] = useState();
 const [passworderr,setPasswordErr] = useState();  
 const [showeye, setshoweye] = useState(true);
-// const fullname="gagan";
+//  const fullname="gagan";
+
 const {user_id, fullname, role} = route.params;
 const [register , setregister] = useState({
   pincode : "",
@@ -86,11 +87,24 @@ setregister({ ...register,
 }
 
 const setPassword= (e) =>{
-  setregister({ ...register,
-    password: e,
-  });
+  const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  const password = e;
+  if(!isValidnameRegex.test(password)){
+    setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character.")
+    setregister({...register,
+      password: '',
+    });
+  }else{
+    setregister({...register,
+      password: password,
+    });
+    setPasswordErr('');
+  }
+ 
   setPasswordErr('');
 }
+
+
 
 useEffect(()=>{
   async function fetchUniversity(){
@@ -132,7 +146,7 @@ const setCollege= (e) =>{
 
 const pickupImage = (arg) => {
     PickImage(arg).then(async (res) => {
-      let localUri = res?.uri;
+      let localUri = res?.assets[0]?.uri;
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
@@ -154,7 +168,7 @@ const pickupImage = (arg) => {
               headers:{'Content-Type': 'multipart/form-data'},
               body :formData
           });
-        const result=  await responce.json();
+          const result=  await responce.json();
 
         if(fromWhere == 'document'){
           setregister({ ...register,
@@ -171,37 +185,41 @@ const pickupImage = (arg) => {
 };
 
 const form_submit = async() =>{ 
-  console.log("register",register);
+  // console.log(passworderr);
+  console.log(register.password );
+  // const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-  }else if(!register.university){
-    setuniversityerr("Please Select University ");
+    }else if(!register.university){
+    setuniversityerr("Please select university ");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-  }else if(!register.college){
-    setclgerr("Please Select College");
+    }else if(!register.college){
+    setclgerr("Please select college");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-  }else if(!register.password){
-    setPasswordErr("Please enter your password");
-  }else if(!register.profile_pic){
-    if (ref.current) {
+  }
+  else if(!register.password){
+    setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character..");
+  }
+  else if(!register.profile_pic){
+  if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
-    setprofilErr("Please Upload your Profile Photo");
+    setprofilErr("Please upload your profile photo");
   }else if(!register.mrnproof){
-    setmrnproofErr("Please Upload CollegeId/Library Card");
+    setmrnproofErr("Please upload collegeid/library card");
   }else{
-    setsubmitbtn(true);
+    // setsubmitbtn(true);
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
     setloader(false);
-    Toast.show(result.payload.message);
+    Toast.show(result.payload.message,Toast.LONG);
       if(result.payload.status == 'Success'){
         const coinDetails = {task : 1, receiverId:result.payload.user_id } 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
@@ -213,6 +231,14 @@ const form_submit = async() =>{
           },3000);
         }
       }
+      setregister({
+        pincode : "",
+        university:"",
+        college:"",
+        password:"",
+        profile_pic:"",
+        mrnproof:"",
+    })
       setloader(false);
     }
   }
@@ -226,7 +252,6 @@ const form_submit = async() =>{
   }
 
   const handlePickupModal = (val) => {
-    // console.log("val",val);
     setFromWhere(val)
     setModalVisible(true);
   }

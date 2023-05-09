@@ -26,13 +26,15 @@ import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PickImage } from '../navigation/ReuseLogics';
 
-
 const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 const ref = useRef(null);
 
 const dispatch    = useDispatch();
-  // const fullname = 'asj'
+  // const user_id = '1235';
+  // const fullname = 'tara'
+  // const role = '4'
+  // const specialityId = '34'
   const {user_id,fullname,role,specialityId} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
@@ -99,8 +101,6 @@ const dispatch    = useDispatch();
     password:"",
     profile_pic:"",
     mrnproof:"",
-    // role:4,
-    // user_id:23334
     role:role,
     user_id:user_id
   });
@@ -109,7 +109,7 @@ const dispatch    = useDispatch();
     const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;;
     const pincode = e;
     if(!isValidnameRegex.test(pincode)){
-      setPincode("Please enter valid Pincode")
+      setPincode("Please enter a valid pincode")
     }else{
       setPincode('');
   }
@@ -140,9 +140,20 @@ const stateCouncil= (e) =>{
 }
 
 const setPassword= (e) =>{
-  setregister({ ...register,
-    password: e,
-  });
+  const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  const password = e;
+  if(!isValidnameRegex.test(password)){
+    setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character.")
+    setregister({...register,
+      password: '',
+    });
+  }else{
+    setregister({...register,
+      password: password,
+    });
+    setPasswordErr('');
+  }
+ 
   setPasswordErr('');
 }
 
@@ -152,16 +163,11 @@ const showcong = ()=>{
 
 
 const pickupImage = (arg) => {
-  console.log("fromWhere",fromWhere);
   bottomSheetModalRefSecond.current?.close();
   bottomSheetModalRef.current?.close();
     PickImage(arg).then(async (res) => {
-      let localUri = res?.uri;
-
+          let localUri = res?.assets[0]?.uri;
           let filename = localUri.split('/').pop();
-          // Infer the type of the image
-          // let match = /\.(\w+)$/.exec(filename);
-          // let type = match ? `image/${match[1]}` : `image`;
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
@@ -185,7 +191,6 @@ const pickupImage = (arg) => {
             body :formData
          });
         const result=  await responce.json();
-
         if(fromWhere == 'document'){
           setregister({ ...register,
             mrnproof: result,
@@ -227,40 +232,42 @@ useEffect(()=>{
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.mrn){
-      setmrnId("Please enter MRN");
+      setmrnId("Please enter mrn id");
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.mry){
-      setmrnYear("Please enter MRN Year");
+      setmrnYear("Please enter mrn year");
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.medicalcouncil_id){
-      setStateErr("Please enter State Council");
+      setStateErr("Please enter state council");
       if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
-    }else if(!register.password){
-      setPasswordErr("Please enter your password");
-    }else if(!register.profile_pic){
+    }
+    else if(!register.password){
+      setPasswordErr("Min 8 characters which contain at least one numeric digit, a uppercase letter and a special character.");
+    }
+    else if(!register.profile_pic){
       setprofilErr("Please upload your profile photo");
       if (ref.current) {
         ref.current.scrollTo({ y: 0, animated: true })
       }
-    }else if(!register.mrnproof){
-      setmrnproofErr("Please upload MRN document");
-    }else{
-      setsubmitbtn(true);
+    }
+    else if(!register.mrnproof){
+      setmrnproofErr("Please upload mrn document");
+    }
+    else{
+      // setsubmitbtn(true);
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
-      Toast.show(result.payload.message);
-      console.log('imageUploadData', result.payload);
+      Toast.show(result.payload.message,Toast.LONG);
         if(result.payload.status == 'Success'){
           setloader(false);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
           const coinResult  = await dispatch(coinTransfer(coinDetails));
-          console.log('coinsStatus', coinResult.payload);
           if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {
@@ -282,7 +289,6 @@ if(loader){
 }
 
 const handlePickupModal = (val) => {
-  // console.log("val",val);
   setFromWhere(val)
   setModalVisible(true);
 }

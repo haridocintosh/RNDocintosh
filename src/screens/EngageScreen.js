@@ -55,10 +55,10 @@ useEffect(() => {
             </ImageBackground>
         </View>
 
-        {userdata.role <='4' && <View style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
-                <Text style={styles.CartTitleSurveys}>Surveys</Text>
+                <Text style={styles.CartTitlePolls}>Polls</Text>
                 <View style={styles.cartOffers}>
                     <Text style={styles.cartOffersText}>Earn</Text>
                     <Image source={require("../assets/dr-icon/dcoin.png")} style={styles.docCoin}/>
@@ -67,10 +67,34 @@ useEffect(() => {
                 
                 </View>
                 <TouchableOpacity>
+                <Image source={require('../assets/images/polls.png')} style={styles.cartImages}/>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.trendTitle}>COVID-19 and its effects</Text>
+
+            <Text style={styles.trendTitleContent}>Help us understand COVID better</Text>
+            <ImageBackground source={require('../assets/images/PollsWave.png')} style={styles.CartWave} >
+                <TouchableOpacity style={styles.ButtonContainer} onPress={()=> navigation.navigate('Polls')}>
+                    <Text style={styles.buttonText}>Participate</Text>
+                </TouchableOpacity>
+            </ImageBackground>
+        </View>
+
+        {userdata.role =='4' && <View style={styles.container}>
+            <View style={styles.titleDtails}>
+                <View>
+                <Text style={styles.CartTitleSurveys}>Surveys</Text>
+                <View style={styles.cartOffers}>
+                    <Text style={styles.cartOffersText}>Earn</Text>
+                    <Image source={require("../assets/dr-icon/dcoin.png")} style={styles.docCoin}/>
+                    <Text style={styles.cartOffersText}>100</Text>
+                </View>
+                </View>
+                <TouchableOpacity>
                 <Image source={require('../assets/images/Surveys.png')} style={styles.cartImages}/>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.trendTitle}>COVID-19 and its Effects</Text>
+            <Text style={styles.trendTitle}>Surveys for HCP's</Text>
 
             <Text style={styles.trendTitleContent}>We appreciate your feedback.</Text>
             <ImageBackground source={require('../assets/images/SurveysWave.png')} style={styles.CartWave}>
@@ -79,6 +103,29 @@ useEffect(() => {
                 </TouchableOpacity>
             </ImageBackground>
         </View>}
+        {userdata.role =='4' && <View style={styles.container}>
+            <View style={styles.titleDtails}>
+                <View>
+                    <Text style={styles.CartTitleSentimetrix}>Sentimetrix</Text>
+                    <View style={styles.cartOffers}>
+                        <Text style={styles.cartOffersText}>Earn</Text>
+                        <Image source={require("../assets/dr-icon/dcoin.png")} style={styles.docCoin}/>
+                        <Text style={styles.cartOffersText}>100</Text>
+                    </View>
+                </View>
+                <TouchableOpacity>
+                <Image source={require('../assets/images/Sentimetrix.png')} style={styles.cartImages}/>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.trendTitle}>Tell us want you think</Text>
+
+            <Text style={styles.trendTitleContent}>Your Views are deeply valued.</Text>
+            <ImageBackground source={require('../assets/images/SentimetrixWave.png')} style={styles.CartWave}>
+                <TouchableOpacity style={styles.ButtonContainer} onPress={()=>{ navigation.navigate('SentimetrixList') }}>
+                    <Text style={styles.buttonText}>Participate</Text>
+                </TouchableOpacity>
+            </ImageBackground>
+        </View> }
 
    </ScrollView>
   </SafeAreaView>
@@ -147,7 +194,8 @@ CartTitleSentimetrix:{
 },
 cartOffersText:{
     fontFamily:'PlusJakartaSans-Bold',
-    marginRight:10
+    marginRight:10,
+    color:'#071B36'
 },
 cartOffers:{
     flexDirection:'row',
@@ -167,7 +215,8 @@ CartWave:{
 trendTitle:{
     fontFamily:'PlusJakartaSans-Bold',
     fontSize:18,
-    paddingHorizontal:15
+    paddingHorizontal:15,
+    color:'#071B36'
 },
 trendTitleContent:{
     color:'#51668A',

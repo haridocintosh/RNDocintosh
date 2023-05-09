@@ -1,20 +1,10 @@
 import React, { useState } from 'react'
-import { View,SafeAreaView, ScrollView,Text,Image, TextInput, } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import { View,SafeAreaView, ScrollView,Text} from 'react-native'
+
 
 const TermsAndCondition = () => {
-  const navigation = useNavigation();
 
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../../assets/fonts/Inter-Regular.ttf'),
-    'PlusJakartaSans-Regular': require('../../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-
-  if(!fontsLoaded) {
-    return null;
-  }
+ 
   return (
   <SafeAreaView>
     <ScrollView

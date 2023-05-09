@@ -2,7 +2,8 @@ import React from 'react'
 import { View, Text,SafeAreaView,ScrollView,TouchableOpacity,StyleSheet } from 'react-native'
 import {  Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import {  MaterialCommunityIcons,AntDesign, Entypo,Ionicons} from '@expo/vector-icons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Polls1 = () => {
   const navigation = useNavigation();

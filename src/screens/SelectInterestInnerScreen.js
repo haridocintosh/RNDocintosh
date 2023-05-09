@@ -9,11 +9,8 @@ import {  View,
   import { useDispatch } from "react-redux";
   import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
   import Toast from 'react-native-simple-toast';
-  import { getMycircle } from '../../redux/reducers/postData';
+  import { getSelectedInterest } from '../../redux/reducers/postData';
   import { getLocalData } from '../apis/GetLocalData';
-  
-
-
   
   const SelectInterestInnerScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -24,11 +21,12 @@ import {  View,
     const [selectitem,setselectitem]=useState('');
     const [getspclist,setgetspclist]=useState('');
     const [loader, setLoader] = useState(true);
+    const [userId, setuserId] = useState();
   
     const getItem = (item) => {
       let spl  = item.speciality_id;
       let copy=[...selectitem];
-      copy =[...copy,spl]
+      copy = [...copy,spl]
      setselectitem(copy)
     const newItem = filteredDataSource.map((val)=>{
       if(val.speciality_id===item.speciality_id){
@@ -49,32 +47,27 @@ import {  View,
     };
   
     const fetchPostData = async (speciality_id)=>{
-      const postDetails = {speciality_id:speciality_id}
+      const postDetails = {speciality_id:speciality_id,id:userId}
       const result = await dispatch(addCircle(postDetails));
-    //,id:user_id
    }
   
-   const getInterestSplData = async () => {
-    // const postDetails = {speciality_id:specialityId}
-    const result = await dispatch(getInterestSpl());
+   const getInterestSplData = async (id) => {
+    const postDetails = {user_id : id}
+    const result = await dispatch(getSelectedInterest(postDetails));
     setFilteredDataSource(result?.payload);
     setMasterDataSource(result?.payload);
     setLoader(false)
    }
 
-   const fetchSpecialities = async (id)=>{
-    const postDetails = {user_id : id}
-    const result = await dispatch(getMycircle(postDetails));
-    console.log("getSpecialityList", result.payload);
-    setgetspclist(result.payload);
-   }
+  
   
     useEffect(() => {
       getInterestSplData()
       navigation.setOptions({title:'Select Interest'})
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
-        fetchSpecialities(reData?.id);
+        setuserId(reData?.id)
+        getInterestSplData(reData?.id);
       });
     }, []);
 
@@ -104,10 +97,10 @@ import {  View,
     const ItemView = ({ item }) => {
       return (
       <View style={styles.item}>
-        <Text style={[styles.itemStyle, item.isSelected ? { borderColor:"#E6E6E6", backgroundColor:"transparent",color:"#51668A"} : { borderColor:"#45B5C0", backgroundColor:"#F6FBFC", color:"#071B36"} ]} onPress={() => getItem(item)}> 
-          {'#'}{item.speciality }{ item.isSelected?"":"    "}
+        <Text style={[styles.itemStyle, !item.isSelected ? { borderColor:"#E6E6E6", backgroundColor:"transparent",color:"#51668A"} : { borderColor:"#45B5C0", backgroundColor:"#F6FBFC", color:"#071B36"} ]} onPress={() => getItem(item)}> 
+          {'#'}{item.speciality }{ !item.isSelected?"":"    "}
         </Text>
-        <Text style={{position:"absolute",top:11,right:4}}>{ item.isSelected ?'':<Ionicons style={{width:40, right:100,marginBottom:0}} name="close-circle" size={20} color="#45B5C0"/> } </Text>
+        <Text style={{position:"absolute",top:11,right:4}}>{ !item.isSelected ?'':<Ionicons style={{width:40, right:100,marginBottom:0}} name="close-circle" size={20} color="#45B5C0"/> } </Text>
       </View>
       );
     };
@@ -125,13 +118,10 @@ import {  View,
       );
     };
   
-    const handleSubmit = ()=>{
-      if(selectitem == ''){
-        Toast.show('Please Select Your Interest');
-      }else{
-        navigation.navigate('SelectInterestInnerScreen'); 
-      }
-    }
+    // const handleSubmit = ()=>{
+    
+    //   navigation.navigate('SelectInterestInnerScreen'); 
+    // }
   
       if(loader){
         return(
@@ -169,7 +159,7 @@ import {  View,
         </View>
   
         <View style={{marginTop:0,zIndex:1,width:"100%",backgroundColor:"#fff",position:"absolute",bottom:0,paddingHorizontal:20}}>
-            <CustomButton label={'Continue'} onPress={() => handleSubmit()}   />
+            {/* <CustomButton label={'Continue'} onPress={() => handleSubmit()} /> */}
         </View>
         </View>
     );

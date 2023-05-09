@@ -3,96 +3,62 @@ import React,{useEffect, useRef, useState,useMemo} from 'react'
 import { styles } from './BellNotificationStyles';
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { TapGestureHandler, ScrollView } from "react-native-gesture-handler";
+import { getAllNotification } from '../../../../redux/reducers/getSpeciality';
+import { useDispatch } from 'react-redux';
+import moment from "moment";
 
 const BellNotification = ({navigation}) => {
-    // const [isOpen, setIsOpen]  = useState(false);
+    const dispatch =  useDispatch();
+    const [getNotification, setgetNotification] = useState();
     const snapPoints = useMemo(() => [1, '30%'], []);
     const bottomSheetRef = useRef(null);
-
+   
     const handlePresentModal = () => {
         bottomSheetRef.current?.expand();
     }
+
+    const fetchNotification = async () => {
+        const allNotification = await dispatch(getAllNotification());
+        setgetNotification(allNotification.payload);
+    }
+
     useEffect(()=>{
         navigation.setOptions({ title: 'Notification'});
         bottomSheetRef.current?.close();
+       fetchNotification();
     },[])
+    // var d = new Date()
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
-        <Text style={styles.DayNotification}>Today</Text>
-
-        <View style={styles.userDoesContainer}>
-            <View style={styles.WhatuserDoes}>
-                <Image source={require('../../../assets/images/p2.png')} style={styles.ProfilePic}/>
-                <View style={styles.userName}>
-                    <Text style={styles.userNameText}>Dr.Shalani</Text>
-                    <Text style={styles.userTimeText}>
-                        Share you a Gift card 
-                        <Text style={styles.dot}> . </Text>
-                        2 hrs ago
-                    </Text>
+        <ScrollView>
+        {/* {getQualificationData?.slice(0, qualificationShowAll)?.map((data,i) => {})} */}
+       { getNotification?.map((data,i)=>{
+        const obj = JSON.parse(data.data)
+            return(
+                <View style={styles.userDoesContainer}>
+                    <View style={styles.WhatuserDoes}>
+                        <Image source={data?.profileimage && {uri:data?.profileimage}} style={styles.ProfilePic}/>
+                        <View style={styles.userName}>
+                            <Text style={styles.userNameText}>{data?.username}</Text>
+                            <Text style={styles.userTimeText}>
+                                {obj?.message} . {moment(data?.created_at).calendar()}
+                            </Text>
+                        </View>
+                    </View>
+                    <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
+                    <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
+                    </TouchableOpacity>
                 </View>
-            </View>
-            <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
-              <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
-            </TouchableOpacity>
-        </View>
-        <View style={styles.userDoesContainer}>
-            <View style={styles.WhatuserDoes}>
-                <Image source={require('../../../assets/images/p3.png')} style={styles.ProfilePic}/>
-                <View style={styles.userName}>
-                    <Text style={styles.userNameText}>Dr.Shalani</Text>
-                    <Text style={styles.userTimeText}>
-                        Share you a Gift card 
-                        <Text style={styles.dot}> . </Text>
-                        2 hrs ago
-                    </Text>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
-              <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
-            </TouchableOpacity>
-        </View>
-       
-        <Text style={styles.DayNotification}>Yesterday</Text>
-
-        <View style={styles.userDoesContainer}>
-            <View style={styles.WhatuserDoes}>
-                <Image source={require('../../../assets/images/p2.png')} style={styles.ProfilePic}/>
-                <View style={styles.userName}>
-                    <Text style={styles.userNameText}>Dr.Shalani</Text>
-                    <Text style={styles.userTimeText}>
-                        Share you a Gift card 
-                        <Text style={styles.dot}> . </Text>
-                        2 hrs ago
-                    </Text>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
-              <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
-            </TouchableOpacity>
-        </View>
-        <View style={styles.userDoesContainer}>
-            <View style={styles.WhatuserDoes}>
-                <Image source={require('../../../assets/images/p3.png')} style={styles.ProfilePic}/>
-                <View style={styles.userName}>
-                    <Text style={styles.userNameText}>Dr.Shalani</Text>
-                    <Text style={styles.userTimeText}>
-                        Share you a Gift card 
-                        <Text style={styles.dot}> . </Text>
-                        2 hrs ago
-                    </Text>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.threeDotsContainer} onPress={() => handlePresentModal()}>
-              <Image source={require('../../../assets/images/three-dots.png')} style={styles.threeDots}/>
-            </TouchableOpacity>
-        </View>
+            )}
+        )}
+          
+        </ScrollView>
 
         <BottomSheet
             ref={bottomSheetRef}
             snapPoints={snapPoints}
             enablePanDownToClose={true}
-        >
+>
             <BottomSheetView>
             <ScrollView>
                 <TouchableOpacity style={styles.SheetOpionsContainer}>

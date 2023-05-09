@@ -11,7 +11,6 @@ export const forgotPassword_ = createAsyncThunk("forgotPassword", async (data)=>
             body :JSON.stringify(data)
          });
         const result=  await responce.json();
-        console.log(result);
         return result;
      }
      catch(e){

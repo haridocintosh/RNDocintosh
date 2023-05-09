@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppStack from './AppStack';
-import LoginScreen from '../screens/LoginScreen';
 import IntroStack from './IntroStack';
 import OtpVerification from '../screens/OtpVerification';
 import RegisterTwoScreen from '../screens/RegisterTwoScreen';
@@ -16,16 +15,16 @@ import RegisterStudentScreen from '../screens/RegisterStudentScreen';
 import ForgotPasswordOTP from '../screens/ForgotPasswordOTP';
 import DoctorOtp from '../screens/DoctorOtp';
 import OnboardingScreen from '../screens/OnboardingScreen';
-import InvitePeers from '../screens/InvitePeers';
 import SelectInterest from '../screens/SelectInterest';
 import ContactPermission from '../screens/ContactPermission';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
-import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
-import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+import UpgradeApp from './UpgradeApp';
+// import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import RegisterScreen from '../screens/RegisterScreen';
+import LoginScreen from '../screens/Login/LoginScreen';
 
 
 export default function AppNav() {
@@ -42,8 +41,8 @@ const navigation  = useNavigation();
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
-       setDefaultRoute("Intro");
-       // setDefaultRoute("SelectInterest");
+      setDefaultRoute("Intro");
+      // setDefaultRoute("ContactPermission");
       }
       setStatusKeyLoaded(true);
     } catch(e) {
@@ -65,20 +64,17 @@ const handleMessage = () => {
   return (<>
     {statusKeyLoaded && 
     <>
+      <UpgradeApp/>
       <HandleBack/>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
-            {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
-            {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
             <Stack.Screen name="Intro" component={IntroStack} />
-            <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true, headerRight: () => (<Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
-            <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen}  options={{ title: 'Register', headerShown: true}}/>
             <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
             <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  
-            <Stack.Screen name="RegisterTwoScreen" component={RegisterTwoScreen} options={{ title: 'Register', headerShown: true}} />
-            <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} />
+            <Stack.Screen name="RegisterTwoScreen" component={RegisterTwoScreen} options={{ title: 'Professional Information', headerShown: true}} />
+            <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Professional Information', headerShown: true}} />
             <Stack.Screen name="Congratulation" component={Congratulation} />
             <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
               headerRight: () => (
@@ -90,7 +86,7 @@ const handleMessage = () => {
             <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
             <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  
                headerRight: () => (
-                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)
+                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}} >Skip</Text>)
               }} />
             <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
             <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />

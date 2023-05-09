@@ -1,8 +1,8 @@
 import React,{ useEffect } from 'react'
 import { View, Text , StyleSheet} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { FontAwesome5,FontAwesome,Feather,Ionicons ,Fontisto} from '@expo/vector-icons';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const SettingsScreen = ({navigation}) => {
   useEffect(()=>{

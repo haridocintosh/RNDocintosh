@@ -16,7 +16,8 @@ export const styles = StyleSheet.create({
         paddingHorizontal:25,
         backgroundColor: '#20324A',
         height:42,
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     rankText:{
         fontSize:28,
@@ -31,12 +32,12 @@ export const styles = StyleSheet.create({
     dcoinImag:{
         width:25,
         height:25,
-        marginRight:10,
     },
     achivedText:{
         color:'#fff',
         fontFamily:'PlusJakartaSans-Regular',
-        fontSize:16
+        fontSize:16,
+        marginLeft:5
     },
     rankersLederboard:{
         flexDirection:'row',
@@ -158,6 +159,7 @@ export const styles = StyleSheet.create({
     },
     winsCoins:{
         fontFamily:'Inter-SemiBold',
+        marginLeft:10
     },
     progressBar:{
         flex:1,
@@ -196,7 +198,8 @@ export const styles = StyleSheet.create({
     },
     barPrmaryKey:{
        fontFamily:'Inter-SemiBold',
-       fontSize:16
+       fontSize:16,
+       lineHeight:18
     },
     barName:{
        fontFamily:'PlusJakartaSans-Bold',

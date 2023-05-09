@@ -1,6 +1,7 @@
 import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity,Modal} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
@@ -19,7 +20,7 @@ const CommentsScreen = ({route,navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const dispatch = useDispatch();
 
-    const getData = async() => {
+    const getData = async(send) => {
       navigation.setOptions({ title: 'Comments'});
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
@@ -29,7 +30,12 @@ const CommentsScreen = ({route,navigation}) => {
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
         setInstData(sentResult.payload.getallcomment);
-        setLoader(false)
+        // console.log(sentResult.payload.getallcomment.length);
+        setLoader(false);
+        // if(send == "send"){
+        //   // console.log("done---");
+        //   navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
+        // }
     }
 
     const handleComment = async () => {
@@ -37,10 +43,9 @@ const CommentsScreen = ({route,navigation}) => {
       const sentResult = await dispatch(commentData(postDetails));
       const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
-      getData();
-      onChangeText()
+      getData("send");
+      onChangeText();
     }
-
 
     useEffect(()=>{
         getData();
@@ -67,8 +72,8 @@ const CommentsScreen = ({route,navigation}) => {
     }
   return (
     <View style={styles.commentContainer}>
-      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
-               { instData.length > 0 ? instData?.map((element, index)=>{
+      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
+               {instData.length > 0 ? instData?.map((element, index)=>{
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>

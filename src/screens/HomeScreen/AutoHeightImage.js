@@ -1,40 +1,102 @@
-import { View, Text, Image,StyleSheet,Dimensions } from 'react-native'
-import React, { useState, useRef, useEffect } from 'react'
-import Swiper from 'react-native-swiper';
-//import { Audio, Video } from 'expo-av';
+import { View, Text, Image,StyleSheet,Dimensions,TouchableOpacity } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react';
+import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
+import FastImage from 'react-native-fast-image'
 
-const AutoHeightImage = ({item}) => {
+
+const AutoHeightImage = ({items,currentIndex,postIndex}) => {
+
+  // const [isPlaying, setIsPlaying] = React.useState(false); 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [carouselItems] = useState(item?.attach_array)
-  
-  //const video = useRef(null);
+  const [carouselItems,SetCarouselItems] = useState(items?.attach_array)
+  const videoPlayer = useRef(null);
+  const [imgHeight, setImgHeight] = useState();
 
-  const _renderItem = ({ item, index }) => {
-    return (
-           <View key={index}>
-              {item?.filename?.includes("mp4") ? ''
-              // <Video
-              //     ref={video}
-              //     resizeMode={"contain"}
-              //     source={{uri:item?.filename}} 
-              //     useNativeControls
-              //     //shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
-              //     isLooping={false}
-              //     style={{width: "100%", height:300, marginHorizontal:10}} 
-              // />
+
+  const onPlayVideo = (id) => {
+    console.log('id',id);
+    // setPostId(items.post_id);
+    // setPaused(!paused);
+  };
+
+  useEffect(() => {
+    SetCarouselItems(items?.attach_array)
+  },[items?.attach_array])
+
+
+
+  const actualHeight = (width,height) => {
+      const ratio = Dimensions.get('window').width/width;
+      const actual = height * ratio;
+      const ActualHeight = actual ? actual : 350;
+      return ActualHeight;
+  }
+
+  const _renderItem = ({item, index}) => {
+        return (
+          <View key={index} style={styles.imageVideoContainer}>
+            {/* <Text>{item?.fileheight}</Text> */}
+              {item?.filename?.includes("mp4") ?
+              <TouchableOpacity onPress={() => onPlayVideo(items.post_id)}>
+                <Video 
+                  // onEnd={onEnd}
+                  // onLoad={onLoad}
+                  // onLoadStart={onLoadStart}
+                  // onProgress={onProgress}
+                  paused={currentIndex !== postIndex}
+                  ref={videoPlayer}
+                  resizeMode={"contain"}
+                  // onFullScreen={isFullScreen}
+                  source={{uri:item?.filename}} 
+                  style={{width:"100%",marginHorizontal:10,zIndex:0, alignSelf:'center',aspectRatio: 0.8}}
+                  volume={10}
+                  useTextureView={false}
+                  playInBackground={false}
+                  disableFocus={true}
+                  playWhenInactive={false}
+                />
+              
+              {/* <MediaControls
+                    duration={duration}
+                    isLoading={isLoading}
+                    mainColor="#333"
+                    onFullScreen={onFullScreen}
+                    onPaused={onPaused}
+                    onReplay={onReplay}
+                    onSeek={onSeek}
+                    onSeeking={onSeeking}
+                    playerState={playerState}
+                    progress={currentTime}
+                    toolbar={renderToolbar()}
+                  /> */}
+               </TouchableOpacity>
               :
-                <Image 
+              <>
+              
+              {/* <Image 
                   source={{uri:item?.filename}}
-                  style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
-                  resizeMode={"contain"}/> 
+                  style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
+                  // style={carouselItems?.length > 1 ? styles.multiImageStyle: [styles.imageStyle,{height:imgHeight}]} 
+                  resizeMode={"contain"}/> */}
+              <FastImage
+                  style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
+                  source={{
+                      uri: item?.filename,
+                      priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+              />
+              </>
               }
           </View>
     )
   }
 
   return (
-    <View>
+    // backgroundColor:'rgba(52,119,224,0.3)'
+    <View style={{alignItems:'center'}}>
     {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
     <Carousel
         layout={"default"}
@@ -43,14 +105,14 @@ const AutoHeightImage = ({item}) => {
         enableMomentum={false}
         lockScrollWhileSnapping={true}
         autoplayInterval={10000}
-        data={item?.attach_array}
+        data={items?.attach_array}
         sliderWidth={Dimensions.get("window").width - 50}
         itemWidth={Dimensions.get("window").width - 50}
         renderItem={_renderItem}
         pagingEnabled={true}
-        onSnapToItem={index => setActiveIndex(index)} />
-
-        <View>
+        onSnapToItem={index => setActiveIndex(index)} 
+    />
+        <View style={{alignItems:'center',backgroundColor:'#fff',width:'100%'}}>
         <Pagination
           dotsLength={carouselItems?.length}
           activeDotIndex={activeIndex}
@@ -78,18 +140,6 @@ const AutoHeightImage = ({item}) => {
 export default AutoHeightImage;
 
 export const styles = StyleSheet.create({
-  wrapper:{
-    height:350,
-  },
-  paginationStyle:{
-    position:'absolute',
-    right:15,
-    top:15,
-    backgroundColor:'#f2f2f2',
-    paddingHorizontal:10,
-    paddingVertical:5,
-    borderRadius:20
-  },
   ImagePaginationCount:{
     backgroundColor: 'rgba(0,0,0,0.7)',
     position:'absolute',
@@ -101,5 +151,21 @@ export const styles = StyleSheet.create({
     right:10,
     top:10,
     fontFamily:'Inter-SemiBold'
-  }
+  },
+  imageStyle:{
+    width:"100%",
+    alignSelf:'center',
+    zIndex:0, 
+  },  
+  multiImageStyle:{
+    width:"100%",
+    // marginHorizontal:10,
+    // aspectRatio:1,
+    // borderWidth:1
+  },  
+  imageVideoContainer:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+  },  
 })

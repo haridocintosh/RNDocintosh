@@ -1,6 +1,6 @@
 import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
 import React,{useEffect} from 'react';
-import { Entypo } from '@expo/vector-icons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { styles } from './profilestyle';
 import { getFollowingDataApi } from '../../../redux/reducers/postData';
 

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput } from 'react-native';
+import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput,PermissionsAndroid } from 'react-native';
+// import { PermissionsAndroid } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import * as Contacts from 'expo-contacts';
+import Contacts from 'react-native-contacts';
 import CheckBox from "react-native-check-box";
-const styelcss = require('../assets/css/style');
-import { AntDesign } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from '../apis/GetLocalData';
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
+const styelcss = require('../assets/css/style');
 
- 
 
 export default function ContactPermission({navigation}) {
   const refInput = React.useRef(null);
@@ -18,8 +18,7 @@ export default function ContactPermission({navigation}) {
   const [isChecked, setisChecked] = useState(false);
   const [sliceCount, setSliceCount] = useState(10);
   const [totalSlice, setTotalSlice] = useState(0);
-  // const [contactData, setcontactData] = useState('');
-  // const [contactData1, setcontactData1] = useState(contactList);
+  const [defaultRoute, setDefaultRoute] = useState();
   const [inputText,setInputText] = useState(null);
   const [item, setItem] = useState()
   const [selectedList, setSelectedList] = useState();
@@ -27,10 +26,20 @@ export default function ContactPermission({navigation}) {
   const [spinner, setSpinner]  = useState(false);
   const dispatch = useDispatch();
 
+  getLocalData("USER_INFO").then((res) => {
+    // console.log('checkLogin', res?.login);
+    if(res?.login){
+      setDefaultRoute('HomeScreen');
+    }else{
+      setDefaultRoute('Login');
+      // console.log('Login');
+    }
+  })
+
   const handleChange = (phoneNumbers) => {
     // setSpinner(true);
     let temp = contactList.map((data) => {
-      if (phoneNumbers === data.id) {
+      if (phoneNumbers === data.recordID) {
         return { ...data, isSelected: !data.isSelected };
       }
       return data;
@@ -68,9 +77,8 @@ export default function ContactPermission({navigation}) {
   const sentInvite = async () => {
     const uploadData = {usercontact:selectedList};
     const result = await dispatch(sendInvitation(uploadData));
-    console.log("result",result.payload);
      if(result.payload.status=="Success"){
-      Toast.show(result.payload.message);
+      Toast.show(result.payload.message,Toast.LONG);
       getLocalData("USER_INFO").then((res) => {
         if(res?.login){
           navigation.goBack();
@@ -78,47 +86,64 @@ export default function ContactPermission({navigation}) {
           navigation.navigate("Login");
         }
       })
+     }else{
+      navigation.navigate("Login");
      }
     }
-     
-    
-  
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Invite Peers'});
+    navigation.setOptions({ title: 'Invite Fellow Doctors Only'});
+    getLocalData("USER_INFO");
     getPrermission();
   }, []);
 
 
     const getPrermission = async()=>{
-    const { status } = await Contacts.requestPermissionsAsync();
-    if(status === 'granted') {
-      const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.PhoneNumbers],
-      });
-       if(data.length > 0) {
-        const contact = await data.map(element=> {return{...element,isSelected:false}});
-        setTotalSlice(contact.length)  
-        setContact(contact);
-        setItem(contact)
-        setLoading(false);
-       }
-    }else{
-     //navigation.navigate('Login');
-     Toast.show('Permission deny');
-    }
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+        {
+          'title': 'Contacts',
+          'message': 'This app would like to view your contacts.',
+          'buttonPositive': 'Ok'
+        }
+      )
+      .then(res=> { 
+        if(res==='granted')
+        {
+           Contacts.getAll()
+          .then((contacts) => {
+          if(contacts.length > 0) { 
+            const contactlist =  contacts.map(element=> {return{...element,isSelected:false}});
+            const sortName = contactlist.sort((a,b) => a.givenName.localeCompare(b.givenName));
+            setTotalSlice(sortName.length)  
+            setContact(sortName);
+            setItem(sortName)
+          }
+        })
+            .catch((e) => {
+                console.log(e)
+            })
+        }else{
+
+          getLocalData("USER_INFO").then((res) => {
+            if(res?.login){
+              navigation.goBack();
+            }else{
+              navigation.navigate("Login");
+            }
+          })
+          // console.log('checkdefaultpermission',defaultRoute);
+         // Toast.show('Permission deny',Toast.LONG);
+         // navigation.navigate('Login');
+         
+        }
+      })
   }
-  
-  const handleSubmit = async()=>{
-    navigation.navigate('InvitePeers',{
-      alluserContact :contactList,
-    }) 
-  };
 
  const onChangeText =  (text) =>{
   if (text) {
       const newData = item?.filter((data) => {
-        const itemData = data?.name.toUpperCase();
+        const itemData = data?.displayName.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -148,7 +173,7 @@ const renderItem = (item) => {
         <View style={styelcss.peersSubiListArea}>
             <Image style={styelcss.tinyLogo} source={require('../assets/dr-icon/normal.png')}/>
             <View style={styelcss.peerListcontent}>
-              <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{item?.item.name}</Text>
+              <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{item?.item.displayName}</Text>
               <Text style={[styelcss.peersubtextpara,{fontFamily:"Inter-Regular"}]}>
                   {item?.item.phoneNumbers?.[0]?.number} 
               </Text>
@@ -156,7 +181,7 @@ const renderItem = (item) => {
         </View>
         <TouchableOpacity>
           <CheckBox
-              onClick={() => handleChange(item.item.id)}
+              onClick={() => handleChange(item.item.recordID)}
               isChecked={item.item.isSelected}
               checkBoxColor="#2C8892"
           />
@@ -180,17 +205,18 @@ const renderItem = (item) => {
             />
           </View>
           <View style={styelcss.selectAllList}>
-            <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text>
+            {/* <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text>
             {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
+            {/* <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text> */}
+            {/* {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
             <CheckBox  
               onClick={()=> onAllChecked()} 
               isChecked={isChecked} 
-            />}
+            />} */}
           </View>
         </View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} 
       keyboardShouldPersistTaps='handled'>
-       
       <FlatList
         data={contactList?.slice(0,sliceCount)}
         renderItem={renderItem}

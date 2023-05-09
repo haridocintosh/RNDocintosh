@@ -59,7 +59,7 @@ const WhatsNew = ({navigation}) => {
             </ImageBackground>
         </View>
 
-        {/* <View style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                 <Text style={styles.CartTitlePolls}>Polls</Text>
@@ -82,7 +82,7 @@ const WhatsNew = ({navigation}) => {
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>
-        </View> */}
+        </View>
 
          <View style={styles.container}>
             <View style={styles.titleDtails}>
@@ -109,7 +109,7 @@ const WhatsNew = ({navigation}) => {
             </ImageBackground>
         </View>
     
-        {/* <View style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                 <Text style={styles.CartTitleSentimetrix}>Sentimetrix</Text>
@@ -132,7 +132,7 @@ const WhatsNew = ({navigation}) => {
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>
-        </View> */}
+        </View>
     
       </ScrollView> 
     </SafeAreaView>

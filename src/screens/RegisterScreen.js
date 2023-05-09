@@ -21,9 +21,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { getdeviceId } from './PushNotification';
 
 // import { registerForPushNotificationsAsync } from './PushNotification';
-
 
 const RegisterScreen = () => {
   const dispatch = useDispatch();
@@ -143,36 +143,33 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  console.log('expoToken',register);
   if(!register.fname){
-    fnerr("Please enter First Name");
+    fnerr("Please enter first name");
     if (ref.current) {
       ref.current.scrollTo({ y: 0, animated: true })
     }
   }else if(!register.lname){
-    lnerr("Please enter Last Name");
+    lnerr("Please enter last name");
   }else if(!register.email){
-    setemail("Please enter valid Email ID");
-  }
-  // else if(emailIderr != ''){
-  //   setemail("This Email ID is registered with us");
-  // }else if(mobileId !=''){
-  //   setmobile("This mobile no. is registred with us");
-  // }
-  else if(!register.mobile){
+    setemail("Please enter valid email id");
+  }else if(emailIderr != ''){
+    setemail("This email id is registered with us");
+  }else if(mobileId !=''){
+    setmobile("This mobile no. is registred with us");
+  }else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
-    errgender("Please Select gender");
+    errgender("Please select gender");
   }else if(!register.role){
-    setroleErr("Please Select role");
+    setroleErr("Please select role");
   }else if(!register.speciality){
-    docsplErr("Please Select Speciality");
+    docsplErr("Please select speciality");
   }
   else{
     setloader(true)
     const result = await dispatch(userRegisterOne(register));
     setloader(false)
-    Toast.show(result.payload.message);
+    Toast.show(result.payload.message,Toast.LONG);
     setregister({
       fname : "",
       lname:"",
@@ -182,7 +179,6 @@ const form_submit = async() =>{
       role:"",
       speciality:""
    })
-  // console.log(result.payload);
     navigation.navigate('DoctorOtp', {
       mobile_no : result.payload.mobilenumber,
       email     : result.payload.email,
@@ -195,26 +191,26 @@ const form_submit = async() =>{
 
   const handleStudentSubmit = async() =>{
     if(!register.fname){
-      fnerr("Please enter First Name");
+      fnerr("Please enter first name");
       if (ref.current) {
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.lname){
-      lnerr("Please enter Last Name");
+      lnerr("Please enter last name");
     }else if(!register.gender){
-      errgender("Please Select gender");
+      errgender("Please select gender");
     }
-    // else if(emailIderr != ''){
-    //   setemail("This Email ID is registered with us");
-    // }else if(mobileId !=''){
-    //   setmobile("This mobile no. is registred with us");
-    // }
+    else if(emailIderr != ''){
+      setemail("This email-id is registered with us");
+    }else if(mobileId !=''){
+      setmobile("This mobile no. is registred with us");
+    }
     else if(!register.email){
-      setemail("Please enter valid Email ID");
+      setemail("Please enter valid email id");
     }else if(!register.mobile){
       setmobile("Pleaes enter valid mobile no.");
     }else if(!register.role){
-      setroleErr("Please Select role");
+      setroleErr("Please select role");
     }else{
       seterr("")
       setemail("");
@@ -230,7 +226,7 @@ const form_submit = async() =>{
           gender:"",
           role:"",
       })
-      Toast.show(result.payload.message);
+      Toast.show(result.payload.message,Toast.LONG);
       navigation.navigate('DoctorOtp', {
         mobile_no : result.payload.mobilenumber,
         email     : result.payload.email,
@@ -254,8 +250,13 @@ const form_submit = async() =>{
           return {label: ele.speciality, value: ele.speciality_id};
       }))
       }
-    // fetchSpecialities();
-      // fetchToken();
+     fetchSpecialities();
+      getdeviceId().then((res) => {
+        setregister({
+          ...register,
+          device_id: res,
+         })
+      });
     },[]);
 
   if(loader){
@@ -274,6 +275,7 @@ const form_submit = async() =>{
             <TextInput 
               style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
               placeholderTextColor='#687690' 
+              returnKeyType='go'
               placeholder='First name'  
               onChangeText={(e)=> firstName(e)}
             />
@@ -288,11 +290,11 @@ const form_submit = async() =>{
           </View>
 
           <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
-           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
+           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are : </Text>
            <View style={styles.roleContainer}>
              <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '1' ? 1 : 0}]} 
               onPress={() => {setcheckgender('1'); selectedgender('1')}}>
-              <Ionicons name="md-male-sharp" size={25} color="#51668A" />
+              <MaterialCommunityIcons name="gender-male" size={25} color="#51668A" />
                 <Text style={styles.roleTabText}>Male</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '0' ? 1 : 0}]} 
@@ -307,6 +309,7 @@ const form_submit = async() =>{
           <TextInput  
             style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} 
             placeholderTextColor='#687690' 
+            returnKeyType='go'
             autoComplete='off' 
             autoCapitalize="none" 
             keyboardType="email-address" 

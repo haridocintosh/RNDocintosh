@@ -12,25 +12,59 @@ const CreateNewPass = ({route}) => {
  const dispatch   = useDispatch();
  const navigation = useNavigation();
  const [password,set_password]  = useState();
+ const [passworderr, setpassworderr] = useState('');
  const [cpassword,setcpassword] = useState();
+ const [cpassworderr,setcpassworderr] = useState();
  const [showeye, setshoweye]    = useState(true);
- const {mobile_no, email, user_id} = route.params;
- const handleSubmit = async ()=>{
-  if(password!==cpassword){
-   Toast.show("Please Check Both Password");
+ const {user_id} = route.params;
+
+
+ const checkpassword= async(e)=>{
+  console.log(e);
+  const isValidpswdRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  const passwordcheck = e;
+  if(!isValidpswdRegex.test(passwordcheck)){
+    setpassworderr("Min 8 characters which contain at least one numeric digit and a special character.")
   }else{
-   const token =await dispatch(setpassword({
-    id:user_id,
-    pwd:password
-  }));
-  if(token?.payload?.status=="Success"){
-   Toast.show(token.payload.message);
-  navigation.navigate('Login');
+    setpassworderr('')
   }
-  
+  set_password(passwordcheck)
+}
+
+const checkConfirmpassword= async(e)=>{
+  // console.log(e);
+  const isValidpswdRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+  const confirmpassword = e;
+  if(!isValidpswdRegex.test(confirmpassword)){
+    setcpassworderr("Min 8 characters which contain at least one numeric digit and a special character.")
+  }else{
+    setcpassworderr('')
   }
-  
+  setcpassword(confirmpassword)
+}
+
+ const handleSubmit = async ()=>{
+  if(!password){
+    setpassworderr('Please Enter Password');
+  }
+  else if(!cpassword){
+    setcpassworderr('Please Enter Confirm Password')
+  }else{
+    if(password!==cpassword){
+      Toast.show("Please Check Both Password", Toast.LONG);
+    }else{
+      const token =await dispatch(setpassword({
+        id:user_id,
+        pwd:password
+    }));
+      if(token?.payload?.status=="Success"){
+      Toast.show(token.payload.message,Toast.LONG);
+      navigation.navigate('Login');
+    }
+  }
+  }
  }
+
  return (
   <SafeAreaView style={styelcss.maindDivBannerCnp}>
   <ScrollView
@@ -39,24 +73,25 @@ const CreateNewPass = ({route}) => {
     keyboardShouldPersistTaps='handled'
   >
     <View style={styelcss.forgetmainPara}>
-      <Text style={styelcss.forgetPara}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Text>
+      <Text style={styelcss.forgetPara}>Enter New Password. </Text>
     </View>
     <TextInput style={styelcss.customInputVerifyFull} 
-    placeholder="Password"
-     returnKeyType='go'
-     secureTextEntry
-   onChangeText={set_password}
+      placeholder="Password"
+      returnKeyType='go'
+      secureTextEntry
+      onChangeText={(e)=> checkpassword(e)}
    />
-   <View>
-   </View>
+    <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{passworderr}</Text>
+ 
     <TextInput style={styelcss.customInputVerifyFull} 
-    placeholder="Confirm Password*"
-     returnKeyType='go'
-     secureTextEntry={showeye}
-     onChangeText={setcpassword}
-     hideShow={showeye}
-     autoCapitalize="none"
+      placeholder="Confirm Password*"
+      returnKeyType='go'
+      secureTextEntry={showeye}
+      onChangeText={(e)=>checkConfirmpassword(e)}
+      hideShow={showeye}
+      autoCapitalize="none"
    />
+   <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{cpassworderr}</Text>
     <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
    
      <Text style={styelcss.forgetParapaasb}>Both passwords must match.</Text>
@@ -76,7 +111,7 @@ const styles = StyleSheet.create({
   eyeIcon:{
     zIndex:1, 
     alignSelf:'flex-end', 
-    marginTop:-50,
+    marginTop:-60,
      marginRight:30,
      marginBottom:30
 },

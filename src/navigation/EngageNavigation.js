@@ -12,6 +12,13 @@ import HandleBack from './HandleBack';
 import { showHeaderItem ,showHeaderItemBackless} from './ReuseLogics';
 import SavedPost from '../screens/Settings/SavedPost/SavedPost';
 import BlockList from '../screens/Settings/BlockList/BlockList';
+import Polls from '../screens/Polls/Polls';
+import PollsThankYouPage from '../screens/Polls/PollsThankYouPage';
+import Sentimetrix from '../screens/Sentimetrix/Sentimetrix';
+import SentimetrixList from '../screens/Sentimetrix/SentimetrixList';
+import SentimetrixMcq from '../screens/Sentimetrix/SentimetrixMcq';
+import CongratulationPage from '../screens/Sentimetrix/CongratulationPage';
+import SentimetrixThankYouPage from '../screens/Sentimetrix/SentimetrixThankYouPage';
 
 const EngageNavigation = () => {
     const Stack = createNativeStackNavigator();
@@ -24,11 +31,18 @@ const EngageNavigation = () => {
         <Stack.Screen name="KnowYourHeart" component={KnowYourHeart} options={showHeaderItemBackless}/>
         <Stack.Screen name="QuizGame" component={QuizGame} options={showHeaderItem} />
         <Stack.Screen name="SurvayCheckBoxMcq" component={SurvayCheckBoxMcq}/>
-        <Stack.Screen name="SurveyMcq" component={SurveyMcq} options={showHeaderItem} />
-        <Stack.Screen name="Surveys" component={Surveys} options={showHeaderItem} />
+        <Stack.Screen name="SurveyMcq" component={SurveyMcq} options={showHeaderItem}/>
+        <Stack.Screen name="Surveys" component={Surveys} options={showHeaderItem}/>
+        <Stack.Screen name="Polls" component={Polls} options={showHeaderItem}/>
         <Stack.Screen name="ThankYouPage" component={ThankYouPage} options={showHeaderItemBackless}/>
+        <Stack.Screen name="PollsThankYouPage" component={PollsThankYouPage} options={showHeaderItemBackless}/>
+        <Stack.Screen name="Sentimetrix" component={Sentimetrix} options={showHeaderItem}/>
         <Stack.Screen name="SavedPost" component={SavedPost} options={showHeaderItem} />
         <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
+        <Stack.Screen name="SentimetrixList" component={SentimetrixList} options={showHeaderItem} />
+        <Stack.Screen name="SentimetrixMcq" component={SentimetrixMcq} options={showHeaderItem} />
+        <Stack.Screen name="CongratulationPage" component={CongratulationPage} options={showHeaderItem} />
+        <Stack.Screen name="SentimetrixThankYouPage" component={SentimetrixThankYouPage} options={showHeaderItem} />
     </Stack.Navigator>
     </>
   )

@@ -1,0 +1,554 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { mainApi } from "../../src/apis/constant";
+
+export const profileSpeciality = createAsyncThunk("profile/speciality", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/login`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(data)
+        });
+        const userresult=  await responce.json();
+        return userresult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+export const addworkexperianceAPI = createAsyncThunk("addWorkexp", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/addworkexperiance`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const deleteWorkexperianceAPI = createAsyncThunk("deleteworkexp", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/deleteworkexperiance`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const getWorkExpAPI = createAsyncThunk("getWorkExp", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/workexperiance`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const getAwardAPI = createAsyncThunk("getAward", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/award`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const getPublicationAPI = createAsyncThunk("getPublication", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/publish`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+export const addPublicationAPI = createAsyncThunk("addPublication", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/addpublish`, {            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const getQualificationAPI = createAsyncThunk("getQualification", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/get_ug_qualification`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const deleteQualificationAPI = createAsyncThunk("deleteQualification", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/deletequalification`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult =  await responce.json();
+        return userResult;
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+export const updateMobileNumber = createAsyncThunk("updateMobilenumber", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/UpdateMobileNo`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const updateEmailID = createAsyncThunk("updateEmailID", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/Update_Email_ID`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+export const userInfo = createAsyncThunk("userInfo", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_profileReact`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+export const updateUserInfoAPI = createAsyncThunk("updateUser", async(data)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/about_profileupdate`, {
+            method : 'POST',
+            headers:{ 'Content-Type': 'application/json'},
+            body : JSON.stringify(data)
+        });
+        const userResult=  await responce.json();
+        return userResult
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+    export const EditProfileAwardAPI = createAsyncThunk("editAward", async(data)=>{
+        try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileAward`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult=  await responce.json();
+            return userResult
+        }
+        catch(e){
+        console.log(e);
+        }
+    })
+
+    export const deleteAwardAPI = createAsyncThunk("deleteaward", async(data)=>{
+        try{
+           const responce = await fetch(`${mainApi.baseUrl}/ApiController/deleteaward`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult =  await responce.json();
+            return userResult;
+        }
+        catch(e){
+           console.log(e);
+        }
+    })
+
+    export const deletePublicationsAPI = createAsyncThunk("deleteaward", async(data)=>{
+        try{
+           const responce = await fetch(`${mainApi.baseUrl}/ApiController/deletepublications`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult =  await responce.json();
+            return userResult;
+        }
+        catch(e){
+           console.log(e);
+        }
+    })
+
+    export const Edit_ProfileOTP = createAsyncThunk("Edit_Profile_OTP", async(data)=>{
+        try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/EditProfileOTP`, {
+                method : 'POST',
+                headers:{ 'Content-Type': 'application/json'},
+                body : JSON.stringify(data)
+            });
+            const userResult=  await responce.json();
+            return userResult
+        }
+        catch(e){
+        console.log(e);
+        }
+    })
+
+
+export const profileSlice= createSlice({
+    name : 'Profile',
+    initialState : {
+        loading     : false,
+        isLoggedIn  : false,
+        error       : false,
+        userInfo    : {},
+        workExp     : {},
+        award       : {},
+        editAward   : {},
+        getQualification   : {},
+        updateUserInfo   : {},
+        publicationInfo   : {},
+        updateData  : {},
+        user_data   : {},
+        updateEmail : {},
+        deleteWorkExp: {},
+        deleteQualification: {},
+        deleteAward: {},
+        deletePublications: {},
+    },
+    reducers : {
+      
+    },
+
+    extraReducers : builder =>{
+        //-------------------------userInfo-----------------------------
+        builder.addCase(userInfo.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userInfo.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.user_data    =  action.payload;
+        })
+        builder.addCase(userInfo.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+
+        //-------------------------userLogin-----------------------------
+        builder.addCase(userLogin.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userLogin.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.usertoken     = 'userLogin'
+            state.userInfo      =  action.payload;
+        })
+        builder.addCase(userLogin.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+    //===========================addworkexperianceAPI=============================
+        builder.addCase(addworkexperianceAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(addworkexperianceAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.workExp      =  action.payload;
+        })
+        builder.addCase(addworkexperianceAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===========================updateMobileNumber=============================
+
+        builder.addCase(updateMobileNumber.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(updateMobileNumber.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.updateData    =  action.payload;
+        })
+        builder.addCase(updateMobileNumber.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===========================updateEmailID=============================
+
+        builder.addCase(updateEmailID.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(updateEmailID.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.updateEmail    =  action.payload;
+        })
+        builder.addCase(updateEmailID.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===========================getWorkExpAPI=============================
+        builder.addCase(getWorkExpAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getWorkExpAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.workExp      =  action.payload;
+        })
+        builder.addCase(getWorkExpAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+   //===========================getAwardAPI=============================
+   
+        builder.addCase(getAwardAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getAwardAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.award      =  action.payload;
+        })
+        builder.addCase(getAwardAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+   //===========================EditProfileAwardAPI=============================
+   
+        builder.addCase(EditProfileAwardAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(EditProfileAwardAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.editAward      =  action.payload;
+        })
+        builder.addCase(EditProfileAwardAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================Edit_ProfileOTP===============================
+
+        builder.addCase(Edit_ProfileOTP.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(Edit_ProfileOTP.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.editAward      =  action.payload;
+        })
+        builder.addCase(Edit_ProfileOTP.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================getQualificationAPI===============================
+
+        builder.addCase(getQualificationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getQualificationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.getQualification      =  action.payload;
+        })
+        builder.addCase(getQualificationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================deleteQualificationAPI===============================
+
+        builder.addCase(deleteQualificationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteQualificationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deleteQualification      =  action.payload;
+        })
+        builder.addCase(deleteQualificationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================updateUserInfoAPI===============================
+
+        builder.addCase(updateUserInfoAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(updateUserInfoAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.updateUserInfo      =  action.payload;
+        })
+        builder.addCase(updateUserInfoAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================getPublicationAPI===============================
+
+        builder.addCase(getPublicationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getPublicationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.publicationInfo      =  action.payload;
+        })
+        builder.addCase(getPublicationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+        
+    //===================addPublicationAPI===============================
+
+        builder.addCase(addPublicationAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(addPublicationAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.publicationInfo      =  action.payload;
+        })
+        builder.addCase(addPublicationAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+
+    //===================deleteWorkexperianceAPI===============================
+
+        builder.addCase(deleteWorkexperianceAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteWorkexperianceAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deleteWorkExp      =  action.payload;
+        })
+        builder.addCase(deleteWorkexperianceAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+    //===================deleteAwardAPI===============================
+
+        builder.addCase(deleteAwardAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteAwardAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deleteAward   =  action.payload;
+        })
+        builder.addCase(deleteAwardAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+    //===================deletePublicationsAPI===============================
+
+        builder.addCase(deletePublicationsAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deletePublicationsAPI.fulfilled, (state, action) => {
+            state.loading       = false;
+            state.isLoggedIn    = true;
+            state.deletePublications   =  action.payload;
+        })
+        builder.addCase(deletePublicationsAPI.rejected, (state) => {
+            state.isLoggedIn = false;
+            state.loading = false;
+            state.error = false
+        })
+    }
+})  

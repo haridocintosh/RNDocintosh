@@ -32,64 +32,9 @@ const ThankYouPage = ({ route,navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
     >
+      <Image source={require('../../assets/images/KnowYourHeartBI.png')} style={styles.CongratulationBgImage}/>
       {showOffer && <ScratchOffer setShowOffer={setShowOffer} />}
-      <Card style={styles.cardbody}>
-        <View>
-          {/* <View style={styles.badgeConatiner}>
-            <Text style={styles.cardheading}>
-              386 Coins Left to reach Level 5!!!
-            </Text>
-            <View style={styles.badgeparent}>
-              <View style={styles.levelsBadge}>
-                <Image source={beginnerBadge} style={styles.badgeimg} />
-                <View>
-                  <Text style={styles.levelText}>Beginner</Text>
-                  <View style={styles.row}>
-                    <Image source={dcoin} style={styles.imaguser} />
-                    <Text style={styles.coinsCount}>200</Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.levelsBadge}>
-                <Image source={intermediateBadge} style={styles.badgeimg} />
-                <View>
-                  <Text style={styles.levelText}>Intermediate</Text>
-                  <View style={styles.row}>
-                    <Image source={dcoin} style={styles.imaguser} />
-                    <Text style={styles.coinsCount}>400</Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.levelsBadge}>
-                <Image source={ExpertBadge} style={styles.badgeimg} />
-                <View>
-                  <Text style={styles.levelText}>Expert</Text>
-                  <View style={styles.row}>
-                    <Image source={dcoin} style={styles.imaguser} />
-                    <Text style={styles.coinsCount}>600</Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.levelsBadge}>
-                <Image source={legendBadge} style={styles.badgeimg} />
-                <View>
-                  <Text style={styles.levelText}>Legend</Text>
-                  <View style={styles.row}>
-                    <Image source={dcoin} style={styles.imaguser} />
-                    <Text style={styles.coinsCount}>800</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View> */}
-
-          {/* <Image
-            source={tankyouCelebration}
-            style={styles.tankyouCelebration}
-          /> */}
+      <View style={styles.cardbody}>
           <View style={styles.tankyouCelebration}>
           <Lottie
             source={require('../../assets/intro/ThankYou_FireBlast.json')}
@@ -105,6 +50,7 @@ const ThankYouPage = ({ route,navigation }) => {
                 fontSize: 14,
                 textAlign: "center",
                 fontFamily: "Inter-Regular",
+                color:"#071B36"
               }}
             >
               for your time and response.
@@ -115,25 +61,18 @@ const ThankYouPage = ({ route,navigation }) => {
             <Text style={styles.wonCoinMsg}>
               You have earned <Text style={styles.wonCoins}>300</Text> DocCoins.
             </Text>
-
-            <Button
-              title="Back"
-              buttonStyle={styles.buttonStyle}
-              titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
-              onPress={() =>
-                navigation.navigate("Surveys", { surveyid: surveyid })
-              }
-            />
           </View>
-
-          {/* 
-          <View>
-            <Text style={{ color: "blue", alignSelf: "center", marginTop: 16 }}>
-              View All
-            </Text>
-          </View> */}
-        </View>
-      </Card>
+          <View style={{position:'absolute',bottom:0,padding:10,width:'100%'}}>
+                <Button
+                  title="Back"
+                  buttonStyle={styles.buttonStyle}
+                  titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
+                  onPress={() =>
+                    navigation.navigate("Surveys", { surveyid: surveyid })
+                  }
+                />
+            </View>
+      </View>
     </SafeAreaView>
   );
 };

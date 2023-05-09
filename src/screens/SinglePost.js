@@ -1,6 +1,8 @@
 import { View, Text, SafeAreaView,TouchableOpacity,Image,Dimensions, ScrollView } from 'react-native'
 import React,{useState,useEffect} from 'react';
-import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Card } from 'react-native-paper';
 import { styles } from './HomeScreen/Homestyle';
 import Svg, {Path} from 'react-native-svg';
@@ -30,17 +32,14 @@ const SinglePost = () => {
 
     const GetSinglePOstData = async () => {
         const singleResult = await dispatch(singlePostDataAPI({post_id : 3176}));
-        console.log("singleResult",singleResult.payload[0]);
         setItem(singleResult.payload[0])
     }  
-    // console.log("item",item?.profileimage);
 
     useEffect(() => {
         GetSinglePOstData();
     },[isFocused])  
 
     const BlockId = (id) =>{
-    console.log("BlockId",id);
     const BlockId = item?.filter(Uid => Uid.id != id);
     setItem(BlockId);
     }

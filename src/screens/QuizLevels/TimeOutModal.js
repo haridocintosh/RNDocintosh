@@ -8,7 +8,6 @@ import {
 import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
-import { useFonts } from "expo-font";
 
 const TimeOutModal = ({ setTimeOUtModal }) => {
   const navigation = useNavigation();
@@ -19,7 +18,6 @@ const TimeOutModal = ({ setTimeOUtModal }) => {
           <AntDesign
             name="closecircleo"
             size={25}
-            
           />
         </TouchableOpacity> */}
         <View style={styles.McqSelection}>
@@ -60,6 +58,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     width: Dimensions.get("window").width / 1.1,
+    padding:10
   },
   iconContainer: {
     padding: 10,
@@ -74,8 +73,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     backgroundColor: "#046B74",
-    position: "relative",
-    top: 50,
+    marginTop:25
   },
   mcqsListText: {
     fontSize: 25,

@@ -7,6 +7,8 @@ import { styles } from './profilestyle';
 import { getLocalData } from '../../apis/GetLocalData';
 import { getAllCoins, getFollowersDataApi, getFollowingDataApi } from '../../../redux/reducers/postData';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image'
 
 const ProfileScreen = ({navigation}) => {
   const [allcoins, setAllcoins] = useState(0);
@@ -20,14 +22,15 @@ const ProfileScreen = ({navigation}) => {
   })
   const dispatch = useDispatch();
 
-  const asyncFetchDailyData =  () => {
+  const asyncFetchDailyData =  async() => {
     navigation.setOptions({ title: 'Profile'});
+    const value = await AsyncStorage.getItem('profileImage');
     getLocalData('USER_INFO').then( async (res) => {
       const reData = res?.data;
       setuserdata({...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,
         speciality: reData?.speciality,
-        profile: reData?.profileimage,
+        profile: value,
         role:reData?.role
       });
       const postData = { user_id:reData.id};
@@ -51,12 +54,17 @@ const ProfileScreen = ({navigation}) => {
   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
-  
-
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
       <View>
-        <Image source={{uri:userdata?.profile}} style={styles.profileScreenimg}/>
+        {/* <Image source={{uri:userdata?.profile}} style={styles.profileScreenimg}/> */}
+        <FastImage
+            style={styles.profileScreenimg}
+            source={userdata.profile && {
+                uri:userdata.profile,
+                priority: FastImage.priority.normal,
+            }}
+        />
       </View>
       <View style={styles.profileDetails}>
         <Text style={styles.profilescreenName}>Dr.{userdata?.fullname} <Image source={icon}/></Text>    
@@ -67,7 +75,6 @@ const ProfileScreen = ({navigation}) => {
       </TouchableOpacity>
       </View>
     </View>
-
       <View style={{flexDirection:'row', marginTop:20}}>
           <View style={styles.ScoreContainer}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
@@ -79,10 +86,9 @@ const ProfileScreen = ({navigation}) => {
           </View>
       </View>
     </Card>
-
     <View style={styles.UserDataConatiner}>
           <View style={styles.UserDataNameCont}>
-            <Text style={styles.UserDataName}>Post ({totalPost})</Text>
+            <Text style={styles.UserDataName}>Post ({totalPost?totalPost:0})</Text>
           </View>
          <TouchableOpacity style={styles.UserDataName} 
             onPress={() => navigation.navigate('ProfileScreenFollowers', {followersData})}>
@@ -93,7 +99,6 @@ const ProfileScreen = ({navigation}) => {
             <Text style={styles.UserDataName}>Following ({followingData?.length})</Text>
           </TouchableOpacity>
     </View>
-
      <ProfileScreenPost postLength={postLength}/>
  </SafeAreaView>
   )

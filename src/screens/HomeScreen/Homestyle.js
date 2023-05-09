@@ -13,6 +13,20 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Inter-Regular",
   },
+  whatsMindCartConatiner: {
+    marginTop:-35, 
+    zIndex:1, 
+    borderRadius:50,
+    shadowRadius:10, 
+    shadowOffset:10,
+    backgroundColor:'#fff'
+  },
+  whatsMindConatiner: {
+    flexDirection:'row', 
+    margin:10,
+    justifyContent:'space-between',   
+    alignItems:'center'
+  },
   whtsnewtxt: {
     alignSelf: "center",
     paddingLeft: 12,
@@ -54,28 +68,6 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     shadowColor: "#000",
     zIndex: 1,
-  },
-  careticontop: {
-    backgroundColor: "#45B5C0",
-    borderRadius: 50 / 2,
-    width: 30,
-    height: 30,
-    padding: 3,
-    marginTop: -100,
-    marginBottom: 70,
-    alignSelf: "center",
-    shadowColor: "#000",
-    zIndex: 99999,
-  },
-  imgblackstrip: {
-    backgroundColor: "#000",
-    width: "95%",
-    padding: 20,
-    marginLeft: 9,
-    zIndex: 1,
-    marginTop: -40,
-    opacity: 0.6,
-    height: 20,
   },
 
   songStyle: {
@@ -128,12 +120,14 @@ export const styles = StyleSheet.create({
     shadowRadius: 10,
     padding: 15,
     marginTop: -10,
+    backgroundColor:'#fff',
   },
   SavePostsContainer: {
     marginBottom: 20,
     borderRadius: 10,
     shadowRadius: 10,
     padding: 15,
+    backgroundColor:'#fff'
   },
   bgtophome: {
     width: "100%",
@@ -151,12 +145,15 @@ export const styles = StyleSheet.create({
   collectedCoins: {
     borderRadius: 50,
     backgroundColor: "#20324a",
-    flexDirection: "row",
     position: "absolute",
     alignSelf: "center",
     paddingHorizontal: 10,
+    marginTop:20,
+  },
+  collectedCoinss: {
+    flexDirection: "row",
     alignItems: "center",
-    marginTop:20
+    justifyContent:'center'
   },
   viewDoccin: {
     fontSize: 18,
@@ -166,25 +163,27 @@ export const styles = StyleSheet.create({
     color: "#51668A",
     fontSize: 18,
     fontWeight: "500",
-    fontFamily:"Inter-Regular"
+    fontFamily:"Inter-Regular",
+    borderWidth:1,
+    borderColor:'#fff'
   },
-triangle: {
-  width: 0,
-  height: 0,
-  backgroundColor: 'transparent',
-  borderStyle: 'solid',
-  borderTopWidth: 0,
-  borderRightWidth: 13,
-  borderBottomWidth: 13,
-  borderLeftWidth: 13,
-  borderTopColor: 'transparent',
-  borderRightColor: 'transparent',
-  borderBottomColor: '#071B36',
-  borderLeftColor: 'transparent',
-  transform: [{ rotate: '-90deg'}],
-  position:'absolute',
-  right:-7
-},
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: 0,
+    borderRightWidth: 13,
+    borderBottomWidth: 13,
+    borderLeftWidth: 13,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#071B36',
+    borderLeftColor: 'transparent',
+    transform: [{ rotate: '-90deg'}],
+    position:'absolute',
+    right:-7
+  },
 darkBlueOnWhatsNew: {
   width: 2,
   height: 20,
@@ -200,6 +199,9 @@ loaderStyle: {
 wrapper:{
   height:300,
   borderWidth:1,
+},
+optionModalContainer:{
+  zIndex:2
 },
 
 // ---------------------------postsScreen-----------------------------------
@@ -270,6 +272,8 @@ userUsername:{
 },
 userCommentTexts:{
   fontFamily:'Inter-Regular',
+  width:Dimensions.get('window').width/1.3,
+  textAlign:'justify'
 },
 NoCommentTexts:{
   fontFamily:'Inter-SemiBold',

@@ -11,51 +11,37 @@ import { View,
   import React, { useState, useEffect } from 'react';
   import { useNavigation } from '@react-navigation/native';
   import CustomButton from '../components/CustomButton';
-  import AntDesign from 'react-native-vector-icons/AntDesign';
-  import Ionicons from 'react-native-vector-icons/Ionicons';
-  import FontAwesome from 'react-native-vector-icons/FontAwesome';
   import OTPTextView from 'react-native-otp-textinput';
   import { useDispatch } from 'react-redux';
   import Toast from 'react-native-simple-toast';
   import { doctorOtp } from '../../redux/reducers/otpSlice';
   import { resendOTP } from '../../redux/reducers/loginAuth';
   import { userIdupdate } from '../../redux/reducers/otpSlice';
+  import { Icon } from '../navigation/ReuseLogics';
+  
 
  
  const DoctorOtp = ({route}) => {
-   const dispatch = useDispatch(); 
-  //  console.log("routedata",route);
-  //  const mobile_no = '9029634011';
-  //  const email ='tara@docintosh.com';
-  //  const user_id = '228737';
-  //  const role = '4'
-  //  const speciality = '4'
-
-  const {mobile_no, email, user_id, role, speciality} = route.params;
-  // console.log("mobile_no",mobile_no);
-  // console.log("email",email);
-  // console.log("user_id",user_id);
-  // console.log("role",role);
-  // console.log("speciality",speciality);
-
-   const [phone ,setPhone] =useState("");
-   const navigation = useNavigation();
-   const [counter, setCounter] = useState(30);
-   const [otpInput, setotpInput ] = useState('');
-   const [message , setmessage] = useState();
-   const [loader, setLoader] = useState(false);
-   const [editNumber , setEditNumber] = useState(false);
+    const dispatch = useDispatch(); 
+    const {mobile_no, email, user_id, role, speciality} = route.params;
+    const [phone ,setPhone] = useState("");
+    const navigation = useNavigation();
+    const [counter, setCounter] = useState(30);
+    const [otpInput, setotpInput ] = useState('');
+    const [message , setmessage] = useState();
+    const [loader, setLoader] = useState(false);
+    const [editNumber , setEditNumber] = useState(false);
  
      const resendUserOtp = async() =>{ 
        setCounter(30);
         const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-        Toast.show(result.payload.message);
+        Toast.show(result.payload.message,Toast.LONG);
      }
  
      const submitOtp = async()=>{
        if(otpInput !== ""){
          const result = await dispatch(doctorOtp({user_id:user_id, otp:otpInput, user_role:role}));
-         Toast.show(result.payload.message);
+         Toast.show(result.payload.message,Toast.LONG);
          if((result.payload.role == '4') && (result.payload.status == 'Success')){
             navigation.navigate('RegisterTwoScreen', {
                 user_id     : result.payload.user_id,
@@ -94,7 +80,7 @@ import { View,
         email:phone,
         id:user_id
       }))
-      Toast.show(token.payload.message);
+      Toast.show(token.payload.message, Toast.LONG);
       if(token?.payload?.status == 'Success'){
         navigation.navigate('DoctorOtp',{
           mobile_no: token.payload.userdetails,
@@ -105,7 +91,7 @@ import { View,
       }
       // Toast.show("Please Enter Mobile No. OR Email");
     }else{
-      Toast.show("Please Enter Mobile No. OR Email");
+      Toast.show("Please Enter Mobile No. OR Email",Toast.LONG);
     }   
   }
 
@@ -184,16 +170,16 @@ import { View,
             clearTextOnFocus={true}
             />
         <View style={styles.InputSendIcons}>
-            <TouchableOpacity onPress={() => handleEdit()}>
+            <TouchableOpacity onPress={() => handleEdit()} style={{margin:5}}>
               {editNumber ? 
-                  <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
+                  Icon('AntDesign','closecircleo',20,'#2c9dd1')
                 :
-                  <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+                  Icon('FontAwesome','pencil',20,'#2c9dd1')
               }
             </TouchableOpacity>
             {editNumber &&
-            <TouchableOpacity onPress={() => handleSubmit()}>
-                <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+            <TouchableOpacity onPress={() => handleSubmit()} style={{margin:5,paddingLeft:7}}>
+              {Icon('Ionicons','send-outline',20,'#2c9dd1')}
             </TouchableOpacity>
             }
         </View>

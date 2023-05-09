@@ -6,7 +6,7 @@ import axios  from 'axios';
 const storeData = async (key,value) => {
     try {
       const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem(key, jsonValue)
+      await AsyncStorage.setItem(key, jsonValue);
     } catch (e) {
       console.log(e);
     }
@@ -19,7 +19,6 @@ const singlestoreData = async (key,value) => {
     console.log(e);
   }
 }
-
 
 const login = (email,password) =>
 new Promise((resolve, reject) => {
@@ -41,7 +40,7 @@ new Promise((resolve, reject) => {
         })) 
         singlestoreData('isloggedin','true');  
         resolve(res.data);
-        Toast.show(res.data["message"])
+        Toast.show(res.data["message"],Toast.LONG)
       } else reject(res);
     })
     .catch(error => {
@@ -65,7 +64,7 @@ new Promise((resolve, reject) => {
       .then(res => {
         if(res.status === 200) {
           resolve(res.data);
-          Toast.show(res.data["message"])
+          Toast.show(res.data["message"],Toast.LONG)
         } else reject(res);
       })
       .catch(error => {
@@ -94,7 +93,7 @@ const verifyOtp = (otp,user_id) =>
           data:res.data["session_data"]
         }))  
         resolve(res.data);
-        Toast.show(res.data["message"])
+        Toast.show(res.data["message"],Toast.LONG)
         } else reject(res);
       })
       .catch(error => {
@@ -119,7 +118,7 @@ const verifyOtp = (otp,user_id) =>
         if(res.status === 200) {
           resolve(res.data);
           if(res.data["message"])
-          Toast.show(res.data["message"])
+          Toast.show(res.data["message"],Toast.LONG)
         } else reject(res);
       })
       .catch(error => {
@@ -129,7 +128,7 @@ const verifyOtp = (otp,user_id) =>
   })
   
 
-  const forgotverifyOtp = (otp,user_id) =>
+  const forgotverifyOtp_bk = (otp,user_id) =>
   new Promise((resolve, reject) => {
     axios({
       method: 'post',
@@ -144,8 +143,12 @@ const verifyOtp = (otp,user_id) =>
       .then(res => {
         if(res.status === 200) {
         resolve(res.data);
-        Toast.show('OTP Verify Successfully')
-        } else reject(res);
+        Toast.show('OTP Verify Successfully',Toast.LONG)
+        } else{ 
+          reject(res)
+          Toast.show('Please Enter Valid OTP ',Toast.LONG)
+        
+        };
       })
       .catch(error => {
         console.log(error);
@@ -154,4 +157,4 @@ const verifyOtp = (otp,user_id) =>
   });
 
 
-export {login, quicklogin, verifyOtp, check_mail, storeData, singlestoreData,forgotverifyOtp} 
+export {login, quicklogin, verifyOtp, check_mail, storeData, singlestoreData} 

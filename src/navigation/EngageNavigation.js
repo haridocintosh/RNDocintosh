@@ -19,6 +19,11 @@ import SentimetrixList from '../screens/Sentimetrix/SentimetrixList';
 import SentimetrixMcq from '../screens/Sentimetrix/SentimetrixMcq';
 import CongratulationPage from '../screens/Sentimetrix/CongratulationPage';
 import SentimetrixThankYouPage from '../screens/Sentimetrix/SentimetrixThankYouPage';
+import NotificationSettings from '../screens/Settings/NotificationSettings/NotificationSettings';
+import DeactivateNDeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeactivateNDeleteAccount';
+import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';
+import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
+
 
 const EngageNavigation = () => {
     const Stack = createNativeStackNavigator();
@@ -43,6 +48,10 @@ const EngageNavigation = () => {
         <Stack.Screen name="SentimetrixMcq" component={SentimetrixMcq} options={showHeaderItem} />
         <Stack.Screen name="CongratulationPage" component={CongratulationPage} options={showHeaderItem} />
         <Stack.Screen name="SentimetrixThankYouPage" component={SentimetrixThankYouPage} options={showHeaderItem} />
+        <Stack.Screen name="NotificationSettings" component={NotificationSettings} options={showHeaderItem} />
+        <Stack.Screen name="DeactivateNDeleteAccount" component={DeactivateNDeleteAccount} options={showHeaderItem} />
+        <Stack.Screen name="ConfirmationAction" component={ConfirmationAction} options={showHeaderItem} />
+        <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem} />
     </Stack.Navigator>
     </>
   )

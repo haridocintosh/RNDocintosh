@@ -8,6 +8,8 @@ import JionCommunity from '../screens/Community/JionCommunity';
 import SharepostCommunity from '../screens/Community/SharepostCommunity';
 import Members from '../screens/Community/Members';
 import MessageScreen from '../screens/Community/MessageScreen';
+import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';
+import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
 
 
 const CommunityNavigation = () => {
@@ -21,6 +23,8 @@ const CommunityNavigation = () => {
         <Stack.Screen name="SharepostCommunity" component={SharepostCommunity} options={showHeaderItem} />
         <Stack.Screen name="Members" component={Members} options={showHeaderItem} />
         <Stack.Screen name="MessageScreen" component={MessageScreen}/>
+        <Stack.Screen name="ConfirmationAction" component={ConfirmationAction} options={showHeaderItem}/>
+        <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem}/>
     </Stack.Navigator>
     </>
   )

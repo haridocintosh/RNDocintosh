@@ -1,27 +1,33 @@
-import { View, Text,SafeAreaView,Image,Switch} from 'react-native'
+import { View, Text,SafeAreaView,Image,Switch,ActivityIndicator} from 'react-native'
 import React,{ useEffect, useState } from 'react';
 import { styles } from './ProfileNPrivacySettingsStyles';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { privacySettingListAPI, privacySettingsAPI } from './ProfileNPrivacySlice';
 import { useDispatch } from 'react-redux';
 
+
 const ProfileNPrivacySettings = ({navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [ppData, setPPData] = useState([]);
   const [userData, setUserData] = useState();
+  const [loader, setLoader] = useState(false);
+  
   const dispatch = useDispatch();
 
   const getPPdata = () =>{
     getLocalData('USER_INFO').then( async (res) => {
+      setLoader(true);
       const resData = res?.data;
       setUserData(resData)
       const resetResult = await dispatch(privacySettingListAPI({id:resData?.id}));
+      console.log("resetResult.payload",resetResult.payload);
       setPPData(resetResult.payload);
+      setLoader(false);
     });
   }
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Profile & Privacy Settings'});
+    navigation.setOptions({title: 'Profile & Privacy Settings'});
     getPPdata();
   },[])
 
@@ -32,6 +38,12 @@ const ProfileNPrivacySettings = ({navigation}) => {
       const resetResult = await dispatch(privacySettingsAPI(postData));
   }
 
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ecf2f6",padding:15 }}>
       {ppData?.map((data,index) => {

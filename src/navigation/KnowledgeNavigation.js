@@ -8,6 +8,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StartModules from '../screens/Knowledge/StartModules';
 import AssesmentTest from '../screens/Knowledge/GetStarted/AssesmentTest';
 import GetStartedModule from '../screens/Knowledge/GetStarted/GetStartedModule';
+import NotificationSettings from '../screens/Settings/NotificationSettings/NotificationSettings';
+import DeactivateNDeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeactivateNDeleteAccount';
+import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';
+import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
+
 
 
 const KnowledgeNavigation = () => {
@@ -22,6 +27,10 @@ const KnowledgeNavigation = () => {
         <Stack.Screen name="StartModules" component={StartModules} options={showHeaderItem} />
         <Stack.Screen name="GetStartedModule" component={GetStartedModule} options={showHeaderItem} />
         <Stack.Screen name="AssesmentTest" component={AssesmentTest} options={showHeaderItem} />
+        <Stack.Screen name="NotificationSettings" component={NotificationSettings} options={showHeaderItem} />
+        <Stack.Screen name="DeactivateNDeleteAccount" component={DeactivateNDeleteAccount} options={showHeaderItem} />
+        <Stack.Screen name="ConfirmationAction" component={ConfirmationAction} options={showHeaderItem} />
+        <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem} />
     </Stack.Navigator>
     </>
   )

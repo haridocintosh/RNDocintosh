@@ -46,7 +46,10 @@ import Sharepost from '../screens/HomeScreen/postScreen/SharePost';
 import PublicReactions from '../screens/HomeScreen/PublicReactions';
 import UserDetailsPage from '../screens/HomeScreen/SearchScreens/UserDetailsPage';
 import ProfileNPrivacySettings from '../screens/Settings/ProfileAndPrivacySettings/ProfileNPrivacySettings';
-
+import NotificationSettings from '../screens/Settings/NotificationSettings/NotificationSettings';
+import DeactivateNDeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeactivateNDeleteAccount';
+import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';
+import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
 
 
 
@@ -106,6 +109,10 @@ const HomeNavigation = () => {
         <Stack.Screen name="ProfilePictureCrop" component={ProfilePictureCrop} options={showHeaderItem}/>
         <Stack.Screen name="UserDetailsPage" component={UserDetailsPage} options={showHeaderItem}/>
         <Stack.Screen name="ProfileNPrivacySettings" component={ProfileNPrivacySettings} options={showHeaderItem}/>
+        <Stack.Screen name="NotificationSettings" component={NotificationSettings} options={showHeaderItem}/>
+        <Stack.Screen name="DeactivateNDeleteAccount" component={DeactivateNDeleteAccount} options={showHeaderItem}/>
+        <Stack.Screen name="ConfirmationAction" component={ConfirmationAction} options={showHeaderItem}/>
+        <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem}/>
         {/* <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={showHeaderItem}/> 

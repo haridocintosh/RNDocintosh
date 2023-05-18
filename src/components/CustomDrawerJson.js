@@ -44,7 +44,7 @@ export const CDrawerDoctor =[
     {
         name:"Business Page",
         provider:'Entypo',
-        redirect:'ProfileScreen',
+        redirect:'BusinessPage',
         icon:'text-document-inverted'
     },
     {

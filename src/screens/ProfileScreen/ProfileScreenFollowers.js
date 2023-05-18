@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
+import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image,TouchableOpacity } from 'react-native'
 import React,{useEffect, useState} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { styles } from './profilestyle';
@@ -13,6 +13,9 @@ const ProfileScreenFollowers = ({navigation,route}) => {
    useEffect(() => {
       navigation.setOptions({ title: 'Followers' });
     },[])
+    const handleOtherProfile = () =>{
+
+    }
   return (
     <SafeAreaView style={styles.Follwerscontainer}>
         <ScrollView
@@ -21,12 +24,13 @@ const ProfileScreenFollowers = ({navigation,route}) => {
             <View style={styles.followerHeader}>
                 <Text style={styles.followerHeader}>{followersData?.length} Followers</Text>
             </View>
-
-            {followersData?.length > 0 ?followersData?.map((data,index) => {
+            {followersData?.length > 0 ? followersData?.map((data,index) => {
                return(
                <View style={styles.followerContainer} key={index}>
                      <View style={styles.followerLhs}>
-                        <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
+                        <TouchableOpacity onPress={() => handleOtherProfile()}>
+                           <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
+                        </TouchableOpacity>
                         <View style={styles.followerName}>
                            <Text style={styles.followerNameText}>{data.username}</Text>
                            <Text style={styles.followerSpecialist}>{data.speciality}</Text>
@@ -39,8 +43,9 @@ const ProfileScreenFollowers = ({navigation,route}) => {
                )
             })
             : 
-            <Text style={styles.Nodata}>You don't have any followers yet</Text>
-         }
+            <View>
+               <Image source={require('../../assets/images/followMe.png')} style={{width:'70%',height:300,alignSelf:'center'}}/>
+            </View>}
         </ScrollView>
     </SafeAreaView>
   )

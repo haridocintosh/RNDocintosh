@@ -26,6 +26,10 @@ export const styles = StyleSheet.create({
         marginTop:10,
         color:'#071B36'
     },
+    subTitleHeighlight:{
+        fontFamily:'Inter-SemiBold',
+        color:'#071B36'
+    },
     selectRadio:{
         borderWidth:2,
         width:20,
@@ -80,5 +84,6 @@ export const styles = StyleSheet.create({
     livingSeasionText:{
         color:'#51668A',
         
-    }
+    },
+    
 })

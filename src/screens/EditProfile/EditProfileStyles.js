@@ -3,7 +3,7 @@ import { color } from "react-native-reanimated";
 
 export const styles = StyleSheet.create({
     CartContainer:{
-        marginVertical:10, 
+        margin:10, 
         borderRadius:10,
         backgroundColor:'#fff',
         padding:20
@@ -15,7 +15,11 @@ export const styles = StyleSheet.create({
         color:'#071B36',
         alignItems:'center'
     },
-    imageTick:{width:16.16,height:16.16},
+    imageTick:{
+        width:16.16,
+        height:16.16,
+        // marginLeft:5
+    },
     userCategoryContainer:{justifyContent:'center',alignItems:'center',flexDirection:'row'},
     userCategory:{color:'#51668A'},
     closebtn: {

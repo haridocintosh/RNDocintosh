@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { COLORS } from "../../components/constant";
+
 export const styles = StyleSheet.create({
   coins: {
     fontWeight: "700",
@@ -31,8 +32,13 @@ export const styles = StyleSheet.create({
     borderColor: "#DCE0E8",
     borderWidth: 5,
     borderRadius: 50,
-    width: 72,
-    height: 72,
+    width: 80,
+    height: 80,
+  },
+  otherProfileScreenimg: {
+    borderRadius: 50,
+    width: 80,
+    height: 80,
   },
   profileDetails: {
     marginLeft: 15,
@@ -44,11 +50,11 @@ export const styles = StyleSheet.create({
     color:'#071B36'
   },
   profileDesignationpro: {
-    fontSize: 14,
+    fontSize:14,
     fontWeight: "400",
     color: "#51668a",
-    width: 250,
     fontFamily: "Inter-Regular",
+    flexWrap:'wrap'
   },
   UserDataConatiner: {
     flexDirection: "row",

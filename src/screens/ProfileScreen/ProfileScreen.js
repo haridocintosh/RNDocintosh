@@ -57,7 +57,6 @@ const ProfileScreen = ({navigation}) => {
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
       <View>
-        {/* <Image source={{uri:userdata?.profile}} style={styles.profileScreenimg}/> */}
         <FastImage
             style={styles.profileScreenimg}
             source={userdata.profile && {
@@ -70,7 +69,7 @@ const ProfileScreen = ({navigation}) => {
         <Text style={styles.profilescreenName}>Dr.{userdata?.fullname} <Image source={icon}/></Text>    
         <Text style={styles.profileDesignationpro}>{userdata?.speciality} | Bangalore</Text>
        <TouchableOpacity style={{flexDirection:'row'}}>
-        <Text style={{color:'#2376e5', fontFamily:"Inter-Regular"}}> View / </Text>
+        <Text style={{color:'#2376e5', fontFamily:"Inter-Regular"}}>View / </Text>
         <Text style={{color:'#2376e5',fontFamily:"Inter-Regular"}} onPress={() => navigation.navigate('EditProfileScreen')}>Edit Profile</Text>
       </TouchableOpacity>
       </View>

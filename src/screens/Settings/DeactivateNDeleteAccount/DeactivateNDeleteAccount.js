@@ -39,7 +39,7 @@ const DeactivateNDeleteAccount = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <Text style={styles.subTitle}>
-                Deactivating is temprory and you can login anytime to continue using your account.
+                Deactivating is <Text style={styles.subTitleHeighlight}>temprory</Text> and you can login anytime to continue using your account.
                 Your account will be disabled and other users wont be able to find you on the application.
             </Text>
         </View>
@@ -53,7 +53,7 @@ const DeactivateNDeleteAccount = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <Text style={styles.subTitle}>
-                Deleting is permanent and you will lose all the date from your account. You will not be able to retrieve the content back.
+                Deleting is <Text style={styles.subTitleHeighlight}>permanent</Text> and you will lose all the date from your account. You will not be able to retrieve the content back.
             </Text>
         </View>
         <View>

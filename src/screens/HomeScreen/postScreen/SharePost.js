@@ -337,7 +337,7 @@ const publishCheck1 = (e, text)=>{
   const uploadPostImage = async (post_id) => {
     let localUri = {pickedData};
     let filename = localUri.split('/').pop();
-    log(filename);
+    // log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
     let fileType = uriParts[uriParts.length - 1];

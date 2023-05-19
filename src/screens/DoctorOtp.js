@@ -17,6 +17,8 @@ import { View,
   import { doctorOtp } from '../../redux/reducers/otpSlice';
   import { resendOTP } from '../../redux/reducers/loginAuth';
   import { userIdupdate } from '../../redux/reducers/otpSlice';
+  import { Icon } from '../navigation/ReuseLogics';
+  
 
  
  const DoctorOtp = ({route}) => {

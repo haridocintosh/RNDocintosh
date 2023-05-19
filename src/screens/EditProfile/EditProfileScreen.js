@@ -203,7 +203,6 @@
         getQualification();
         getPublication();
         getSelectIntrest();
-        
     },[])
     
 

@@ -290,7 +290,7 @@ const form_submit = async() =>{
           </View>
 
           <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
-           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
+           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are : </Text>
            <View style={styles.roleContainer}>
              <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '1' ? 1 : 0}]} 
               onPress={() => {setcheckgender('1'); selectedgender('1')}}>
@@ -438,7 +438,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height:48,
     marginTop:10,
-   borderRadius:0,
+    borderRadius:0,
+    borderWidth:0,
     borderBottomWidth:1,
     borderLeftWidth:0,
     borderRightWidth:0,

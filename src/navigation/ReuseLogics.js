@@ -187,6 +187,7 @@ export const PickVideos = async (setloader) => {
               multiple: true,
               selectionLimit:3,
               mediaType: 'video',
+              videoQuality:'medium'
             };
             const result = ImagePicker.launchImageLibrary(options, (response) => {
                   if(response.didCancel) {

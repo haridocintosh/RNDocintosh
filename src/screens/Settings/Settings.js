@@ -38,13 +38,13 @@ const data =[
     {
         name:"Notification Settings",
         provider:'Fontisto',
-        redirect:'',
+        redirect:'NotificationSettings',
         icon:'bell-alt'
     },
     {
         name:"Deactivate & Delete Account",
         provider:'MaterialCommunityIcons',
-        redirect:'',
+        redirect:'DeactivateNDeleteAccount',
         icon:'account-cancel'
     },
 ]

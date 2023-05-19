@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
+import { View, Text,SafeAreaView, ScrollView, StyleSheet,TouchableOpacity, Image } from 'react-native'
 import React,{useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { styles } from './profilestyle';
@@ -10,20 +10,26 @@ const ProfileScreenFollowing = ({navigation,route}) => {
    useEffect(() => {
       navigation.setOptions({ title: 'Following' });
     },[])
+
+    const handleOtherProfile = (data) =>{
+      console.log(data);
+      navigation.navigate('OthersProfileScreen',{data})
+    }
   return (
    <SafeAreaView style={styles.Follwerscontainer}>
    <ScrollView
      showsVerticalScrollIndicator={false}
      nestedScrollEnable={true}>
        <View style={styles.followerHeader}>
-           <Text style={styles.followerHeader}>{followingData?.length} Followers</Text>
+           <Text style={styles.followerHeader}>{followingData?.length} Following</Text>
        </View>
-
        {followingData?.length > 0 ? followingData?.map((data,index) => {
           return(
           <View style={styles.followerContainer} key={index}>
                 <View style={styles.followerLhs}>
-                   <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
+                  <TouchableOpacity onPress={() => handleOtherProfile(data)}>
+                     <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
+                  </TouchableOpacity>
                    <View style={styles.followerName}>
                       <Text style={styles.followerNameText}>{data.username}</Text>
                       <Text style={styles.followerSpecialist}>{data.speciality}</Text>

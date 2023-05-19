@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppStack from './AppStack';
-import LoginScreen from '../screens/LoginScreen';
 import IntroStack from './IntroStack';
 import OtpVerification from '../screens/OtpVerification';
 import RegisterTwoScreen from '../screens/RegisterTwoScreen';
@@ -25,6 +24,7 @@ import HandleBack from './HandleBack';
 import UpgradeApp from './UpgradeApp';
 // import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import RegisterScreen from '../screens/RegisterScreen';
+import LoginScreen from '../screens/Login/LoginScreen';
 
 
 export default function AppNav() {

@@ -84,7 +84,6 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
                   style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
                   source={{
                       uri: item?.filename,
-                      // headers: { Authorization: 'someAuthToken' },
                       priority: FastImage.priority.normal,
                   }}
                   resizeMode={FastImage.resizeMode.contain}

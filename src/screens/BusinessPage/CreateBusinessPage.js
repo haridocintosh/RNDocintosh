@@ -9,10 +9,9 @@ const CreateBusinessPage = ({navigation}) => {
     const [text, setText] = useState();
     const [spl, setSpl] = useState([
         {label: 'Doctor', value: '1'},
-      ]);
+    ]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
-
 
     useEffect(() =>{
         navigation.setOptions({ title: 'Create Business Page'});
@@ -46,7 +45,6 @@ const CreateBusinessPage = ({navigation}) => {
             placeholder="wecare.anindia@abbott.com"
         />
       </View>
-
       <View style={styles.inputContainer}>
         <TextInput
             style={styles.inputTextArea}
@@ -58,7 +56,6 @@ const CreateBusinessPage = ({navigation}) => {
         />
         <Text style={styles.wordsCount}>0/2000</Text>
       </View>
-
 
       <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>Category*</Text>
@@ -106,7 +103,8 @@ const CreateBusinessPage = ({navigation}) => {
         color={"#fff"} 
         bgColor={"#2C8892"} 
         customStyle={{position:'absolute',bottom:10,width:'100%',alignSelf:'center'}}
-    />
+        onPress={() => navigation.navigate('UploadProfilePhoto')}
+      />
     </SafeAreaView>
   )
 }

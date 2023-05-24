@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity,Dimensions,Image,FlatList,ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity,Dimensions,Image,SafeAreaView,FlatList,ActivityIndicator } from 'react-native'
 import React,{ useEffect,useState,useRef }  from 'react';
 import { Card } from 'react-native-paper';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -16,7 +16,7 @@ import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from '../HomeScreen/AutoHeightImage';
 
 
-const ProfileScreenPost = ({postLength}) => {
+const ProfileScreenPost = ({postLength,totalPost,followingData,followersData}) => {
   const [myPost, setMyPost] = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,9 +26,10 @@ const ProfileScreenPost = ({postLength}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [bottumLoader, setBottumLoader] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { width } = Dimensions.get('window')
+  const { width } = Dimensions.get('window');
 
   const handleOption = (post_id) => {
     setPostId(post_id);
@@ -41,14 +42,14 @@ const ProfileScreenPost = ({postLength}) => {
 
   const getMyPosts = async () => {
     getLocalData('USER_INFO').then( async (res) =>{
-      setBottumLoader(true)
+      setLoader(true)
       setUserData(res?.data)
       const resData = res?.data;
       const postDetails = { postType:0,role:resData?.role,circle_type:resData?.role == 4 ? 1 : resData?.circle_type,
         city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:1,user_id:resData?.id,id:resData?.id
       }
       const allPostResult = await dispatch(getMyPostsApi(postDetails));
-      setBottumLoader(false)
+      setLoader(false)
       setMyPost(allPostResult.payload.result);
       await postLength(allPostResult.payload.count);
     });
@@ -80,10 +81,10 @@ const ProfileScreenPost = ({postLength}) => {
 
   const renderLoader = () => {
     return (
-      bottumLoader ?
+      bottumLoader &&
         <View style={styles.loaderStyle}>
           <ActivityIndicator size="small" color="#1A7078"/>
-        </View> : null
+        </View> 
     );
   };
   
@@ -121,7 +122,6 @@ const ProfileScreenPost = ({postLength}) => {
         <Text style={styles.subTitle}>Looks Like no post uploaded.</Text>
       </View>
     )
-
   }
 
   const renderItem = ({item,index}) => {
@@ -177,20 +177,35 @@ const ProfileScreenPost = ({postLength}) => {
   }
   
   return (
-    <View style={{padding:10,backgroundColor:'#E6E6E6',flex:1}}>
-    <FlatList
-        contentInsetAdjustmentBehavior="automatic"
-        data={myPost}
-        renderItem={renderItem}
-        keyExtractor={(item,index) => index}
-        ListFooterComponent={renderLoader}
-        onEndReached={() => handleLoadeMore()}
-        showsVerticalScrollIndicator={false}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-        viewabilityConfig={_viewabilityConfig}
-        onScrollBeginDrag={() => setModalVisible(false)}
-        ListEmptyComponent={ListEmptyComponent}
-    />
+    <View style={{backgroundColor:'#E6E6E6',flex:1}}>
+        {!loader && 
+          <View style={styles.UserDataConatiner}>
+            <View style={styles.UserDataNameCont}>
+              <Text style={styles.UserDataName}>Post ({totalPost?totalPost:0})</Text>
+            </View>
+            <TouchableOpacity style={styles.UserDataName} 
+              onPress={() => navigation.navigate('ProfileScreenFollowers', {followersData})}>
+              <Text style={styles.UserDataName}>Followers ({followersData?.length})</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.UserDataName} 
+              onPress={() => navigation.navigate('ProfileScreenFollowing',{followingData})}>
+              <Text style={styles.UserDataName}>Following ({followingData?.length})</Text>
+            </TouchableOpacity>
+          </View>
+        }
+      <FlatList
+          contentInsetAdjustmentBehavior="automatic"
+          data={myPost}
+          renderItem={renderItem}
+          keyExtractor={(item,index) => index}
+          ListFooterComponent={renderLoader}
+          onEndReached={() => handleLoadeMore()}
+          showsVerticalScrollIndicator={false}
+          viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+          viewabilityConfig={_viewabilityConfig}
+          onScrollBeginDrag={() => setModalVisible(false)}
+          ListEmptyComponent={ListEmptyComponent}
+      />
     </View>
   )
 }

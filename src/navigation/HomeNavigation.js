@@ -56,7 +56,7 @@ import OthersProfileFollowers from '../screens/ProfileScreen/OthersProfileScreen
 import OthersProfileFollowing from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileFollowing';
 import BusinessPage from '../screens/BusinessPage/BusinessPage';
 import CreateBusinessPage from '../screens/BusinessPage/CreateBusinessPage';
-
+import UploadProfilePhoto from '../screens/BusinessPage/UploadProfilePhoto';
 
 
 
@@ -126,6 +126,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="OthersProfileFollowing" component={OthersProfileFollowing} options={showHeaderItem}/>
         <Stack.Screen name="BusinessPage" component={BusinessPage} options={showHeaderItem}/>
         <Stack.Screen name="CreateBusinessPage" component={CreateBusinessPage} options={showHeaderItem}/>
+        <Stack.Screen name="UploadProfilePhoto" component={UploadProfilePhoto} options={showHeaderItem}/>
         {/* <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={showHeaderItem}/> 

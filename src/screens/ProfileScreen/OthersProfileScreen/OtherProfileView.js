@@ -1,7 +1,7 @@
 import React,{useState,useEffect } from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity,ActivityIndicator} from 'react-native';
 import { Card } from 'react-native-paper';
-import {styles} from '../../EditProfile/EditProfileStyles';
+import { styles } from '../../EditProfile/EditProfileStyles';
 import { Icon } from '../../../navigation/ReuseLogics';
 import FastImage from 'react-native-fast-image';
 

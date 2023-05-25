@@ -19,6 +19,8 @@ import { addLocal, userLogin } from '../../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import OneSignal from 'react-native-onesignal';
 import IncompleteRegistrationModal from './IncompleteRegistrationModal';
+import { getLocalData } from '../../apis/GetLocalData';
+
 
 
 const LoginScreen = () => {
@@ -55,15 +57,36 @@ const LoginScreen = () => {
     });
   }
 
+  const getData = () => {
+    getLocalData('USER_INFO').then(async(res) => {
+      // console.log("res?.data",res?.data);
+      await setdata(res?.data)
+      setloader(false);
+    });
+    getLocalData('rememberme').then(async(res) => {
+      // console.log("res",res);
+      await setdatarm(res?.data?.register); 
+      setChecked(res?.data?.isChecked);
+      if(res == null){
+        setregister({email: "",password:""});
+      }
+    })
+    OneSignal.getDeviceState().then((deviceUUid) => {
+      // console.log("deviceUUid~",deviceUUid.userId);
+      const deviceId  = deviceUUid.userId;
+      setdevice_id({deviceId})
+    })
+  }
+
   const authLogin = async ()=>{
-    console.log("datarm",datarm);
+    console.log("register",register);
     register.email = register.email? register.email : datarm?.email ;
     register.password = register.password ? register.password :datarm?.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const uploadData = {register,device_id};
-      console.log("register",register);
-      console.log("device_id",device_id);
+      // console.log("register",register);
+      // console.log("device_id",device_id);
       const token = await dispatch(userLogin(uploadData));
       console.log("token",token);
       if(token?.payload?.status == 'Success'){
@@ -75,7 +98,6 @@ const LoginScreen = () => {
         },
         ));
         singlestoreData('profileImage',token.payload.session_data.profileimage); 
-        console.log("isChecked",isChecked);
         if(isChecked){
             storeData('rememberme',JSON.stringify({
             data:{...token.meta.arg, isChecked:isChecked }
@@ -98,60 +120,10 @@ const LoginScreen = () => {
     }
   }
 
-  const getData = async (key) => {
-    console.log("key",key);
-    try {
-      const jsonValue = await AsyncStorage.getItem(key);
-      const dsgfksd= jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      console.log("local",dsgfksd);
-      setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
-      setloader(false);
-    } catch(e) {
-     console.log(e)
-    }
-  }
-
-  const getDatarm = async (key) => {
-    try {
-      const jsonValue = await AsyncStorage.getItem(key);
-      const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      console.log(result);
-      await setdatarm(result?.data?.register); 
-      setChecked(result?.data.isChecked);
-      if(result == null){
-        setregister({email: "",password:""});
-      }
-    } catch(e) {
-     console.log(e)
-    }
-  }
-
-  const getdeviceId = () => {
-    var userId = OneSignal.getDeviceState();
-      userId.then((deviceUUid)=>{
-      console.log("deviceUUid",deviceUUid.userId);
-      const deviceId  = deviceUUid.userId;
-        setdevice_id({deviceId})
-    }).catch(()=>{
-      console.log('Error');
-    })
-  };
 
   useEffect(() => {
-      getDatarm('rememberme');
-      getData('USER_INFO');
-      getdeviceId()
-  },[]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      getDatarm('rememberme');
-      getData('USER_INFO');
-      getdeviceId()
-    }, 2000)
-    return () => clearTimeout(timeout)
+      getData();
   },[isFocused]);
-
 
   if(loader){
     return(
@@ -183,7 +155,6 @@ const LoginScreen = () => {
 
       <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
           autoCapitalize="none"
-          placeholder='Password'
           secureTextEntry={showeye}
           onChangeText={(text)=>setregister({...register, 
             password: text,

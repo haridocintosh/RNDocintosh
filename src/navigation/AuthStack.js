@@ -30,10 +30,10 @@ const AuthStack = () => {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Login'}>
           <Stack.Screen name="Intro" component={IntroStack} />
           <Stack.Screen name="MobileScreen" component={MobileScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="LoginScreen"> 
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          {/* <Stack.Screen name="LoginScreen"> 
             {(props) => <AppStack {...props}/>}
-          </Stack.Screen>
+          </Stack.Screen> */}
           <Stack.Screen name="Register" component={RegisterScreen}  />
           <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
           <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  

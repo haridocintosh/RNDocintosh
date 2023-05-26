@@ -9,12 +9,12 @@ const ProfileScreenFollowing = ({navigation,route}) => {
    const {followingData} = route.params;
    useEffect(() => {
       navigation.setOptions({ title: 'Following' });
-    },[])
+   },[])
 
-    const handleOtherProfile = (data) =>{
-      console.log(data);
+   const handleOtherProfile = (data) =>{
       navigation.navigate('OthersProfileScreen',{data})
-    }
+   }
+   
   return (
    <SafeAreaView style={styles.Follwerscontainer}>
    <ScrollView

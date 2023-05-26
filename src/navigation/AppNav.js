@@ -57,7 +57,7 @@ const navigation  = useNavigation();
 const handleMessage = () => {
   alert("Successfully completed registration please login")
   setTimeout(() => {
-    navigation.navigate('Login');
+    navigation.navigate('LoginScreen');
   }, 2000);
 }
 
@@ -69,7 +69,7 @@ const handleMessage = () => {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             <Stack.Screen name="Intro" component={IntroStack} />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen}  options={{ title: 'Register', headerShown: true}}/>
             <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
             <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  

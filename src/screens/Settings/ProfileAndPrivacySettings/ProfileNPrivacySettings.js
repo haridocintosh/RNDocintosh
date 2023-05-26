@@ -20,7 +20,7 @@ const ProfileNPrivacySettings = ({navigation}) => {
       const resData = res?.data;
       setUserData(resData)
       const resetResult = await dispatch(privacySettingListAPI({id:resData?.id}));
-      console.log("resetResult.payload",resetResult.payload);
+      // console.log("resetResult.payload",resetResult.payload);
       setPPData(resetResult.payload);
       setLoader(false);
     });

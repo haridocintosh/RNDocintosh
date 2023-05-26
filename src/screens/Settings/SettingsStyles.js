@@ -14,6 +14,5 @@ export const styles = StyleSheet.create({
         fontWeight:'500',
         fontFamily:'PlusJakartaSans-Bold',
         color:'#071B36',
-    }
-
+    },
 })

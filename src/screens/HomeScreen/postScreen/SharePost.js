@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
-import {PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
-import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
+import { PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground } from "react-native";
+import { BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -24,7 +24,7 @@ import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 import { Video } from 'react-native-compressor';
 // import ImageCompressor  from 'react-native-compressor';
-//import EmojiSelector, { Categories } from "react-native-emoji-selector";
+// import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
 
 const requestCameraPermission = async () => {
@@ -197,14 +197,26 @@ const publishCheck1 = (e, text)=>{
       if(pickedData.length != 0){
         pickedData?.map(async(data) => {
           let localUri = data?.uri;
-          console.log("localUri",localUri);
-          let filename = localUri.split('/').pop();
-          let uriParts = localUri.split('.');
+
+          const compressed = await Video.compress(localUri,
+            {
+              compressionMethod: 'auto',
+            },
+            (progress) => {
+              if (backgroundMode) {
+                console.log('Compression Progress: ', progress);
+              } else {
+                setCompressingProgress(progress);
+              }
+            }
+          );
+          console.log("compressed",compressed);
+          let filename = compressed.split('/').pop();
+          let uriParts = compressed.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
           const checkIncludes = data?.type?.includes("image") ? `image/${fileType}` : `video/${fileType}`;
-            console.log("checkIncludes",checkIncludes);
-            const imageData = { uri : localUri, name: filename, type: checkIncludes}
+            const imageData = { uri : compressed, name: filename, type: checkIncludes}
             formData.append('postImage', imageData);
             formData.append('post_id', '3032');
             const responce = await fetch(data?.type?.includes("image") ? imageFetch : videoFetch,{
@@ -237,7 +249,7 @@ const publishCheck1 = (e, text)=>{
   const getFun = async(data) => {
     console.log("getFun",data);
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
-    console.log("uniqueData",countData ,uniqueData.length);
+    // console.log("uniqueData",countData ,uniqueData.length);
     console.log("uniqueData",uniqueData);
     if(countData == uniqueData.length){
           const uploadData = {userdata,post,uploadImage:data.pimage};

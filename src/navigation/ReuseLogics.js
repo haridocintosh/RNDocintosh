@@ -144,6 +144,7 @@ export const PickImageAll = async (setloader) => {
               multiple: true,
               selectionLimit:3,
               mediaType: 'photo',
+              quality: 0.7,
             };
             const result = ImagePicker.launchImageLibrary(options, (response) => {
                   setloader(true);
@@ -187,7 +188,7 @@ export const PickVideos = async (setloader) => {
               multiple: true,
               selectionLimit:3,
               mediaType: 'video',
-              videoQuality:'medium'
+              videoQuality:'medium',
             };
             const result = ImagePicker.launchImageLibrary(options, (response) => {
                   if(response.didCancel) {
@@ -211,8 +212,7 @@ export const PickVideos = async (setloader) => {
 }
 
 
-
-export const SingleImage = async (arg) => {
+export const SingleImage = async (arg, ) => {
       let options = {
             storageOptions: {
               skipBackup: true,

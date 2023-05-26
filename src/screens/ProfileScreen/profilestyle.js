@@ -63,6 +63,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
+  
   },
   UserDataName: {
     fontSize: 14,
@@ -229,7 +230,8 @@ cardOfPosts: {
   shadowRadius: 10,
   padding: 15,
   // marginTop: -10,
-  backgroundColor:"#fff"
+  backgroundColor:"#fff",
+  margin:10
 },
 userInfo: {
   justifyContent: "space-between",

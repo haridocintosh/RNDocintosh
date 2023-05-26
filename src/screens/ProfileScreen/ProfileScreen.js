@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity} from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity,ActivityIndicator} from 'react-native';
 import icon from '../../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
 import ProfileScreenPost from './ProfileScreenPost';
@@ -55,25 +55,25 @@ const ProfileScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
-    <View style={styles.profilePicContainer}>
-      <View>
-        <FastImage
-            style={styles.profileScreenimg}
-            source={userdata.profile && {
-                uri:userdata.profile,
-                priority: FastImage.priority.normal,
-            }}
-        />
+      <View style={styles.profilePicContainer}>
+        <View>
+          <FastImage
+              style={styles.profileScreenimg}
+              source={userdata.profile && {
+                  uri:userdata.profile,
+                  priority: FastImage.priority.normal,
+              }}
+          />
+        </View>
+        <View style={styles.profileDetails}>
+          <Text style={styles.profilescreenName}>Dr.{userdata?.fullname} <Image source={icon}/></Text>    
+          <Text style={styles.profileDesignationpro}>{userdata?.speciality} | Bangalore</Text>
+          <TouchableOpacity style={{flexDirection:'row'}}>
+            <Text style={{color:'#2376e5', fontFamily:"Inter-Regular"}}>View / </Text>
+            <Text style={{color:'#2376e5',fontFamily:"Inter-Regular"}} onPress={() => navigation.navigate('EditProfileScreen')}>Edit Profile</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.profileDetails}>
-        <Text style={styles.profilescreenName}>Dr.{userdata?.fullname} <Image source={icon}/></Text>    
-        <Text style={styles.profileDesignationpro}>{userdata?.speciality} | Bangalore</Text>
-       <TouchableOpacity style={{flexDirection:'row'}}>
-        <Text style={{color:'#2376e5', fontFamily:"Inter-Regular"}}>View / </Text>
-        <Text style={{color:'#2376e5',fontFamily:"Inter-Regular"}} onPress={() => navigation.navigate('EditProfileScreen')}>Edit Profile</Text>
-      </TouchableOpacity>
-      </View>
-    </View>
       <View style={{flexDirection:'row', marginTop:20}}>
           <View style={styles.ScoreContainer}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
@@ -85,20 +85,13 @@ const ProfileScreen = ({navigation}) => {
           </View>
       </View>
     </Card>
-    <View style={styles.UserDataConatiner}>
-          <View style={styles.UserDataNameCont}>
-            <Text style={styles.UserDataName}>Post ({totalPost?totalPost:0})</Text>
-          </View>
-         <TouchableOpacity style={styles.UserDataName} 
-            onPress={() => navigation.navigate('ProfileScreenFollowers', {followersData})}>
-            <Text style={styles.UserDataName} >Followers ({followersData?.length})</Text>
-          </TouchableOpacity>
-         <TouchableOpacity style={styles.UserDataName} 
-            onPress={() => navigation.navigate('ProfileScreenFollowing',{followingData})}>
-            <Text style={styles.UserDataName}>Following ({followingData?.length})</Text>
-          </TouchableOpacity>
-    </View>
-     <ProfileScreenPost postLength={postLength}/>
+
+    <ProfileScreenPost 
+      postLength={postLength}
+      totalPost={totalPost}
+      followingData={followingData}
+      followersData={followersData}
+    />
  </SafeAreaView>
   )
   }

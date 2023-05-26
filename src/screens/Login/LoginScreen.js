@@ -21,15 +21,13 @@ import OneSignal from 'react-native-onesignal';
 import IncompleteRegistrationModal from './IncompleteRegistrationModal';
 import { getLocalData } from '../../apis/GetLocalData';
 
-
-
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const dispatch   = useDispatch();
+  const dispatch = useDispatch();
   const [loader, setloader] = useState(true);
   const [showeye, setshoweye] = useState(true);
   const [isChecked, setChecked] = useState(false);
-  const [message , setmessage]  = useState();
+  const [message , setmessage] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const isValidemailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
   const [register,setregister] = useState({
@@ -79,13 +77,12 @@ const LoginScreen = () => {
   }
 
   const authLogin = async ()=>{
-    console.log("register",register);
-    register.email = register.email? register.email : datarm?.email ;
+    register.email = register.email? register.email : datarm?.email;
     register.password = register.password ? register.password :datarm?.password ;
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const uploadData = {register,device_id};
-      // console.log("register",register);
+      console.log("register",register);
       // console.log("device_id",device_id);
       const token = await dispatch(userLogin(uploadData));
       console.log("token",token);
@@ -106,9 +103,8 @@ const LoginScreen = () => {
           AsyncStorage.removeItem("rememberme")
         }
         singlestoreData('isloggedin','true'); 
-          navigation.navigate('HomeScreen');
-          setloader(true);
-          setshoweye(true)
+        navigation.navigate('HomeScreen');
+        setshoweye(true)
       }else{
       setloader(false)
        Toast.show(token.payload.message, Toast.LONG);
@@ -127,7 +123,7 @@ const LoginScreen = () => {
 
   if(loader){
     return(
-    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
         <ActivityIndicator size={'large'} color={"#2C8892"}/>
     </View>)
   }
@@ -137,9 +133,9 @@ const LoginScreen = () => {
       <IncompleteRegistrationModal modalVisible={modalVisible}/>
       <View style={{marginTop:40}}>
         <Text  style={styles.headingtexts}>Welcome</Text>
-        <Text  style={styles.headingtext}>
-         {data?((data?.data?.role<='4')?'Dr. ':''):''}{data? data?.data?.first_name+' '+data?.data?.last_name:''}
-        </Text>
+          <Text  style={styles.headingtext}>
+            {data?((data?.data?.role<='4')?'Dr. ':''):''}{data? data?.data?.first_name+' '+data?.data?.last_name:''}
+          </Text>
         <Text style={styles.headingpara}>Log in to your own personal space in one of the fastest growing professional network for doctors.</Text>
     
       <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
@@ -151,7 +147,7 @@ const LoginScreen = () => {
           defaultValue={datarm?.email}
           blurOnSubmit={true}
           autoComplete={"off"}
-         />
+      />
 
       <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
           autoCapitalize="none"
@@ -165,11 +161,10 @@ const LoginScreen = () => {
           defaultValue={datarm?.password}
           blurOnSubmit={true}
           autoComplete={"off"}
-        />
+      />
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'md-eye-off' : 'md-eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
       <View style={styles.forgetPassContainer}>
-
       <View style={styles.section}>
         <CheckBox
           onClick={() => toggleRememberMe()}
@@ -209,15 +204,13 @@ const LoginScreen = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
- 
-  eyeIcon:{
-    zIndex:1, 
-    alignSelf:'flex-end', 
-    marginTop:-50,
-    marginRight:30,
-    marginBottom:30
+eyeIcon:{
+  zIndex:1, 
+  alignSelf:'flex-end', 
+  marginTop:-50,
+  marginRight:30,
+  marginBottom:30
 },
 red: {
   backgroundColor: 'red',

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   } from 'react-native';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const styelcss = require('../../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -20,6 +20,7 @@ import Toast from 'react-native-simple-toast';
 import OneSignal from 'react-native-onesignal';
 import IncompleteRegistrationModal from './IncompleteRegistrationModal';
 import { getLocalData } from '../../apis/GetLocalData';
+
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -43,6 +44,8 @@ const LoginScreen = () => {
   const toggleRememberMe = () => {
     setChecked(!isChecked);
   }
+  // const userInfo = useSelector((state) => state.userLocalData);
+  // console.log("userInfo", userInfo);
 
   const  updateEmail = (text)=>{
     if(!isValidemailRegex.test(text)){
@@ -50,19 +53,19 @@ const LoginScreen = () => {
     }else{
         setmessage('');
     }
-    setregister({ ...register, 
+    setregister({...register, 
       email: text,
     });
   }
 
   const getData = () => {
+    
     getLocalData('USER_INFO').then(async(res) => {
-      // console.log("res?.data",res?.data);
-      await setdata(res?.data)
+      console.log("res?.data",res?.data);
+      setdata(res?.data)
       setloader(false);
     });
     getLocalData('rememberme').then(async(res) => {
-      // console.log("res",res);
       await setdatarm(res?.data?.register); 
       setChecked(res?.data?.isChecked);
       if(res == null){
@@ -83,28 +86,26 @@ const LoginScreen = () => {
       setloader(true);
       const uploadData = {register,device_id};
       console.log("register",register);
-      // console.log("device_id",device_id);
       const token = await dispatch(userLogin(uploadData));
-      console.log("token",token);
       if(token?.payload?.status == 'Success'){
           setloader(false)
           dispatch(addLocal(token.payload.session_data));
           await storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data,
-        },
-        ));
+        }));
         singlestoreData('profileImage',token.payload.session_data.profileimage); 
-        if(isChecked){
-            storeData('rememberme',JSON.stringify({
-            data:{...token.meta.arg, isChecked:isChecked }
-        }))
-        }else{
-          AsyncStorage.removeItem("rememberme")
-        }
         singlestoreData('isloggedin','true'); 
         navigation.navigate('HomeScreen');
-        setshoweye(true)
+        setshoweye(true);
+        if(isChecked){
+          storeData('rememberme',JSON.stringify({
+            data:{...token.meta.arg, isChecked:isChecked }
+          }));
+        }else{
+          AsyncStorage.removeItem("rememberme");
+        }
+        console.log("token",token);
       }else{
       setloader(false)
        Toast.show(token.payload.message, Toast.LONG);
@@ -115,7 +116,6 @@ const LoginScreen = () => {
       setmessage('Please fill the above details');
     }
   }
-
 
   useEffect(() => {
       getData();
@@ -134,7 +134,7 @@ const LoginScreen = () => {
       <View style={{marginTop:40}}>
         <Text  style={styles.headingtexts}>Welcome</Text>
           <Text  style={styles.headingtext}>
-            {data?((data?.data?.role<='4')?'Dr. ':''):''}{data? data?.data?.first_name+' '+data?.data?.last_name:''}
+            {data?((data?.role<='4')?'Dr. ':''):''}{data? data?.first_name+' '+data?.last_name:''}
           </Text>
         <Text style={styles.headingpara}>Log in to your own personal space in one of the fastest growing professional network for doctors.</Text>
     
@@ -156,6 +156,7 @@ const LoginScreen = () => {
             password: text,
           })}
           inputType="password"
+          placeholder="password"
           placeholderTextColor='#51668A'
           hideShow={showeye}
           defaultValue={datarm?.password}

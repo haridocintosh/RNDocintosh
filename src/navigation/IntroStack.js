@@ -12,6 +12,7 @@ import Lottie from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
 import CustomButton from '../components/CustomButton';
 
+
 const styles = {
   wrapper: {
     backgroundColor: 'transparent',
@@ -111,10 +112,11 @@ export const Slider_comp = () => {
 
 
   useEffect(() => {
-    animationRef.current?.play()
+    animationRef.current?.play();
     // Or set a specific startFrame and endFrame with:
     animationRef.current?.play(30, 120);
   }, [])
+
 
   return ( 
     <View style={styles.container}>
@@ -144,14 +146,14 @@ export const Slider_comp = () => {
           </View>
       </Swiper> 
 
-      <View style = {styles.ragisterbutton} >
+      <View style = {styles.ragisterbutton}>
         <CustomButton label = {'Register'} onPress = {() => navigation.navigate('Register')}/>
       </View> 
 
       <View style={styles.ragistertext0}>
         <Text style={styles.ragistertext2}>Already a member ?</Text> 
         <TouchableOpacity onPress = {() => navigation.navigate('LoginScreen')} >
-          <Text style={{ color: '#2376E5', fontWeight: '600',fontSize: 16,fontFamily:"Inter-Regular"}}> Login </Text> 
+          <Text style={{ color:'#2376E5', fontWeight:'600', fontSize: 16, fontFamily:"Inter-Regular"}}> Login</Text> 
         </TouchableOpacity> 
       </View>
     </View>

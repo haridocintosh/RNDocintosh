@@ -65,13 +65,7 @@ const LoginScreen = () => {
       setdata(res?.data)
       setloader(false);
     });
-    getLocalData('rememberme').then(async(res) => {
-      await setdatarm(res?.data?.register); 
-      setChecked(res?.data?.isChecked);
-      if(res == null){
-        setregister({email: "",password:""});
-      }
-    })
+    
     OneSignal.getDeviceState().then((deviceUUid) => {
       // console.log("deviceUUid~",deviceUUid.userId);
       const deviceId  = deviceUUid.userId;
@@ -117,8 +111,21 @@ const LoginScreen = () => {
     }
   }
 
+  const rememberMe = () =>{
+    getLocalData('rememberme').then(async(res) => {
+      await setdatarm(res?.data?.register); 
+      setChecked(res?.data?.isChecked);
+      if(res == null){
+        setregister({email: "",password:""});
+      }
+    })
+  }
+
   useEffect(() => {
       getData();
+      if(isFocused){
+        rememberMe()
+      }
   },[isFocused]);
 
   if(loader){

@@ -1,10 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import Knowledge2Screen from '../screens/Knowledge2Screen';
-import Polls from '../screens/Polls';
-import Polls1 from '../screens/Polls1';
 import SentimentixScreen from '../screens/SentimentixScreen';
-import SentimentrixCong from '../screens/SentimentrixCong';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
 import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
@@ -38,7 +35,6 @@ import AudioScreen from '../screens/HomeScreen/postScreen/AudioScreen';
 import AccountSettings from '../screens/Settings/Account Setting/AccountSettins';
 import ResetPassword from '../screens/Settings/Account Setting/ResetPassword/ResetPassword';
 import Leaderboard from '../screens/Leaderboard/Leaderboard';
-import EarnDocCoins from '../screens/Leaderboard/EarnDocCoins';
 import Rewards from '../components/Rewards/Rewards';
 import SinglePost from '../screens/SinglePost';
 import ProfilePictureCrop from '../screens/EditProfile/ProfilePictureCrop';
@@ -57,6 +53,7 @@ import OthersProfileFollowing from '../screens/ProfileScreen/OthersProfileScreen
 import BusinessPage from '../screens/BusinessPage/BusinessPage';
 import CreateBusinessPage from '../screens/BusinessPage/CreateBusinessPage';
 import UploadProfilePhoto from '../screens/BusinessPage/UploadProfilePhoto';
+import DocCoinsHistory from '../screens/Leaderboard/DocCoinsHistory';
 
 
 
@@ -70,8 +67,6 @@ const HomeNavigation = () => {
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={showHeaderItem}/>
           <Stack.Screen name="HomeScreen" component={HomeScreen}/>
           <Stack.Screen name="PublicReactions" component={PublicReactions}/>
-          <Stack.Screen name="Polls" component={Polls} options={showHeaderItem}/>
-          <Stack.Screen name="Polls1" component={Polls1} options={showHeaderItem}/>
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={showHeaderItem}/>
           <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={showHeaderItem}/>
           <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={showHeaderItem}/>
@@ -110,7 +105,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="AccountSettings" component={AccountSettings} options={showHeaderItem} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} options={showHeaderItem} />
         <Stack.Screen name="Leaderboard" component={Leaderboard} options={showHeaderItem} />
-        <Stack.Screen name="EarnDocCoins" component={EarnDocCoins} options={showHeaderItem} />
+        <Stack.Screen name="DocCoinsHistory" component={DocCoinsHistory} options={showHeaderItem} />
         <Stack.Screen name="Rewards" component={Rewards} options={showHeaderItem} />
         <Stack.Screen name="SinglePost" component={SinglePost} options={showHeaderItem}/>
         <Stack.Screen name="ProfilePictureCrop" component={ProfilePictureCrop} options={showHeaderItem}/>

@@ -44,7 +44,7 @@ const ProfileScreenFollowers = ({navigation,route}) => {
             })
             : 
             <View>
-               <Image source={require('../../assets/images/followMe.png')} style={{width:'70%',height:300,alignSelf:'center'}}/>
+               <Image source={require('../../assets/images/followMe.png')} style={{width:'100%',height:300,alignSelf:'center',resizeMode:'contain'}}/>
             </View>}
         </ScrollView>
     </SafeAreaView>

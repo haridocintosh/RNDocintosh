@@ -6,6 +6,7 @@ import {
   TextInput,
   StyleSheet,
   ActivityIndicator,
+  Alert,
   } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 const styelcss = require('../../assets/css/style');
@@ -20,6 +21,7 @@ import Toast from 'react-native-simple-toast';
 import OneSignal from 'react-native-onesignal';
 import IncompleteRegistrationModal from './IncompleteRegistrationModal';
 import { getLocalData } from '../../apis/GetLocalData';
+import { getdeviceId } from '../PushNotification';
 
 
 const LoginScreen = () => {
@@ -34,11 +36,11 @@ const LoginScreen = () => {
   const [register,setregister] = useState({
     email:"",
     password:"", 
-    // device_id:""
   });
-  const [device_id , setdevice_id]  = useState('');
+  const [device_id , setDeviceId]  = useState('');
   const [data, setdata] = useState();
   const [datarm, setdatarm] = useState();
+  const [reloadID, setReloadID] = useState(false);
   const isFocused = useIsFocused();
 
   const toggleRememberMe = () => {
@@ -58,67 +60,61 @@ const LoginScreen = () => {
     });
   }
 
-  const getData = () => {
-    
-    getLocalData('USER_INFO').then(async(res) => {
-      console.log("res?.data",res?.data);
-      setdata(res?.data)
-      setloader(false);
+  const getData = async () => {
+    await getLocalData('USER_INFO').then(async(res) => {
+      setdata(res?.data);
     });
-    getLocalData('rememberme').then(async(res) => {
-      await setdatarm(res?.data?.register); 
+    await getLocalData('rememberme').then((res) => {
+      setdatarm(res?.data?.register); 
       setChecked(res?.data?.isChecked);
       if(res == null){
-        setregister({email: "",password:""});
+        setregister({email:"",password:""});
       }
-    })
-    OneSignal.getDeviceState().then((deviceUUid) => {
-      // console.log("deviceUUid~",deviceUUid.userId);
-      const deviceId  = deviceUUid.userId;
-      setdevice_id({deviceId})
-    })
+    });
+    setloader(false);
   }
+
 
   const authLogin = async ()=>{
     register.email = register.email? register.email : datarm?.email;
-    register.password = register.password ? register.password :datarm?.password ;
-    if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
+    register.password = register.password ? register.password : datarm?.password ;
+    // if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
+    if(register.email !== ("" || undefined)  &&  register.password !== ("" || undefined)){
       setloader(true);
-      const uploadData = {register,device_id};
-      console.log("register",register);
-      const token = await dispatch(userLogin(uploadData));
-      if(token?.payload?.status == 'Success'){
-          setloader(false)
-          dispatch(addLocal(token.payload.session_data));
-          await storeData('USER_INFO',JSON.stringify({
-          login:true,
-          data:token.payload.session_data,
-        }));
-        singlestoreData('profileImage',token.payload.session_data.profileimage); 
-        singlestoreData('isloggedin','true'); 
-        navigation.navigate('HomeScreen');
-        setshoweye(true);
-        if(isChecked){
-          storeData('rememberme',JSON.stringify({
-            data:{...token.meta.arg, isChecked:isChecked }
+      const uploadData = {register};
+      await dispatch(userLogin(uploadData)).then(async (res)=>{
+        const status = await res?.payload?.status;
+        if(status == 'Success'){
+            await dispatch(addLocal(res.payload.session_data));
+            storeData('USER_INFO',JSON.stringify({
+            login:true,
+            data:res.payload.session_data,
           }));
+          singlestoreData('profileImage', res.payload.session_data.profileimage); 
+          singlestoreData('isloggedin',"true"); 
+          // setshoweye(true);
+          if(isChecked){
+              storeData('rememberme',JSON.stringify({
+              data:{...res.meta.arg, isChecked:isChecked}
+          }))}else{
+            AsyncStorage.removeItem("rememberme");
+          }
+          navigation.navigate('HomeScreen');
+          setloader(false);
         }else{
-          AsyncStorage.removeItem("rememberme");
+          setloader(false)
+          Toast.show(res.payload.message, Toast.LONG);
         }
-        console.log("token",token);
-      }else{
-      setloader(false)
-       Toast.show(token.payload.message, Toast.LONG);
-       //Toast.show('INCORRECT PASSWORD');
-      }
-    }else{
+      })}else{
       setloader(false)
       setmessage('Please fill the above details');
     }
   }
 
   useEffect(() => {
+    if(isFocused){
       getData();
+    }
   },[isFocused]);
 
   if(loader){

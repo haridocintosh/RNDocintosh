@@ -266,7 +266,7 @@
                     Mobile Number : <Text style={styles.userInfoTextResult}>{userdata.mobilenumber} </Text>
                   </Text>
                   <TouchableOpacity onPress={mobileModal}>
-                    <Entypo name="edit" size={23} color="black" style={{marginLeft:70,color:'#2C8892'}}  />
+                    <Entypo name="edit" size={20} color="black" style={{color:'#2C8892'}}  />
                   </TouchableOpacity>
               </View>
               <View style={styles.userInfoContainer}>
@@ -274,7 +274,7 @@
                   Email ID : <Text style={styles.userInfoTextResult}>{userdata.email}</Text>
                   </Text>
                   <TouchableOpacity onPress={emailModal}>
-                    <Entypo name="edit" size={23} color="black"  style={{marginLeft:70,color:'#2C8892'}}  />
+                    <Entypo name="edit" size={20} color="black"  style={{color:'#2C8892'}}  />
                   </TouchableOpacity>
               </View>
               <View style={styles.userInfoContainer}>
@@ -297,11 +297,11 @@
             userdata={userdata}
           />
           <Card style={styles.CartContainer}>
-              <View>
+              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <Text style={styles.userInfoTitle}>About Me</Text>
-                <Entypo name="edit" size={23} color="black" style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={aboutMeModal} />
+                <Entypo name="edit" size={20} color="black" style={{color:'#2C8892'}} onPress={aboutMeModal} />
               </View>
-              <Text style={{color:'#51668A',lineHeight:20,marginBottom:20}}>
+              <Text style={{color:'#51668A',lineHeight:20,marginTop:7}}>
                 {userdata?.summary}  
               </Text>
           </Card>
@@ -343,10 +343,10 @@
                       </View>  
                     </View>
                     <TouchableOpacity onPress={() => WorkExpEditModal(data)}>
-                      <Entypo name="edit" size={23} color="#2C8892"  />
+                      <Entypo name="edit" size={20} color="#2C8892"  />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleDelete(data?.workexp_id,"WorkExperience")}>  
-                      <AntDesign name="delete" size={23} color="#D01212"/>  
+                      <AntDesign name="delete" size={20} color="#D01212" style={{marginLeft:7}}/>  
                     </TouchableOpacity>
                   </View>
                 )
@@ -399,10 +399,10 @@
                     </View>
                   </View> 
                   <TouchableOpacity onPress={() => handleEditQualification(data)}>  
-                    <Entypo name="edit" size={23} color="#2C8892"/>  
+                    <Entypo name="edit" size={20} color="#2C8892"/>  
                   </TouchableOpacity>  
                   <TouchableOpacity onPress={() => handleDelete(data?.pg_id, "Qualification")}>  
-                    <AntDesign name="delete" size={23} color="#D01212"/>  
+                    <AntDesign name="delete" size={20} color="#D01212" style={{marginLeft:7}}/>  
                   </TouchableOpacity>  
                 </View>
               )
@@ -450,10 +450,10 @@
                       </View>  
                     </View>
                     <TouchableOpacity onPress={() => awardsEditModal(data)}>
-                      <Entypo name="edit" size={23} color="#2C8892"  /> 
+                      <Entypo name="edit" size={20} color="#2C8892"  /> 
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleDelete(data?.award_id,"Award")}>  
-                      <AntDesign name="delete" size={23} color="#D01212"/>  
+                      <AntDesign name="delete" size={20} color="#D01212" style={{marginLeft:7}}/>  
                     </TouchableOpacity>
                   </View>
                 )
@@ -497,17 +497,17 @@
                       <View style={{paddingLeft:10}}>
                         <Text style={styles.AddedDetailsTitle}>{data?.title}</Text>
                         <Text style={styles.AddedDetailsDate}>
-                          {moment(data.publishedyear).format("MMM YYYY")}
+                          {moment(data?.publishedyear).format("MMM YYYY")}
                         </Text>
                       </View>  
                     </View>
                         
-                  <TouchableOpacity onPress={() => publicationEditModal(data)}>  
-                    <Entypo name="edit" size={23} color="#2C8892" />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleDelete(data?.paperpublised_id,"Publication")}>  
-                    <AntDesign name="delete" size={23} color="#D01212"/>  
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={() => publicationEditModal(data)}>  
+                      <Entypo name="edit" size={20} color="#2C8892" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDelete(data?.paperpublised_id,"Publication")}>  
+                      <AntDesign name="delete" size={20} color="#D01212" style={{marginLeft:7}}/>  
+                    </TouchableOpacity>
                   </View>
                 )
               })}
@@ -526,7 +526,7 @@
           <Card style={styles.CartContainer}>
             <View style={styles.InterestsContainer}>
               <Text style={styles.userInfoTitle}>Interests</Text>
-              <Entypo name="edit" size={23} color="#2C8892" onPress={InterestsModal} />
+              <Entypo name="edit" size={20} color="#2C8892" onPress={InterestsModal} />
             </View>
             <View style={styles.InterestsList}>
               {loader &&<View style={styles.loaderContainer}>
@@ -536,8 +536,7 @@
                 return(
                   <View style={styles.InterestsSelected} key={i}>
                     <Text>{data.speciality}</Text>
-                  </View>
-                )
+                  </View>)
               })}
             </View>
           </Card>

@@ -7,16 +7,17 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { GetPollsData, SavePollAns } from '../../../redux/reducers/PollsSlice';
 import { useDispatch } from 'react-redux';
 import { getLocalData } from '../../apis/GetLocalData';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import moment from "moment";
 
 
 const Polls = () => {
-  const [showMcq, setShowMcq] = useState(false);
+  const [showMcq, setShowMcq] = useState(true);
   const [pollsData, setPollsData] = useState([]);
   const [userData, setUserData] = useState();
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const toggleMcq = () => {
     setShowMcq(!showMcq)
   }
@@ -26,20 +27,24 @@ const Polls = () => {
       setUserData(res?.data);
       const reData = res?.data;
       const result = await dispatch(GetPollsData({id:reData.id,assoc_id:''}));
-      // console.log("result",result?.payload?.current_poll);
+      console.log("result",result?.payload?.current_poll);
       setPollsData(result?.payload?.current_poll);
       
     })
   }
   const handleAnswer = async (data) => {
     const PostData = {qid:data?.qid,id:userData?.id,opt_id:data?.opt_id,basic_id:pollsData?.basic_id};
+   console.log("PostData",PostData);
     const result = await dispatch(SavePollAns(PostData));
+    console.log("result",result);
     navigation.navigate("PollsThankYouPage")
   }
 
   useEffect(() => {
-    getPollsQue()
-  },[])
+    if(isFocused){
+      getPollsQue();
+    }
+  },[isFocused]);
     return (
     <SafeAreaView>
       {pollsData?.solved == 0 ? <Card style={styles.pollsCart}>

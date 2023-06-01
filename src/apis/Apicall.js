@@ -14,7 +14,7 @@ const storeData = async (key,value) => {
 
 const singlestoreData = async (key,value) => {
   try {
-    await AsyncStorage.setItem(key, value)
+    await AsyncStorage.setItem(key, value);
   }catch (e) {
     console.log(e);
   }
@@ -38,7 +38,7 @@ new Promise((resolve, reject) => {
           login:true,
           data:res.data["session_data"]
         })) 
-        singlestoreData('isloggedin','true');  
+        singlestoreData('isloggedin',"true");  
         resolve(res.data);
         Toast.show(res.data["message"],Toast.LONG)
       } else reject(res);

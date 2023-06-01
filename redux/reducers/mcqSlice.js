@@ -93,6 +93,23 @@ import { mainApi } from "../../src/apis/constant";
         }
     });
 
+    export const docHistoryResult = createAsyncThunk("docCoinHistory", async (data)=>{
+        try{
+            const responce = await fetch(`${mainApi.baseUrl}/ApiController/docHistory`, {
+                method : 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body :JSON.stringify(data)
+            });
+            const result =  await responce.json();
+            return result;
+        }
+        catch(e){
+            console.log(e);;
+        }
+    });
+
 
 
 export const quizData = createSlice({
@@ -100,6 +117,7 @@ export const quizData = createSlice({
     initialState :{
         postData : [],
         rankResult : {},
+        docResult : {},
         loading : false,
         error :false,
     },
@@ -167,6 +185,19 @@ export const quizData = createSlice({
             state.rankResult   = action.payload;
         })
         builder.addCase(showRankResult.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //-------------------------docHistoryResult-----------------------------
+        builder.addCase(docHistoryResult.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(docHistoryResult.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.docResult   = action.payload;
+        })
+        builder.addCase(docHistoryResult.rejected, (state) => {
             state.loading = false;
             state.error = false
         })

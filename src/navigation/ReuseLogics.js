@@ -208,7 +208,6 @@ export const PickVideos = async (setloader) => {
       } else {
             console.log("Camera permission denied");
       }
-
 }
 
 

@@ -222,6 +222,8 @@ export const styles = StyleSheet.create({
        fontSize:16,
        fontFamily:'PlusJakartaSans-Bold',
     },
+
+    //---------------------------DocCoinsHistory----------------------------
     TotalBalanceContainer:{
        borderWidth:1,
        height:84,
@@ -258,36 +260,33 @@ export const styles = StyleSheet.create({
         fontSize:12,
         fontFamily:'Inter-Regular',
     },
-    activityBonus:{
-       height:56,
-       borderRadius:8,
-       backgroundColor:'#fff',
-       borderColor:'#D5DEED',
-       flexDirection:'row',
-       justifyContent:'space-between',
-       alignItems:"center",
-       padding:15,
-       marginVertical:5
-    },
-    activityBonusrhs:{
+    coinHistoryContainer:{
+        paddingVertical:15,
+        justifyContent:'space-between',
         flexDirection:'row',
-        alignItems:'center'
+        borderBottomWidth:1,
+        borderBottomColor:'#F2F5FA'
     },
-    howmuchYouEarn:{
+    CoinsTrackPlus:{
         fontFamily:'Inter-SemiBold',
+        color:'#219653'
     },
-    activityBonusTitle:{
-        fontFamily:'PlusJakartaSans-Bold',
+    CoinsTrackMin:{
+        fontFamily:'Inter-SemiBold',
+        color:'#EB5757'
+    },
+    CoinsTrackTitle:{
+        fontFamily:'Inter-SemiBold',
         color:'#071B36'
     },
-    activityBonusSubTitle:{
+    CoinsTrackTime:{
+        fontFamily:'Inter-Regular',
         color:'#51668A',
-        fontFamily:'Inter-Regular',
-        fontSize:8
+        fontSize:12,
     },
-    ActivityRedirect:{
-        marginRight:15,
-        color:'#2376E5',
-        fontFamily:'Inter-Regular',
-    },
+    historyTitle:{
+        fontSize:16,
+        fontFamily:'Inter-SemiBold',
+        color:'#071B36'}
+   
 })

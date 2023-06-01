@@ -100,8 +100,8 @@ android {
         applicationId "com.docintosh.tech"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "3.0"
+        versionCode 5
+        versionName "1.0"
     }
 
     splits {
@@ -130,12 +130,6 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-    }
-    sourceSets { main { jni.srcDirs = ['src/main/jni/','src/main/jniLibs/'] } }
-    externalNativeBuild {
-        ndkBuild {
-            path 'build/intermediates/ndk/debug/Android.mk'
         }
     }
 

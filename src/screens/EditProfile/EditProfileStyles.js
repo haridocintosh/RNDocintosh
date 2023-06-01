@@ -236,7 +236,10 @@ export const styles = StyleSheet.create({
     profileEditBtn:{
         color:'#51668A'
     },
-    basicInfoConatiner:{padding:20},
+    basicInfoConatiner:{
+        // padding:20,
+        // borderWidth:1
+    },
     basicInfoTitle:{
         fontSize:20,
         color:"#071B36",
@@ -266,7 +269,7 @@ export const styles = StyleSheet.create({
     },
     AddedDetails:{
         flexDirection:'row',
-        padding:20,
+        padding:5,
         justifyContent:'space-between',
         borderColor:'#D5DEED'
     },
@@ -288,8 +291,8 @@ export const styles = StyleSheet.create({
         width:Dimensions.get('window').width/2
     },
     SingleLetter:{
-        width:50,
-        height:50,
+        width:40,
+        height:40,
         borderRadius:50,
         justifyContent:'center',
         alignItems:'center',
@@ -297,7 +300,8 @@ export const styles = StyleSheet.create({
     },
     SingleLetterText:{
         color:'#fff',
-        fontFamily:"Inter-SemiBold"
+        fontFamily:"Inter-SemiBold",
+        fontSize:18
     },
     devider:{
         backgroundColor:'#D5DEED',

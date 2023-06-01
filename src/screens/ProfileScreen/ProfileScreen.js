@@ -68,21 +68,21 @@ const ProfileScreen = ({navigation}) => {
         <View style={styles.profileDetails}>
           <Text style={styles.profilescreenName}>Dr.{userdata?.fullname} <Image source={icon}/></Text>    
           <Text style={styles.profileDesignationpro}>{userdata?.speciality} | Bangalore</Text>
-          <TouchableOpacity style={{flexDirection:'row'}}>
+          <TouchableOpacity style={{flexDirection:'row'}} onPress={() => navigation.navigate('EditProfileScreen')}>
             <Text style={{color:'#2376e5', fontFamily:"Inter-Regular"}}>View / </Text>
-            <Text style={{color:'#2376e5',fontFamily:"Inter-Regular"}} onPress={() => navigation.navigate('EditProfileScreen')}>Edit Profile</Text>
+            <Text style={{color:'#2376e5',fontFamily:"Inter-Regular"}}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
       </View>
       <View style={{flexDirection:'row', marginTop:20}}>
-          <View style={styles.ScoreContainer}>
+          <TouchableOpacity style={styles.ScoreContainer} onPress={() => navigation.navigate('Rewards',{data:'coin'})}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
             <Text style={styles.coins}>{allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0}</Text>
-          </View>
-          <View style={styles.ScoreContainer}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.ScoreContainer} onPress={() => navigation.navigate('Rewards',{data:'coupon'})}>
             <Image source={require('../../assets/dr-icon/coupon1.png')} style={styles.scoreImg}/>
             <Text style={styles.coins}>0</Text>
-          </View>
+          </TouchableOpacity>
       </View>
     </Card>
 

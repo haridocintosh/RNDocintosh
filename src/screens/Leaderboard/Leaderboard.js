@@ -133,8 +133,8 @@ const Leaderboard = ({navigation}) => {
                 
         </ScrollView>
 
-        <TouchableOpacity style={styles.earnButton} onPress={()=>{navigation.navigate("EarnDocCoins")}}>
-            <Text style={styles.earnButtonText}>How to Earn DocCoins?</Text>
+        <TouchableOpacity style={styles.earnButton} onPress={()=>{navigation.navigate("DocCoinsHistory")}}>
+            <Text style={styles.earnButtonText}>DocCoins History</Text>
         </TouchableOpacity>
     </SafeAreaView>
   )

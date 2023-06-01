@@ -1,12 +1,19 @@
 import { View, Text ,SafeAreaView,TouchableOpacity} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styles } from './RewardsStyles';
 import RedeemCoins from './RedeemCoins';
 import VouchersHistory from './VouchersHistory';
 
 
-const Rewards = () => {
+const Rewards = ({route}) => {
+    const data = route?.params?.data;
     const [btnClick, setBtnClick] = useState(true);
+
+    useEffect(() =>{
+        if(data == 'coupon'){
+            setBtnClick(false);
+        }
+    },[data])
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:15}}>
         <View style={styles.rewardsContainer}>

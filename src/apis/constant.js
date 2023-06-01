@@ -1,5 +1,5 @@
 export const mainApi = {
-    baseUrl: 'https://docintosh.com',
+    baseUrl: 'https://docintosh.com/',
     session: {
       ud: 'userData',
     },

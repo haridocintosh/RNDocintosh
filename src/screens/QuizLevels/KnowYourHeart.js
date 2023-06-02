@@ -26,7 +26,6 @@ import outoffWhiteBadge from "../../assets/dr-icon/outoffWhiteBadge.png";
 import whiteAccesstime from "../../assets/dr-icon/whiteAccesstime.png";
 import { Button } from "react-native-elements";
 import { Card } from "react-native-paper";
-import axios from "axios";
 import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -47,17 +46,11 @@ const KnowYourHeart = ({ route,navigation }) => {
   const getLeaderboardData = () => {
     navigation.setOptions({ title: 'Know Your Heart' });
     getLocalData('USER_INFO').then(async (res) => {
-      // console.log(res.data.role);
       const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
-      // console.log(uresult);
       setUserData(uresult?.payload);
       setLoader(false);
     });
-    // axios.get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
-    //   .then((res) => {
-    //     setUserData(res.data);
-    //     setLoader(false);
-    //   });
+   
   };
   useEffect(() => {
     animationRef.current?.play()

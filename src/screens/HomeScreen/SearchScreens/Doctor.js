@@ -39,7 +39,6 @@ const Doctor = ({handleRemove,filteredDataSource,handleLoadeMore,renderLoader}) 
             showsVerticalScrollIndicator={false}
             onEndReached={() => handleLoadeMore()}
             ListFooterComponent={renderLoader}
-            
         />
     </View>
   )

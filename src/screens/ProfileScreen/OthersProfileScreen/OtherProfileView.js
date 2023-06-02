@@ -2,11 +2,26 @@ import React,{useState,useEffect } from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity,ActivityIndicator} from 'react-native';
 import { Card } from 'react-native-paper';
 import { styles } from '../../EditProfile/EditProfileStyles';
-import { Icon } from '../../../navigation/ReuseLogics';
 import FastImage from 'react-native-fast-image';
+import { getDoctorsDetails } from '../../../../redux/reducers/ALL_APIs';
+import { useDispatch } from 'react-redux';
+
 
 const OtherProfileView = ({route}) => {
+    const [userDetais, setUserDetails] = useState();
     const {data} =route?.params;
+    // console.log("data",data?.follow_to);
+    const dispatch = useDispatch();
+
+    const GetDoctorDetails = async() => {
+        const result = await dispatch(getDoctorsDetails({id:data?.follow_to}));
+        setUserDetails(result.payload);
+        console.log("result.payload",result.payload);
+    }
+
+    useEffect(() => {
+        GetDoctorDetails()
+    },[])
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
@@ -14,38 +29,40 @@ const OtherProfileView = ({route}) => {
                 <View style={styles.ProfileImageContainer}>
                 <FastImage
                     style={styles.profileimg}
-                    source={data.userprofile && {
-                            uri:data.userprofile,
+                    source={userDetais?.user_profile?.profileimage && {
+                            uri:userDetais?.user_profile?.profileimage,
                             priority: FastImage.priority.normal,
                         }}
                 />
                 </View>
                 <View>
                     <Text style={styles.userName}>
-                        {data?.username} <Image source={require('../../../assets/images/celTick.png')} style={styles.imageTick}/>
+                        {userDetais?.user_profile?.title} {userDetais?.user_profile?.first_name} {`${userDetais?.user_profile?.last_name} `}
+                        <Image source={require('../../../assets/images/celTick.png')} style={styles.imageTick}/>
                     </Text>
                     <View style={styles.userCategoryContainer}>
-                        <Text style={styles.userCategory}>{data?.speciality} | Bangalore</Text>
+                        <Text style={styles.userCategory}>
+                            {userDetais?.user_profile?.speciality} | {userDetais?.user_profile?.state}</Text>
                     </View>
                 </View>
             </Card>  
 
-            <Card style={styles.CartContainer}>
+            {userDetais?.user_profile?.summary && <Card style={styles.CartContainer}>
                 <View>
-                    <Text style={styles.userInfoTitle}>About {data?.username}</Text>
+                    <Text style={styles.userInfoTitle}>About</Text>
                 </View>
                 <Text style={{color:'#51668A',lineHeight:20,marginBottom:20}}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquet cursus pellentesque. Mauris gravida libero nec sapien ultricies blandit. 
+                {userDetais?.user_profile?.summary}
                 </Text>
-            </Card>
-            <Card style={styles.CartContainer}>
+            </Card>}
+            {/* <Card style={styles.CartContainer}>
                 <View style={styles.InterestsContainer}>
                 <Text style={styles.userInfoTitle}>Interests</Text>
                 </View>
                 <View style={styles.InterestsList}>
-                {/* {loader &&<View style={styles.loaderContainer}>
+                {loader &&<View style={styles.loaderContainer}>
                     <ActivityIndicator size={'small'}/>
-                </View>} */}
+                </View>}
                     <View style={styles.InterestsSelected}>
                         <Text>speciality</Text>
                     </View>
@@ -59,7 +76,7 @@ const OtherProfileView = ({route}) => {
                         <Text>speciality</Text>
                     </View>
                 </View>
-            </Card>
+            </Card> */}
           </ScrollView>
     </SafeAreaView>
   )

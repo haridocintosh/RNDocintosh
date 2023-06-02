@@ -2,7 +2,6 @@ import React,{useState,useEffect } from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView,TouchableOpacity,ActivityIndicator} from 'react-native';
 import { Card } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {styles} from '../../EditProfile/EditProfileStyles';
 import moment from "moment";
@@ -11,16 +10,16 @@ import { getDoctorsDetails } from '../../../../redux/reducers/ALL_APIs';
 
 
 const UserDetailsPage = ({route}) => {
-    const [userDetais, setUserDetails] =useState();
-    const [workShowAll, setWorkShowAll] = useState(2);
-    const [showAllQualification, setShowAllQualification] = useState(false);
-    const { item } = route.params;
-    const dispatch = useDispatch(); 
+    const [userDetais, setUserDetails] = useState();
+    // const [workShowAll, setWorkShowAll] = useState(2);
+    // const [showAllQualification, setShowAllQualification] = useState(false);
+    const { item } = route?.params;
 
-    const handleWorkloadMore = () => {
-        setWorkShowAll()
-    }
-   
+    const dispatch = useDispatch();
+
+    // const handleWorkloadMore = () => {
+    //     setWorkShowAll()
+    // }
 
     const GetDoctorDetails = async() => {
         const result = await dispatch(getDoctorsDetails({id:item?.id}));
@@ -133,7 +132,7 @@ const UserDetailsPage = ({route}) => {
         </Card>}
         
         {/* -----------------------Qualification------------------------ */}
-        {userDetais?.user_qualification && <Card style={styles.CartContainer}>
+        {/* {userDetais?.user_qualification && <Card style={styles.CartContainer}>
           <View>
             <Text style={styles.userInfoTitle}>Qualification</Text>
           </View>
@@ -172,10 +171,10 @@ const UserDetailsPage = ({route}) => {
               <Text style={styles.showMore}>Show all {userDetais?.user_pg_qualification.length} Qualification</Text>
               <Feather name="arrow-right" size={19} color="#2376E5" />
             </TouchableOpacity>}
-        </Card>}
+        </Card>} */}
 
         {/* -----------------------Awards------------------------ */}
-        {userDetais?.user_award.length > 0 && <Card style={styles.CartContainer}>
+        {/* {userDetais?.user_award.length > 0 && <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Awards</Text>
             </View>
@@ -195,10 +194,10 @@ const UserDetailsPage = ({route}) => {
                 </View>
               )
             })}
-        </Card>}
+        </Card>} */}
 
         {/* -----------------------Publications------------------------ */}
-        {userDetais?.user_papers?.length > 0 && <Card style={styles.CartContainer}>
+        {/* {userDetais?.user_papers?.length > 0 && <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Publications</Text>
             </View>
@@ -219,7 +218,7 @@ const UserDetailsPage = ({route}) => {
                 </View>
                 )
             })}
-        </Card>}
+        </Card>} */}
 
         {/* -----------------------Achievements------------------------ */}
         {/* {userDetais?.user_achievement.length > 0 && <Card style={styles.CartContainer}>

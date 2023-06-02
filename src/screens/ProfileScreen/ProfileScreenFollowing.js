@@ -31,7 +31,9 @@ const ProfileScreenFollowing = ({navigation,route}) => {
                      <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
                   </TouchableOpacity>
                    <View style={styles.followerName}>
+                   <TouchableOpacity onPress={() => handleOtherProfile(data)}>
                       <Text style={styles.followerNameText}>{data.username}</Text>
+                   </TouchableOpacity>
                       <Text style={styles.followerSpecialist}>{data.speciality}</Text>
                    </View>
                 </View>

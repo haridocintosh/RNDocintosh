@@ -58,6 +58,7 @@ const CommonSearchScreen = () => {
 
   const handleLoadeMore = async () => {
     if(endNull !== null && currentPage){
+      setBottumLoader(true);
       const page  = currentPage + 1;
       const tabData = index == 0 ? 'doctor' : 'speciality';
       const postData = {pageCounter:page,user_id:userData?.id,type:tabData};
@@ -68,6 +69,7 @@ const CommonSearchScreen = () => {
         setCurrentPage(result?.payload?.pageCounter);
       }
       setEndNull(result?.payload?.result);
+      setBottumLoader(false);
     }
   };
   

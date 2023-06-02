@@ -56,7 +56,8 @@
     const [interestsData, setInterestsData] = useState(null);
     const [allInterestsData, setAllInterestsData] = useState(null);
     const [workResult, setWorkResult] = useState(null);
-    const [loader, setLoader] = useState(false);
+    const [loader, setLoader] = useState(true);
+    const [intrestLoader, setIntrestLoader] = useState(false);
     const [workShowAll, setWorkShowAll] = useState(2);
     const [getAward, setGetAward] = useState(null);
     const [passAwardData, setPassAwardData] = useState(null);
@@ -139,7 +140,7 @@
         
         const uresult = await dispatch(userInfo({user_id : res.data.id}));
         setuserdata(uresult?.payload[0]);
-        
+        setLoader(false);
       });
     }
 
@@ -178,12 +179,12 @@
     }
     const getSelectIntrest =  () => {
       getLocalData('USER_INFO').then(async (res) => {
-        setLoader(true);
+        setIntrestLoader(true);
         const result = await dispatch(getSelectedInterest({user_id : res.data.id}));
         setAllInterestsData(result?.payload)
         const TrueData = result.payload.filter(data => data.isSelected == true)
         setInterestsData(TrueData);
-        setLoader(false);
+        setIntrestLoader(false);
       })
     }
     
@@ -205,6 +206,12 @@
         getSelectIntrest();
     },[])
     
+    if(loader){
+      return(
+      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+          <ActivityIndicator size={'large'} color={"#2C8892"}/>
+      </View>)
+    }
 
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
@@ -529,7 +536,7 @@
               <Entypo name="edit" size={20} color="#2C8892" onPress={InterestsModal} />
             </View>
             <View style={styles.InterestsList}>
-              {loader &&<View style={styles.loaderContainer}>
+              {intrestLoader &&<View style={styles.loaderContainer}>
                  <ActivityIndicator size={'small'}/>
               </View>}
               {interestsData?.map((data,i) => {

@@ -1,46 +1,39 @@
 import React,{useEffect, useState,useRef, useMemo} from 'react'
-import{ View, ActivityIndicator ,useWindowDimensions,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
-import { TabView, SceneMap } from 'react-native-tab-view'; 
+import{ View,Text, ActivityIndicator ,Image,TextInput,Animated,TouchableOpacity}from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Doctor from './Doctor';
-import Community from './Community';
 import Speciality from './Speciality';
-import Page from './Page';
 const styelcss = require('../../../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 import { getLocalData } from '../../../apis/GetLocalData';
-
+import {styles} from './CommonSearchScreenStyles'
 
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
   const refInput = useRef(null);
-  const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
   const [userData,setUserData] = useState();
   const [index, setIndex] = useState(0);
   const [endNull, setEndNull] = useState();
   const [currentPage, setCurrentPage] = useState();
   const [bottumLoader, setBottumLoader] = useState(false);
-  
-  const [routes] = useState([
-    { key: 'first',  title: 'Doctor'},
-    // { key: 'second', title: 'Community'},
-    { key: 'third',  title: 'Speciality' },
-    // { key: 'fourth', title: 'page'},
-  ]); 
-
-  const [item, setItem] = useState();
+  const [activeTab, setActiveTab] = useState(true);
   const [filteredDataSource, setFilteredDataSource] = useState();
 
+  const handleTab = (i) =>{
+    console.log(i);
+    setIndex(i)
+    setActiveTab(!activeTab);
+  }
   const handleRemove = (id) => {
     console.log(id);
-      // const removed = filteredDataSource?.filter(o => o.id != id)
-      // setFilteredDataSource(removed);
+      const removed = filteredDataSource?.filter(o => o.id != id)
+      setFilteredDataSource(removed);
   }
-
+  
   const GetsearchData =  () => {
     getLocalData('USER_INFO').then(async (res) => {
       setBottumLoader(true);
@@ -50,23 +43,17 @@ const CommonSearchScreen = () => {
       const postData = {pageCounter:1,user_id:reData.id,type:tabData};
       const result = await dispatch(getsearchSplData(postData));
       setCurrentPage(result?.payload?.pageCounter);
-      setItem(result?.payload?.result);
       setFilteredDataSource(result?.payload?.result);
       setBottumLoader(false);
     });
   }
 
   const onChangeText = async (text) => {
-    if (text) {
         setInputText(text);
         const tabData = index == 0 ? 'doctor' : 'speciality';
         const postData = {pageCounter:1,user_id:userData.id,type:tabData,search:text}
         const result = await dispatch(getsearchSplData(postData));
         setFilteredDataSource(result?.payload?.result);
-      } else {
-        setInputText(text);
-        setFilteredDataSource(item);
-      }
   }
 
   const handleLoadeMore = async () => {
@@ -92,103 +79,18 @@ const CommonSearchScreen = () => {
         </View> 
     );
   };
-  
-  const FirstRoute = () => {
-    return(
-      <Doctor 
-        filteredDataSource={filteredDataSource} 
-        handleRemove={handleRemove} 
-        handleLoadeMore={handleLoadeMore} 
-        renderLoader={renderLoader}
-      />
-    )
-  };
 
-  const SecondRoute = () => { 
-    return(
-      <Community/>
-    )
-  };
-  
-  const ThirdRoute = () => {
-    return(
-      <Speciality 
-        filteredDataSource={filteredDataSource} 
-        handleRemove={handleRemove}
-        handleLoadeMore={handleLoadeMore} 
-        renderLoader={renderLoader}
-      />
-    )
-  };
-  
-  const fourthRoute = () => {
-    return(
-      <Page/>
-    )
-  }
-  
-  const renderScene = SceneMap({
-    first  : FirstRoute,
-    second : SecondRoute,
-    third  : ThirdRoute,
-    fourth : fourthRoute,
-  });
-
-  const renderTabBar = (props) => {
-    const inputRange = props.navigationState.routes.map((x, i) => i);
-    return (
-      <View style={styelcss.tabBar}>
-        {props.navigationState.routes.map((route, i) => {
-          const opacity = props.position.interpolate({
-            inputRange,
-            outputRange: inputRange.map((inputIndex) =>
-              inputIndex === i ? 1 : 0.3
-            ),
-          });
-
-          return (
-            <TouchableOpacity
-              style={styelcss.tabItem}
-              onPress={() => setIndex(i)}>
-                <Animated.Text style={{opacity,fontFamily:"Inter-SemiBold"}}>
-                  {route.title}
-                </Animated.Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
-
-
-
-  useEffect(() => {
-    GetsearchData();
-    // Voice.onSpeechError = onSpeechError;
-    // Voice.onSpeechResults = onSpeechResults;
-    // return () => {
-    //   Voice.destroy().then(Voice.removeAllListeners);
-    // }
-  }, [index]);
-
-  const onSpeechResults = (result) => {
-    setResults(result.value);
-  };
-
-  const onSpeechError = (error) => {
-    console.log(error);
-  };
-
-  
   const emptyField =  () =>{
     setInputText(null)
   }
 
   const startVoice = async () =>{
     refInput.current.focus();
-    // await Voice.start("en-US");
-    // console.log("startVoice");
   }
+  useEffect(() => {
+    GetsearchData();
+  }, [index]);
+
 
 return (
   <View style={{flex:1}}>
@@ -210,16 +112,32 @@ return (
         <Ionicons name={inputText ? "close-outline":"search"} size={24} color={"#fff"}/>
       </TouchableOpacity>
     </View>
-    
-    <TabView 
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width, fontSize:10}}
-      swipeEnabled={true}
-      renderTabBar={renderTabBar}
+
+    <View style={styles.TabContainer}>
+      <TouchableOpacity onPress={() => handleTab(0)} style={activeTab ?styles.TabBtnA : styles.TabBtnD}>
+        <Text style={activeTab ?styles.TabBtnTxtA : styles.TabBtnTxtD}>Doctor</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleTab(1)} style={activeTab ? styles.TabBtnD: styles.TabBtnA}>
+        <Text style={activeTab ? styles.TabBtnTxtD : styles.TabBtnTxtA}>Community</Text>
+      </TouchableOpacity>
+    </View>
+
+    {activeTab ?
+    <Doctor 
+      filteredDataSource={filteredDataSource} 
+      handleRemove={handleRemove} 
+      handleLoadeMore={handleLoadeMore} 
+      renderLoader={renderLoader}
     />
+    :
+    <Speciality 
+      filteredDataSource={filteredDataSource} 
+      handleRemove={handleRemove}
+      handleLoadeMore={handleLoadeMore} 
+      renderLoader={renderLoader}
+    />
+    }
   </View>
 )
 }
-export default CommonSearchScreen
+export default CommonSearchScreen;

@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView ,Image,TouchableOpacity} from 'react-native'
+import { View, Text,SafeAreaView ,Image,TouchableOpacity,ActivityIndicator} from 'react-native'
 import React,{useEffect, useRef, useState,useMemo} from 'react'
 import { styles } from './BellNotificationStyles';
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
@@ -10,6 +10,7 @@ import moment from "moment";
 const BellNotification = ({navigation}) => {
     const dispatch =  useDispatch();
     const [getNotification, setgetNotification] = useState();
+    const [loader, setLoader] = useState(true);
     const snapPoints = useMemo(() => [1, '30%'], []);
     const bottomSheetRef = useRef(null);
    
@@ -17,9 +18,12 @@ const BellNotification = ({navigation}) => {
         bottomSheetRef.current?.expand();
     }
 
+    
+
     const fetchNotification = async () => {
         const allNotification = await dispatch(getAllNotification());
         setgetNotification(allNotification.payload);
+        setLoader(false);
     }
 
     useEffect(()=>{
@@ -28,6 +32,13 @@ const BellNotification = ({navigation}) => {
        fetchNotification();
     },[])
     // var d = new Date()
+
+    if(loader){
+    return(
+        <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+            <ActivityIndicator size={'large'} color={"#2C8892"}/>
+        </View>)
+    }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
         <ScrollView>
@@ -58,7 +69,7 @@ const BellNotification = ({navigation}) => {
             ref={bottomSheetRef}
             snapPoints={snapPoints}
             enablePanDownToClose={true}
->
+        >
             <BottomSheetView>
             <ScrollView>
                 <TouchableOpacity style={styles.SheetOpionsContainer}>

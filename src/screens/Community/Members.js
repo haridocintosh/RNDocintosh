@@ -1,8 +1,8 @@
 import { View, Text, SafeAreaView,TouchableOpacity,TextInput,Image } from 'react-native';
 import React , {useState,useRef}from 'react';
 import { styles } from './CommunityStyles';
-import Entypo from 'react-native-vector-icons/Entypo';
 import MemberOptionsModal from './MemberOptionsModal';
+import { Icon } from '../../navigation/ReuseLogics';
 
 
 const Members = ({navigation}) => {
@@ -23,7 +23,7 @@ const Members = ({navigation}) => {
             </View>
             <View>
                 <TouchableOpacity onPress={() => openOption("JionCommunity")}>
-                    <Entypo name='dots-three-vertical' size={25} color={'#071B36'}/>
+                    {Icon('Entypo','dots-three-vertical',25, '#071B36')}
                 </TouchableOpacity>
                 <MemberOptionsModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
             </View>

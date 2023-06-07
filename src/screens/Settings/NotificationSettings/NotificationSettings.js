@@ -1,36 +1,53 @@
 import { View, Text,SafeAreaView,Switch } from 'react-native'
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { styles } from './NotificationSettingsStyle';
+import { getNotificationApi } from '../../../../redux/reducers/SettingsSlice';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { useDispatch } from 'react-redux';
+import { HandleSwitch } from './HandleSwitch';
 
-const NotificationSettings = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const handleSelect =  async () => {
-        setIsEnabled(!isEnabled)
+
+const NotificationSettings = ({navigation}) => {
+    const dispatch = useDispatch();
+    const [userId,setUserId] = useState();
+    const [fetchData,setFetchData] = useState();
+    
+
+    const getDataFetch = () => {
+        getLocalData('USER_INFO').then(async(res) => {
+            const reData = res?.data;
+            setUserId(reData?.id);
+            const result = await dispatch(getNotificationApi({user_id : reData?.id}));
+            console.log("result",result?.payload);
+            setFetchData(result?.payload)
+        })
     }
 
-
-    const HandleSwitch = ({title}) => {
-        return(
-            <View style={styles.mainContainer}>
-                <View style={styles.IconContainer}>
-                    <Text style={styles.ppNames}>{title}</Text>
-                </View>
-                <Switch
-                    trackColor={{false: '#DDDDDD', true: '#2C8892'}}
-                    thumbColor={isEnabled ? '#DDDDDD' : '#f4f3f4'}
-                    ios_backgroundColor="#3e3e3e"
-                    // onChange={() => handleSelect()}
-                    onValueChange={() => handleSelect()}
-                    value={isEnabled}
-                />
-            </View>
-        )
-    }
+    useEffect(() =>{
+        getDataFetch();
+        navigation.setOptions({ title: 'Notification Settings'});
+    },[])
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ecf2f6",padding:15 }}>
-        <HandleSwitch title={"Post claps"}/>
-        <HandleSwitch title={"Comment alert on your post"}/>
-        <HandleSwitch title={"Alert on post upload in your circle"}/>
+        {fetchData && <><HandleSwitch 
+            title={"Post claps"} 
+            column={"postclaps"} 
+            userId={userId}
+            bool={fetchData?.[0]?.postclaps == "0" ? false : true}
+        />
+        <HandleSwitch 
+            title={"Comment alert on your post"} 
+            column={"commentalert"} 
+            userId={userId}
+            bool={fetchData?.[0]?.commentalert == "0" ? false : true}
+        />
+        <HandleSwitch 
+            title={"Alert on post upload in your circle"} 
+            column={"circlepostalert"} 
+            userId={userId}
+            bool={fetchData?.[0]?.circlepostalert == "0" ? false : true }
+        /></>}
     </SafeAreaView>
   )
 }

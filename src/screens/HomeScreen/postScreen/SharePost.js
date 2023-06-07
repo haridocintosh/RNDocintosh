@@ -133,9 +133,6 @@ const  Sharepost = () => {
     })
   };
 
-  console.log("pickedData",pickedData);
-
-
   const handleDocPicker = async () => {
     // let result = await DocumentPicker.getDocumentAsync({ 
     //   type: "application/*",
@@ -194,29 +191,16 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Select PostType",Toast.LONG);
       bottomSheetModalRef.current?.present();
     }else{
-      if(pickedData.length != 0){
+      if(pickedData.length){
+        console.log("click");
         pickedData?.map(async(data) => {
-          let localUri = data?.uri;
-
-          const compressed = await Video.compress(localUri,
-            {
-              compressionMethod: 'auto',
-            },
-            (progress) => {
-              if (backgroundMode) {
-                console.log('Compression Progress: ', progress);
-              } else {
-                setCompressingProgress(progress);
-              }
-            }
-          );
-          console.log("compressed",compressed);
-          let filename = compressed.split('/').pop();
-          let uriParts = compressed.split('.');
+          // let localUri = data?.uri;
+          let filename = data?.uri.split('/').pop();
+          let uriParts = data?.uri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
           const checkIncludes = data?.type?.includes("image") ? `image/${fileType}` : `video/${fileType}`;
-            const imageData = { uri : compressed, name: filename, type: checkIncludes}
+            const imageData = { uri : data?.uri, name: filename, type: checkIncludes}
             formData.append('postImage', imageData);
             formData.append('post_id', '3032');
             const responce = await fetch(data?.type?.includes("image") ? imageFetch : videoFetch,{
@@ -225,7 +209,6 @@ const publishCheck1 = (e, text)=>{
                 body :formData
             });
             var result1 = await responce.json();
-            console.log("result1",result1);
               getFun({...uploadImage,
                 uploadImage:uploadImage.pimage.push(result1.postImage)
               })
@@ -247,17 +230,12 @@ const publishCheck1 = (e, text)=>{
   }
 
   const getFun = async(data) => {
-    console.log("getFun",data);
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
-    // console.log("uniqueData",countData ,uniqueData.length);
-    console.log("uniqueData",uniqueData);
     if(countData == uniqueData.length){
           const uploadData = {userdata,post,uploadImage:data.pimage};
-          console.log("uploadData",uploadData);
         // setloader(true);
           const result = await dispatch(postCreate(uploadData));
           if(result.payload.status == 'Success'){
-            console.log("result.payload",result.payload);
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 

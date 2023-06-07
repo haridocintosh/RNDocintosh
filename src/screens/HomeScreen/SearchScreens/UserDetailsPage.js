@@ -9,24 +9,28 @@ import { useDispatch } from 'react-redux';
 import { getDoctorsDetails } from '../../../../redux/reducers/ALL_APIs';
 
 
-const UserDetailsPage = ({route}) => {
+const UserDetailsPage = ({route,navigation}) => {
     const [userDetais, setUserDetails] = useState();
-    // const [workShowAll, setWorkShowAll] = useState(2);
-    // const [showAllQualification, setShowAllQualification] = useState(false);
+    const [workShowAll, setWorkShowAll] = useState(2);
+    const [loader, setLoader] = useState(false);
+    const [interestsData, setInterestsData] = useState([]);
+    const [showAllQualification, setShowAllQualification] = useState(false);
     const { item } = route?.params;
 
     const dispatch = useDispatch();
 
-    // const handleWorkloadMore = () => {
-    //     setWorkShowAll()
-    // }
+    const handleWorkloadMore = () => {
+        setWorkShowAll()
+    }
 
     const GetDoctorDetails = async() => {
+      
         const result = await dispatch(getDoctorsDetails({id:item?.id}));
         setUserDetails(result.payload)
     }
 
     useEffect(() => {
+         navigation.setOptions({ title: 'Profile' });
         GetDoctorDetails()
     },[])
 
@@ -91,7 +95,7 @@ const UserDetailsPage = ({route}) => {
         </Card>  
 
         {/* -----------------------About Us------------------------ */}
-        {userDetais?.user_profile?.summary != "" && <Card style={styles.CartContainer}>
+        {userDetais?.user_profile?.summary && <Card style={styles.CartContainer}>
             <View>
                 <Text style={styles.userInfoTitle}>About Me</Text>
             </View>
@@ -132,7 +136,7 @@ const UserDetailsPage = ({route}) => {
         </Card>}
         
         {/* -----------------------Qualification------------------------ */}
-        {/* {userDetais?.user_qualification && <Card style={styles.CartContainer}>
+        {userDetais?.user_qualification && <Card style={styles.CartContainer}>
           <View>
             <Text style={styles.userInfoTitle}>Qualification</Text>
           </View>
@@ -171,10 +175,10 @@ const UserDetailsPage = ({route}) => {
               <Text style={styles.showMore}>Show all {userDetais?.user_pg_qualification.length} Qualification</Text>
               <Feather name="arrow-right" size={19} color="#2376E5" />
             </TouchableOpacity>}
-        </Card>} */}
+        </Card>}
 
         {/* -----------------------Awards------------------------ */}
-        {/* {userDetais?.user_award.length > 0 && <Card style={styles.CartContainer}>
+        {userDetais?.user_award.length > 0 && <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Awards</Text>
             </View>
@@ -194,10 +198,10 @@ const UserDetailsPage = ({route}) => {
                 </View>
               )
             })}
-        </Card>} */}
+        </Card>}
 
         {/* -----------------------Publications------------------------ */}
-        {/* {userDetais?.user_papers?.length > 0 && <Card style={styles.CartContainer}>
+        {userDetais?.user_papers?.length > 0 && <Card style={styles.CartContainer}>
             <View>
               <Text style={styles.userInfoTitle}>Publications</Text>
             </View>
@@ -218,10 +222,10 @@ const UserDetailsPage = ({route}) => {
                 </View>
                 )
             })}
-        </Card>} */}
+        </Card>}
 
         {/* -----------------------Achievements------------------------ */}
-        {/* {userDetais?.user_achievement.length > 0 && <Card style={styles.CartContainer}>
+        {userDetais?.user_achievement.length > 0 && <Card style={styles.CartContainer}>
           <View>
             <Text style={styles.userInfoTitle}>Achievements</Text>
           </View>
@@ -235,10 +239,10 @@ const UserDetailsPage = ({route}) => {
               </View>  
             </View>
           </View>
-        </Card>} */}
+        </Card>}
 
         {/* -----------------------Interests------------------------ */}
-        {/* <Card style={styles.CartContainer}>
+        {interestsData.length > 0 && <Card style={styles.CartContainer}>
           <View style={styles.InterestsContainer}>
             <Text style={styles.userInfoTitle}>Interests</Text>
           </View>
@@ -254,7 +258,7 @@ const UserDetailsPage = ({route}) => {
               )
             })}
           </View>
-        </Card> */}
+        </Card>}
       </View>
     </ScrollView>
   </SafeAreaView>

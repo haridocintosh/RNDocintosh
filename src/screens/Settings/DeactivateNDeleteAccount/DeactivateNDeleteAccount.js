@@ -3,18 +3,23 @@ import React,{useEffect, useState} from 'react'
 import { styles } from './DeactivateNDeleteAccountStyles'
 import { Icon } from '../../../navigation/ReuseLogics';
 import { Button } from 'react-native-elements';
+import { getDeactiveDeleteApi } from '../../../../redux/reducers/SettingsSlice';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { useDispatch } from 'react-redux';
+
 
 const DeactivateNDeleteAccount = ({navigation}) => {
     const [selectDeactivate,setSelectDeactivate] = useState(false);
     const [selectDelete,setSelectDelete] = useState(false);
     const [value,setValue] = useState(null);
+    const dispatch  = useDispatch();
 
     const handleAction = () => {
         if(selectDelete || selectDeactivate){
             navigation.navigate("ConfirmationAction",{value})
         }
     }
-    console.log("value",value,selectDelete, selectDeactivate);
+
     const handleSelect = (val) => {
         if(val==1){
             setSelectDelete(false)
@@ -26,8 +31,18 @@ const DeactivateNDeleteAccount = ({navigation}) => {
             setValue(val);
         }
     }
+
+    const getDataFetch = () => {
+        getLocalData('USER_INFO').then(async(res) => {
+            const reData = res?.data;
+            const resultdetactiveDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:5}));
+            console.log("resultdetactiveDelete",resultdetactiveDelete);
+        })
+    }
+
     useEffect(() =>{
-        navigation.setOptions({title: 'Deactivate or  Delete account'});
+        getDataFetch()
+        navigation.setOptions({title:'Deactivate or  Delete account'});
     },[])
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:15 }}>

@@ -8,29 +8,31 @@ const OthersProfileFollowers = ({navigation}) => {
     useEffect(() => {
         navigation.setOptions({ title: 'Followers' });
     },[])
+    const handleOtherProfile = (data) =>{
+      navigation.navigate('OthersProfileScreen',{data})
+   }
   return (
     <SafeAreaView style={styles.Follwerscontainer}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           nestedScrollEnable={true}>
             <View style={styles.followerHeader}>
-                <Text style={styles.followerHeader}> Followers</Text>
+                <Text style={styles.followerHeader}>Followers</Text>
             </View>
-               <View style={styles.followerContainer} >
-                     <View style={styles.followerLhs}>
-                        <TouchableOpacity onPress={() => handleOtherProfile()}>
-                           {/* <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/> */}
-                        </TouchableOpacity>
-                        <View style={styles.followerName}>
-                           <Text style={styles.followerNameText}>username</Text>
-                           <Text style={styles.followerSpecialist}>speciality</Text>
-                        </View>
+            <View style={styles.followerContainer}>
+                  <View style={styles.followerLhs}>
+                     <TouchableOpacity onPress={() => handleOtherProfile()}>
+                        {/* <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/> */}
+                     </TouchableOpacity>
+                     <View style={styles.followerName}>
+                        <Text style={styles.followerNameText}>username</Text>
+                        <Text style={styles.followerSpecialist}>speciality</Text>
                      </View>
-                     <View style={styles.followerLhs}>
-                        <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                     </View>
-               </View>
-             
+                  </View>
+                  <View style={styles.followerLhs}>
+                     <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
+                  </View>
+            </View>
             {/* <View>
                <Image source={require('../../../assets/images/followMe.png')} style={{width:'70%',height:300,alignSelf:'center'}}/>
             </View>} */}

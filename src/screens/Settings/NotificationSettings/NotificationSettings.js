@@ -18,7 +18,6 @@ const NotificationSettings = ({navigation}) => {
             const reData = res?.data;
             setUserId(reData?.id);
             const result = await dispatch(getNotificationApi({user_id : reData?.id}));
-            console.log("result",result?.payload);
             setFetchData(result?.payload)
         })
     }

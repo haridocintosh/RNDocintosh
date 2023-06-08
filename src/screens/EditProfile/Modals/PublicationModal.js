@@ -21,7 +21,6 @@ const PublicationModal = ({publication,setPublication,getPublication}) => {
             data.publishedyear = format(data?.publishedyear, 'yyyy-MM-dd');
             const postParams = {...data, id:res?.data?.id, paperpublised_id:''};
             const allCoinsResult = await dispatch(addPublicationAPI(postParams));
-            console.log("allCoinsResult",allCoinsResult);
             getPublication();
             setPublication(false);
             reset();

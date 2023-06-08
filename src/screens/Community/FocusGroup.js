@@ -12,7 +12,6 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
   const onViewableItemsChanged = ({viewableItems}) => {
     viewableItems.map((data) => {
       setCurrentIndex(data.index);
-      console.log("data.index",data.index);
     });
   };
 

@@ -36,7 +36,6 @@ const QualificationModal = ({qualification,setQualification,getQualification}) =
             pg_id : ""
         }
         const addQuaResult = await dispatch(AddQualificationAPI(postData));
-        // console.log(addQuaResult);
         getQualification();
         setQualification(false);
     }

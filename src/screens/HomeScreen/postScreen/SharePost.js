@@ -192,7 +192,6 @@ const publishCheck1 = (e, text)=>{
       bottomSheetModalRef.current?.present();
     }else{
       if(pickedData.length){
-        console.log("click");
         pickedData?.map(async(data) => {
           // let localUri = data?.uri;
           let filename = data?.uri.split('/').pop();

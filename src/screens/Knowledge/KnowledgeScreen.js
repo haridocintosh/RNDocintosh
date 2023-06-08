@@ -12,10 +12,8 @@ const KnowledgeScreen = ({navigation}) => {
   const source3 = {uri:'https://docintosh.com/Webinar_pdf/ENSURE%20PEPTIDE%20DECK-%20Gastros.pdf',cache: true}
 
   const onBuffer = (data) =>{
-    console.log("data",data);
 
   }
-  console.log("playv1",playv1);
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>

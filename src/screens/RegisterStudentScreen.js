@@ -185,8 +185,6 @@ const pickupImage = (arg) => {
 };
 
 const form_submit = async() =>{ 
-  // console.log(passworderr);
-  console.log(register.password );
   // const isValidnameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   if(!register.pincode){
     setPincode("Please enter a valid pincode");

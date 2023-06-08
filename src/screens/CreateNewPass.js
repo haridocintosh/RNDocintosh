@@ -32,7 +32,6 @@ const CreateNewPass = ({route}) => {
 }
 
 const checkConfirmpassword= async(e)=>{
-  // console.log(e);
   const isValidpswdRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   const confirmpassword = e;
   if(!isValidpswdRegex.test(confirmpassword)){

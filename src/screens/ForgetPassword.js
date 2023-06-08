@@ -28,14 +28,12 @@ const ForgetPassword = () => {
         email:inputtext
       }))
       if(token?.payload?.status == 'Success'){
-        console.log("inside");
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: inputtext,
           email:token.payload.email,
           user_id :token.payload.userid
         })
       }else if(token?.payload?.status_code == 6){
-        console.log("inside1",token?.payload);
         setIncptData(token?.payload);
         setModalVisible(true);
       }else{
@@ -50,7 +48,6 @@ const ForgetPassword = () => {
    // window.location.reload();
   },[])
   const handleRedirect = () => {
-    console.log(incptData?.data?.mobilenumber);
     navigation.navigate('DoctorOtp', {
       mobile_no : incptData?.data?.mobilenumber,
       email     : incptData?.data?.email,

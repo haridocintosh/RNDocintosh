@@ -18,11 +18,9 @@ const Leaderboard = ({navigation}) => {
         getLocalData('USER_INFO').then(async (res) => {
           const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
           const userRankResult = await dispatch(showRankResult({user_id : res.data.id}));
-          console.log(userRankResult.payload);
           setRank(userRankResult.payload)
           setUserData(uresult?.payload);
           setLoader(false)
-        //   const rank = uresult?.payload?.findIndex(data => data?.userId == res.data.id)
         });
       };
 

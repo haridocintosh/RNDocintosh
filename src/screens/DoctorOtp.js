@@ -240,11 +240,10 @@ import { View,
   
    },
    InputFieldVerify:{
- display:"flex",
- flexDirection:"row",
- justifyContent:"center",
- marginBottom:25,
- 
+    flexDirection:"row",
+    justifyContent:"center",
+    marginBottom:25,
+    alignItems:'center'
    },
    container: {
      flex: 1,
@@ -297,7 +296,7 @@ import { View,
    numInput:{
     fontSize:16,
     color:"#071B36",
-    width:110,
+    // width:1dfsdf0,
     paddingLeft:10
    },
    numInputEdit:{
@@ -305,7 +304,7 @@ import { View,
     color:"#071B36",
     borderBottomWidth: 1,
     borderColor:"#ccc",
-    width:200,
+    minWidth:150,
     paddingLeft:10
     },
     InputSendIcons:{

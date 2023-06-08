@@ -31,7 +31,6 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
 
 
   const handleSubmit = async ()=>{
-    //console.log(email, userId);
       if(email){
         const token =await dispatch(userIdupdate({
           email:email,
@@ -63,7 +62,6 @@ const  EmailVerify = ({emailVerify,setemailVerify,emailId}) => {
     }
 
     const submitEmailOtp = async() =>{
-      console.log(otpInput, userId, emailID);
       setVerifying("Verifying...")
         if(otpInput !== ""){
         const result = await dispatch(updateEmailID({otp:otpInput, user_id:userId, email:emailID}));

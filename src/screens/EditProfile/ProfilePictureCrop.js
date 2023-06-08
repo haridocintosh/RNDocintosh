@@ -12,7 +12,6 @@ const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 const ProfilePictureCrop = ({route}) => {
   const [loader, setLoader] = useState(false);
-    // console.log('cropScreen',route);
     const {pucUrl, user_ID} = route?.params;
     
     const navigation = useNavigation();
@@ -22,14 +21,11 @@ const ProfilePictureCrop = ({route}) => {
     },[])
 
     const uri = pucUrl.uri;
-    // console.log('uriiii', uri);
-
     let crop = async (quality) => ({uri: '', width: 0, height: 0});
     
     const handleSave = async () =>{
       setLoader(true);
       const cropped = await crop();
-      // console.log("merge",cropped);
       let localUri = cropped.uri
       let formData = new FormData();
       const imageData = {
@@ -37,7 +33,6 @@ const ProfilePictureCrop = ({route}) => {
         name: pucUrl.fileName,
         type: pucUrl.type,
       }
-      // console.log('typeess',imageData);
       formData.append('profile_pic', imageData);
       formData.append('user_id', user_ID);
 
@@ -51,7 +46,6 @@ const ProfilePictureCrop = ({route}) => {
 
       var result1=  await responce.json();
       singlestoreData('profileImage',result1.result); 
-      // console.log(result1);
       setTimeout(()=>{
           navigation.navigate('EditProfileScreen', {justLoad : "justLoad"});
           setLoader(false);

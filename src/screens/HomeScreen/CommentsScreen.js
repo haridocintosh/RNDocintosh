@@ -30,10 +30,8 @@ const CommentsScreen = ({route,navigation}) => {
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
         setInstData(sentResult.payload.getallcomment);
-        // console.log(sentResult.payload.getallcomment.length);
         setLoader(false);
         // if(send == "send"){
-        //   // console.log("done---");
         //   navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
         // }
     }

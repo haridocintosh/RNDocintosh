@@ -27,12 +27,10 @@ export default function ContactPermission({navigation}) {
   const dispatch = useDispatch();
 
   getLocalData("USER_INFO").then((res) => {
-    // console.log('checkLogin', res?.login);
     if(res?.login){
       setDefaultRoute('HomeScreen');
     }else{
       setDefaultRoute('Login');
-      // console.log('Login');
     }
   })
 
@@ -132,7 +130,6 @@ export default function ContactPermission({navigation}) {
               navigation.navigate("Login");
             }
           })
-          // console.log('checkdefaultpermission',defaultRoute);
          // Toast.show('Permission deny',Toast.LONG);
          // navigation.navigate('Login');
          

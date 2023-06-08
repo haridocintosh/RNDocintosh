@@ -1,11 +1,20 @@
 import { View, Text, SafeAreaView, Image,TouchableOpacity ,TextInput} from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import { styles } from './DeactivateNDeleteAccountStyles';
 import { Button } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
+import ConfirmModal from '../../../utils/ConfirmModal';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { getDeactiveDeleteApi } from '../../../../redux/reducers/SettingsSlice';
 
-const DeleteAccount = () => {
+const DeleteAccount = ({navigation,route}) => {
   const [selectReason, setSelectReason] = useState(null);
+  const [modalToggle, setModalToggle] = useState(false)
+  const dispatch = useDispatch();
+  // const {data} = route?.params;
+  const refInput = useRef(null);
   
+  // console.log("data",data);
   const onSelect =(val)=>{
     switch (val) {
         case '1':
@@ -18,16 +27,34 @@ const DeleteAccount = () => {
             setSelectReason("I don’t trust the users");
             break;
         case '4':
-            setSelectReason("Others");
+             refInput.current.focus();
             break;
         default:
             break;
     }
   }
 
-  console.log(selectReason);
+  const handleAction = () => {
+    setModalToggle(true);
+  }
+
+  const handleOkay = () => {
+    getLocalData('USER_INFO').then(async(res) => {
+      const reData = res?.data;
+      console.log("reData",reData);
+      const resultdetactiveDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:6}));
+      console.log("resultdetactiveDelete",resultdetactiveDelete);
+    })
+  }
+  // console.log(selectReason);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:20 }}>
+      <ConfirmModal 
+        modalToggle={modalToggle}
+        setModalToggle={setModalToggle}
+        handleOkay={handleOkay}
+        activityTitle={"Are you certain you want to delete your profile?"}
+      />
       <Text style={styles.deleteContentTitle}>We regret to see you go. We really appreciate your contribution towards helping your Docintosh family grow.</Text>
       <View style={styles.imgContainer}>
         <Image source={require('../../../assets/images/deleteAccount.png')} style={{width:'40%',height:200}}/>
@@ -51,6 +78,8 @@ const DeleteAccount = () => {
             placeholder='Description'
             style={styles.input}
             onChangeText={setSelectReason}
+            value={selectReason}
+            ref={refInput}
         />
         <View>
             <Button title={`Delete`} buttonStyle={{backgroundColor:'#2C8892',width:'100%',marginTop:15}}

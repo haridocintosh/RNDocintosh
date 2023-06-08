@@ -35,10 +35,8 @@ const JionCommunity = ({navigation}) => {
     });
 
     const handleTab = (val) => {
-        console.log(val);
     }
     const handleCommunityModal = () => {
-        console.log("val");
         setCmtyPageOptions(!cmtyPageOptions);
     }
     // useEffect(() => {

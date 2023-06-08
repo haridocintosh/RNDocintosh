@@ -29,7 +29,6 @@ const AssesmentTest = ({navigation}) => {
     },[])
 
     const handleSelectAns = (data) => {
-      console.log("data",data?.is_correct);
       if(data?.is_correct == '1'){
         setScore(score+1);
       }
@@ -42,7 +41,6 @@ const AssesmentTest = ({navigation}) => {
       }
     }
     
-    // console.log("score",score);
     useEffect(() => {
       if(!scoreBoard){
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -67,9 +65,7 @@ const AssesmentTest = ({navigation}) => {
     const handleToggle = async () => {
       setScoreBoard(!scoreBoard);
       setScore(0);
-      // console.log("score==score",score);
       const data = await dispatch(TsiQuizSaveAPI({user_id:userData?.id,basic_id:307,score:score}));
-      console.log("data",data.payload);
     }
 
   return(

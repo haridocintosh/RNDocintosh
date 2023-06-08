@@ -24,12 +24,10 @@ const CommonSearchScreen = () => {
   const [filteredDataSource, setFilteredDataSource] = useState();
 
   const handleTab = (i) =>{
-    console.log(i);
     setIndex(i)
     setActiveTab(!activeTab);
   }
   const handleRemove = (id) => {
-    console.log(id);
       const removed = filteredDataSource?.filter(o => o.id != id)
       setFilteredDataSource(removed);
   }
@@ -63,7 +61,6 @@ const CommonSearchScreen = () => {
       const tabData = index == 0 ? 'doctor' : 'speciality';
       const postData = {pageCounter:page,user_id:userData?.id,type:tabData};
       const result = await dispatch(getsearchSplData(postData));
-      // console.log(result?.payload);
       if(result?.payload?.result !== null){
         setFilteredDataSource([...filteredDataSource, ...result?.payload?.result]);
         setCurrentPage(result?.payload?.pageCounter);

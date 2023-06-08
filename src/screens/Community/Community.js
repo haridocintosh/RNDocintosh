@@ -14,7 +14,6 @@ const refInput = useRef(null);
     // refInput.current.focue();
   } 
 
-  // console.log("refInput.current.focue()",refInput?.current?.focue());
 
   const onChangeText = async (text) => {
     setInputText(text)

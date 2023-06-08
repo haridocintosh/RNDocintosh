@@ -54,6 +54,10 @@ export const styles = StyleSheet.create({
         color:'#071B36',
         fontFamily:'Inter-Regular',
     },
+    errorMsg:{
+        fontFamily:'Inter-SemiBold',
+        color:'#AD0B00'
+    },
 
     //------------------delete account---------------------
 

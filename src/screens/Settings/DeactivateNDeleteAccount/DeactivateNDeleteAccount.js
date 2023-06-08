@@ -32,16 +32,7 @@ const DeactivateNDeleteAccount = ({navigation}) => {
         }
     }
 
-    const getDataFetch = () => {
-        getLocalData('USER_INFO').then(async(res) => {
-            const reData = res?.data;
-            const resultdetactiveDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:5}));
-            console.log("resultdetactiveDelete",resultdetactiveDelete);
-        })
-    }
-
     useEffect(() =>{
-        getDataFetch()
         navigation.setOptions({title:'Deactivate or  Delete account'});
     },[])
   return (

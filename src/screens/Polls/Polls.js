@@ -27,16 +27,13 @@ const Polls = () => {
       setUserData(res?.data);
       const reData = res?.data;
       const result = await dispatch(GetPollsData({id:reData.id,assoc_id:''}));
-      console.log("result",result?.payload?.current_poll);
       setPollsData(result?.payload?.current_poll);
       
     })
   }
   const handleAnswer = async (data) => {
     const PostData = {qid:data?.qid,id:userData?.id,opt_id:data?.opt_id,basic_id:pollsData?.basic_id};
-   console.log("PostData",PostData);
     const result = await dispatch(SavePollAns(PostData));
-    console.log("result",result);
     navigation.navigate("PollsThankYouPage")
   }
 

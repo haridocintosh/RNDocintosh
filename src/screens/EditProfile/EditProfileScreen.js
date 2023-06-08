@@ -92,8 +92,6 @@
       setEditWorkExp(!editWorkExp)
     };
     const handleDelete = async (data,name) => {
-      // console.log("data",data);
-      console.log({id :data,name:name});
       setDeleteToggle(true);
       await setDeleteData({id :data,name:name})
     };

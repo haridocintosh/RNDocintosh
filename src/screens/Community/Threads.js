@@ -20,10 +20,8 @@ const Threads = ({modalVisible,setModalVisible}) => {
   const ref = useRef(null);
 
   const clock = (val) => {
-    console.log(val);
   }
   const hadleOptionModal = (post_id) => {
-    console.log("post_id",post_id);
     setPostId(post_id)
     if(postId == post_id){
       setModalVisible(!modalVisible);
@@ -34,7 +32,6 @@ const Threads = ({modalVisible,setModalVisible}) => {
   const  getData = async () => {
     const Result =  await dispatch(CommunityPostDataAPI({type:16}));
     setcommunityData(Result.payload);
-   // console.log("communityData",communityData);
   }
 
   useEffect(() => {
@@ -44,7 +41,6 @@ const Threads = ({modalVisible,setModalVisible}) => {
   const onViewableItemsChanged = ({viewableItems}) => {
     viewableItems.map((data) => {
       setCurrentIndex(data.index);
-      console.log("data.index",data.index);
     });
   };
 

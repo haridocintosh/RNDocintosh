@@ -17,11 +17,9 @@ const GetStartedModule = ({navigation,route}) => {
     const slideImage3 = `https://docintosh.com/homeassets/images/Tele3/Telemedicine-Course-Module-3-${nxtImage}.png`;
 
     const handleNetImg = () => {
-        // console.log(nxtImage,number);
         setNxtImage(nxtImage + 1);
     }
     const handlePrevImg = () => {
-        // console.log(nxtImage,number);
         setNxtImage(nxtImage - 1);
     }
   return (

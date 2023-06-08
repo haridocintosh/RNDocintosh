@@ -46,10 +46,7 @@ import NotificationSettings from '../screens/Settings/NotificationSettings/Notif
 import DeactivateNDeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeactivateNDeleteAccount';
 import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';
 import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
-import OthersProfileScreen from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileScreen';
 import OtherProfileView from '../screens/ProfileScreen/OthersProfileScreen/OtherProfileView';
-import OthersProfileFollowers from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileFollowers';
-import OthersProfileFollowing from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileFollowing';
 import BusinessPage from '../screens/BusinessPage/BusinessPage';
 import CreateBusinessPage from '../screens/BusinessPage/CreateBusinessPage';
 import UploadProfilePhoto from '../screens/BusinessPage/UploadProfilePhoto';
@@ -115,10 +112,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="DeactivateNDeleteAccount" component={DeactivateNDeleteAccount} options={showHeaderItem}/>
         <Stack.Screen name="ConfirmationAction" component={ConfirmationAction} options={showHeaderItem}/>
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem}/>
-        <Stack.Screen name="OthersProfileScreen" component={OthersProfileScreen} options={showHeaderItem}/>
         <Stack.Screen name="OtherProfileView" component={OtherProfileView} options={showHeaderItem}/>
-        <Stack.Screen name="OthersProfileFollowers" component={OthersProfileFollowers} options={showHeaderItem}/>
-        <Stack.Screen name="OthersProfileFollowing" component={OthersProfileFollowing} options={showHeaderItem}/>
         <Stack.Screen name="BusinessPage" component={BusinessPage} options={showHeaderItem}/>
         <Stack.Screen name="CreateBusinessPage" component={CreateBusinessPage} options={showHeaderItem}/>
         <Stack.Screen name="UploadProfilePhoto" component={UploadProfilePhoto} options={showHeaderItem}/>

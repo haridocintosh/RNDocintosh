@@ -10,7 +10,6 @@ import { getLocalData } from '../../apis/GetLocalData';
 
 
 const PublicReactions = ({item,getStorageData}) => {
-  // console.log('postIndex', postIndex);
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
@@ -24,7 +23,6 @@ const PublicReactions = ({item,getStorageData}) => {
       const reData = res?.data;
       setResult(reData);
       const getallLikesData = await dispatch(getallLikes({postid:item?.post_id}));
-      // console.log(getallLikesData.payload);
       setAllLikeData(getallLikesData.payload);
     })
   }

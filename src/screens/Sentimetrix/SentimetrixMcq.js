@@ -48,7 +48,6 @@ const SentimetrixMcq = ({navigation,route}) => {
     }
 
     const MCQsLength = parseInt(allMCQs?.length);
-    // console.log("undefined", liftUpCheckData?.filter(d => d !== undefined).length);
 
     const prevMcq = async () => {
       if (currentQuestionIndex > 0) {
@@ -130,9 +129,7 @@ const SentimetrixMcq = ({navigation,route}) => {
 
     const PosData = async (userId, basicId, subquestionId, optionId, ans, id, key, x_val ) => {
       const postDetails = {userId, basicId, subquestionId, optionId, ans, id, key, x_val};
-      // console.log("postDetails",postDetails);
       const result = await dispatch(SentimetrixSaveAPI(postDetails));
-      // console.log("result",result);
     };
 
     useEffect(() => {

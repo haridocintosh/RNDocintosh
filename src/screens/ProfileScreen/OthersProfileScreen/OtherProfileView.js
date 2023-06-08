@@ -15,14 +15,12 @@ const OtherProfileView = ({route,navigation}) => {
     const [showAllQualification, setShowAllQualification] = useState(false);
     const [loader, setLoader] = useState(false);
     const [interestsData, setInterestsData] = useState([]);
-    // console.log("data",data?.follow_to);
     const dispatch = useDispatch();
 
 
     const GetDoctorDetails = async() => {
         const result = await dispatch(getDoctorsDetails({id:data?.follow_to}));
         await setUserDetails(result.payload);
-        console.log("payload",result.payload);
     }
 
     const handleWorkloadMore = () => {
@@ -31,9 +29,8 @@ const OtherProfileView = ({route,navigation}) => {
 
     useEffect(() => {
         navigation.setOptions({ title: 'Profile' });
-        GetDoctorDetails()
+        GetDoctorDetails();
     },[])
-    console.log("userDetais?.phycircle",userDetais?.phycircle);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>

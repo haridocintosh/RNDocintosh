@@ -21,7 +21,6 @@ const AwardsModal = ({awards,setAwards,handleAward}) => {
             data.awardyear = format(data?.awardyear, 'yyyy-MM-dd');
             const postParams = { ...data, id:res?.data?.id, award_id:""}
             const editAward = await dispatch(EditProfileAwardAPI(postParams));
-            console.log("editAward",editAward);
             handleAward();
             setAwards(false);
             reset();

@@ -10,10 +10,7 @@ import Members from '../screens/Community/Members';
 import MessageScreen from '../screens/Community/MessageScreen';
 import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';
 import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
-import OthersProfileScreen from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileScreen';
 import OtherProfileView from '../screens/ProfileScreen/OthersProfileScreen/OtherProfileView';
-import OthersProfileFollowers from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileFollowers';
-import OthersProfileFollowing from '../screens/ProfileScreen/OthersProfileScreen/OthersProfileFollowing';
 import BusinessPage from '../screens/BusinessPage/BusinessPage';
 
 const CommunityNavigation = () => {
@@ -29,10 +26,7 @@ const CommunityNavigation = () => {
         <Stack.Screen name="MessageScreen" component={MessageScreen}/>
         <Stack.Screen name="ConfirmationAction" component={ConfirmationAction} options={showHeaderItem}/>
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem}/>
-        <Stack.Screen name="OthersProfileScreen" component={OthersProfileScreen} options={showHeaderItem}/>
         <Stack.Screen name="OtherProfileView" component={OtherProfileView} options={showHeaderItem}/>
-        <Stack.Screen name="OthersProfileFollowers" component={OthersProfileFollowers} options={showHeaderItem}/>
-        <Stack.Screen name="OthersProfileFollowing" component={OthersProfileFollowing} options={showHeaderItem}/>
         <Stack.Screen name="BusinessPage" component={BusinessPage} options={showHeaderItem}/>
     </Stack.Navigator>
     </>

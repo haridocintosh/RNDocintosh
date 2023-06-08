@@ -59,7 +59,6 @@ const SelectInterest = ({route}) => {
 
 
  const getInterestSplData = async () => {
-  console.log(specialityId);
   const postDetails = {speciality_id:specialityId}
   const result = await dispatch(getInterestSpl(postDetails));
   setFilteredDataSource(result?.payload);

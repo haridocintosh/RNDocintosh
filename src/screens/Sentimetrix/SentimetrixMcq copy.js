@@ -26,12 +26,9 @@ const SentimetrixMcq = ({route}) => {
     const getAllMcq = () => {
       getLocalData("USER_INFO").then(async(res) =>{
         const resData = res?.data;
-        console.log("resData",resData.assoc_id);
         const getList = await dispatch(SentimetrixGetByIdAPI({basicId:basicId,assoc_id:resData?.assoc_id}));
-        console.log(getList?.payload);
         setAllMCQs(getList?.payload)
       })
-        
     }
 
     const MCQsLength = parseInt(allMCQs?.length);
@@ -45,7 +42,6 @@ const SentimetrixMcq = ({route}) => {
     const nextMcq = async (basicId, sqid, type) => {
       getLocalData("USER_INFO").then((res) =>{
         const resData = res?.data;
-        // console.log("resData",resData);
         if(type == 1){
           if (liftUpData) {
             PosData(resData?.id, basicId, sqid, liftUpData);
@@ -111,9 +107,7 @@ const SentimetrixMcq = ({route}) => {
 
     const PosData = async (id, basic_id, sqid, opt_id) => {
     const postDetails = {userId: id, basicId: basic_id, subquestionId: sqid, optionId: opt_id, ans: ""};
-      // console.log("postDetails",postDetails);
       const result = await dispatch(SentimetrixSaveAPI(postDetails));
-      // console.log("result",result);
     };
 
     useEffect(() => {

@@ -54,9 +54,8 @@
 
 
    useEffect(() => {
-    
-   const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-   return () => clearInterval(timer);
+    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
    }, [counter]);
 
   

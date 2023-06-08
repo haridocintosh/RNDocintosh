@@ -13,11 +13,9 @@ export  const HandleSwitch = ({title,userId,column,bool}) => {
     const handleSelect =  async () => {
         setIsEnabled(!isEnabled);
         const postData = {user_id:userId,column:column,value:isEnabled?1:0}
-        console.log("postData",postData);
         const result = await dispatch(getUpdateNotificationApi(postData));
-        console.log("result",result?.payload);
     }
-console.log("isEnabled",isEnabled);
+    
     return(
         <View style={styles.mainContainer}>
             <View style={styles.IconContainer}>

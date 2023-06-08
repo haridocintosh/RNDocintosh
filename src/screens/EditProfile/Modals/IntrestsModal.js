@@ -15,8 +15,6 @@ const IntrestsModal = ({Interests, setInterests, allInterestsData,getSelectIntre
     
 
     const handleSelect = async (id) => {
-        console.log(id);
-        console.log('intersetModal',interestsData);
         let temp = interestsData.map((data) => {
             if (id === data.speciality_id) {
               return { ...data, isSelected: !data.isSelected };

@@ -7,12 +7,13 @@ import { getFollowingDataApi } from '../../../redux/reducers/postData';
 
 const ProfileScreenFollowing = ({navigation,route}) => {
    const {followingData} = route.params;
+   
    useEffect(() => {
       navigation.setOptions({ title: 'Following' });
    },[])
 
    const handleOtherProfile = (data) =>{
-      navigation.navigate('OthersProfileScreen',{data})
+      navigation.navigate('OtherProfileView',{data})
    }
    
   return (

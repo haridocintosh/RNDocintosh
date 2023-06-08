@@ -34,10 +34,7 @@ const CustomDrawer = (props) => {
   // const Drawer = createDrawerNavigator();
   const drawerStatus = useDrawerStatus();
 
-  // console.log("CDrawer",CDrawer);
 
-  // const userInfo = useSelector((state) => state.userLocalData.localData);
-  // console.log("userInfo",userInfo);
 
   const asyncFetchDailyData = async () => {
     const value = await AsyncStorage.getItem('profileImage');

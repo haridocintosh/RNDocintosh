@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  TouchableOpacity
   } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 const styelcss = require('../../assets/css/style');
@@ -46,8 +47,6 @@ const LoginScreen = () => {
   const toggleRememberMe = () => {
     setChecked(!isChecked);
   }
-  // const userInfo = useSelector((state) => state.userLocalData);
-  // console.log("userInfo", userInfo);
 
   const  updateEmail = (text)=>{
     if(!isValidemailRegex.test(text)){
@@ -168,17 +167,19 @@ const LoginScreen = () => {
           isChecked={isChecked}
           checkBoxColor="#2C8892"
         />
-        <Text style={{
-            fontSize: 12,
-            marginLeft:5,
-            fontWeight: '400',
-            fontStyle: 'normal',
-            letterSpacing: 1,
-            color: '#51668A',
-            fontFamily: 'Inter-Regular',
-          }}>
-          Remember Me
-        </Text>
+        <TouchableOpacity onPress={() => toggleRememberMe()}>
+          <Text style={{
+              fontSize: 12,
+              marginLeft:5,
+              fontWeight: '400',
+              fontStyle: 'normal',
+              letterSpacing: 1,
+              color: '#51668A',
+              fontFamily: 'Inter-Regular',
+            }}>
+            Remember Me
+          </Text>
+        </TouchableOpacity>
       </View>
           <Text style={{
             fontSize: 14,

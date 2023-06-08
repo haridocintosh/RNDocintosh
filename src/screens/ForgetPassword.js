@@ -1,6 +1,6 @@
 import { View,SafeAreaView, ScrollView,Text, TextInput,StyleSheet ,Modal,TouchableOpacity} from 'react-native'
 import Toast from 'react-native-simple-toast';
-import React, { useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../components/CustomButton';
 const styelcss = require('../assets/css/style');
@@ -8,11 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { forgotPassword_ } from '../../redux/reducers/forgotPass';
 
 
-
 const ForgetPassword = () => {
    const navigation = useNavigation();
    const dispatch = useDispatch();
-   const [buttonChange, setbuttonChange]=useState(false);
    const [inputtext, getinput] = useState();
    const [modalVisible, setModalVisible] = useState(false);
    const [incptData, setIncptData] = useState();
@@ -27,6 +25,7 @@ const ForgetPassword = () => {
       const token = await dispatch(forgotPassword_({
         email:inputtext
       }))
+      // console.log("token",token);
       if(token?.payload?.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: inputtext,
@@ -44,9 +43,7 @@ const ForgetPassword = () => {
     }   
   }
 
-  useEffect(()=>{
-   // window.location.reload();
-  },[])
+  
   const handleRedirect = () => {
     navigation.navigate('DoctorOtp', {
       mobile_no : incptData?.data?.mobilenumber,
@@ -83,12 +80,15 @@ const ForgetPassword = () => {
       visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.textBold}>{incptData?.message}</Text>
+            <Text style={styles.textBold}>We noticed that your sign-up process is 
+            incomplete. To continue accessing our services, please complete the 
+            registration by providing the necessary information.</Text>
+            <Text style={styles.textBold}>Click here to complete your sign-up</Text>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity 
                 style={[styles.buttonsDesign,styles.RightButtonsDesign]}
                 onPress={() => handleRedirect()} >
-              <Text style={[styles.textBold,styles.RightText]}>Redirect</Text>
+                  <Text style={[styles.RightText]}>Proceed</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -110,7 +110,7 @@ export const styles = StyleSheet.create({
   modalView: {
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 25,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -120,12 +120,13 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width:'70%'
+    width:'75%'
   },
   textBold:{
     fontFamily:'Inter-SemiBold',
     textAlign:'center',
     color:'#071B36',
+    marginBottom:20
   },
   textNormal:{
     fontFamily:"Inter-Regular",
@@ -142,7 +143,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal:25,
     borderRadius:5,
     paddingVertical:7,
-    marginTop:20
   },
   leftButtonsDesign:{
     borderColor:'#1A7078'
@@ -155,6 +155,8 @@ export const styles = StyleSheet.create({
     color:'#1A7078'
   },
   RightText:{
-    color:'#fff'
+    color:'#fff',
+    fontFamily:'Inter-SemiBold',
+    textAlign:'center',
   },
 })

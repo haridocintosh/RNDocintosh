@@ -14,7 +14,6 @@ const DeleteAccount = ({navigation,route}) => {
   // const {data} = route?.params;
   const refInput = useRef(null);
   
-  // console.log("data",data);
   const onSelect =(val)=>{
     switch (val) {
         case '1':
@@ -41,12 +40,9 @@ const DeleteAccount = ({navigation,route}) => {
   const handleOkay = () => {
     getLocalData('USER_INFO').then(async(res) => {
       const reData = res?.data;
-      console.log("reData",reData);
       const resultdetactiveDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:6}));
-      console.log("resultdetactiveDelete",resultdetactiveDelete);
     })
   }
-  // console.log(selectReason);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:20 }}>
       <ConfirmModal 

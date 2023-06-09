@@ -83,6 +83,9 @@ const LoginScreen = () => {
       const uploadData = {register};
       await dispatch(userLogin(uploadData)).then(async (res)=>{
         const status = await res?.payload?.status;
+        if(res?.payload?.session_data?.status_code == 5){
+          Toast.show("Welcome back! We're thrilled to have your profile reactivated.", Toast.LONG);
+        }
         if(status == 'Success'){
             await dispatch(addLocal(res.payload.session_data));
             storeData('USER_INFO',JSON.stringify({
@@ -91,7 +94,6 @@ const LoginScreen = () => {
           }));
           singlestoreData('profileImage', res.payload.session_data.profileimage); 
           singlestoreData('isloggedin',"true"); 
-          // setshoweye(true);
           if(isChecked){
               storeData('rememberme',JSON.stringify({
               data:{...res.meta.arg, isChecked:isChecked}
@@ -158,6 +160,7 @@ const LoginScreen = () => {
           blurOnSubmit={true}
           autoComplete={"off"}
       />
+
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'md-eye-off' : 'md-eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
       <View style={styles.forgetPassContainer}>

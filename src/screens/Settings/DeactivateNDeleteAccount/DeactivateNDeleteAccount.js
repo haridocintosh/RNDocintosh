@@ -34,7 +34,7 @@ const DeactivateNDeleteAccount = ({navigation}) => {
 
     useEffect(() =>{
         navigation.setOptions({title:'Deactivate or  Delete account'});
-    },[])
+    },[]);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:15 }}>
         <View style={styles.deactivateContainer}>

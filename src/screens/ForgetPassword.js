@@ -51,7 +51,8 @@ const ForgetPassword = () => {
       user_id   : incptData?.data?.id,
       role      : incptData?.data?.user_role,
       speciality: incptData?.data?.speciality_id,
-    })
+    });
+    setModalVisible(false);
   }
 
   return (

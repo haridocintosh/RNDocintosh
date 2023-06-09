@@ -6,6 +6,9 @@ import { useDispatch } from 'react-redux';
 import ConfirmModal from '../../../utils/ConfirmModal';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { getDeactiveDeleteApi } from '../../../../redux/reducers/SettingsSlice';
+import { storeData } from '../../../apis/Apicall';
+import { DrawerActions } from '@react-navigation/native';
+
 
 const DeleteAccount = ({navigation,route}) => {
   const [selectReason, setSelectReason] = useState(null);
@@ -39,8 +42,15 @@ const DeleteAccount = ({navigation,route}) => {
 
   const handleOkay = () => {
     getLocalData('USER_INFO').then(async(res) => {
+      setModalToggle(false);
       const reData = res?.data;
-      const resultdetactiveDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:6}));
+      const resultDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:6}));
+      storeData('USER_INFO',JSON.stringify({
+        login:false,
+        data:reData
+      }))
+        navigation.dispatch(DrawerActions.closeDrawer());
+        navigation.navigate('LoginScreen');
     })
   }
   return (

@@ -83,7 +83,7 @@ const GetStartedModule = ({navigation,route}) => {
   )
 }
 
-export default GetStartedModule
+export default GetStartedModule;
 
 export const styles = StyleSheet.create({
     rewardsContainer:{

@@ -44,6 +44,7 @@ const BlockList = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",paddingHorizontal:15,paddingVertical:10 }}>
         <Text style={styles.BlockedTitle}>Blocked accounts</Text>
+        <Text style={styles.BlockedTitles}>Manage your privacy and control who can contact you by adding unwanted contacts to your block list. </Text>
         {item?.data?.map((data,i) => {
             return(
             <View style={styles.communitySubDiv} key={i}>

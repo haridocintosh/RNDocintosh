@@ -65,7 +65,7 @@ const CustomDrawer = (props) => {
       }))
       // setTimeout(()=>{
         navigation.dispatch(DrawerActions.closeDrawer());
-        navigation.navigate('LoginScreen')
+        navigation.navigate('LoginScreen');
       // },1000)
     }catch(e) {
     }

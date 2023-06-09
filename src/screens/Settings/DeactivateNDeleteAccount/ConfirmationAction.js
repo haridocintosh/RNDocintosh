@@ -6,10 +6,15 @@ import ConfirmModal from '../../../utils/ConfirmModal';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { useDispatch } from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
+import { DrawerActions } from '@react-navigation/native';
+import { storeData } from '../../../apis/Apicall';
+import { getDeactiveDeleteApi } from '../../../../redux/reducers/SettingsSlice';
+
+
 
 
 const ConfirmationAction = ({navigation,route}) => {
-    const [modalToggle, setModalToggle] = useState(false)
+    const [modalToggle, setModalToggle] = useState(false);
     const {value} = route?.params;
     const dispatch = useDispatch();
     const {control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
@@ -26,7 +31,15 @@ const ConfirmationAction = ({navigation,route}) => {
     const handleOkay = () => {
       getLocalData('USER_INFO').then(async(res) => {
         const reData = res?.data;
-        const resultdetactiveDelete = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:5}));
+        console.log("reData",reData);
+        const resultDetactive = await dispatch(getDeactiveDeleteApi({userID : reData?.id,status:5}));
+        setModalToggle(false);
+        storeData('USER_INFO',JSON.stringify({
+          login:false,
+          data:reData
+        }))
+          navigation.dispatch(DrawerActions.closeDrawer());
+          navigation.navigate('LoginScreen');
       })
     }
 

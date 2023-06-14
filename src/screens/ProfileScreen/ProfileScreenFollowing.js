@@ -1,18 +1,31 @@
 import { View, Text,SafeAreaView, ScrollView, StyleSheet,TouchableOpacity, Image } from 'react-native'
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { styles } from './profilestyle';
 import { getFollowingDataApi } from '../../../redux/reducers/postData';
-
+import OptionModal from './OptionModal';
 
 const ProfileScreenFollowing = ({navigation,route}) => {
+   const [modalVisible, setModalVisible] = useState(false);
+   
+   const [postId, setPostId] = useState(false);
    const {followingData} = route.params;
    
    useEffect(() => {
-      navigation.setOptions({ title: 'Following' });
+      navigation.setOptions({ title:'Following'});
    },[])
 
+   const handleOptionModal = (data) =>{
+      setPostId(data?.follow_to);
+      if(postId == data?.follow_to){
+         setModalVisible(!modalVisible);
+         return;
+      }
+      setModalVisible(true);
+   }
+
    const handleOtherProfile = (data) =>{
+      
       navigation.navigate('OtherProfileView',{data})
    }
    
@@ -38,9 +51,11 @@ const ProfileScreenFollowing = ({navigation,route}) => {
                       <Text style={styles.followerSpecialist}>{data.speciality}</Text>
                    </View>
                 </View>
-                <View style={styles.followerLhs}>
+                <TouchableOpacity style={styles.followerLhs} onPress={() => handleOptionModal(data)}>
                    <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
+                </TouchableOpacity>
+                {postId == data?.follow_to && 
+                <OptionModal modalVisible={modalVisible}/>}
           </View>
           )
        })

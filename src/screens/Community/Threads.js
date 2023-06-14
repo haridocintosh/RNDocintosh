@@ -82,7 +82,6 @@ const Threads = ({modalVisible,setModalVisible}) => {
   }
 
   return (
-    <>
     <FlatList
         ref={ref}
         data={communityData}
@@ -98,7 +97,6 @@ const Threads = ({modalVisible,setModalVisible}) => {
         // onRefresh={() => setRefresh(true)}
         onScrollBeginDrag={() => setModalVisible(false)}
     />
-    </>
   )
 }
 

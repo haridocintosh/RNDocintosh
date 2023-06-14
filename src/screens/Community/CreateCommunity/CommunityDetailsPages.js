@@ -1,15 +1,13 @@
 import { View, Text,SafeAreaView ,TextInput,Image,TouchableOpacity,ImageBackground, ScrollView,Animated,Share} from 'react-native'
 import React,{useState, useRef} from 'react';
-import {styles} from './CommunityStyles'
+import {styles} from '../CommunityStyles'
 import LinearGradient from 'react-native-linear-gradient';
-import { Button } from 'react-native-elements';
-import Threads from './Threads';
-import FocusGroup from './FocusGroup';
-import CommunityPageOptionsModal from './CommunityPageOptionsModal';
-import { Icon } from '../../navigation/ReuseLogics';
+import CreateCommunityPageOptionsModal from './CreateCommunityPageOptionsModal';
+import { Icon } from '../../../navigation/ReuseLogics';
+import CreateCommunityThreads from './CreateCommunityThreads';
+import CreateCommunityFocusGroup from './CreateCommunityFocusGroup';
 
-
-const JionCommunity = ({navigation}) => {
+const CommunityDetailsPages = ({navigation}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
@@ -17,7 +15,7 @@ const JionCommunity = ({navigation}) => {
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
-    const maxHeaderHeight = 270;
+    const maxHeaderHeight = 280;
 
     const headerHeight = scrollPosition.interpolate({
         inputRange: [0, 500],
@@ -64,9 +62,9 @@ const JionCommunity = ({navigation}) => {
         }
       };
   return (
-    <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
+    <SafeAreaView style={{ backgroundColor:"#ecf2f6", flex: 1}}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
-            <ImageBackground source={require("../../assets/images/RectangleBgImage.png")} style={[styles.RectangleBgImage]}>
+            <ImageBackground source={require("../../../assets/images/RectangleBgImage.png")} style={[styles.RectangleBgImage]}>
                 <LinearGradient colors={["#000", "transparent"]}>
                     <View style={styles.joinHeaderView}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -87,7 +85,7 @@ const JionCommunity = ({navigation}) => {
             <View style={styles.communityName}>
                 <View>
                     <Image 
-                        source={require('../../assets/images/CommunityPPic3.png')} 
+                        source={require('../../../assets/images/CommunityPPic3.png')} 
                         style={styles.CommunityProfilePic}/>
                         <Text style={styles.communityNameText}>AIMS Hospital</Text>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -100,7 +98,7 @@ const JionCommunity = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                 </View>
-                <Button title={"Join"}
+                {/* <Button title={"Join"}
                     buttonStyle={{
                         width:100,
                         borderRadius:15/2,
@@ -109,10 +107,10 @@ const JionCommunity = ({navigation}) => {
                     }}
                     titleStyle={{
                         color:'#fff',
-                    }}/>
+                    }}/> */}
             </View>
         </Animated.View>
-        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions}/>
+        <CreateCommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions}/>
         <View style={styles.CommunityTabContainer}>
             <TouchableOpacity onPress={() => setIndex(true)}>
                 <Text style={index ? styles.CommunityActiveTabText : styles.CommunityTabText}>Threads</Text>
@@ -128,12 +126,12 @@ const JionCommunity = ({navigation}) => {
                 )} onScrollBeginDrag={() => handleOnScroll()}>
             <View style={{padding:15,marginBottom:80}}>
                 {index ? 
-                    <Threads 
+                    <CreateCommunityThreads 
                         modalVisible={threadOptionModal}
                         setModalVisible={setThreadOptionModal}
                     /> 
-                : 
-                    <FocusGroup
+                  : 
+                    <CreateCommunityFocusGroup
                         modalVisible={threadOptionModal}
                         setModalVisible={setThreadOptionModal}
                     />
@@ -142,10 +140,10 @@ const JionCommunity = ({navigation}) => {
         </ScrollView>
 
 
-        <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
+        {/* <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
             <View style={styles.UserInnerComments}>
                 <View style={styles.inputCont} >
-                <Image source={require('../../assets/images/CommunityPPic3.png')} style={{width:50,height:50, borderRadius:50}}/>
+                <Image source={require('../../../assets/images/CommunityPPic3.png')} style={{width:50,height:50, borderRadius:50}}/>
                 <TextInput
                     style={styles.input}
                     onChangeText={setText}
@@ -165,10 +163,10 @@ const JionCommunity = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
     </SafeAreaView>
   )
 }
 
-export default JionCommunity
+export default CommunityDetailsPages

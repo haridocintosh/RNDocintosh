@@ -90,10 +90,10 @@ export default function ContactPermission({navigation}) {
     }
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Invite Fellow Doctors Only'});
+    navigation.setOptions({ title:'Invite Fellow Doctors Only'});
     getLocalData("USER_INFO");
     getPrermission();
-  }, []);
+  },[]);
 
 
     const getPrermission = async()=>{
@@ -106,8 +106,7 @@ export default function ContactPermission({navigation}) {
         }
       )
       .then(res=> { 
-        if(res==='granted')
-        {
+        if(res === 'granted'){
            Contacts.getAll()
           .then((contacts) => {
           if(contacts.length > 0) { 
@@ -155,7 +154,6 @@ export default function ContactPermission({navigation}) {
 const loadMore =  () =>{
   setSliceCount(sliceCount + 10);
 }
-
 
 if(loading){
   return(

@@ -3,6 +3,8 @@ import React , {useState,useRef}from 'react';
 import { styles } from './CommunityStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { Icon } from '../../navigation/ReuseLogics';
+
 
 const Community = ({navigation}) => {
 const [viewInput, setViewInput] = useState(false);
@@ -24,7 +26,7 @@ const refInput = useRef(null);
       <View style={styles.headerView}>
         <View style={styles.headerTitle}>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
+            {Icon('Ionicons','reorder-three-outline',35,'#fff')}
           </TouchableOpacity>
           {viewInput ? 
             <TextInput
@@ -39,7 +41,7 @@ const refInput = useRef(null);
             <Text style={styles.headerText}>Community</Text>}
         </View>
         <TouchableOpacity onPress={() => InputView()}>
-          <Ionicons name={viewInput ? "close-outline" : "search"} size={24} color={"#fff"} styles={{marginRight:15}}/>
+          {Icon('Ionicons',viewInput ? 'close-outline': 'search',24,'#fff')}
         </TouchableOpacity>
       </View>
       <View style={styles.bodyView}>
@@ -54,7 +56,8 @@ const refInput = useRef(null);
             </View>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("JionCommunity")}>
-            <Text style={styles.joinText}><Entypo name="plus" size={13} color="#2376E5"/> Join</Text>
+            <Text style={styles.joinText}>
+            {Icon('Entypo','plus',13,'#2376E5')} Join</Text>
           </TouchableOpacity>
         </View>
         
@@ -62,12 +65,12 @@ const refInput = useRef(null);
           <View style={styles.recomandedUsersPic}>
           <Image source={require('../../assets/images/CommunityPPic2.png')} style={styles.UsersProfilePic}/>
             <View style={styles.userInfo}>
-              <Text style={styles.hospitalName}>AIMS Hospital </Text>
+              <Text style={styles.hospitalName}>AIMS Hospital</Text>
               <Text style={styles.groupsText}>3 Groups</Text>
             </View>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("JionCommunity")}>
-            <Text style={styles.joinText}><Entypo name="plus" size={13} color="#2376E5"/> Join</Text>
+            <Text style={styles.joinText}>{Icon('Entypo','plus',13,'#2376E5')} Join</Text>
           </TouchableOpacity>
         </View>
 
@@ -75,16 +78,20 @@ const refInput = useRef(null);
           <View style={styles.recomandedUsersPic}>
           <Image source={require('../../assets/images/CommunityPPic3.png')} style={styles.UsersProfilePic}/>
             <View style={styles.userInfo}>
-              <Text style={styles.hospitalName}>AIMS Hospital </Text>
+              <Text style={styles.hospitalName}>AIMS Hospital</Text>
               <Text style={styles.groupsText}>3 Groups</Text>
             </View>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("JionCommunity")}>
-            <Text style={styles.joinText}><Entypo name="plus" size={13} color="#2376E5"/> Join</Text>
+            <Text style={styles.joinText}>
+              {Icon('Entypo','plus',13,'#2376E5')} Join</Text>
           </TouchableOpacity>
         </View>
 
       </View>
+      <TouchableOpacity style={styles.plusContainer} onPress={() => navigation.navigate("CreateCommunity")}>
+          {Icon('AntDesign','plus',40,'#fff')}
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }

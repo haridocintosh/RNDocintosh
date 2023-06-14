@@ -2,12 +2,12 @@ import { StyleSheet, Dimensions } from "react-native";
 
 export const styles = StyleSheet.create({
     container:{
-        //   width:150,
           position:'absolute',
           right:40,
           borderRadius:5,
           zIndex:100,
-          top:15
+          top:15,
+          overflow:'visible'
         },
         optionModal:{
           width:155,
@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
           shadowOffset: { width: 0, height: 2},
           shadowRadius: 10,
           elevation: 3,
+          zIndex:10000
         },
         optionList:{
           paddingVertical:8,

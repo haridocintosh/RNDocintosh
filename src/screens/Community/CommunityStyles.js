@@ -292,7 +292,14 @@ export const styles = StyleSheet.create({
         fontSize:18,
         marginTop:15,
       },
-      
+      plusContainer:{
+        backgroundColor:'#2C8892',
+        position:'absolute',
+        bottom:20,
+        right:20,
+        borderRadius:50,
+        padding:10
+    },
 // =================================Message Screen=====================================
 
 headerContainer:{

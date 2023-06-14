@@ -1,0 +1,79 @@
+import { StyleSheet, Dimensions } from "react-native";
+
+export const styles = StyleSheet.create({
+    inputContainer:{
+        marginBottom:30
+    },
+    profileUploadBg:{
+        backgroundColor:'#fff',
+        height:100,
+        width:100,
+        borderRadius:50,
+        alignSelf:'center',
+        // borderWidthL:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    profileBorderLine:{
+        borderWidth:3,
+        borderColor:'#DCE0E8',
+        height:95,
+        width:95,
+        borderRadius:50,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    profilePicturebg:{
+        height:83,
+        width:83,
+        borderRadius:50,
+        backgroundColor:'#DCE0E8',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    profilePic:{
+        width:83,
+        height:83,
+        borderRadius:50,
+    },
+    UploadProfileImg:{
+        fontSize:10,
+        textAlign:'center',
+        fontFamily:'Inter-SemiBold',
+        color:'#2376E5',
+        // marginTop:29,
+    },
+    inputLabel:{
+        color:'#071B36',
+        fontFamily: "Inter-Regular",
+    },
+    input:{
+        height:50,
+        borderBottomWidth:1.5,
+        borderBottomColor:'#51668A'
+    },
+    inputTextArea:{
+        borderWidth:1,
+        height:135,
+        padding:10,
+        borderRadius:4,
+        textAlignVertical:'top',
+        borderColor:'#51668A',
+        backgroundColor:'#fff'
+    },
+    wordsCount:{
+        alignSelf:'flex-end',
+        color:'#51668A',
+    },
+    customInputVerify:{
+        backgroundColor:'transparent',
+        borderRadius:0,
+        borderWidth:0,
+        borderBottomWidth:1,
+        borderBottomColor:"#071B36",
+    },
+    bottomTitle:{
+        color:'#51668A',
+        fontFamily: "Inter-Regular",
+    }
+})

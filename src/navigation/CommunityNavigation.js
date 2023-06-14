@@ -12,9 +12,24 @@ import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/Con
 import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
 import OtherProfileView from '../screens/ProfileScreen/OthersProfileScreen/OtherProfileView';
 import BusinessPage from '../screens/BusinessPage/BusinessPage';
+import CreateFocusGroup from '../screens/Community/CreateFocusGroup/CreateFocusGroup';
+import CreateCommunity from '../screens/Community/CreateCommunity/CreateCommunity';
+import CommunityUploadImage from '../screens/Community/CreateCommunity/CommunityUploadImage';
+import ContactPermission from '../screens/ContactPermission';
+import CommunityDetailsPages from '../screens/Community/CreateCommunity/CommunityDetailsPages';
+import { Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 const CommunityNavigation = () => {
   const Stack = createNativeStackNavigator();
+  const navigation  = useNavigation();
+
+
+  const handleMessage = () => {
+      navigation.navigate('CommunityDetailsPages');
+  }
+
   return (
     <>
     <HandleBack/>
@@ -28,6 +43,14 @@ const CommunityNavigation = () => {
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={showHeaderItem}/>
         <Stack.Screen name="OtherProfileView" component={OtherProfileView} options={showHeaderItem}/>
         <Stack.Screen name="BusinessPage" component={BusinessPage} options={showHeaderItem}/>
+        <Stack.Screen name="CreateFocusGroup" component={CreateFocusGroup} options={showHeaderItem}/>
+        <Stack.Screen name="CreateCommunity" component={CreateCommunity} options={showHeaderItem}/>
+        <Stack.Screen name="CommunityUploadImage" component={CommunityUploadImage} options={showHeaderItem}/>
+        <Stack.Screen name="CommunityDetailsPages" component={CommunityDetailsPages} />
+        <Stack.Screen name='ContactPermissionSkip' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
+              headerRight:() => (
+                <Text onPress={() => handleMessage()} style={{color:"#2376E5"}}>Skip</Text>)
+              }}/> 
     </Stack.Navigator>
     </>
   )

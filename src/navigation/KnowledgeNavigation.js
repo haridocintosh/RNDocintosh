@@ -7,7 +7,7 @@ import KnowledgeScreen from '../screens/Knowledge/KnowledgeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StartModules from '../screens/Knowledge/StartModules';
 import AssesmentTest from '../screens/Knowledge/GetStarted/AssesmentTest';
-import GetStartedModule from '../screens/Knowledge/GetStarted/GetStartedModule';
+import GetStartedModule from '../screens/Knowledge/GetStarted/getStartedModule';
 import NotificationSettings from '../screens/Settings/NotificationSettings/NotificationSettings';
 import DeactivateNDeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeactivateNDeleteAccount';
 import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/ConfirmationAction';

@@ -19,6 +19,7 @@ import ContactPermission from '../screens/ContactPermission';
 import CommunityDetailsPages from '../screens/Community/CreateCommunity/CommunityDetailsPages';
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import InvitePeers from '../screens/Community/InvitePeers';
 
 
 const CommunityNavigation = () => {
@@ -47,6 +48,7 @@ const CommunityNavigation = () => {
         <Stack.Screen name="CreateCommunity" component={CreateCommunity} options={showHeaderItem}/>
         <Stack.Screen name="CommunityUploadImage" component={CommunityUploadImage} options={showHeaderItem}/>
         <Stack.Screen name="CommunityDetailsPages" component={CommunityDetailsPages} />
+        <Stack.Screen name="InvitePeers" component={InvitePeers} options={showHeaderItem}/>
         <Stack.Screen name='ContactPermissionSkip' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
               headerRight:() => (
                 <Text onPress={() => handleMessage()} style={{color:"#2376E5"}}>Skip</Text>)

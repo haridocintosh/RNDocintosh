@@ -29,8 +29,9 @@ const CommunityUploadImage = ({navigation}) => {
       } 
     })
   }
-  
+
   useEffect(() =>{
+    navigation.setOptions({ title:'Create Community'});
     if(bgPic && profilePic){
       setDesable(false);
     }

@@ -7,17 +7,23 @@ import Threads from './Threads';
 import FocusGroup from './FocusGroup';
 import CommunityPageOptionsModal from './CommunityPageOptionsModal';
 import { Icon } from '../../navigation/ReuseLogics';
+import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 
 
 const JionCommunity = ({navigation}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
+    const [report , setReport] = useState(true);
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
     const [threadOptionModal,setThreadOptionModal] = useState(false);
+    const [isOpen, setIsOpen]     = useState(false);
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
     const maxHeaderHeight = 270;
+
+    const bottomSheetModalRef = useRef(null);
+    const snapPoints = ["1%","70%"];
 
     const headerHeight = scrollPosition.interpolate({
         inputRange: [0, 500],
@@ -45,6 +51,10 @@ const JionCommunity = ({navigation}) => {
         setThreadOptionModal(false);
     } 
 
+    function handlePresentModal() {
+        bottomSheetModalRef.current?.present();
+    }
+
     const onShare = async (post_id) => {
         try {
           const result = await Share.share({
@@ -62,7 +72,8 @@ const JionCommunity = ({navigation}) => {
         } catch (error) {
           alert(error.message);
         }
-      };
+    };
+
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
@@ -112,7 +123,7 @@ const JionCommunity = ({navigation}) => {
                     }}/>
             </View>
         </Animated.View>
-        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions}/>
+        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions} handleReport={handlePresentModal}/>
         <View style={styles.CommunityTabContainer}>
             <TouchableOpacity onPress={() => setIndex(true)}>
                 <Text style={index ? styles.CommunityActiveTabText : styles.CommunityTabText}>Threads</Text>
@@ -166,7 +177,49 @@ const JionCommunity = ({navigation}) => {
                 </View>
             </View>
         </TouchableOpacity>
+        <BottomSheetModalProvider>
+            <BottomSheetModal
+                ref={bottomSheetModalRef}
+                index={1}
+                snapPoints={snapPoints}
+                backgroundStyle={{ borderRadius: 30 }}
+                onDismiss={() => setIsOpen(true)}>
+                    <BottomSheetScrollView keyboardShouldPersistTaps='handled'>
+                        <View style={styles.JCBScontainer}>
+                            <Text style={styles.JCBSTitle}>What’s going wrong?</Text>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>Harassment or Bullying</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>Hate Speech</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>Spams</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>Voilation</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>Nudity or Sexual Activity</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>False Information</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                                <Text style={styles.JCBSreportSelect}>Unauthorized Sales</Text>
+                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
+                            </TouchableOpacity>
 
+                        </View>
+                    </BottomSheetScrollView>
+            </BottomSheetModal>
+        </BottomSheetModalProvider>
     </SafeAreaView>
   )
 }

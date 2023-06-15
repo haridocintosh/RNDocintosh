@@ -127,7 +127,7 @@ const CreateFocusGroup = ({navigation}) => {
         color={"#fff"} 
         bgColor={"#2C8892"} 
         customStyle={{position:'absolute',bottom:10,width:'100%',alignSelf:'center'}}
-        onPress={() => navigation.navigate('insideContactPermission')}
+        onPress={() => navigation.navigate('InvitePeers',{title:'Add Members to this Focus Group'})}
         disable={desable}
       />
        <GetProfile profile={picModal} setProfile={setPicModal} changeProfile={changeProfile}/>

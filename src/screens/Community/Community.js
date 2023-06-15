@@ -1,8 +1,6 @@
 import { View, Text, SafeAreaView,TouchableOpacity,TextInput,Image } from 'react-native'
 import React , {useState,useRef}from 'react';
 import { styles } from './CommunityStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import { Icon } from '../../navigation/ReuseLogics';
 
 

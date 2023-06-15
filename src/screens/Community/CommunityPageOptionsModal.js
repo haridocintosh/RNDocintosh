@@ -5,7 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import { useNavigation } from '@react-navigation/native';
 
-const CommunityPageOptionsModal = ({modalVisible}) => {
+const CommunityPageOptionsModal = ({modalVisible,handleReport}) => {
   return (
     <View style={styles.container}>
         {modalVisible &&
@@ -19,7 +19,7 @@ const CommunityPageOptionsModal = ({modalVisible}) => {
                 <Ionicons name="exit-outline" size={24} color="#45B5C0" style={styles.optionListIcon}/>
                 <Text style={styles.optionListText}>Exit Community</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionList}>
+            <TouchableOpacity style={styles.optionList} onPress={() => handleReport()}>
                 <MaterialIcons name="report-problem" size={24} color="#45B5C0" style={styles.optionListIcon}/>
                 <Text style={styles.optionListText}>Report</Text>
             </TouchableOpacity>

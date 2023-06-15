@@ -58,9 +58,9 @@ const ForgetPassword = () => {
   return (
   <SafeAreaView style={styelcss.maindDivBannerForget}>
     <ScrollView
-     showsVerticalScrollIndicator={false}
-     nestedScrollEnable={true}
-     keyboardShouldPersistTaps='handled'>
+      showsVerticalScrollIndicator={false}
+      nestedScrollEnable={true}
+      keyboardShouldPersistTaps='handled'>
         <View style={styelcss.forgetmainPara}>
             <Text style={[styelcss.forgetPara,{fontFamily:'Inter-Regular'}]}>Enter the email address or mobile number associated with your account</Text>
         </View>

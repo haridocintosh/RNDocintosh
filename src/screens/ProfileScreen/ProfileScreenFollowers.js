@@ -5,16 +5,22 @@ import { styles } from './profilestyle';
 import { getLocalData } from '../../apis/GetLocalData';
 import { getFollowersDataApi } from '../../../redux/reducers/postData';
 import { useDispatch } from 'react-redux';
+import OptionModal from './OptionModal';
 
 
 const ProfileScreenFollowers = ({navigation,route}) => {
+   const [modalVisible, setModalVisible] =useState(false)
    const {followersData} = route.params;
+   
 
    useEffect(() => {
       navigation.setOptions({ title: 'Followers' });
     },[])
-    const handleOtherProfile = () =>{
-
+    const handleOtherProfile = (data) =>{
+      console.log(data);
+    }
+    const handleOptionModal = () =>{
+      setModalVisible(false)
     }
   return (
     <SafeAreaView style={styles.Follwerscontainer}>
@@ -28,17 +34,20 @@ const ProfileScreenFollowers = ({navigation,route}) => {
                return(
                <View style={styles.followerContainer} key={index}>
                      <View style={styles.followerLhs}>
-                        <TouchableOpacity onPress={() => handleOtherProfile()}>
+                        <TouchableOpacity onPress={() => handleOtherProfile(data)}>
                            <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
                         </TouchableOpacity>
                         <View style={styles.followerName}>
+                        <TouchableOpacity onPress={() => handleOtherProfile(data)}>
                            <Text style={styles.followerNameText}>{data.username}</Text>
+                        </TouchableOpacity>
                            <Text style={styles.followerSpecialist}>{data.speciality}</Text>
                         </View>
                      </View>
-                     <View style={styles.followerLhs}>
+                     <TouchableOpacity style={styles.followerLhs} onPress={() => handleOptionModal()}>
                         <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                     </View>
+                     </TouchableOpacity>
+                     <OptionModal modalVisible={modalVisible}/>
                </View>
                )
             })

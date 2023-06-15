@@ -292,53 +292,137 @@ export const styles = StyleSheet.create({
         fontSize:18,
         marginTop:15,
       },
-      
+      plusContainer:{
+        backgroundColor:'#2C8892',
+        position:'absolute',
+        bottom:20,
+        right:20,
+        borderRadius:50,
+        padding:10
+    },
 // =================================Message Screen=====================================
 
-headerContainer:{
-  height:55,
-  backgroundColor:'#071B36',
-  paddingHorizontal:10,
-  justifyContent:'space-between',
-  alignItems:'center',
-  flexDirection:'row'
-},
-headerTitleText:{
-  color:'#fff',
-},
-chatContainer:{
-  paddingHorizontal:10,
-  marginBottom:60
-},
-OtherChatContainer:{
-  flexDirection:'row',
-  alignItems:'flex-end',
-  marginVertical:10
-},
-OtherChatText:{
-  padding:10,
-  maxWidth:Dimensions.get('window').width/1.5,
-  borderRadius:5,
-  backgroundColor:'#F2FAFA',
-  marginLeft:5
-},
-OwnChatContainer:{
-  justifyContent:'flex-end',
-  alignItems:'flex-end',
-  flexDirection:'row'
-},
-OwnChatText:{
-  flexDirection:'row',
-  padding:10,
-  maxWidth:Dimensions.get('window').width/1.5,
-  borderRadius:5,
-  backgroundColor:'#A0C5C5',
-  marginRight:5
-},
-ImagePic:{
-  borderRadius:50,
-  height:40,
-  width:40
-},
+    headerContainer:{
+      height:55,
+      backgroundColor:'#071B36',
+      paddingHorizontal:10,
+      justifyContent:'space-between',
+      alignItems:'center',
+      flexDirection:'row'
+    },
+    headerTitleText:{
+      color:'#fff',
+    },
+    chatContainer:{
+      paddingHorizontal:10,
+      marginBottom:60
+    },
+    OtherChatContainer:{
+      flexDirection:'row',
+      alignItems:'flex-end',
+      marginVertical:10
+    },
+    OtherChatText:{
+      padding:10,
+      maxWidth:Dimensions.get('window').width/1.5,
+      borderRadius:5,
+      backgroundColor:'#F2FAFA',
+      marginLeft:5
+    },
+    OwnChatContainer:{
+      justifyContent:'flex-end',
+      alignItems:'flex-end',
+      flexDirection:'row'
+    },
+    OwnChatText:{
+      flexDirection:'row',
+      padding:10,
+      maxWidth:Dimensions.get('window').width/1.5,
+      borderRadius:5,
+      backgroundColor:'#A0C5C5',
+      marginRight:5
+    },
+    ImagePic:{
+      borderRadius:50,
+      height:40,
+      width:40
+    },
+
+    // ------------------------- Invite Peers -------------------------
+    IPTitle:{
+      fontFamily:"Inter-SemiBold",
+      color:'#071B36',
+      fontSize:18,
+    },
+    //   ==========================ProfileScreenFollwers========================
+    Follwerscontainer: {
+      backgroundColor: "#F2FAFA",
+      flex: 1,
+      paddingHorizontal: 15,
+    },
+    followerHeader: {
+      fontWeight: "600",
+      fontSize: 16,
+      marginVertical: 5,
+      fontFamily: "Inter-Regular",
+    },
+    followerContainer: {
+      justifyContent: "space-between",
+      flexDirection: "row",
+      alignItems: "center",
+      marginVertical: 10,
+    },
+    profileimgfollower: {
+      height: 60,
+      width: 60,
+      marginRight: 15,
+      borderRadius:50
+    },
+    followerLhs: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    Nodata: {
+      textAlign:'center',
+      fontSize: 16,
+      fontFamily: "PlusJakartaSans-Bold",
+    },
+    followerNameText: {
+      fontSize: 16,
+      fontWeight: "500",
+      fontFamily: "PlusJakartaSans-Regular",
+      color:'#071B36'
+    },
+    followerSpecialist: {
+      fontSize: 12,
+      fontWeight: "400",
+      color: "#51668A",
+      marginTop: 5,
+      fontFamily: "Inter-Regular",
+    },
+ 
+    //-----------------------------bottom-shit -------------------
+
+    JCBScontainer:{
+      padding:20,
+      
+    },
+    JCBSTitle:{
+      color:'#071B36',
+      fontSize: 18,
+      fontFamily: "PlusJakartaSans-Bold",
+    },
+    JCBSreportSelectContainer:{
+      justifyContent:'space-between',
+      alignItems:'center',
+      flexDirection:'row',
+      height:60,
+      borderBottomWidth:1,
+      borderBottomColor:'#D5DEED'
+    },
+    JCBSreportSelect:{
+      color:'#071B36',
+      fontFamily: "Inter-Regular",
+    },
 
 });

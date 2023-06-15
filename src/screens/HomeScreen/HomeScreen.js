@@ -10,14 +10,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useDispatch, useSelector } from "react-redux";
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Feather from 'react-native-vector-icons/Feather';
+import { useDispatch } from "react-redux";
 import { getAllCoins, userPostData } from '../../../redux/reducers/postData';
-import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
 import moment from "moment";
@@ -27,13 +21,16 @@ import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
-
+import { Icon } from '../../navigation/ReuseLogics';
 
 const HomeScreen = ({navigation,route})=> {
+  const isFocused = useIsFocused();
+  const ref = useRef(null);
+  const dispatch = useDispatch();
+  const { width, height} = Dimensions.get('window');
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState();
   const [resData, setResData]  = useState();
-  const dispatch = useDispatch();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
@@ -43,15 +40,10 @@ const HomeScreen = ({navigation,route})=> {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [refresh, setRefresh] = useState(false)
 
-  const isFocused = useIsFocused();
-  const ref = useRef(null);
-  const { width, height} = Dimensions.get('window');
+  const press = () => {
+    ref.current.scrollToIndex({ animated: true, index: 5 });
+  };
 
-  //    const list = useRef(null);
-    const press = () => {
-      //scroll to the 12th item in the index.
-      ref.current.scrollToIndex({ animated: true, index: 5 });
-    };
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100;
@@ -102,13 +94,6 @@ const HomeScreen = ({navigation,route})=> {
     });
   };
 
-  // if(postLoader){
-  //   return(
-  //   <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-  //       <ActivityIndicator size={'large'} color="#1A7078"/>
-  //   </View>)
-  // }
-
   const renderLoader = () => {
     return (
       bottumLoader ?
@@ -148,13 +133,6 @@ const HomeScreen = ({navigation,route})=> {
     }
   },[isFocused]);
 
-  // useEffect(()=>{
-  //   if(isFocused){
-  //     asyncFetchDailyData();
-  //     getStorageData();
-  //   }
-  // },[isFocused]);
-
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
@@ -175,7 +153,6 @@ const HomeScreen = ({navigation,route})=> {
       const result = await dispatch(userPostData(postDetails));
       setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);
-     // const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
       const allPostData = result?.payload.result.filter(Post => Post.user_role == reData?.role);
       setallPost(allPostData);
       setRefresh(false);
@@ -216,42 +193,28 @@ const HomeScreen = ({navigation,route})=> {
       return(
         <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
-            <View  style={{flexDirection:'row',alignItems:'center'}}>
-               <FastImage
-                  style={{width:38, height:38,marginRight:5,borderRadius:50}} 
-                  source={{
-                      uri: item?.profileimage,
-                      priority: FastImage.priority.normal,
-                  }}
-              />
+            <View style={styles.useInfoLhs} >
+              <FastImage style={styles.ProfilePic} source={{ uri: item?.profileimage, priority: FastImage.priority.normal}}/>
               <View style={{marginLeft:5}}>
-                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular",color:'#071B36'}}>
-                  { item?.utitle} {item?.first_name} {item?.last_name } 
-                  <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69"/>
+                <Text style={styles.UserInfoName}>
+                  {item?.utitle} {item?.first_name} {item?.last_name} {Icon('MaterialCommunityIcons','check-decagram',12,'#0F9C69')}
                 </Text>
-                <View style={{flexDirection:'row',alignItems:'flex-start'}}>
-                  {/* <Text style={{marginLeft:5}}>
-                    <FontAwesome5 name="users" size={17} color="#45B5C0" />  
-                  </Text>
-                  <View style={styles.dot}/> */}
-                  <Text style={{fontSize:12, fontWeight:'400',color:'#51668A', fontFamily:"Inter-Regular",marginTop:1}}>
+                <View style={styles.UISpeciality}>
+                  <Text style={styles.UISpecialityName}>
                     {item?.speciality}
                   </Text>
                   <Text style={{marginHorizontal:4}}>
-                    <Ionicons name="time-outline" size={19} color="#51668A" />  
+                    {Icon("Ionicons","time-outline",19,"#51668A")}
                   </Text>
-                  <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular",marginTop:1.5}}>
-                    {/* {moment(item?.created_at).subtract('h').fromNow(true)} */}
+                  <Text style={styles.UIPostTiming}>
                     {moment(item?.created_at,).fromNow().split(" ")[0] == ('a'||"an")  ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
                     {moment(item?.created_at).fromNow().split(" ")[1].slice(0,1)}
                   </Text>
                 </View>
               </View> 
             </View>
-            <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{padding:10,right:-10,top:-10}}>
-              <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
-              </Svg>
+            <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{padding:10,right:-15,top:-10}}>
+              {Icon('Entypo','dots-three-vertical',22,'#51668A')}
             </TouchableOpacity>
           </View>
           {item?.post_id == postId && <OptionModal 
@@ -265,7 +228,6 @@ const HomeScreen = ({navigation,route})=> {
           <View style={item?.description && {paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
-              
             </Text>
           </View>
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
@@ -281,7 +243,7 @@ const HomeScreen = ({navigation,route})=> {
           <View style={styles.imageConatentContainer}>
             <View style={{flexDirection:'row',alignItems:'center'}}> 
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
+                {Icon("Ionicons", "reorder-three-outline",34, "#fff")}
               </TouchableOpacity>
               <View style={{backgroundColor:'#FFCC00', width:4, height:28, marginLeft:10,zIndex:1}}/>
               <Animated.View style={{backgroundColor:'#3477E0', width:imagePosition, height:24,justifyContent:'center',position:'relative'}}>
@@ -296,10 +258,10 @@ const HomeScreen = ({navigation,route})=> {
             </View>
             <Animated.View style={{flexDirection:'row'}} >
               <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen')}}>
-                <Feather name="search" size={24} color="#ffff" />
+                {Icon("Feather", "search",24, "#fff")}
               </TouchableOpacity>
               <TouchableOpacity style={{marginLeft:10}} onPress={() => navigation.navigate('BellNotification')}>
-                <MaterialCommunityIcons name="bell-ring-outline" size={24} color="#ffff" />
+                {Icon("MaterialCommunityIcons", "bell-ring-outline",24, "#fff")}
               </TouchableOpacity>
             </Animated.View>
           </View>
@@ -320,45 +282,40 @@ const HomeScreen = ({navigation,route})=> {
           onPress={() => navigation.navigate('Sharepost')}>
           <View style={styles.whatsMindConatiner} >
             <View style={{flexDirection:'row'}}>
-            <FastImage
-                  style={{width:32, height:32, borderRadius:50}}
-                  source={userdata.profile && {
-                      uri:userdata.profile,
-                      priority: FastImage.priority.normal,
-                  }}
-              />
+            <FastImage 
+              style={{width:32, height:32, borderRadius:50}}
+              source={userdata.profile && {uri:userdata.profile, priority: FastImage.priority.normal}}/>
             <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
             </View>
-              <AntDesign name="pluscircle" size={26} color="#D5DEED" style={{backgroundColor:'#51668A',borderRadius:50,padding:0}}/>
+            <View style={{backgroundColor:'#51668A',borderRadius:50}}>
+              {Icon('AntDesign',"pluscircle",26,"#D5DEED")}
+            </View>
           </View>
-          </Card>
+        </Card>
         <View>
-
-            <View style={styles.marginten}>
-                <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}  onPress={() => press()} >Suggested Post</Text>
-                <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
-            </View>
-            <View style={{paddingBottom:550}}>
-            <Animated.FlatList
-                ref={ref}
-                onScroll={Animated.event(
-                  [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
-                  {useNativeDriver: false},
-                )}
-                data={allPost}
-                renderItem={renderItem}
-                keyExtractor={(item,index) => index}
-                ListFooterComponent={renderLoader}
-                onEndReached={() => handleLoadeMore()}
-                showsVerticalScrollIndicator={false}
-                viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-                viewabilityConfig={_viewabilityConfig}
-                // ListEmptyComponent={_listEmptyComponent}
-                refreshing={refresh}
-                onRefresh={() => setRefresh(true)}
-                onScrollBeginDrag={() => setModalVisible(false)}
-            />
-            </View>
+          <View style={styles.marginten}>
+              <Text style={{fontSize:16, fontWeight:'600',color:'#071B36'}}  onPress={() => press()} >Suggested Post</Text>
+              <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
+          </View>
+          <View style={{paddingBottom:550}}>
+          <Animated.FlatList
+              ref={ref}
+              onScroll={Animated.event(
+                [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
+                {useNativeDriver: false},
+              )}
+              data={allPost}
+              renderItem={renderItem}
+              keyExtractor={(item,index) => index}
+              ListFooterComponent={renderLoader}
+              onEndReached={() => handleLoadeMore()}
+              showsVerticalScrollIndicator={false}
+              viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+              viewabilityConfig={_viewabilityConfig}
+              refreshing={refresh}
+              onRefresh={() => setRefresh(true)}
+              onScrollBeginDrag={() => setModalVisible(false)}/>
+          </View>
         </View>
         </View>
   </SafeAreaView>

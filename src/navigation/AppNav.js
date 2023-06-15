@@ -77,9 +77,9 @@ const handleMessage = () => {
             <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Professional Information', headerShown: true}} />
             <Stack.Screen name="Congratulation" component={Congratulation} />
             <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
-              headerRight: () => (
+              headerRight:() => (
                 <Text onPress={() => handleMessage()} style={{color:"#2376E5"}}>Skip</Text>)
-              }} /> 
+              }}/> 
             <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
             <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
             <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />

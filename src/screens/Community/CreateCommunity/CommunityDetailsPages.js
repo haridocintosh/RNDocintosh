@@ -1,29 +1,21 @@
 import { View, Text,SafeAreaView ,TextInput,Image,TouchableOpacity,ImageBackground, ScrollView,Animated,Share} from 'react-native'
 import React,{useState, useRef} from 'react';
-import {styles} from './CommunityStyles'
+import {styles} from '../CommunityStyles'
 import LinearGradient from 'react-native-linear-gradient';
-import { Button } from 'react-native-elements';
-import Threads from './Threads';
-import FocusGroup from './FocusGroup';
-import CommunityPageOptionsModal from './CommunityPageOptionsModal';
-import { Icon } from '../../navigation/ReuseLogics';
-import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
+import CreateCommunityPageOptionsModal from './CreateCommunityPageOptionsModal';
+import { Icon } from '../../../navigation/ReuseLogics';
+import CreateCommunityThreads from './CreateCommunityThreads';
+import CreateCommunityFocusGroup from './CreateCommunityFocusGroup';
 
-
-const JionCommunity = ({navigation}) => {
+const CommunityDetailsPages = ({navigation}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
-    const [report , setReport] = useState(true);
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
     const [threadOptionModal,setThreadOptionModal] = useState(false);
-    const [isOpen, setIsOpen]     = useState(false);
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
-    const maxHeaderHeight = 270;
-
-    const bottomSheetModalRef = useRef(null);
-    const snapPoints = ["1%","70%"];
+    const maxHeaderHeight = 280;
 
     const headerHeight = scrollPosition.interpolate({
         inputRange: [0, 500],
@@ -51,10 +43,6 @@ const JionCommunity = ({navigation}) => {
         setThreadOptionModal(false);
     } 
 
-    function handlePresentModal() {
-        bottomSheetModalRef.current?.present();
-    }
-
     const onShare = async (post_id) => {
         try {
           const result = await Share.share({
@@ -72,12 +60,11 @@ const JionCommunity = ({navigation}) => {
         } catch (error) {
           alert(error.message);
         }
-    };
-
+      };
   return (
-    <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
+    <SafeAreaView style={{ backgroundColor:"#ecf2f6", flex: 1}}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
-            <ImageBackground source={require("../../assets/images/RectangleBgImage.png")} style={[styles.RectangleBgImage]}>
+            <ImageBackground source={require("../../../assets/images/RectangleBgImage.png")} style={[styles.RectangleBgImage]}>
                 <LinearGradient colors={["#000", "transparent"]}>
                     <View style={styles.joinHeaderView}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -98,7 +85,7 @@ const JionCommunity = ({navigation}) => {
             <View style={styles.communityName}>
                 <View>
                     <Image 
-                        source={require('../../assets/images/CommunityPPic3.png')} 
+                        source={require('../../../assets/images/CommunityPPic3.png')} 
                         style={styles.CommunityProfilePic}/>
                         <Text style={styles.communityNameText}>AIMS Hospital</Text>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -111,7 +98,7 @@ const JionCommunity = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                 </View>
-                <Button title={"Join"}
+                {/* <Button title={"Join"}
                     buttonStyle={{
                         width:100,
                         borderRadius:15/2,
@@ -120,10 +107,10 @@ const JionCommunity = ({navigation}) => {
                     }}
                     titleStyle={{
                         color:'#fff',
-                    }}/>
+                    }}/> */}
             </View>
         </Animated.View>
-        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions} handleReport={handlePresentModal}/>
+        <CreateCommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions}/>
         <View style={styles.CommunityTabContainer}>
             <TouchableOpacity onPress={() => setIndex(true)}>
                 <Text style={index ? styles.CommunityActiveTabText : styles.CommunityTabText}>Threads</Text>
@@ -139,12 +126,12 @@ const JionCommunity = ({navigation}) => {
                 )} onScrollBeginDrag={() => handleOnScroll()}>
             <View style={{padding:15,marginBottom:80}}>
                 {index ? 
-                    <Threads 
+                    <CreateCommunityThreads 
                         modalVisible={threadOptionModal}
                         setModalVisible={setThreadOptionModal}
                     /> 
-                : 
-                    <FocusGroup
+                  : 
+                    <CreateCommunityFocusGroup
                         modalVisible={threadOptionModal}
                         setModalVisible={setThreadOptionModal}
                     />
@@ -153,10 +140,10 @@ const JionCommunity = ({navigation}) => {
         </ScrollView>
 
 
-        <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
+        {/* <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
             <View style={styles.UserInnerComments}>
                 <View style={styles.inputCont} >
-                <Image source={require('../../assets/images/CommunityPPic3.png')} style={{width:50,height:50, borderRadius:50}}/>
+                <Image source={require('../../../assets/images/CommunityPPic3.png')} style={{width:50,height:50, borderRadius:50}}/>
                 <TextInput
                     style={styles.input}
                     onChangeText={setText}
@@ -176,52 +163,10 @@ const JionCommunity = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
-        </TouchableOpacity>
-        <BottomSheetModalProvider>
-            <BottomSheetModal
-                ref={bottomSheetModalRef}
-                index={1}
-                snapPoints={snapPoints}
-                backgroundStyle={{ borderRadius: 30 }}
-                onDismiss={() => setIsOpen(true)}>
-                    <BottomSheetScrollView keyboardShouldPersistTaps='handled'>
-                        <View style={styles.JCBScontainer}>
-                            <Text style={styles.JCBSTitle}>What’s going wrong?</Text>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>Harassment or Bullying</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>Hate Speech</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>Spams</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>Voilation</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>Nudity or Sexual Activity</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>False Information</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
-                                <Text style={styles.JCBSreportSelect}>Unauthorized Sales</Text>
-                                {Icon("Entypo","chevron-thin-right",25,'#071B36')}
-                            </TouchableOpacity>
+        </TouchableOpacity> */}
 
-                        </View>
-                    </BottomSheetScrollView>
-            </BottomSheetModal>
-        </BottomSheetModalProvider>
     </SafeAreaView>
   )
 }
 
-export default JionCommunity
+export default CommunityDetailsPages

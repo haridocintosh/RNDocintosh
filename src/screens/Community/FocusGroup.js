@@ -1,12 +1,26 @@
 import { View, Text,Image,TouchableOpacity,FlatList } from 'react-native'
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,Fragment} from 'react';
 import Card from '../../utils/Card';
 import { styles } from './CommunityStyles';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { Icon } from '../../navigation/ReuseLogics';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const FocusGroup = ({modalVisible,setModalVisible}) => {
   const [focusData, setFocusData] = useState([]);
+  const navigation = useNavigation()
 
+  // const names = ["gagan",'pawan',"gagan","bansode","Hari","bansode"];
+  // const unique = Array.from(new Set(names));
+  // const newArr = [];
+  // console.log(unique);
+  // const mapUniq = names.filter((data,i) =>{
+  //       const a = newArr.findIndex(x => x == data);
+        
+  // })
+  // console.log("mapUniq",mapUniq);
   const ref = useRef(null);
 
   const onViewableItemsChanged = ({viewableItems}) => {
@@ -30,6 +44,7 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
           style={{width:'70%',height:300}}/>
         <Text style={styles.Title}>Opps!</Text>
         <Text style={styles.subTitle}>Looks Like no group created.</Text>
+
       </View>
     )
   }
@@ -62,7 +77,7 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
     )
   }
   return (
-    <>
+    <Fragment>
     <FlatList
         ref={ref}
         data={focusData}
@@ -78,6 +93,9 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
         // onRefresh={() => setRefresh(true)}
         onScrollBeginDrag={() => setModalVisible(false)}
     />
+    <TouchableOpacity style={styles.plusContainer} onPress={() => navigation.navigate("CreateFocusGroup")}>
+        {Icon('AntDesign','plus',40,'#fff')}
+    </TouchableOpacity>
     {/* <Card>
       <View style={styles.FocusPostUserDetailsContainer}>
         <View style={styles.FocusPostUserDetails}>
@@ -473,7 +491,7 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
       </View>
     </Card> */}
     
-    </>
+    </Fragment>
   )
 }
 

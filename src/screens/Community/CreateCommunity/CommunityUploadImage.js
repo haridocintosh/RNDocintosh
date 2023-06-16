@@ -60,7 +60,6 @@ const CommunityUploadImage = ({navigation}) => {
             </TouchableOpacity>
           </View>
       </View>
-      
 
       <Button
         title={'Save & Continue'}
@@ -72,13 +71,10 @@ const CommunityUploadImage = ({navigation}) => {
           width: '100%',
           alignSelf: 'center',
         }}
-        onPress={() => navigation.navigate('ContactPermissionSkip')}
+        onPress={() => navigation.navigate('InvitePeersSkip',{title:'Add Members to this Community'})}
         disable={desable}
       />
-
       <GetProfile profile={picModal} setProfile={setPicModal} changeProfile={changeProfile}/>
-
-      
     </SafeAreaView>
   )
 }

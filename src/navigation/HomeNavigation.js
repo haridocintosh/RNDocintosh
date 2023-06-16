@@ -85,7 +85,7 @@ const HomeNavigation = () => {
              headerStyle: {backgroundColor: '#071B36'},
              headerTintColor: '#fff',
              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={{marginRight:5}} >
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight:5}} >
                    {Icon('AntDesign','close',25,'#fff')}
                  </TouchableOpacity>
                 )

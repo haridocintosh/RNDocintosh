@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView ,TextInput,Image,TouchableOpacity,ImageBackground, ScrollView,Animated,Share} from 'react-native'
+import { View, Text,SafeAreaView ,TextInput,Image,TouchableOpacity,Modal,ImageBackground, ScrollView,Animated,Share} from 'react-native'
 import React,{useState, useRef} from 'react';
 import {styles} from './CommunityStyles'
 import LinearGradient from 'react-native-linear-gradient';
@@ -13,7 +13,8 @@ import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "
 const JionCommunity = ({navigation}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
-    const [report , setReport] = useState(true);
+    const [reportSelect,setReportSelect] = useState();
+    const [modalVisible, setModalVisible] = useState(false);
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
     const [threadOptionModal,setThreadOptionModal] = useState(false);
     const [isOpen, setIsOpen]     = useState(false);
@@ -37,8 +38,7 @@ const JionCommunity = ({navigation}) => {
         extrapolate: 'clamp',
     });
 
-    const handleTab = (val) => {
-    }
+    
     const handleCommunityModal = () => {
         setCmtyPageOptions(!cmtyPageOptions);
     }
@@ -73,6 +73,40 @@ const JionCommunity = ({navigation}) => {
           alert(error.message);
         }
     };
+
+    const handleSelect = (val) => {
+        switch (val) {
+            case '1':
+                setReportSelect("Harassment or Bullying");
+                break;
+            case '2':
+                setReportSelect("Hate Speech");
+                break;
+            case '3':
+                setReportSelect("Spams");
+                break;
+            case '4':
+                setReportSelect("Voilation");
+                break;
+            case '5':
+                setReportSelect("Nudity or Sexual Activity");
+                break;
+            case '6':
+                setReportSelect("False Information");
+                break;
+            case '7':
+                setReportSelect("Unauthorized Sales");
+                break;
+            default:
+                break;
+        }
+        setModalVisible(true)
+    }
+
+    const handleSend = async() => {
+            navigation.navigate("ReportTrack", {reportSelect});
+      }
+    console.log("reportSelect",reportSelect);
 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
@@ -187,31 +221,31 @@ const JionCommunity = ({navigation}) => {
                     <BottomSheetScrollView keyboardShouldPersistTaps='handled'>
                         <View style={styles.JCBScontainer}>
                             <Text style={styles.JCBSTitle}>What’s going wrong?</Text>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("1")}>
                                 <Text style={styles.JCBSreportSelect}>Harassment or Bullying</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("2")}>
                                 <Text style={styles.JCBSreportSelect}>Hate Speech</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("3")}>
                                 <Text style={styles.JCBSreportSelect}>Spams</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("4")}>
                                 <Text style={styles.JCBSreportSelect}>Voilation</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("5")}>
                                 <Text style={styles.JCBSreportSelect}>Nudity or Sexual Activity</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("6")}>
                                 <Text style={styles.JCBSreportSelect}>False Information</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.JCBSreportSelectContainer}>
+                            <TouchableOpacity style={styles.JCBSreportSelectContainer} onPress={() =>handleSelect("7")}>
                                 <Text style={styles.JCBSreportSelect}>Unauthorized Sales</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
@@ -220,6 +254,31 @@ const JionCommunity = ({navigation}) => {
                     </BottomSheetScrollView>
             </BottomSheetModal>
         </BottomSheetModalProvider>
+        <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                <Text style={styles.textBold}>Are You Sure?</Text>
+                <Text style={styles.textNormal}>Dou you what report on this post?</Text>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity 
+                    style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
+                    onPress={() =>{setModalVisible(false)}}>
+                    <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
+                    </TouchableOpacity>
+                    <Text>{"        "}</Text>
+                    <TouchableOpacity 
+                    style={[styles.buttonsDesign,styles.RightButtonsDesign]}
+                    onPress={() => handleSend()}>
+                    <Text style={[styles.textBold,styles.RightText]}>send</Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+            </View>
+        </Modal>
     </SafeAreaView>
   )
 }

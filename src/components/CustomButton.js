@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-export default function CustomButton({label, onPress}) {
+export default function CustomButton({label,onPress,style}) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -12,9 +12,11 @@ export default function CustomButton({label, onPress}) {
         height:48,
         width:"100%",
         lineHeight:48,
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        alignSelf:'center',
+        ...style
       }}>
       <Text
         style={{

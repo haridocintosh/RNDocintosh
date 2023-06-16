@@ -49,7 +49,11 @@ const CommunityNavigation = () => {
         <Stack.Screen name="CommunityUploadImage" component={CommunityUploadImage} options={showHeaderItem}/>
         <Stack.Screen name="CommunityDetailsPages" component={CommunityDetailsPages} />
         <Stack.Screen name="InvitePeers" component={InvitePeers} options={showHeaderItem}/>
-        <Stack.Screen name='ContactPermissionSkip' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
+        <Stack.Screen name='InvitePeersSkip' component={InvitePeers}  options={{ 
+          title: 'Invite Peers' , 
+          headerShown: true, 
+          headerStyle: { backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
               headerRight:() => (
                 <Text onPress={() => handleMessage()} style={{color:"#2376E5"}}>Skip</Text>)
               }}/> 

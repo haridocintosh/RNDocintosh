@@ -23,11 +23,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
 
-const HomeScreen = ({navigation,route})=> {
+const HomeScreen = ({navigation})=> {
   const isFocused = useIsFocused();
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const { width, height} = Dimensions.get('window');
+  const {width, height} = Dimensions.get('window');
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState();
   const [resData, setResData]  = useState();
@@ -38,7 +38,7 @@ const HomeScreen = ({navigation,route})=> {
   const [currentPage, setCurrentPage] = useState(1);
   const [bottumLoader, setBottumLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [refresh, setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false);
 
   const press = () => {
     ref.current.scrollToIndex({ animated: true, index: 5 });
@@ -194,7 +194,7 @@ const HomeScreen = ({navigation,route})=> {
         <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
             <View style={styles.useInfoLhs} >
-              <FastImage style={styles.ProfilePic} source={{ uri: item?.profileimage, priority: FastImage.priority.normal}}/>
+              <FastImage style={styles.ProfilePic} source={{uri: item?.profileimage, priority: FastImage.priority.normal}}/>
               <View style={{marginLeft:5}}>
                 <Text style={styles.UserInfoName}>
                   {item?.utitle} {item?.first_name} {item?.last_name} {Icon('MaterialCommunityIcons','check-decagram',12,'#0F9C69')}

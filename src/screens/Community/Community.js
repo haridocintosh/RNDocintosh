@@ -14,7 +14,6 @@ const refInput = useRef(null);
     // refInput.current.focue();
   } 
 
-
   const onChangeText = async (text) => {
     setInputText(text)
   }
@@ -49,7 +48,7 @@ const refInput = useRef(null);
           <View style={styles.recomandedUsersPic}>
           <Image source={require('../../assets/images/CommunityPPic1.png')} style={styles.UsersProfilePic}/>
             <View style={styles.userInfo}>
-              <Text style={styles.hospitalName}>AIMS Hospital </Text>
+              <Text style={styles.hospitalName}>AIMS Hospital</Text>
               <Text style={styles.groupsText}>3 Groups</Text>
             </View>
           </View>
@@ -82,7 +81,7 @@ const refInput = useRef(null);
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("JionCommunity")}>
             <Text style={styles.joinText}>
-              {Icon('Entypo','plus',13,'#2376E5')} Join</Text>
+            {Icon('Entypo','plus',13,'#2376E5')} Join</Text>
           </TouchableOpacity>
         </View>
 

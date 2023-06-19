@@ -12,10 +12,8 @@ const InvitePeers = ({navigation,route}) => {
       navigation.navigate('CommunityDetailsPages')
     }
 
-    const handleOtherProfile = () => {
+    const handleOtherProfile = () => {};
 
-    };
-    
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6", padding:15}}>
       <Text style={styles.IPTitle}>{title}</Text>

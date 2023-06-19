@@ -3,6 +3,7 @@ import { View,SafeAreaView, ScrollView,Text,Image, TextInput, } from 'react-nati
 import Entypo from 'react-native-vector-icons/Entypo'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native';
+import { Icon } from '../../navigation/ReuseLogics';
 
 const ContactScreen = () => {
   return (
@@ -22,8 +23,7 @@ const ContactScreen = () => {
 <View>
 <View style={{borderRadius:50, backgroundColor:'#ffff', width:64, height:64}}>
 <View style={{margin:20}}>
-<Entypo name="mail" size={26} color="#51668A" />
-
+{Icon("Entypo","mail",26,"#51668A")}
 </View>
 
 </View>
@@ -38,9 +38,7 @@ const ContactScreen = () => {
 
 <View style={{borderRadius:50, backgroundColor:'#ffff', width:64, height:64}}>
 <View style={{margin:20}}>
-<FontAwesome name="phone" size={26} color="#51668A" />
-
-
+{Icon("FontAwesome","phone",26,"#51668A")}
 </View>
 <Text style={{alignSelf:'center', fontFamily:'PlusJakartaSans-Regular', color: '#013F60'}}>Call Us</Text>
 </View>

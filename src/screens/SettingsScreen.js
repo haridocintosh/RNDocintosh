@@ -3,6 +3,7 @@ import { View, Text , StyleSheet} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { Icon } from '../navigation/ReuseLogics';
 
 const SettingsScreen = ({navigation}) => {
   useEffect(()=>{
@@ -11,7 +12,7 @@ const SettingsScreen = ({navigation}) => {
   return (
     <View style={{flex:1,padding:25}}>
       <View style={{flexDirection:'row'}}>
-      <Fontisto name="locked" size={22} color="black" />
+        {Icon("Fontisto","locked",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Profile & Privacy Settings</Text>
         </TouchableOpacity>
@@ -19,7 +20,7 @@ const SettingsScreen = ({navigation}) => {
       </View>
       <View style={styles.line}/>
       <View style={{flexDirection:'row'}}>
-      <Ionicons name="person" size={22} color="black" />
+        {Icon("Ionicons","person",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Account Settings</Text>
         </TouchableOpacity>
@@ -27,7 +28,7 @@ const SettingsScreen = ({navigation}) => {
       </View>
       <View style={styles.line}/>
       <View style={{flexDirection:'row'}}>
-      <Fontisto name="locked" size={22} color="black" />
+        {Icon("Fontisto","locked",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Saved Post</Text>
         </TouchableOpacity>
@@ -35,7 +36,7 @@ const SettingsScreen = ({navigation}) => {
       </View>
       <View style={styles.line}/>
       <View style={{flexDirection:'row'}}>
-      <Fontisto name="locked" size={22} color="black" />
+        {Icon("Fontisto","locked",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Block list</Text>
         </TouchableOpacity>
@@ -43,7 +44,7 @@ const SettingsScreen = ({navigation}) => {
       </View>
       <View style={styles.line}/>
       <View style={{flexDirection:'row'}}>
-      <Fontisto name="locked" size={22} color="black" />
+      {Icon("Fontisto","locked",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Activity</Text>
         </TouchableOpacity>
@@ -51,7 +52,7 @@ const SettingsScreen = ({navigation}) => {
       </View>
       <View style={styles.line}/>
       <View style={{flexDirection:'row'}}>
-      <Fontisto name="locked" size={22} color="black" />
+      {Icon("Fontisto","locked",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Notification Settings</Text>
         </TouchableOpacity>
@@ -59,7 +60,7 @@ const SettingsScreen = ({navigation}) => {
       </View>
       <View style={styles.line}/>
       <View style={{flexDirection:'row'}}>
-      <Fontisto name="locked" size={22} color="black" />
+      {Icon("Fontisto","locked",22,"#000")}
         <TouchableOpacity>
           <Text style={{paddingLeft:17,fontSize:16, fontWeight:'500',marginTop:4 }}>Deactivate & Delete Account</Text>
         </TouchableOpacity>

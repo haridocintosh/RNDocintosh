@@ -20,6 +20,7 @@ import CommunityDetailsPages from '../screens/Community/CreateCommunity/Communit
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import InvitePeers from '../screens/Community/InvitePeers';
+import About from '../screens/Community/About';
 
 
 const CommunityNavigation = () => {
@@ -49,6 +50,7 @@ const CommunityNavigation = () => {
         <Stack.Screen name="CommunityUploadImage" component={CommunityUploadImage} options={showHeaderItem}/>
         <Stack.Screen name="CommunityDetailsPages" component={CommunityDetailsPages} />
         <Stack.Screen name="InvitePeers" component={InvitePeers} options={showHeaderItem}/>
+        <Stack.Screen name="About" component={About} />
         <Stack.Screen name='InvitePeersSkip' component={InvitePeers}  options={{ 
           title: 'Invite Peers' , 
           headerShown: true, 

@@ -9,7 +9,6 @@ import CommunityPageOptionsModal from './CommunityPageOptionsModal';
 import { Icon } from '../../navigation/ReuseLogics';
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 
-
 const JionCommunity = ({navigation}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
@@ -37,11 +36,11 @@ const JionCommunity = ({navigation}) => {
         outputRange: [1, 0.8, 0.6, 0.4, 0],
         extrapolate: 'clamp',
     });
-
     
     const handleCommunityModal = () => {
         setCmtyPageOptions(!cmtyPageOptions);
     }
+
     // useEffect(() => {
     //     navigation.setOptions({ title: ''});
     // },[])
@@ -115,7 +114,7 @@ const JionCommunity = ({navigation}) => {
                 <LinearGradient colors={["#000", "transparent"]}>
                     <View style={styles.joinHeaderView}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
-                            {Icon('Ionicons','arrow-back',25,'#fff')}
+                                {Icon('Ionicons','arrow-back',25,'#fff')}
                         </TouchableOpacity>
                         <View style={{flexDirection:'row'}}>
                             <TouchableOpacity style={{marginRight:15}}>
@@ -150,11 +149,21 @@ const JionCommunity = ({navigation}) => {
                         width:100,
                         borderRadius:15/2,
                         backgroundColor:'#2C8892',
-                        color:'#fff',
                     }}
                     titleStyle={{
                         color:'#fff',
                     }}/>
+                {/* <Button title={"Joined"}
+                    buttonStyle={{
+                        width:100,
+                        borderRadius:15/2,
+                        backgroundColor:'#fff',
+                        borderColor:'#2C8892',
+                        borderWidth:2,
+                    }}
+                    titleStyle={{
+                        color:'#2C8892',
+                    }}/> */}
             </View>
         </Animated.View>
         <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions} handleReport={handlePresentModal}/>
@@ -216,7 +225,7 @@ const JionCommunity = ({navigation}) => {
                 ref={bottomSheetModalRef}
                 index={1}
                 snapPoints={snapPoints}
-                backgroundStyle={{ borderRadius: 30 }}
+                backgroundStyle={{borderRadius: 30}}
                 onDismiss={() => setIsOpen(true)}>
                     <BottomSheetScrollView keyboardShouldPersistTaps='handled'>
                         <View style={styles.JCBScontainer}>
@@ -249,7 +258,6 @@ const JionCommunity = ({navigation}) => {
                                 <Text style={styles.JCBSreportSelect}>Unauthorized Sales</Text>
                                 {Icon("Entypo","chevron-thin-right",25,'#071B36')}
                             </TouchableOpacity>
-
                         </View>
                     </BottomSheetScrollView>
             </BottomSheetModal>

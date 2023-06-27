@@ -6,7 +6,8 @@ import GetProfile from '../../EditProfile/Modals/GetProfile';
 import { SingleImage } from '../../../navigation/ReuseLogics';
 import Button from '../../../utils/Button';
 
-const CommunityUploadImage = ({navigation}) => {
+const CommunityUploadImage = ({navigation,route}) => {
+  const {allData} = route?.params;
   const [desable, setDesable] = useState(true);
   const [profilePic, setProfilePic] = useState(null);
   const [bgPic, setBgPic] = useState(null);
@@ -30,6 +31,12 @@ const CommunityUploadImage = ({navigation}) => {
     })
   }
 
+  const  handleSave = () =>{
+    const data = {...allData,group_icon:profilePic, cover_image:bgPic}
+    navigation.navigate('InvitePeersSkip',
+    {title:'Add Members to this Community',data})
+  } 
+
   useEffect(() =>{
     navigation.setOptions({ title:'Create Community'});
     if(bgPic && profilePic){
@@ -41,7 +48,7 @@ const CommunityUploadImage = ({navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#ecf2f6', padding: 20}}>
       <Text style={styles.UploadTitle}>Add Images to this Community</Text>
       <Text style={styles.UploadSubTitle}>
-      Use image that represent what this Page is about, like a logo. These will appear in serch results.
+          Use image that represent what this Page is about, like a logo. These will appear in serch results.
       </Text>
       
       <View>
@@ -71,7 +78,7 @@ const CommunityUploadImage = ({navigation}) => {
           width: '100%',
           alignSelf: 'center',
         }}
-        onPress={() => navigation.navigate('InvitePeersSkip',{title:'Add Members to this Community'})}
+        onPress={() => handleSave()}
         disable={desable}
       />
       <GetProfile profile={picModal} setProfile={setPicModal} changeProfile={changeProfile}/>

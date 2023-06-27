@@ -44,6 +44,7 @@ export const styles = StyleSheet.create({
         width:'100%',
         marginBottom:20
     },
+    
     inputTextArea:{
         alignSelf:'center',
         borderColor:'#071B36',
@@ -188,7 +189,8 @@ export const styles = StyleSheet.create({
     //     borderColor: '#cc0000'
     // },
     errorMsg:{
-        color:'#cc0000'
+        color:'#cc0000',
+        fontFamily:"Inter-SemiBold",
     },
     datePickerStyle:{
         width:'100%'

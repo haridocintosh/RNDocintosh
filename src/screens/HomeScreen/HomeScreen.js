@@ -149,7 +149,6 @@ const HomeScreen = ({navigation})=> {
         });
       }
       const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 3 : 1,speciality_id:reData?.speciality_id};
-     
       const result = await dispatch(userPostData(postDetails));
       setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);

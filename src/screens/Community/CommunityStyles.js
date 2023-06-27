@@ -395,7 +395,8 @@ export const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: "500",
       fontFamily: "PlusJakartaSans-Regular",
-      color:'#071B36'
+      color:'#071B36',
+      maxWidth:250
     },
     followerSpecialist: {
       fontSize: 12,

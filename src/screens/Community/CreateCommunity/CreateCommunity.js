@@ -3,50 +3,84 @@ import React,{useEffect,useState} from 'react'
 import { styles } from './CreateCommunityStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Button from '../../../utils/Button';
+import {useForm, Controller} from 'react-hook-form';
 
 
 const CreateCommunity = ({navigation}) => {
-    const [text, setText] = useState();
+    const [privacyError, setPrivacyError] = useState(false);
     const [spl, setSpl] = useState([
+        {label: 'Public', value: '0'},
         {label: 'Private', value: '1'},
-        {label: 'Public', value: '2'},
     ]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
+    const { control, handleSubmit, reset, formState: { errors }} = useForm({mode: 'onBlur'});
     
-    const selectedspl=(e)=>{
-        console.log("option",e);
-      }
+    // const selectedspl=(e)=>{
+    //     console.log("option",e);
+    //   }
+
 
     useEffect(() =>{
         navigation.setOptions({ title:'Create Community'});
     });
+    const onSubmit = async (data) => {
+      if(value){
+        const allData = {...data, privacy_type:value }
+        setPrivacyError(false)
+        navigation.navigate('CommunityUploadImage',{allData})
+      }else{
+        setPrivacyError(true)
+      }
+      
+    }
+    
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:20}}>
       <View style={styles.inputContainer}>
-        
-        <Text style={styles.inputLabel}>Community Name*</Text>
-        <TextInput
-            style={styles.input}
-            onChangeText={setText}
-            value={text}
-            // placeholder="PediaSure India"
-        />
+          <Text style={styles.inputLabel}>Community Name*</Text>
+          <Controller
+              control={control}        
+              name="community_name"    
+              rules={{
+              required: true,
+              }}  
+              render={({field: {onChange, value, onBlur}}) => (
+              <TextInput
+              style={styles.input}
+                  value={value}            
+                  onBlur={onBlur}            
+                  onChangeText={value => onChange(value)} 
+              />
+              )}  
+          />
+        {errors.community_name && <Text style={styles.errorMsg}>Community field is required!</Text>}
         <Text style={styles.bottomTitle}>Provide a community name and optional group icon</Text>
       </View>
-      
+
       <View style={styles.inputContainer}>
-        <TextInput
-            style={styles.inputTextArea}
-            onChangeText={setText}
-            value={text}
-            placeholder="Description"
-            multiline={true}
-            maxLength={2000}
-        />
+          <Controller
+              control={control}        
+              name="description"    
+              rules={{
+              required: true,
+              }}  
+              render={({field: {onChange, value, onBlur}}) => (
+                <TextInput
+                    style={styles.inputTextArea}
+                    onChangeText={onChange}
+                    value={value}
+                    onBlur={onBlur}  
+                    placeholder="Description"
+                    multiline={true}
+                    maxLength={2000}
+                />
+              )}  
+          />
+        {errors.description && <Text style={styles.errorMsg}>Description field is required!</Text>}
         <Text style={styles.wordsCount}>0/2000</Text>
       </View>
-
+        
       <View style={styles.inputContainer}>
         <DropDownPicker style={styles.customInputVerify}
             open={open}
@@ -64,9 +98,9 @@ const CreateCommunity = ({navigation}) => {
                 color:"#687690",
                 fontFamily: 'PlusJakartaSans-Regular',
             }}
-            onChangeValue={(value) => {
-                selectedspl(value)
-            }}
+            // onChangeValue={(value) => {
+            //     selectedspl(value)
+            // }}
 
             listItemLabelStyle={{
                 color: "#687690",
@@ -85,13 +119,14 @@ const CreateCommunity = ({navigation}) => {
                 borderBottomColor: "#687690"
             }}
         />
+        {privacyError && <Text style={styles.errorMsg}>Choose Privacy is required!</Text>}
       </View>
       <Button 
         title={"Save & Continue"} 
         color={"#fff"} 
         bgColor={"#2C8892"} 
         customStyle={{position:'absolute',bottom:10,width:'100%',alignSelf:'center'}}
-        onPress={() => navigation.navigate('CommunityUploadImage')}
+        onPress={handleSubmit(onSubmit)}
       />
     </SafeAreaView>
   )

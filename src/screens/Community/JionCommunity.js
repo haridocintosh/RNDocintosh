@@ -16,7 +16,7 @@ const JionCommunity = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
     const [threadOptionModal,setThreadOptionModal] = useState(false);
-    const [isOpen, setIsOpen]     = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
@@ -52,6 +52,7 @@ const JionCommunity = ({navigation}) => {
 
     function handlePresentModal() {
         bottomSheetModalRef.current?.present();
+        setCmtyPageOptions(false)
     }
 
     const onShare = async (post_id) => {
@@ -99,7 +100,7 @@ const JionCommunity = ({navigation}) => {
             default:
                 break;
         }
-        setModalVisible(true)
+        setModalVisible(true);
     }
 
     const handleSend = async() => {
@@ -184,17 +185,14 @@ const JionCommunity = ({navigation}) => {
                 {index ? 
                     <Threads 
                         modalVisible={threadOptionModal}
-                        setModalVisible={setThreadOptionModal}
-                    /> 
+                        setModalVisible={setThreadOptionModal}/> 
                 : 
                     <FocusGroup
                         modalVisible={threadOptionModal}
-                        setModalVisible={setThreadOptionModal}
-                    />
+                        setModalVisible={setThreadOptionModal}/>
                 }
             </View>
         </ScrollView>
-
 
         <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
             <View style={styles.UserInnerComments}>
@@ -265,8 +263,7 @@ const JionCommunity = ({navigation}) => {
         <Modal
             animationType="fade"
             transparent={true}
-            visible={modalVisible}
-            >
+            visible={modalVisible}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                 <Text style={styles.textBold}>Are You Sure?</Text>

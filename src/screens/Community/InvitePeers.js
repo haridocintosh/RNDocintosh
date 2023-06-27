@@ -7,6 +7,8 @@ import { getLocalData } from '../../apis/GetLocalData';
 import { GetSpecialityWiseUserAPI } from './CreateCommunity/CommunitySlice';
 import { useDispatch } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
+import { addCommunityApi } from './JoinCommunitySlice';
+
 
 const InvitePeers = ({navigation,route}) => {
     const [userApi,setUserApi] = useState();
@@ -19,18 +21,23 @@ const InvitePeers = ({navigation,route}) => {
     const dispatch = useDispatch();
     const ref = useRef(null);
 
-    const handleRedirect = () => {
-      navigation.navigate('CommunityDetailsPages');
+    const handleRedirect = async () => {
+      const mergeUpload = {...data, addUser:inviteId,user_id:userData.id,speciality_id:userData?.speciality_id};
+      const uresult = await dispatch(addCommunityApi(mergeUpload));
+      console.log("uresult",uresult);
+      navigation.navigate('Community');
     }
 
     const getInvitePeers = () => {
       getLocalData("USER_INFO").then(async(res) => {
+        setBottumLoader(true);
         setUserData(res?.data);
         const postUpload = {user_id:res?.data?.id,speciality_id:"",pageCounter:1};
         const uresult = await dispatch(GetSpecialityWiseUserAPI(postUpload));
-        setUserApi(uresult?.payload?.result);
-        console.log(uresult.payload.result);
+        const removeSelf = uresult.payload.result.filter((data) => data.id !== res?.data?.id)
+        setUserApi(removeSelf);
         setCurrentPage(uresult?.payload?.pageCounter);
+        setBottumLoader(false);
       })
     };
 
@@ -68,21 +75,16 @@ const InvitePeers = ({navigation,route}) => {
 
     const handleInvite = (id) => {
       let temp = userApi.map((data) => {
-        if (id === data.id) {
-          return { ...data, isSelected: !data.isSelected };
-        }
+        if (id === data.id) return {...data, selected: !data.selected}
         return data;
       });
       setUserApi(temp);
 
       const trueVal = temp
-        .filter((val) => val.isSelected == true)
+        .filter((val) => val.selected == true)
         .map((temp) => temp?.id);
       setInviteId(trueVal)
-      // setInviteId([...inviteId, data]);
     }
-
-    console.log(inviteId);
 
     const renderItem = ({item,index}) => {
       return(
@@ -96,8 +98,8 @@ const InvitePeers = ({navigation,route}) => {
           </View>
           <TouchableOpacity onPress={() => handleInvite(item?.id)}>
               <Text style={styles.joinText}>
-                {Icon('Entypo','plus',13,'#2376E5')} 
-                {inviteId == item?.id ? "Invited" : "Invite"}
+                {Icon('Entypo',item.selected ?'minus' : 'plus',13,'#2376E5')} 
+                {item.selected ? "Invited" : "Invite"}
               </Text>
           </TouchableOpacity>
         </View>

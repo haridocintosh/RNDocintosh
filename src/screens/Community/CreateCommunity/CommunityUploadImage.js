@@ -20,14 +20,30 @@ const CommunityUploadImage = ({navigation,route}) => {
   }
 
   const changeProfile = (arg) => {
-    SingleImage(arg).then((res) => {
+    SingleImage(arg).then(async(res) => {
       setPicModal(!picModal);
-      const data = res?.assets[0];
+      let localUri = res?.assets[0]?.uri;
+      let filename = localUri.split('/').pop();
+      let uriParts = localUri.split('.');
+      let fileType = uriParts[uriParts.length - 1];
+      let formData = new FormData();
+      const imageData = {uri : localUri,name: filename,type: `image/${fileType}`}
       if(position == 'cover'){
-        setBgPic(data.uri);
+        setBgPic(localUri);
+        formData.append('cover_image', imageData);
       }else{
-        setProfilePic(data.uri);
+        setProfilePic(localUri);
+        formData.append('group_icon', imageData);
       } 
+      const responce = await fetch(`https://docintosh.com/ApiController/communityImageUpload`, {
+        method : 'POST',
+        headers:{
+            'Content-Type': 'multipart/form-data'
+        },
+        body :formData
+      });
+      const result=  await responce.json();
+      console.log("result",result);
     })
   }
 

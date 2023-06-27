@@ -4,6 +4,10 @@ export const styles = StyleSheet.create({
     inputContainer:{
         marginBottom:30
     },
+    errorMsg:{
+        color:'#cc0000',
+        fontFamily:"Inter-SemiBold",
+    },
     profileUploadBg:{
         backgroundColor:'#fff',
         height:100,

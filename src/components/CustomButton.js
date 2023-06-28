@@ -7,7 +7,7 @@ export default function CustomButton({label,onPress,style}) {
       onPress={onPress}
       style={{
         borderRadius: 8,
-        marginBottom: 30,
+        marginBottom: 10,
         backgroundColor:"#2C8892",
         height:48,
         width:"100%",

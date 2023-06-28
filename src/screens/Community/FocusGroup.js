@@ -71,7 +71,7 @@ const FocusGroup = ({modalVisible,setModalVisible}) => {
                 </View>
             </View>
           </View>
-          <Entypo name='dots-three-vertical' size={25} color={'#51668A'}/>
+          {Icon("Entypo",'dots-three-vertical',25,"#51668A")}
         </View>
       </Card>
     )

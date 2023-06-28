@@ -90,7 +90,11 @@ export const styles = StyleSheet.create({
     communityNameMembersCount:{
       color:'#51668A',
     },
-    CommunityProfilePic:{
+    
+    CommunityAboutProfilePic:{
+      position:'absolute',
+      bottom:-30,
+      left:30,
       width:60,
       height:60, 
       borderRadius:50,
@@ -391,7 +395,8 @@ export const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: "500",
       fontFamily: "PlusJakartaSans-Regular",
-      color:'#071B36'
+      color:'#071B36',
+      maxWidth:250
     },
     followerSpecialist: {
       fontSize: 12,
@@ -400,7 +405,7 @@ export const styles = StyleSheet.create({
       marginTop: 5,
       fontFamily: "Inter-Regular",
     },
- 
+
     //-----------------------------bottom-shit -------------------
 
     JCBScontainer:{
@@ -475,5 +480,24 @@ export const styles = StyleSheet.create({
   RightText:{
       color:'#fff'
   },
+
+  // ------------------ About page---------------------------
+
+  CommunityProfilePic:{
+    width:60,
+    height:60, 
+    borderRadius:50,
+    borderWidth:4,
+    borderColor:'#fff',
+  },
+  AboutDetailsContainer:{
+    marginTop:50,
+    padding:15
+  },
+  AboutDetailsText:{
+    fontFamily:"Inter-Regular",
+    color:'#071B36',
+    marginBottom:15
+  }
 
 });

@@ -1,31 +1,41 @@
 import { View, Text, StyleSheet, TouchableOpacity,Image } from 'react-native'
 import React, { useState } from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { useNavigation } from '@react-navigation/native';
+import { Icon } from '../../../navigation/ReuseLogics';
+import { useNavigation } from '@react-navigation/native';
 
-const CreateCommunityPageOptionsModal = ({modalVisible}) => {
+const CreateCommunityPageOptionsModal = ({modalVisible,setModalVisible}) => {
+
+  const navigation = useNavigation();
+
+  const handleAbout = () => {
+    navigation.navigate('About');
+    setModalVisible(false);
+  }
+
   return (
     <View style={styles.container}>
         {modalVisible &&
         <View style={styles.optionModal}>
         <View>
-            <TouchableOpacity style={styles.optionList} >
-                <Entypo name="info-with-circle" size={24} color="#45B5C0" style={styles.optionListIcon}/>
+            <TouchableOpacity style={styles.optionList} onPress={() => handleAbout()}>
+                {Icon("Entypo",'info-with-circle',24,"#45B5C0")}
                 <Text style={styles.optionListText}>About</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionList}>
-                <Ionicons name="exit-outline" size={24} color="#45B5C0" style={styles.optionListIcon}/>
-                <Text style={styles.optionListText}>Exit Community</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionList}>
-                <MaterialIcons name="report-problem" size={24} color="#45B5C0" style={styles.optionListIcon}/>
-                <Text style={styles.optionListText}>Report</Text>
+            <TouchableOpacity style={styles.optionList} >
+                {Icon("Entypo",'edit',24,"#45B5C0")}
+                <Text style={styles.optionListText}>Edit Group Info</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.optionList} >
-            <Entypo name="block" size={24} color="#45B5C0" style={styles.optionListIcon}/>
-                <Text style={styles.optionListText}>Block</Text>
+                {Icon("AntDesign","addusergroup",24, "#45B5C0")}
+                <Text style={styles.optionListText}>Group Requests</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionList} >
+                {Icon("FontAwesome","trash",24, "#45B5C0")}
+                <Text style={styles.optionListText}>Delete Group</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionList}>
+                {Icon('Ionicons',"exit-outline",24, "#45B5C0")}
+                <Text style={styles.optionListText}>Exit Community</Text>
             </TouchableOpacity>
         </View>
         </View>}
@@ -63,13 +73,11 @@ export const styles = StyleSheet.create({
     optionListText:{
       color:'#071B36',
       fontFamily:"Inter-Regular",
+      marginLeft:7
     },
     optionListImage:{
       width:15.5,
       height:20.7,
-      marginRight:7
-    },
-    optionListIcon:{
       marginRight:7
     },
   

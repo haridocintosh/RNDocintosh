@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
         color:'#071B36',
         fontFamily: "Inter-Regular",
     },
+    errorMsg:{
+        color:'#cc0000',
+        fontFamily:"Inter-SemiBold",
+    },
     input:{
         height:50,
         borderBottomWidth:1.5,

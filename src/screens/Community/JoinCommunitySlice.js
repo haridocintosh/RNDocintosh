@@ -31,6 +31,23 @@ export const addCommunityApi = createAsyncThunk("addCommunity", async (data)=>{
         return result;
      }
      catch(e){
+        console.log(e);
+     }
+})
+
+export const getCommunityApi = createAsyncThunk("getCommunitylist", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getCommunitylist`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
         console.log(e);;
      }
 })
@@ -41,6 +58,7 @@ export const CommunityPD = createSlice({
     initialState :{
         result   : {},
         CommunityPostData  : {},
+        getCommunityData  : {},
         loading     : false,
         error       : false,
     },
@@ -70,6 +88,20 @@ export const CommunityPD = createSlice({
             state.CommunityPostData    = action.payload;
         })
         builder.addCase(addCommunityApi.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+
+        
+        //-------------------------getCommunityApi----------------------------------
+        builder.addCase(getCommunityApi.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getCommunityApi.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.getCommunityData    = action.payload;
+        })
+        builder.addCase(getCommunityApi.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })

@@ -9,7 +9,7 @@ import CommunityPageOptionsModal from './CommunityPageOptionsModal';
 import { Icon } from '../../navigation/ReuseLogics';
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 
-const JionCommunity = ({navigation}) => {
+const JionCommunity = ({navigation,route}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
     const [reportSelect,setReportSelect] = useState();
@@ -36,11 +36,14 @@ const JionCommunity = ({navigation}) => {
         outputRange: [1, 0.8, 0.6, 0.4, 0],
         extrapolate: 'clamp',
     });
+
+    const {data} = route?.params;
     
     const handleCommunityModal = () => {
         setCmtyPageOptions(!cmtyPageOptions);
     }
 
+    console.log("data",data);
     // useEffect(() => {
     //     navigation.setOptions({ title: ''});
     // },[])
@@ -106,12 +109,11 @@ const JionCommunity = ({navigation}) => {
     const handleSend = async() => {
             navigation.navigate("ReportTrack", {reportSelect});
       }
-    console.log("reportSelect",reportSelect);
 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
-            <ImageBackground source={require("../../assets/images/RectangleBgImage.png")} style={[styles.RectangleBgImage]}>
+            <ImageBackground source={{uri:data?.cover_image}} style={[styles.RectangleBgImage]}>
                 <LinearGradient colors={["#000", "transparent"]}>
                     <View style={styles.joinHeaderView}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -132,9 +134,9 @@ const JionCommunity = ({navigation}) => {
             <View style={styles.communityName}>
                 <View>
                     <Image 
-                        source={require('../../assets/images/CommunityPPic3.png')} 
+                        source={{uri:data?.group_icon}} 
                         style={styles.CommunityProfilePic}/>
-                        <Text style={styles.communityNameText}>AIMS Hospital</Text>
+                        <Text style={styles.communityNameText}>{data?.community_name}</Text>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={styles.communityNameMembersCount}>2.2k </Text>
                             <TouchableOpacity onPress={() => navigation.navigate('Members')}>

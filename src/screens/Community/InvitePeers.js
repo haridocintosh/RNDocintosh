@@ -21,7 +21,10 @@ const InvitePeers = ({navigation,route}) => {
     const dispatch = useDispatch();
     const ref = useRef(null);
 
+    console.log(data);
+
     const handleRedirect = async () => {
+      
       const mergeUpload = {...data, addUser:inviteId,user_id:userData.id,speciality_id:userData?.speciality_id};
       const uresult = await dispatch(addCommunityApi(mergeUpload));
       console.log("uresult",uresult);
@@ -108,7 +111,7 @@ const InvitePeers = ({navigation,route}) => {
   return (
     <SafeAreaView style={{flex:1,backgroundColor:"#ecf2f6",padding:10 }}>
       <Text style={styles.IPTitle}>{title}</Text>
-      <View style={{marginBottom:95}}>
+      <View style= {{marginBottom:title.includes('Community') ? 95 :30}}>
         <FlatList
           ref={ref}
           data={userApi}
@@ -124,10 +127,8 @@ const InvitePeers = ({navigation,route}) => {
           // onScrollBeginDrag={() => setModalVisible(false)}
         />
       </View>
-      {title.includes('Community')? 
+      {title.includes('Community') &&
         <CustomButton label={"Continue"} style={{position:'absolute',bottom:0}} onPress={() => handleRedirect()}/>
-      : 
-        console.log("false")
       }
     </SafeAreaView>
   )

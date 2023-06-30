@@ -20,10 +20,10 @@ const CreateCommunity = ({navigation}) => {
     //     console.log("option",e);
     //   }
 
-
     useEffect(() =>{
-        navigation.setOptions({ title:'Create Community'});
+        navigation.setOptions({title:'Create Community'});
     });
+
     const onSubmit = async (data) => {
       if(value){
         const allData = {...data, privacy_type:value }
@@ -32,7 +32,6 @@ const CreateCommunity = ({navigation}) => {
       }else{
         setPrivacyError(true)
       }
-      
     }
     
   return (
@@ -48,9 +47,9 @@ const CreateCommunity = ({navigation}) => {
               render={({field: {onChange, value, onBlur}}) => (
               <TextInput
               style={styles.input}
-                  value={value}            
-                  onBlur={onBlur}            
-                  onChangeText={value => onChange(value)} 
+                value={value}            
+                onBlur={onBlur}            
+                onChangeText={value => onChange(value)} 
               />
               )}  
           />

@@ -12,9 +12,10 @@ const CreateFocusGroup = ({navigation}) => {
     const [desable, setDesable] = useState(true);
     const [picModal, setPicModal] = useState(null);
     const [profilePic, setProfilePic] = useState(null);
+    const [profileUrl, setProfileUrl] = useState(null);
     const [spl, setSpl] = useState([
+        {label: 'Public', value: '0'},
         {label: 'Private', value: '1'},
-        {label: 'Public', value: '2'},
     ]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState();
@@ -39,15 +40,16 @@ const CreateFocusGroup = ({navigation}) => {
         const imageData = {uri : localUri,name: filename,type: `image/${fileType}`}
         setProfilePic(localUri);
         formData.append('group_icon', imageData);
-        // const responce = await fetch(`https://docintosh.com/ApiController/communityImageUpload`, {
-        //   method : 'POST',
-        //   headers:{
-        //       'Content-Type': 'multipart/form-data'
-        //   },
-        //   body :formData
-        // });
-        // const result=  await responce.json();
-        // console.log("result",result);
+        const responce = await fetch(`https://docintosh.com/ApiController/communityImageUpload`, {
+          method : 'POST',
+          headers:{
+              'Content-Type': 'multipart/form-data'
+          },
+          body :formData
+        });
+        const result=  await responce.json();
+        console.log("result",result);
+        setProfileUrl(result?.groupImage)
       })
     }
     const com_name = watch("community_name")
@@ -61,9 +63,10 @@ const CreateFocusGroup = ({navigation}) => {
     },[profilePic,value,com_name,grp_name,desc]);
 
 
-    const onSubmit = (data) => {
+    const onSubmit = (inpuDdata) => {
+      const data = {...inpuDdata,privacy_type:value,group_icon:profileUrl}
       console.log(data);
-      // navigation.navigate('InvitePeers',{title:'Add Members to this Focus Group'})
+      navigation.navigate('InvitePeers',{title:'Add Members to this Focus Group',data})
     }
    
   return (

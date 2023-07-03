@@ -10,7 +10,9 @@ const CommunityUploadImage = ({navigation,route}) => {
   const {allData} = route?.params;
   const [desable, setDesable] = useState(true);
   const [profilePic, setProfilePic] = useState(null);
+  const [profileUrl, setProfileUrl] = useState(null);
   const [bgPic, setBgPic] = useState(null);
+  const [bgUrl, setBgUrl] = useState(null);
   const [picModal, setPicModal] = useState(false);
   const [position, setPosition] = useState(false);
 
@@ -18,6 +20,7 @@ const CommunityUploadImage = ({navigation,route}) => {
     setPicModal(!picModal);
     setPosition(select)
   }
+  console.log("url",bgUrl,profileUrl);
 
   const changeProfile = (arg) => {
     SingleImage(arg).then(async(res) => {
@@ -44,11 +47,15 @@ const CommunityUploadImage = ({navigation,route}) => {
       });
       const result=  await responce.json();
       console.log("result",result);
+      position == 'cover'?
+      setBgUrl(result?.coverImage)
+      :
+      setProfileUrl(result?.groupImage)
     })
   }
 
   const  handleSave = () =>{
-    const data = {...allData,group_icon:profilePic, cover_image:bgPic}
+    const data = {...allData,group_icon:profileUrl, cover_image:bgUrl}
     navigation.navigate('InvitePeersSkip',
     {title:'Add Members to this Community',data})
   } 

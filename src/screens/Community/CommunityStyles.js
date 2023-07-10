@@ -45,7 +45,8 @@ export const styles = StyleSheet.create({
     UsersProfilePic:{
         width:40,
         height:40,
-        borderRadius:50
+        borderRadius:50,
+        borderWidth:1
     },
     hospitalName:{
         fontFamily:'Inter-Regular',

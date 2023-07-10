@@ -52,6 +52,23 @@ export const getCommunityApi = createAsyncThunk("getCommunitylist", async (data)
      }
 })
 
+export const addUserCommunityAPI = createAsyncThunk("addUserCommunity", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/addUserCommunity`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 
 export const CommunityPD = createSlice({
     name : "pollsData",
@@ -59,6 +76,7 @@ export const CommunityPD = createSlice({
         result   : {},
         CommunityPostData  : {},
         getCommunityData  : {},
+        addCommunityData  : {},
         loading     : false,
         error       : false,
     },
@@ -102,6 +120,19 @@ export const CommunityPD = createSlice({
             state.getCommunityData    = action.payload;
         })
         builder.addCase(getCommunityApi.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+
+        //-------------------------addUserCommunityAPI----------------------------------
+        builder.addCase(addUserCommunityAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(addUserCommunityAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.addCommunityData = action.payload;
+        })
+        builder.addCase(addUserCommunityAPI.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })

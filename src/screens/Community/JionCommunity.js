@@ -8,6 +8,11 @@ import FocusGroup from './FocusGroup';
 import CommunityPageOptionsModal from './CommunityPageOptionsModal';
 import { Icon } from '../../navigation/ReuseLogics';
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
+import { SvgUri } from 'react-native-svg';
+import { getLocalData } from '../../apis/GetLocalData';
+import { addUserCommunityAPI } from './JoinCommunitySlice';
+import { useDispatch } from 'react-redux';
+
 
 const JionCommunity = ({navigation,route}) => {
     const [text , setText] = useState();
@@ -17,6 +22,7 @@ const JionCommunity = ({navigation,route}) => {
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
     const [threadOptionModal,setThreadOptionModal] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch()
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
@@ -38,12 +44,12 @@ const JionCommunity = ({navigation,route}) => {
     });
 
     const {data} = route?.params;
+    // console.log("data",data);
     
     const handleCommunityModal = () => {
         setCmtyPageOptions(!cmtyPageOptions);
     }
 
-    console.log("data",data);
     // useEffect(() => {
     //     navigation.setOptions({ title: ''});
     // },[])
@@ -107,13 +113,20 @@ const JionCommunity = ({navigation,route}) => {
     }
 
     const handleSend = async() => {
-            navigation.navigate("ReportTrack", {reportSelect});
-      }
+        navigation.navigate("ReportTrack", {reportSelect});
+    }
+    const handleJoin = (data) => {
+        getLocalData("USER_INFO").then(async(res) => {
+            const postData = {community_id:data?.id,user_id:res?.data?.id}
+            const result = await dispatch(addUserCommunityAPI(postData));
+            console.log("result",result?.payload);
+        })
+    }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
-            <ImageBackground source={{uri:data?.cover_image}} style={[styles.RectangleBgImage]}>
+            <ImageBackground source={{uri:data?.coverImage}} style={[styles.RectangleBgImage]}>
                 <LinearGradient colors={["#000", "transparent"]}>
                     <View style={styles.joinHeaderView}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -130,29 +143,40 @@ const JionCommunity = ({navigation,route}) => {
                     </View>
                 </LinearGradient>
             </ImageBackground>
+            
            
             <View style={styles.communityName}>
                 <View>
+                {data?.groupImage?.includes(".svg") ?
+                    <SvgUri
+                      uri={data?.groupImage}
+                      style={styles.CommunityProfilePic}
+                    />
+                    :
                     <Image 
-                        source={{uri:data?.group_icon}} 
-                        style={styles.CommunityProfilePic}/>
-                        <Text style={styles.communityNameText}>{data?.community_name}</Text>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Text style={styles.communityNameMembersCount}>2.2k </Text>
-                            <TouchableOpacity onPress={() => navigation.navigate('Members')}>
-                                <Text style={styles.communityNameMembers}>Member</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft:10}} onPress={() => onShare("item?.post_id")}>
-                                {Icon('FontAwesome5','share',20,'#51668A')}
-                            </TouchableOpacity>
-                        </View>
+                        source={{uri:data?.groupImage}} 
+                        style={styles.CommunityProfilePic}
+                    />
+                  }
+                    <Text style={styles.communityNameText}>{data?.community_name}</Text>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.communityNameMembersCount}>2.2k </Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Members')}>
+                            <Text style={styles.communityNameMembers}>Member</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{marginLeft:10}} onPress={() => onShare("item?.post_id")}>
+                            {Icon('FontAwesome5','share',20,'#51668A')}
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <Button title={"Join"}
+                onPress={() => handleJoin(data)}
                     buttonStyle={{
                         width:100,
                         borderRadius:15/2,
                         backgroundColor:'#2C8892',
                     }}
+                    disabled={false}
                     titleStyle={{
                         color:'#fff',
                     }}/>

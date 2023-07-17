@@ -48,7 +48,7 @@ export const getCommunityApi = createAsyncThunk("getCommunitylist", async (data)
         return result;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })
 
@@ -65,7 +65,24 @@ export const addUserCommunityAPI = createAsyncThunk("addUserCommunity", async (d
         return result;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
+     }
+})
+
+export const specialityWiseUserLimitAPI = createAsyncThunk("specialityWiseUserLimit", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/specialityWiseUserLimit`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);
      }
 })
 
@@ -77,6 +94,7 @@ export const CommunityPD = createSlice({
         CommunityPostData  : {},
         getCommunityData  : {},
         addCommunityData  : {},
+        specialityWUL  : {},
         loading     : false,
         error       : false,
     },
@@ -133,6 +151,19 @@ export const CommunityPD = createSlice({
             state.addCommunityData = action.payload;
         })
         builder.addCase(addUserCommunityAPI.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+
+        //-------------------------specialityWiseUserLimitAPI----------------------------------
+        builder.addCase(specialityWiseUserLimitAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(specialityWiseUserLimitAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.specialityWUL = action.payload;
+        })
+        builder.addCase(specialityWiseUserLimitAPI.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })

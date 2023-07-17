@@ -1,5 +1,5 @@
 import { View, Text,SafeAreaView ,TextInput,Image,TouchableOpacity,Modal,ImageBackground, ScrollView,Animated,Share} from 'react-native'
-import React,{useState, useRef} from 'react';
+import React,{useState, useRef,useEffect} from 'react';
 import {styles} from './CommunityStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { Button } from 'react-native-elements';
@@ -13,7 +13,6 @@ import { getLocalData } from '../../apis/GetLocalData';
 import { addUserCommunityAPI } from './JoinCommunitySlice';
 import { useDispatch } from 'react-redux';
 
-
 const JionCommunity = ({navigation,route}) => {
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
@@ -22,7 +21,9 @@ const JionCommunity = ({navigation,route}) => {
     const [cmtyPageOptions , setCmtyPageOptions] = useState(false);
     const [threadOptionModal,setThreadOptionModal] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isJoin, setIsJoin] = useState(false);
     const dispatch = useDispatch()
+    const {data,getCommunityList} = route?.params;
 
     const scrollPosition = useRef(new Animated.Value(0)).current;
     const minHeaderHeight = 0;
@@ -42,17 +43,15 @@ const JionCommunity = ({navigation,route}) => {
         outputRange: [1, 0.8, 0.6, 0.4, 0],
         extrapolate: 'clamp',
     });
-
-    const {data} = route?.params;
-    // console.log("data",data);
     
     const handleCommunityModal = () => {
         setCmtyPageOptions(!cmtyPageOptions);
     }
 
-    // useEffect(() => {
-    //     navigation.setOptions({ title: ''});
-    // },[])
+    useEffect(() => {
+        const arr = [data?.userlist.split(",")];
+        arr[0].includes(data?.user_id) ? setIsJoin(false): setIsJoin(true);
+    },[])
 
     const handleOnScroll = () => {
         setCmtyPageOptions(false);
@@ -116,16 +115,19 @@ const JionCommunity = ({navigation,route}) => {
         navigation.navigate("ReportTrack", {reportSelect});
     }
     const handleJoin = (data) => {
+        setIsJoin(!isJoin)
         getLocalData("USER_INFO").then(async(res) => {
             const postData = {community_id:data?.id,user_id:res?.data?.id}
             const result = await dispatch(addUserCommunityAPI(postData));
             console.log("result",result?.payload);
+            getCommunityList()
         })
     }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <Animated.View style={{height:headerHeight,opacity:opacity}}>
+            
             <ImageBackground source={{uri:data?.coverImage}} style={[styles.RectangleBgImage]}>
                 <LinearGradient colors={["#000", "transparent"]}>
                     <View style={styles.joinHeaderView}>
@@ -144,13 +146,12 @@ const JionCommunity = ({navigation,route}) => {
                 </LinearGradient>
             </ImageBackground>
             
-           
             <View style={styles.communityName}>
                 <View>
                 {data?.groupImage?.includes(".svg") ?
                     <SvgUri
-                      uri={data?.groupImage}
-                      style={styles.CommunityProfilePic}
+                        uri={data?.groupImage}
+                        style={styles.CommunityProfilePic}
                     />
                     :
                     <Image 
@@ -169,8 +170,9 @@ const JionCommunity = ({navigation,route}) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {isJoin?
                 <Button title={"Join"}
-                onPress={() => handleJoin(data)}
+                    onPress={() => handleJoin(data)}
                     buttonStyle={{
                         width:100,
                         borderRadius:15/2,
@@ -180,7 +182,9 @@ const JionCommunity = ({navigation,route}) => {
                     titleStyle={{
                         color:'#fff',
                     }}/>
-                {/* <Button title={"Joined"}
+                    :
+                    <Button title={"Joined"}
+                    onPress={() => handleJoin(data)}
                     buttonStyle={{
                         width:100,
                         borderRadius:15/2,
@@ -190,10 +194,11 @@ const JionCommunity = ({navigation,route}) => {
                     }}
                     titleStyle={{
                         color:'#2C8892',
-                    }}/> */}
+                    }}/>
+                }
             </View>
         </Animated.View>
-        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions} handleReport={handlePresentModal}/>
+        <CommunityPageOptionsModal modalVisible={cmtyPageOptions} setModalVisible={setCmtyPageOptions} handleReport={handlePresentModal} data={data}/>
         <View style={styles.CommunityTabContainer}>
             <TouchableOpacity onPress={() => setIndex(true)}>
                 <Text style={index ? styles.CommunityActiveTabText : styles.CommunityTabText}>Threads</Text>

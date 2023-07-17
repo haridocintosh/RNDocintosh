@@ -3,20 +3,20 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '../../navigation/ReuseLogics';
 
-
-const CommunityPageOptionsModal = ({modalVisible,handleReport,setModalVisible}) => {
+const CommunityPageOptionsModal = ({modalVisible,handleReport,setModalVisible,data}) => {
   const navigation = useNavigation();
 
-  const handleAbout =() =>{
-    navigation.navigate('About');
+  const handleAbout =(data) =>{
+    navigation.navigate('About',{data});
     setModalVisible(false);
   }
+
   return (
     <View style={styles.container}>
         {modalVisible &&
         <View style={styles.optionModal}>
           <View>
-              <TouchableOpacity style={styles.optionList} onPress={() => handleAbout()}>
+              <TouchableOpacity style={styles.optionList} onPress={() => handleAbout(data)}>
                   {Icon("Entypo","info-with-circle",24,'#45B5C0')}
                   <Text style={styles.optionListText}>About</Text>
               </TouchableOpacity>

@@ -4,7 +4,10 @@ import {styles} from './CommunityStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from '../../navigation/ReuseLogics';
 
-const About = ({navigation}) => {
+const About = ({navigation,route}) => {
+    const {data} = route?.params;
+    console.log(data);
+    
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1, }}>
         <View style={{opacity:1}}>
@@ -24,15 +27,8 @@ const About = ({navigation}) => {
         </View>
         <View style={styles.AboutDetailsContainer}>
             <Text style={styles.AboutDetailsText}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Morbi aliquet cursus pellentesque. Mauris gravida libero 
-                nec sapien ultricies blandit. Vivamus aliquet efficitur 
-                ultrices. </Text>
-            <Text style={styles.AboutDetailsText}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Morbi aliquet cursus pellentesque. Mauris gravida libero 
-                nec sapien ultricies blandit. Vivamus aliquet efficitur 
-                ultrices. </Text>
+                {data?.description} 
+            </Text>
         </View>
     </SafeAreaView>
   )

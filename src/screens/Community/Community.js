@@ -1,23 +1,24 @@
-import { View, Text, SafeAreaView,TouchableOpacity,TextInput,Image } from 'react-native'
+import { View, Text, SafeAreaView,TouchableOpacity,TextInput,ScrollView,Image } from 'react-native'
 import React , {useState,useRef, useEffect}from 'react';
 import { styles } from './CommunityStyles';
 import { Icon } from '../../navigation/ReuseLogics';
-import { getCommunityApi } from './JoinCommunitySlice';
+import { getCommunityApi, specialityWiseUserLimitAPI } from './JoinCommunitySlice';
 import { useDispatch } from 'react-redux';
 import { getLocalData } from '../../apis/GetLocalData';
 import { SvgUri } from 'react-native-svg';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const Community = ({navigation}) => {
 const [viewInput, setViewInput] = useState(false);
+
 const [inputText, setInputText] = useState(null);
 const [communityList, setCommunityList] = useState();
+const [communitySingleList, setCommunitySingleList] = useState();
 const refInput = useRef(null);
 const dispatch = useDispatch();
 
   const InputView = () => {
     setViewInput(!viewInput);
-    // refInput.current.focue();
+    // refInput.current.focus();
   } 
 
   const onChangeText = async (text) => {
@@ -25,21 +26,21 @@ const dispatch = useDispatch();
   }
 
   const handleJoin = (data) =>{
-    navigation.navigate("JionCommunity",{data});
+    navigation.navigate("JionCommunity",{data,getCommunityList});
   }
 
   const getCommunityList =  () => {
     getLocalData('USER_INFO').then(async(res) => {
       const resData = res?.data;
       const result = await dispatch(getCommunityApi({specialityId:resData?.speciality_id}));
-      console.log(result?.payload?.result);
       setCommunityList(result?.payload?.result);
-      
+      const resultOfSingles = await dispatch(specialityWiseUserLimitAPI({specialityId:resData?.speciality_id}));
+      setCommunitySingleList(resultOfSingles?.payload?.result)
     })
   }
 
   useEffect(() => {
-    getCommunityList()
+    getCommunityList();
   },[])
 
   
@@ -68,7 +69,7 @@ const dispatch = useDispatch();
         </TouchableOpacity>
       </View>
       <View style={styles.bodyView}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {communityList?.map((data,index) =>{
             return(
               <View style={styles.recomandedUsers} key={index}>
@@ -97,6 +98,28 @@ const dispatch = useDispatch();
               </View>
             )
           })}
+
+          {communitySingleList?.map((data,index) =>{
+            return(
+              <View style={styles.recomandedUsers} key={index}>
+                <View style={styles.recomandedUsersPic}>
+                  <Image  
+                    style={styles.UsersProfilePic}
+                    source={{uri:data?.userprofile}}
+                  />
+                  <View style={styles.userInfo}>
+                    <Text style={styles.hospitalName}>{data?.username}</Text>
+                    <Text style={styles.groupsText}>{data?.speciality}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity>
+                  <Text style={styles.joinText}>
+                  {Icon('Entypo','plus',13,'#2376E5')} Connect</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          })}
+
         </ScrollView>
       </View>
       <TouchableOpacity style={styles.plusContainer} onPress={() => navigation.navigate("CreateCommunity")}>

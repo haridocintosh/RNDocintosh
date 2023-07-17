@@ -64,6 +64,7 @@ export const styles = StyleSheet.create({
     },
 
     //------------------------Join community----------------------------
+    
     RectangleBgImage:{
       width:Dimensions.get('window').width,
       height:180,

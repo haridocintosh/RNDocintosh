@@ -43,7 +43,6 @@ const dispatch = useDispatch();
     getCommunityList();
   },[])
 
-  
 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>

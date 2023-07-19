@@ -49,6 +49,7 @@ const JionCommunity = ({navigation,route}) => {
     }
 
     useEffect(() => {
+        
         const arr = [data?.userlist.split(",")];
         arr[0].includes(data?.user_id) ? setIsJoin(false): setIsJoin(true);
     },[])
@@ -225,7 +226,7 @@ const JionCommunity = ({navigation,route}) => {
             </View>
         </ScrollView>
 
-        <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity')}>
+        <TouchableOpacity style={styles.UserComments} onPress={() => navigation.navigate('SharepostCommunity',{communityID:data?.id})}>
             <View style={styles.UserInnerComments}>
                 <View style={styles.inputCont} >
                 <Image source={require('../../assets/images/CommunityPPic3.png')} style={{width:50,height:50, borderRadius:50}}/>

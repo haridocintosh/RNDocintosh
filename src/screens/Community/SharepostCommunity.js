@@ -29,29 +29,9 @@ import { PickImageAll, PickVideos } from "../../navigation/ReuseLogics";
 //import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
 
-const requestCameraPermission = async () => {
-  try {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: "App Camera Permission",
-        message:"App needs access to your camera ",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-      }
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("Camera permission given");
-    } else {
-      console.log("Camera permission denied");
-    }
-  } catch (err) {
-    console.warn(err);
-  }
-};
 
-const  Sharepost = () => {
+const  Sharepost = ({route}) => {
+  
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
   const [loader, setloader] = useState(false);
@@ -93,6 +73,9 @@ const  Sharepost = () => {
   const bottomSheetModalRefSecond = useRef(null);
   const snapPointsOne = ["1%","48%"];
   const snapPoints = ["60%","60%"];
+
+  const communityID = route?.params?.communityID;
+  console.log("communityID",communityID);
 
   function handlePresentModal() {
    // bottomSheetModalRef.current?.present();
@@ -331,7 +314,7 @@ const publishCheck1 = (e, text)=>{
 
   useEffect(() => {
     navigation.setOptions({ title: 'Create Post'});
-    getLocalData('USER_INFO').then((res) => {
+     ('USER_INFO').then((res) => {
       const reData = res?.data;
       setuserdata({...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,

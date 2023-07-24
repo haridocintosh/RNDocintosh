@@ -167,6 +167,7 @@ const publishCheck1 = (e, text)=>{
 
   const handleStudentSubmit = async() =>{
     setPostLoad(true);
+    post.community_id = communityID;
     if(post.publishto ==''){
       setPostLoad(false);
       Toast.show('Please Select Publish to',Toast.LONG);
@@ -314,7 +315,7 @@ const publishCheck1 = (e, text)=>{
 
   useEffect(() => {
     navigation.setOptions({ title: 'Create Post'});
-     ('USER_INFO').then((res) => {
+    getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
       setuserdata({...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,

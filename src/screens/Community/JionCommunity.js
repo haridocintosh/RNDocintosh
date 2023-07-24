@@ -216,6 +216,7 @@ const JionCommunity = ({navigation,route}) => {
             <View style={{padding:15,marginBottom:80}}>
                 {index ? 
                     <Threads 
+                        dataID={data?.id}
                         modalVisible={threadOptionModal}
                         setModalVisible={setThreadOptionModal}/> 
                 : 

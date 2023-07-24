@@ -9,7 +9,7 @@ import { CommunityPostDataAPI } from './JoinCommunitySlice';
 import AutoHeightImage from '../HomeScreen/AutoHeightImage';
 
 
-const Threads = ({modalVisible,setModalVisible}) => {
+const Threads = ({modalVisible,setModalVisible,dataID}) => {
   
   const [communityData,setcommunityData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,7 +30,7 @@ const Threads = ({modalVisible,setModalVisible}) => {
     setModalVisible(true);
   }
   const  getData = async () => {
-    const Result =  await dispatch(CommunityPostDataAPI({type:16}));
+    const Result =  await dispatch(CommunityPostDataAPI({type:16,community_id:dataID}));
     setcommunityData(Result.payload);
   }
 

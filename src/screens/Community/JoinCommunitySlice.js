@@ -14,7 +14,7 @@ export const CommunityPostDataAPI = createAsyncThunk("communitypostdata", async 
         return result;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })
 
@@ -69,7 +69,7 @@ export const addUserCommunityAPI = createAsyncThunk("addUserCommunity", async (d
      }
 })
 
-export const specialityWiseUserLimitAPI = createAsyncThunk("specialityWiseUserLimit", async (data)=>{
+export const specialityWiseUserLimitAPI = createAsyncThunk("specialityWiseUser", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/specialityWiseUserLimit`, {
             method : 'POST',
@@ -90,10 +90,10 @@ export const specialityWiseUserLimitAPI = createAsyncThunk("specialityWiseUserLi
 export const CommunityPD = createSlice({
     name : "pollsData",
     initialState :{
-        result   : {},
-        CommunityPostData  : {},
-        getCommunityData  : {},
-        addCommunityData  : {},
+        communityPostData   : {},
+        CommunityData  : {},
+        getCommunity  : {},
+        addCommunity  : {},
         specialityWUL  : {},
         loading     : false,
         error       : false,
@@ -104,11 +104,11 @@ export const CommunityPD = createSlice({
         
         //-------------------------CommunityPostDataAPI----------------------------------
         builder.addCase(CommunityPostDataAPI.pending, (state) => {
-            state.loading       =  true;
+            state.loading       = true;
         })
         builder.addCase(CommunityPostDataAPI.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.result    = action.payload;
+            state.loading       = false;
+            state.communityPostData        = action.payload;
         })
         builder.addCase(CommunityPostDataAPI.rejected, (state) => {
             state.loading       = false;
@@ -120,22 +120,21 @@ export const CommunityPD = createSlice({
             state.loading       =  true;
         })
         builder.addCase(addCommunityApi.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.CommunityPostData    = action.payload;
+            state.loading       = false;
+            state.CommunityData = action.payload;
         })
         builder.addCase(addCommunityApi.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })
 
-        
         //-------------------------getCommunityApi----------------------------------
         builder.addCase(getCommunityApi.pending, (state) => {
             state.loading       =  true;
         })
         builder.addCase(getCommunityApi.fulfilled, (state, action) => {
             state.loading       =  false;
-            state.getCommunityData    = action.payload;
+            state.getCommunity  = action.payload;
         })
         builder.addCase(getCommunityApi.rejected, (state) => {
             state.loading       = false;
@@ -144,11 +143,11 @@ export const CommunityPD = createSlice({
 
         //-------------------------addUserCommunityAPI----------------------------------
         builder.addCase(addUserCommunityAPI.pending, (state) => {
-            state.loading       =  true;
+            state.loading       = true;
         })
         builder.addCase(addUserCommunityAPI.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.addCommunityData = action.payload;
+            state.loading       = false;
+            state.addCommunity  = action.payload;
         })
         builder.addCase(addUserCommunityAPI.rejected, (state) => {
             state.loading       = false;
@@ -157,20 +156,20 @@ export const CommunityPD = createSlice({
 
         //-------------------------specialityWiseUserLimitAPI----------------------------------
         builder.addCase(specialityWiseUserLimitAPI.pending, (state) => {
-            state.loading       =  true;
+            state.loading       = true;
         })
         builder.addCase(specialityWiseUserLimitAPI.fulfilled, (state, action) => {
-            state.loading       =  false;
+            state.loading       = false;
             state.specialityWUL = action.payload;
         })
         builder.addCase(specialityWiseUserLimitAPI.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })
-
-
     },
 });
 
 
-export const { reducer : result } = CommunityPD;
+// export const { reducer:  getCommunity } = CommunityPD;
+
+export default CommunityPD.reducer;

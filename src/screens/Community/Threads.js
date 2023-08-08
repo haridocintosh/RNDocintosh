@@ -4,14 +4,11 @@ import { styles } from './CommunityStyles';
 import Card from '../../utils/Card';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ThreadsOptionModal from './ThreadsOptionModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CommunityPostDataAPI } from './JoinCommunitySlice';
 import AutoHeightImage from '../HomeScreen/AutoHeightImage';
 
-
 const Threads = ({modalVisible,setModalVisible,dataID}) => {
-  
-  const [communityData,setcommunityData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [postId, setPostId] = useState();
   const dispatch = useDispatch();
@@ -19,8 +16,8 @@ const Threads = ({modalVisible,setModalVisible,dataID}) => {
 
   const ref = useRef(null);
 
-  const clock = (val) => {
-  }
+  const communityData = useSelector((state) => state.communityData.communityPostData);
+
   const hadleOptionModal = (post_id) => {
     setPostId(post_id)
     if(postId == post_id){
@@ -31,7 +28,6 @@ const Threads = ({modalVisible,setModalVisible,dataID}) => {
   }
   const  getData = async () => {
     const Result =  await dispatch(CommunityPostDataAPI({type:16,community_id:dataID}));
-    setcommunityData(Result.payload);
   }
 
   useEffect(() => {

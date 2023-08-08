@@ -10,30 +10,32 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllCoins, userPostData } from '../../../redux/reducers/postData';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
 import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
-import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
 
+
 const HomeScreen = ({navigation})=> {
+  const userData = useSelector((state) => state.localData.localData);
+  const AllCoins = useSelector((state) => state?.homeData?.getAllCoins?.coins);
+  // const home = useSelector((state) => state?.homeData?.postData);
+
   const isFocused = useIsFocused();
   const ref = useRef(null);
   const dispatch = useDispatch();
   const {width, height} = Dimensions.get('window');
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
-  const [allPost, setallPost]  = useState();
-  const [resData, setResData]  = useState();
+  const [allPost, setAllPost]  = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [allcoins, setAllcoins] = useState(0);
   const [endNull, setEndNull] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [bottumLoader, setBottumLoader] = useState(false);
@@ -44,8 +46,9 @@ const HomeScreen = ({navigation})=> {
     ref.current.scrollToIndex({ animated: true, index: 5 });
   };
 
+
   //---------------- header Animation------------------
-  const scrollPosition = useRef(new Animated.Value(0)).current;
+  const scrollPosition  = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100;
   const maxHeaderHeight = 160;
 
@@ -60,7 +63,7 @@ const HomeScreen = ({navigation})=> {
     extrapolate: 'clamp',
   });
   const sizeFont = scrollPosition.interpolate({
-    inputRange: [0, 200,  400],
+    inputRange:  [0, 200,  400],
     outputRange: [10, 6, 5],
     extrapolate: 'clamp',
   });
@@ -86,14 +89,6 @@ const HomeScreen = ({navigation})=> {
     setModalVisible(true);
   }
 
-  const getStorageData = () => {
-    getLocalData('USER_INFO').then(async (res) =>{
-      const allCoins = {user_id:res.data.id};
-      const allCoinsResult = await dispatch(getAllCoins(allCoins));
-      setAllcoins(allCoinsResult.payload.coins);
-    });
-  };
-
   const renderLoader = () => {
     return (
       bottumLoader ?
@@ -103,6 +98,28 @@ const HomeScreen = ({navigation})=> {
     );
   };
 
+  const asyncFetchDailyData = async () => {
+      setModalVisible(false);
+      setBottumLoader(true);
+      await dispatch(getAllCoins({user_id:userData?.id}))
+      const value = await AsyncStorage.getItem('profileImage');
+      if (value !== null) {
+        setuserdata({
+          ...userdata,
+          profile:value,
+          user_id:userData?.id,
+          role:userData?.role,
+        });
+      }
+      const postDetails = {postType:0,role:userData?.role,city_id:userData?.city_id,assoc_id:userData?.assoc_id, pageCounter:1, id:userData?.id,circle_type:userData?.role == 5 ? 3 : 1,speciality_id:userData?.speciality_id};
+      const result = await dispatch(userPostData(postDetails));
+      setCurrentPage(result.payload.pageCounter);
+      setBottumLoader(false);
+      const allPostData = result?.payload.result.filter(Post => Post.user_role == userData?.role);
+      setAllPost(allPostData);
+      // setRefresh(false);
+  }
+
   const handleLoadeMore = () => {
     if(endNull !== null){
       LoadPost(currentPage + 1);
@@ -111,61 +128,26 @@ const HomeScreen = ({navigation})=> {
 
   const LoadPost = async (page) => {
     setBottumLoader(true);
-    const postDetails = {postType:0, role:resData?.role, city_id:resData?.city_id,assoc_id:resData?.assoc_id, pageCounter:page, id:resData?.id,circle_type:resData?.role == 5 ? 3 : 1,speciality_id:resData?.speciality_id};
+    const postDetails = {postType:0, role:userData?.role, city_id:userData?.city_id,assoc_id:userData?.assoc_id, pageCounter:page, id:userData?.id,circle_type:userData?.role == 5 ? 3 : 1,speciality_id:userData?.speciality_id};
     const result = await dispatch(userPostData(postDetails));
   
     setEndNull(result.payload.result)
      if(result.payload.result !== null){
-      const allPostData = result?.payload.result.filter(Post => Post.user_role == resData?.role);
+      const allPostData = result?.payload.result.filter(Post => Post.user_role == userData?.role);
       setCurrentPage(result?.payload?.pageCounter)
-      setallPost([...allPost, ...allPostData]);
+      setAllPost([...allPost, ...allPostData]);
      }
      setBottumLoader(false);
-  }
-
-  useEffect(()=>{
-    if(isFocused){
-      asyncFetchDailyData();
-      getStorageData();
-      if(ref.current) {
-        ref.current.scrollToOffset({offset: 0})
-      }
-    }
-  },[isFocused]);
-
-  const asyncFetchDailyData = async () => {
-    getLocalData('USER_INFO').then(async (res) => {
-      const reData = res?.data;
-      setResData(reData)
-      setModalVisible(false);
-      setBottumLoader(true);
-      const value = await AsyncStorage.getItem('profileImage');
-      if (value !== null) {
-        setuserdata({
-          ...userdata,
-          profile:value,
-          user_id:reData?.id,
-          role:reData?.role,
-        });
-      }
-      const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 3 : 1,speciality_id:reData?.speciality_id};
-      const result = await dispatch(userPostData(postDetails));
-      setCurrentPage(result.payload.pageCounter);
-      setBottumLoader(false);
-      const allPostData = result?.payload.result.filter(Post => Post.user_role == reData?.role);
-      setallPost(allPostData);
-      setRefresh(false);
-    })
   }
  
   const deletePostID = (postId) =>{
     const deletePost = allPost.filter(pId => pId.post_id != postId);
-    setallPost(deletePost); 
+    setAllPost(deletePost); 
   }
 
   const BlockId = (id) =>{
     const BlockId = allPost.filter(Uid => Uid.id != id);
-    setallPost(BlockId);
+    setAllPost(BlockId);
   }
 
   const onViewableItemsChanged = ({viewableItems}) => {
@@ -182,11 +164,20 @@ const HomeScreen = ({navigation})=> {
     itemVisiblePercentThreshold: 50
   };
 
-  useEffect(() => {
-    if(refresh){
+  // useEffect(() => {
+  //   if(refresh){
+  //     asyncFetchDailyData();
+  //   }
+  // }, [refresh])
+
+  useEffect(()=>{
+    if(isFocused){
       asyncFetchDailyData();
+      if(ref.current) {
+        ref.current.scrollToOffset({offset: 0})
+      }
     }
-  }, [refresh])
+  },[isFocused]);
 
     const renderItem = ({item,index}) => {
       return(
@@ -222,7 +213,7 @@ const HomeScreen = ({navigation})=> {
               setModalVisible={setModalVisible}
               deletePostID={deletePostID}
               BlockId={BlockId} 
-              resData={resData} 
+              userData={userData} 
           />}
           <View style={item?.description && {paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
@@ -230,7 +221,7 @@ const HomeScreen = ({navigation})=> {
             </Text>
           </View>
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
-            <PublicReactions item={item} getStorageData={getStorageData}/>
+            <PublicReactions item={item}/>
         </Card>
       )
     }
@@ -268,8 +259,7 @@ const HomeScreen = ({navigation})=> {
           <Animated.View style={[styles.collectedCoins,{transform: [{translateY : scoresPosition}]}]} >
           <TouchableOpacity onPress={() => navigation.navigate("Rewards")} style={styles.collectedCoinss}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.d} />
-            <Text style={styles.count}>
-              {allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0} |</Text>
+            <Text style={styles.count}>{AllCoins?.[0]?.coinTotal ? AllCoins?.[0]?.coinTotal : 0} |</Text>
             <Image source={require('../../assets/dr-icon/discount1.png')} style={{width:16, height:16, marginVertical:5,marginHorizontal:5}}/>
             <Text style={styles.count}>0</Text>
           </TouchableOpacity>

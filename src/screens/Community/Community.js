@@ -3,22 +3,21 @@ import React , {useState,useRef, useEffect}from 'react';
 import { styles } from './CommunityStyles';
 import { Icon } from '../../navigation/ReuseLogics';
 import { getCommunityApi, specialityWiseUserLimitAPI } from './JoinCommunitySlice';
-import { useDispatch } from 'react-redux';
-import { getLocalData } from '../../apis/GetLocalData';
+import { useDispatch, useSelector } from 'react-redux';
 import { SvgUri } from 'react-native-svg';
 
 const Community = ({navigation}) => {
 const [viewInput, setViewInput] = useState(false);
-
 const [inputText, setInputText] = useState(null);
-const [communityList, setCommunityList] = useState();
-const [communitySingleList, setCommunitySingleList] = useState();
 const refInput = useRef(null);
 const dispatch = useDispatch();
 
+const userData = useSelector((state) => state.localData.localData);
+const communityData = useSelector((state) => state.communityData.getCommunity);
+const specialityWUL = useSelector((state) => state.communityData.specialityWUL);
+
   const InputView = () => {
     setViewInput(!viewInput);
-    // refInput.current.focus();
   } 
 
   const onChangeText = async (text) => {
@@ -26,17 +25,13 @@ const dispatch = useDispatch();
   }
 
   const handleJoin = (data) =>{
-    navigation.navigate("JionCommunity",{data,getCommunityList});
+    navigation.navigate("JionCommunity", {data});
   }
 
-  const getCommunityList =  () => {
-    getLocalData('USER_INFO').then(async(res) => {
-      const resData = res?.data;
-      const result = await dispatch(getCommunityApi({specialityId:resData?.speciality_id}));
-      setCommunityList(result?.payload?.result);
-      const resultOfSingles = await dispatch(specialityWiseUserLimitAPI({specialityId:resData?.speciality_id}));
-      setCommunitySingleList(resultOfSingles?.payload?.result)
-    })
+  const getCommunityList = async () => {
+      const postData = {specialityId:userData?.speciality_id};
+      const result = await dispatch(getCommunityApi(postData));
+      const resultOfSingles = await dispatch(specialityWiseUserLimitAPI(postData));
   }
 
   useEffect(() => {
@@ -69,7 +64,7 @@ const dispatch = useDispatch();
       </View>
       <View style={styles.bodyView}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {communityList?.map((data,index) =>{
+          {communityData?.result?.map((data,index) =>{
             return(
               <View style={styles.recomandedUsers} key={index}>
                 <View style={styles.recomandedUsersPic}>
@@ -98,7 +93,7 @@ const dispatch = useDispatch();
             )
           })}
 
-          {communitySingleList?.map((data,index) =>{
+          {specialityWUL?.result?.map((data,index) =>{
             return(
               <View style={styles.recomandedUsers} key={index}>
                 <View style={styles.recomandedUsersPic}>

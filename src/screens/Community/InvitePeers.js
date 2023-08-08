@@ -24,10 +24,8 @@ const InvitePeers = ({navigation,route}) => {
     console.log(data);
 
     const handleRedirect = async () => {
-      
       const mergeUpload = {...data, addUser:inviteId,user_id:userData.id,speciality_id:userData?.speciality_id};
       const uresult = await dispatch(addCommunityApi(mergeUpload));
-      console.log("uresult",uresult);
       navigation.navigate('Community');
     }
 

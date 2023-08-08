@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
- 
+
 
 export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
     try{
@@ -11,7 +11,6 @@ export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
             },
             body : JSON.stringify(loginData)
         });
-        
         const userresult=  await responce.json();
         return userresult
     }
@@ -148,6 +147,7 @@ export const loginAuth = createSlice({
             state.localData = action.payload;
         }
     },
+
     extraReducers : builder =>{
         //-------------------------userLogin-----------------------------
         builder.addCase(userLogin.pending, (state) => {
@@ -171,15 +171,12 @@ export const loginAuth = createSlice({
         })
         builder.addCase(userRegisterOne.fulfilled, (state, action) => {
             state.loading       = false,
-            state.isLoggedIn    = true
             state.registerData  = action.payload;
         })
         builder.addCase(userRegisterOne.rejected, (state) => {
-            state.isLoggedIn = false;
             state.loading = false;
             state.error = false
         })
-
 
         //-------------------------userRegisterSecond-----------------------------
         builder.addCase(userRegisterSecond.pending, (state) => {
@@ -187,11 +184,9 @@ export const loginAuth = createSlice({
         })
         builder.addCase(userRegisterSecond.fulfilled, (state, action) => {
             state.loading       = false,
-            state.isLoggedIn    = true
             state.registerTwoData  = action.payload;
         })
         builder.addCase(userRegisterSecond.rejected, (state) => {
-            state.isLoggedIn = false;
             state.loading = false;
             state.error = false
         })
@@ -200,7 +195,6 @@ export const loginAuth = createSlice({
 });
 
 
-export const { reducer : userresult} = loginAuth;
 export const { logout, addLocal } = loginAuth.actions;
 
 export default loginAuth.reducer;

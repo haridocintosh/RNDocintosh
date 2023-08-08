@@ -64,6 +64,7 @@ const LoginScreen = () => {
       setdata(res?.data);
     });
     await getLocalData('rememberme').then((res) => {
+      
       setdatarm(res?.data?.register); 
       setChecked(res?.data?.isChecked);
       if(res == null){

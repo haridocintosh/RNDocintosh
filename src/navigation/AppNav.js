@@ -25,6 +25,10 @@ import UpgradeApp from './UpgradeApp';
 // import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
+import { useDispatch } from 'react-redux';
+import { addLocal } from '../../redux/reducers/loginAuth';
+
+
 
 
 export default function AppNav() {
@@ -33,13 +37,16 @@ const [defaultRoute, setDefaultRoute] = useState();
 const [statusKeyLoaded, setStatusKeyLoaded] = useState(false);
 const Stack = createNativeStackNavigator();
 const navigation  = useNavigation();
+const dispatch  = useDispatch();
 
   const getData = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
       const logData = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
       if(logData?.login){
+        dispatch(addLocal(logData?.data));
         setDefaultRoute("HomeScreen");
+        
       }else{
       setDefaultRoute("Intro");
       // setDefaultRoute("ContactPermission");

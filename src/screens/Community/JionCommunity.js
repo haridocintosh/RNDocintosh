@@ -9,11 +9,11 @@ import CommunityPageOptionsModal from './CommunityPageOptionsModal';
 import { Icon } from '../../navigation/ReuseLogics';
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import { SvgUri } from 'react-native-svg';
-import { getLocalData } from '../../apis/GetLocalData';
-import { addUserCommunityAPI } from './JoinCommunitySlice';
-import { useDispatch } from 'react-redux';
+import { addUserCommunityAPI, getCommunityApi ,specialityWiseUserLimitAPI} from './JoinCommunitySlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const JionCommunity = ({navigation,route}) => {
+    const userData = useSelector((state) => state.localData.localData);
     const [text , setText] = useState();
     const [index , setIndex] = useState(true);
     const [reportSelect,setReportSelect] = useState();
@@ -48,8 +48,8 @@ const JionCommunity = ({navigation,route}) => {
         setCmtyPageOptions(!cmtyPageOptions);
     }
 
+    
     useEffect(() => {
-        
         const arr = [data?.userlist.split(",")];
         arr[0].includes(data?.user_id) ? setIsJoin(false): setIsJoin(true);
     },[])
@@ -115,14 +115,14 @@ const JionCommunity = ({navigation,route}) => {
     const handleSend = async() => {
         navigation.navigate("ReportTrack", {reportSelect});
     }
-    const handleJoin = (data) => {
+    const handleJoin = async (data) => {
         setIsJoin(!isJoin)
-        getLocalData("USER_INFO").then(async(res) => {
-            const postData = {community_id:data?.id,user_id:res?.data?.id}
-            const result = await dispatch(addUserCommunityAPI(postData));
-            console.log("result",result?.payload);
-            getCommunityList()
-        })
+        const postData = {community_id:data?.id,user_id:userData?.id}
+        const result = await dispatch(addUserCommunityAPI(postData));
+
+        //reload data
+        await dispatch(getCommunityApi({specialityId:userData?.speciality_id}));
+        await dispatch(specialityWiseUserLimitAPI({specialityId:userData?.speciality_id}));
     }
 
   return (

@@ -11,7 +11,8 @@ import { useDispatch } from 'react-redux';
 import { coinTransfer } from '../../../redux/reducers/coinSlice';
 import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/ALL_APIs';
 
-const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,resData}) => {
+const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,userData}) => {
+
   const [toggle, setToggle] = useState(false);
   const [savedPost, setSavedPost] = useState(item?.saved_status);
   const [follow, setFollow] = useState(item?.follow_status);
@@ -25,6 +26,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     setModalVisible(false);
     setToggle(true);
   }
+  console.log(userData);
 
   const handleOkay = async () =>{
     if(okay == "delete"){
@@ -39,7 +41,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
         }
       }
    }else if(okay == "block"){
-    const postDetails = {fromuserid:resData?.id,touserid:item?.id};
+    const postDetails = {fromuserid:userData?.id,touserid:item?.id};
     const blockPostResult  = await dispatch(BlockUserApi(postDetails));
     if(blockPostResult?.payload?.status == "Success"){
       setToggle(false);
@@ -49,7 +51,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   }
 
   const SavedPostHandle = async () => {
-    const postDetails = {user_id:resData?.id, post_id:item?.post_id};
+    const postDetails = {user_id:userData?.id, post_id:item?.post_id};
     const savedPostResult = await dispatch(SavePostApi(postDetails));
     if(savedPostResult.payload.status == "Saved"){
       setSavedPost(true);
@@ -64,7 +66,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   }
 
   const handleUnfollow = async () => {
-    const postDetails = {follow_from:resData?.id, follow_to:item?.id};
+    const postDetails = {follow_from:userData?.id, follow_to:item?.id};
     const followResult  = await dispatch(followApi(postDetails));
     if(followResult.payload.status){
       setFollow(false);
@@ -83,7 +85,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     <View style={styles.container}>
     {modalVisible &&
     <View style={styles.optionModal}>
-      {resData?.id === item?.id ?
+      {userData?.id === item?.id ?
       <TouchableOpacity style={styles.optionList} onPress={() =>{handleDeletePost()}}>
         <MaterialCommunityIcons name='delete-outline' size={23} color={'#45B5C0'}/>
         <Text style={styles.optionListText}>Delete Post</Text>

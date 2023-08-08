@@ -11,12 +11,10 @@ import {
   DrawerItemList,
   useDrawerStatus,
 } from '@react-navigation/drawer';
-import profilePicture from '../assets/images/profilePicture.png';
 import { Button } from 'react-native-elements';
 import { useNavigation,DrawerActions} from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocalData } from '../apis/GetLocalData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from '../navigation/ReuseLogics';
 import { CDrawerDoctor,CDrawerUser } from './CustomDrawerJson';
@@ -25,7 +23,6 @@ import FastImage from 'react-native-fast-image'
 
 const CustomDrawer = (props) => { 
   const navigation = useNavigation();
-  const [logoutdata, setlogoutdata] = useState();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
   // const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
@@ -34,20 +31,16 @@ const CustomDrawer = (props) => {
   // const Drawer = createDrawerNavigator();
   const drawerStatus = useDrawerStatus();
 
-
+  const userData = useSelector((state) => state.localData.localData);
 
   const asyncFetchDailyData = async () => {
     const value = await AsyncStorage.getItem('profileImage');
-    getLocalData('USER_INFO').then((res) => {
-      const reData = res?.data;
-      setlogoutdata(reData);
       setuserdata({ ...userdata, 
-        fullname: `${reData?.first_name} ${reData?.last_name}`,
-        speciality: `${reData?.speciality}`,
-        role:`${reData?.role}`,
+        fullname: `${userData?.first_name} ${userData?.last_name}`,
+        speciality: `${userData?.speciality}`,
+        role:`${userData?.role}`,
         profile: value,
       });
-    });
     }
   
   useEffect(() => {
@@ -61,7 +54,7 @@ const CustomDrawer = (props) => {
     try {
       storeData('USER_INFO',JSON.stringify({
         login:false,
-        data:logoutdata
+        data:userData
       }))
       // setTimeout(()=>{
         navigation.dispatch(DrawerActions.closeDrawer());

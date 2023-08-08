@@ -14,7 +14,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postData)=>{
         return result;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })
 
@@ -27,7 +27,7 @@ export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
             },
             body : JSON.stringify(uploadData)
         });
-        const result=  await responce.json();
+        const result =  await responce.json();
         return result
     }
     catch(e){
@@ -123,10 +123,18 @@ export const getFollowingDataApi = createAsyncThunk("following", async (data)=>{
 })
 
 
-export const postData = createSlice({
+export const PostData = createSlice({
     name : "usersfetch",
     initialState :{
         postData : [],
+        registerData : [],
+        circleData : [],
+        SelectedInterest : [],
+        getMyPosts : [],
+        getAllCoins : [],
+        getCointransfer : [],
+        getFollowing : [],
+        getFollowers : [],
         loading : false,
         error :false,
     },
@@ -194,7 +202,7 @@ export const postData = createSlice({
         })
         builder.addCase(getMyPostsApi.fulfilled, (state, action) => {
             state.loading       =  false;
-            state.circleData    = action.payload;
+            state.getMyPosts    = action.payload;
         })
         builder.addCase(getMyPostsApi.rejected, (state) => {
             state.loading = false;
@@ -208,7 +216,7 @@ export const postData = createSlice({
         })
         builder.addCase(getAllCoins.fulfilled, (state, action) => {
             state.loading       =  false;
-            state.circleData    = action.payload;
+            state.getAllCoins    = action.payload;
         })
         builder.addCase(getAllCoins.rejected, (state) => {
             state.loading = false;
@@ -221,7 +229,7 @@ export const postData = createSlice({
         })
         builder.addCase(getCointransfer.fulfilled, (state, action) => {
             state.loading       =  false;
-            state.circleData    = action.payload;
+            state.getCointransfer    = action.payload;
         })
         builder.addCase(getCointransfer.rejected, (state) => {
             state.loading = false;
@@ -234,7 +242,7 @@ export const postData = createSlice({
         })
         builder.addCase(getFollowersDataApi.fulfilled, (state, action) => {
             state.loading       =  false;
-            state.circleData    = action.payload;
+            state.getFollowers    = action.payload;
         })
         builder.addCase(getFollowersDataApi.rejected, (state) => {
             state.loading = false;
@@ -247,7 +255,7 @@ export const postData = createSlice({
         })
         builder.addCase(getFollowingDataApi.fulfilled, (state, action) => {
             state.loading       =  false;
-            state.circleData    = action.payload;
+            state.getFollowing    = action.payload;
         })
         builder.addCase(getFollowingDataApi.rejected, (state) => {
             state.loading = false;
@@ -256,4 +264,4 @@ export const postData = createSlice({
     }
 });
 
-export const { reducer : result } = postData;
+export default PostData.reducer;

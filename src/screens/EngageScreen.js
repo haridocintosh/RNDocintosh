@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text,Image,
   SafeAreaView,ScrollView,ActivityIndicator,StyleSheet,TouchableOpacity,ImageBackground } from 'react-native'
-import {  Card } from 'react-native-paper';
-import { getLocalData } from '../apis/GetLocalData';
+import { useSelector } from 'react-redux';
+
 
 const EngageScreen = ({navigation}) => {
-  const [loader, setLoader] = useState(true);
-  const [userdata,setuserdata]=useState({
-    role:""
-  })
+    const userData = useSelector((state) => state.localData);
 
-useEffect(() => {
-  navigation.setOptions({ title: 'Engage'});
-  getLocalData('USER_INFO').then((res) => {
-    const reData = res?.data;
-    setuserdata(reData);
-    setuserdata({ ...userdata, 
-      role:`${reData?.role}`
-    });
-  });
-    setLoader(false)
-  }, [])
+    useEffect(() => {
+    navigation.setOptions({ title: 'Engage'});
+    }, [])
 
-  if(loader){
+  if(userData.loading){
     return(
     <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
         <ActivityIndicator size={'large'} color={"#2C8892"}/>
@@ -80,7 +69,7 @@ useEffect(() => {
             </ImageBackground>
         </View>
 
-        {userdata.role =='4' && <View style={styles.container}>
+        {userData?.localData.role =='4' && <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                 <Text style={styles.CartTitleSurveys}>Surveys</Text>
@@ -103,7 +92,7 @@ useEffect(() => {
                 </TouchableOpacity>
             </ImageBackground>
         </View>}
-        {userdata.role =='4' && <View style={styles.container}>
+        {userData?.localData.role =='4' && <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                     <Text style={styles.CartTitleSentimetrix}>Sentimetrix</Text>

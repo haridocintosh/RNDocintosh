@@ -116,4 +116,4 @@ export const surveyData = createSlice({
 });
 
 
-export const { reducer: surveyDatalist } = surveyData;
+export default surveyData.reducer;

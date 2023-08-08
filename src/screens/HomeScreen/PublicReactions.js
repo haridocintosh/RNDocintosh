@@ -5,46 +5,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getallLikes, postLikeData } from '../../../redux/reducers/publicReactionSlice';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
-import { getCointransfer } from '../../../redux/reducers/postData';
-import { getLocalData } from '../../apis/GetLocalData';
+import { getAllCoins, getCointransfer } from '../../../redux/reducers/postData';
 
 
-const PublicReactions = ({item,getStorageData}) => {
+const PublicReactions = ({item}) => {
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
- const [result,setResult] = useState();
 
  const dispatch = useDispatch();
  const navigation = useNavigation();
+ 
+ const userData = useSelector((state) => state.localData.localData);
 
-  const localStorageData = () => {
-    getLocalData('USER_INFO').then(async (res) => {
-      const reData = res?.data;
-      setResult(reData);
+  const localStorageData = async() => {
       const getallLikesData = await dispatch(getallLikes({postid:item?.post_id}));
       setAllLikeData(getallLikesData.payload);
-    })
   }
 
  const handleLikes = async (post_id) => {
-  const postDetails = {user_id:result.id, post_id:post_id}
+  const postDetails = {user_id:userData.id, post_id:post_id}
   const sentResult = await dispatch(postLikeData(postDetails));
   const getallLikesData = await dispatch(getallLikes({postid:post_id}));
   setAllLikeData(getallLikesData.payload)
   setLikeCount(getallLikesData.payload.count);
   
   if(sentResult?.payload?.count){
-    const likeCounter = {senderId : 0,receiverId:result.id,task:2}
+    const likeCounter = {senderId : 0,receiverId:userData.id,task:2}
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(true);
   }else{
-    const likeCounter = {senderId : result.id,receiverId:0,task:13}
+    const likeCounter = {senderId : userData.id,receiverId:0,task:13}
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(false);
   }
   
-  getStorageData();
+  await dispatch(getAllCoins({user_id:userData.id}))
  }
 
  useEffect(() => {

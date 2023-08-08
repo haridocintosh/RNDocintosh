@@ -5,12 +5,9 @@ import {  View,
     TextInput } from 'react-native'
   import React, {useState, useEffect, useRef } from 'react'
   import Ionicons from 'react-native-vector-icons/Ionicons';
-  import CustomButton from '../components/CustomButton';
-  import { useDispatch } from "react-redux";
+  import { useDispatch, useSelector } from "react-redux";
   import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
-  import Toast from 'react-native-simple-toast';
   import { getSelectedInterest } from '../../redux/reducers/postData';
-  import { getLocalData } from '../apis/GetLocalData';
   
   const SelectInterestInnerScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -22,7 +19,8 @@ import {  View,
     const [getspclist,setgetspclist]=useState('');
     const [loader, setLoader] = useState(true);
     const [userId, setuserId] = useState();
-  
+    
+    const userData = useSelector((state) => state.localData.localData);
     const getItem = (item) => {
       let spl  = item.speciality_id;
       let copy=[...selectitem];
@@ -47,12 +45,12 @@ import {  View,
     };
   
     const fetchPostData = async (speciality_id)=>{
-      const postDetails = {speciality_id:speciality_id,id:userId}
+      const postDetails = {speciality_id:speciality_id,id:userData?.id}
       const result = await dispatch(addCircle(postDetails));
    }
   
-   const getInterestSplData = async (id) => {
-    const postDetails = {user_id : id}
+   const getInterestSplData = async () => {
+    const postDetails = {user_id : userData?.id}
     const result = await dispatch(getSelectedInterest(postDetails));
     setFilteredDataSource(result?.payload);
     setMasterDataSource(result?.payload);
@@ -62,13 +60,7 @@ import {  View,
   
   
     useEffect(() => {
-      getInterestSplData()
-      navigation.setOptions({title:'Select Interest'})
-      getLocalData('USER_INFO').then((res) => {
-        const reData = res?.data;
-        setuserId(reData?.id)
-        getInterestSplData(reData?.id);
-      });
+        getInterestSplData();
     }, []);
 
     const searchFilterFunction = (text) => {

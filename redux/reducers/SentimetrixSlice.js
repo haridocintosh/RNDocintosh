@@ -106,4 +106,4 @@ export const getSentimetrix = createSlice({
 });
 
 
-export const { reducer : sentimetrixList } = getSentimetrix;
+export default getSentimetrix.reducer;

@@ -26,13 +26,13 @@ import { Icon } from '../../navigation/ReuseLogics';
 const HomeScreen = ({navigation})=> {
   const userData = useSelector((state) => state.localData.localData);
   const AllCoins = useSelector((state) => state?.homeData?.getAllCoins?.coins);
-  // const home = useSelector((state) => state?.homeData?.postData);
+  // const home = useSelector((state) => state?.homeData);
 
   const isFocused = useIsFocused();
   const ref = useRef(null);
   const dispatch = useDispatch();
   const {width, height} = Dimensions.get('window');
-  const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
+  const [userdata, setuserdata]  = useState({profile:'',user_id:'',role:''});
   const [allPost, setAllPost]  = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);

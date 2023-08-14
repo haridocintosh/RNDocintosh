@@ -3,13 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { styles } from './SentimetrixStyles';
 import { getLocalData } from '../../apis/GetLocalData';
 import { getSentimetrixListAPI } from '../../../redux/reducers/SentimetrixSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
+
 
 
 const SentimetrixList = ({navigation}) => {
     const [listData, setListData] = useState();
     const [loader, setLoader] = useState(false);
     const dispatch = useDispatch();
+
+    const sentiData = useSelector((state) =>state?.sentimetrixData?.sentimetrixList);
+    console.log("sentiData",sentiData);
 
     const getSentimetrixList = () => {
         getLocalData('USER_INFO').then(async (res) => {

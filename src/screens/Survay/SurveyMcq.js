@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getSurveyQuestions,
   saveSurveyAnswers,
@@ -21,12 +21,14 @@ import { getLocalData } from "../../apis/GetLocalData";
 
 
 const SurveyMcq = ({ route }) => {
-  const [allMCQs, setAllMCQs] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [liftUpData, setLiftUpData] = useState(null);
   const [liftUpCheckData, setLiftUpCheckData] = useState([]);
   const [error, setError] = useState();
   const { surveyid } = route.params;
+
+  const postData = useSelector((state) => state.surveyGetList.postData?.questions);
+  console.log("postData",postData);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -37,12 +39,10 @@ const SurveyMcq = ({ route }) => {
       const resData = res?.data;
       const postDetails = {surveyid: surveyid, id: resData?.id};
       const result = await dispatch(getSurveyQuestions(postDetails));
-      const data = await result.payload.questions;
-      setAllMCQs(data);
     })
   };
 
-  const MCQsLength = parseInt(allMCQs.length);
+  const MCQsLength = parseInt(postData?.length);
   //-----------------save survay ans--------------------------
   
 
@@ -124,7 +124,7 @@ const SurveyMcq = ({ route }) => {
     }
   }, [liftUpData,liftUpCheckData]);
 
-  const outOff = currentQuestionIndex / allMCQs.length;
+  const outOff = currentQuestionIndex / postData?.length;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ecf2f6" }}>
       <View style={{ padding: 15 }}>
@@ -135,7 +135,7 @@ const SurveyMcq = ({ route }) => {
                 ? currentQuestionIndex + 1
                 : `0${currentQuestionIndex + 1}`}
             </Text>
-            <Text style={styles.OutOffTotal}>/{allMCQs.length}</Text>
+            <Text style={styles.OutOffTotal}>/{postData?.length}</Text>
           </View>
           <View style={styles.NexrPrevIcons}>
             <TouchableOpacity style={{ marginRight: 15 }} onPress={() => prevMcq()} >
@@ -145,9 +145,9 @@ const SurveyMcq = ({ route }) => {
               style={styles.iconStyle}
               onPress={() => 
                 nextMcq(
-                  allMCQs[currentQuestionIndex]?.basic_id, 
-                  allMCQs[currentQuestionIndex]?.qid,
-                  allMCQs[currentQuestionIndex]?.question_type)} >
+                  postData?.[currentQuestionIndex]?.basic_id, 
+                  postData?.[currentQuestionIndex]?.qid,
+                  postData?.[currentQuestionIndex]?.question_type)} >
               <AntDesign name="rightcircle" size={32} color="#2C8892" />
             </TouchableOpacity>
           </View>
@@ -160,35 +160,35 @@ const SurveyMcq = ({ route }) => {
           progress={outOff ? outOff : 0}
         />
         <Text style={styles.SurvayQuestion}>
-          {allMCQs[currentQuestionIndex]?.question_title}
+          {postData?.[currentQuestionIndex]?.question_title}
         </Text>
       </View>
 
-      {allMCQs[currentQuestionIndex]?.question_type == 1 && (
+      {postData?.[currentQuestionIndex]?.question_type == 1 && (
         <RadioMcq
           setLiftUpData={setLiftUpData}
           liftUpData={liftUpData}
           currentIndex={currentQuestionIndex}
-          allMCQs={allMCQs}
+          allMCQs={postData}
           error={error}
         />
       )}
 
-      {allMCQs[currentQuestionIndex]?.question_type == 2 && (
+      {postData?.[currentQuestionIndex]?.question_type == 2 && (
         <SurvayCheckBoxMcq
           setLiftUpData={setLiftUpCheckData}
           currentIndex={currentQuestionIndex}
-          allMCQs={allMCQs}
+          allMCQs={postData}
           error={error}
           setError={setError}
         />
       )}
 
-      {allMCQs[currentQuestionIndex]?.question_type == 3 && (
+      {postData?.[currentQuestionIndex]?.question_type == 3 && (
         <TypoMcq
           setLiftUpData={setLiftUpData}
           currentIndex={currentQuestionIndex}
-          allMCQs={allMCQs}
+          allMCQs={postData}
           length={liftUpData}
           error={error}
         />

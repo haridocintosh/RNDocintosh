@@ -9,7 +9,7 @@ import {
 import { styles } from "./QuizLevelsStyles";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { quizPostData } from "../../../redux/reducers/mcqSlice";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from "../../apis/GetLocalData";
@@ -23,6 +23,8 @@ const QuizLevels = () => {
   // const [topicId, setTopicId] = useState(null);
   const [loader, setLoader] = useState(true);
   const navigation = useNavigation();
+
+  const mcqData = useSelector((state) => state.mcqData);
 
   const McqDataHandle = (basic_id,title) => {
     navigation.navigate("QuizGame", {basicId: basic_id,title: title});

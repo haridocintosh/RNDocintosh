@@ -19,11 +19,12 @@ import { styles } from "./SurvayStyle";
 import { getLocalData } from "../../apis/GetLocalData";
 
 const Surveys = ({ route,navigation }) => {
-  const [survayData, setSurvayData] = useState([]);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [loader, setLoader] = useState(true);
-
+  
   const dispatch = useDispatch();
+
+  const serveyData = useSelector((state) => state.surveyGetList.survayList);
 
   const recall = route?.params?.surveyid;
 
@@ -33,7 +34,6 @@ const Surveys = ({ route,navigation }) => {
       const resData = res?.data;
       const postDetails = {speciality_id:resData?.speciality_id,city_id: null,assoc_id:resData?.assoc_id,earntype: 0,id: resData?.id};
       const result = await dispatch(survayList(postDetails));
-      setSurvayData(result.payload);
       setLoader(false);
     })
   };
@@ -69,7 +69,7 @@ const Surveys = ({ route,navigation }) => {
         nestedScrollEnable={true}
       >
         <View style={{ padding: 10 }}>
-          {survayData?.surveylist.map((data, i) => {
+          {serveyData?.surveylist.map((data, i) => {
               return (
                 <View style={{ marginBottom: 10 }} key={i}>
                   <Card

@@ -115,7 +115,10 @@ import { mainApi } from "../../src/apis/constant";
 export const quizData = createSlice({
     name : "quiz",
     initialState :{
-        postData : [],
+        quizPost : [],
+        GetQuizQuestions : [],
+        saveQuiz : [],
+        leaderBoard : [],
         rankResult : {},
         docResult : {},
         loading : false,
@@ -130,7 +133,7 @@ export const quizData = createSlice({
         })
         builder.addCase(quizPostData.fulfilled, (state, action) => {
             state.loading  =  false;
-            state.postData = action.payload;
+            state.quizPost = action.payload;
         })
         builder.addCase(quizPostData.rejected, (state) => {
             state.loading = false;
@@ -143,7 +146,7 @@ export const quizData = createSlice({
         })
         builder.addCase(GetQuizQuestions.fulfilled, (state, action) => {
             state.loading  =  false;
-            state.postData = action.payload;
+            state.GetQuizQuestions = action.payload;
         })
         builder.addCase(GetQuizQuestions.rejected, (state) => {
             state.loading = false;
@@ -156,7 +159,7 @@ export const quizData = createSlice({
         })
         builder.addCase(saveQuizAnswer.fulfilled, (state, action) => {
             state.loading  =  false;
-            state.postData = action.payload;
+            state.saveQuiz = action.payload;
         })
         builder.addCase(saveQuizAnswer.rejected, (state) => {
             state.loading = false;
@@ -205,4 +208,4 @@ export const quizData = createSlice({
     }
 });
 
-export const { reducer : result } = quizData;
+export default quizData.reducer;

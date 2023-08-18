@@ -5,25 +5,26 @@ import { Divider } from 'react-native-elements';
 import * as Progress from "react-native-progress";
 import { showLeaderBoard, showRankResult } from '../../../redux/reducers/mcqSlice';
 import { getLocalData } from '../../apis/GetLocalData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const Leaderboard = ({navigation}) => {
-    const [userData, setUserData] = useState([]);
-    const [rank, setRank] = useState();
     const [loader, setLoader] = useState(true);
     const dispatch = useDispatch(); 
+
+    const rank = useSelector((state) => state?.mcqData?.rankResult)
+    const userData = useSelector((state) => state?.mcqData?.leaderBoard)
 
     const getLeaderboardData = () => {
         navigation.setOptions({ title: 'Leaderboard' });
         getLocalData('USER_INFO').then(async (res) => {
-          const uresult = await dispatch(showLeaderBoard({role : res.data.role}));
-          const userRankResult = await dispatch(showRankResult({user_id : res.data.id}));
-          setRank(userRankResult.payload)
-          setUserData(uresult?.payload);
+          await dispatch(showLeaderBoard({role : res.data.role}));
+          await dispatch(showRankResult({user_id : res.data.id}));
           setLoader(false)
         });
       };
 
+      
       useEffect(() => {
         getLeaderboardData();
       },[])
@@ -35,8 +36,6 @@ const Leaderboard = ({navigation}) => {
         </View>)
       }
       
-    // const gress = 0.3990
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",padding:15}}>
         <View style={styles.ScoreContainer}>

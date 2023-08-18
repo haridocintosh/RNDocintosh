@@ -15,12 +15,11 @@ import {  View,
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
-    const [selectitem,setselectitem]=useState('');
-    const [getspclist,setgetspclist]=useState('');
+    const [selectitem, setselectitem] = useState('');
     const [loader, setLoader] = useState(true);
-    const [userId, setuserId] = useState();
     
     const userData = useSelector((state) => state.localData.localData);
+    
     const getItem = (item) => {
       let spl  = item.speciality_id;
       let copy=[...selectitem];

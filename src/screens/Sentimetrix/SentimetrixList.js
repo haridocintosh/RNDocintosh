@@ -5,8 +5,6 @@ import { getLocalData } from '../../apis/GetLocalData';
 import { getSentimetrixListAPI } from '../../../redux/reducers/SentimetrixSlice';
 import { useDispatch,useSelector } from 'react-redux';
 
-
-
 const SentimetrixList = ({navigation}) => {
     const [listData, setListData] = useState();
     const [loader, setLoader] = useState(false);

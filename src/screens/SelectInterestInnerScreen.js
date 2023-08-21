@@ -24,7 +24,7 @@ import {  View,
       let spl  = item.speciality_id;
       let copy=[...selectitem];
       copy = [...copy,spl]
-     setselectitem(copy)
+      setselectitem(copy)
     const newItem = filteredDataSource.map((val)=>{
       if(val.speciality_id===item.speciality_id){
         return {...val, isSelected:!val.isSelected }
@@ -56,8 +56,6 @@ import {  View,
     setLoader(false)
    }
 
-  
-  
     useEffect(() => {
         getInterestSplData();
     }, []);
@@ -135,7 +133,6 @@ import {  View,
             />
         </View>
         <View style={{marginTop:0, paddingHorizontal:15,paddingBottom:50 }}>
-       
           <FlatList
             columnWrapperStyle={styles.tagView}
             data={filteredDataSource}
@@ -143,9 +140,9 @@ import {  View,
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={ItemSeparatorView}
             renderItem={ItemView}
-           //contentContainerStyle={{ flexDirection: 'column',height:"100%" , width:"100%" }}
-           numColumns={2}
-          //nestedScrollEnabled={false}
+            //contentContainerStyle={{ flexDirection: 'column',height:"100%" , width:"100%" }}
+            numColumns={2}
+            //nestedScrollEnabled={false}
           />
         </View>
   
@@ -159,8 +156,8 @@ import {  View,
   
   const styles = StyleSheet.create({
     container: {
-    marginTop:6,
-    marginHorizontal:20,
+      marginTop:6,
+      marginHorizontal:20,
       flexDirection: "row",
       justifyContent: 'center',
       alignItems: 'center',
@@ -170,43 +167,40 @@ import {  View,
       borderTopWidth:1,
       borderBottomWidth:1,
       borderColor:"#D5DEED"
-  
-      
     },
     itemStyle: {
       display:"flex",
       paddingHorizontal:16,
       paddingVertical:8,
       marginVertical:4,
-     // marginLeft:10,
+      //marginLeft:10,
       //color: "#51668A",
       width:"100%",
       height:"auto",
-    //   backgroundColor:"transparent",
+      //backgroundColor:"transparent",
       borderRadius:52,
       borderWidth:1,
-     // borderColor:"#45B5C0",
-    //  position:"relative",
+      //borderColor:"#45B5C0",
+      //position:"relative",
       justifyContent:"space-between",
       fontSize:14,
       fontFamily:"Inter-Regular",
-     alignItems:"center"
+      alignItems:"center"
     },
     item:{
       marginLeft:10,
       flexWrap:"wrap",
       position:"relative",
-  
     },
   
     tagView: {
       flexWrap: "wrap",
-      },
+    },
   
     textInputStyle: {
-     flex: 1,
-     paddingTop: 10,
-     paddingRight: 10,
+      flex: 1,
+      paddingTop: 10,
+      paddingRight: 10,
       paddingBottom: 10,
       paddingLeft: 0,
       backgroundColor: '#fff',
@@ -218,13 +212,10 @@ import {  View,
     },
     searchIcon: {
       padding: 10,
-  },
-  searchIconCross:{
-    backgroundColor:"red",
-  
-  }
-  
-  
+    },
+    searchIconCross:{
+      backgroundColor:"red",
+    }
   });
   
   

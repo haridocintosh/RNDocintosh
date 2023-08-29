@@ -87,7 +87,7 @@ import {  View,
       return (
       <View style={styles.item}>
         <Text style={[styles.itemStyle, !item.isSelected ? { borderColor:"#E6E6E6", backgroundColor:"transparent",color:"#51668A"} : { borderColor:"#45B5C0", backgroundColor:"#F6FBFC", color:"#071B36"} ]} onPress={() => getItem(item)}> 
-          {'#'}{item.speciality }{ !item.isSelected?"":"    "}
+          {'#'}{item.speciality }{ !item.isSelected ? "" : "    "}
         </Text>
         <Text style={{position:"absolute",top:11,right:4}}>{ !item.isSelected ?'':<Ionicons style={{width:40, right:100,marginBottom:0}} name="close-circle" size={20} color="#45B5C0"/> } </Text>
       </View>
@@ -107,8 +107,7 @@ import {  View,
       );
     };
   
-    // const handleSubmit = ()=>{
-    
+    // const handleSubmit = () => {
     //   navigation.navigate('SelectInterestInnerScreen'); 
     // }
   
@@ -132,7 +131,7 @@ import {  View,
               placeholderTextColor='#51668A'
             />
         </View>
-        <View style={{marginTop:0, paddingHorizontal:15,paddingBottom:50 }}>
+        <View style={{marginTop:0, paddingHorizontal:15, paddingBottom:50 }}>
           <FlatList
             columnWrapperStyle={styles.tagView}
             data={filteredDataSource}
@@ -151,7 +150,6 @@ import {  View,
         </View>
         </View>
     );
-  
   }
   
   const styles = StyleSheet.create({

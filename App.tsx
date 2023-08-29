@@ -36,7 +36,7 @@ function App(): JSX.Element {
 
   return (
     <Provider store={store}>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} >
         <AppNav/>
       </NavigationContainer>
     </Provider>

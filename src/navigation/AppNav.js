@@ -29,8 +29,6 @@ import { useDispatch } from 'react-redux';
 import { addLocal } from '../../redux/reducers/loginAuth';
 
 
-
-
 export default function AppNav() {
   
 const [defaultRoute, setDefaultRoute] = useState();

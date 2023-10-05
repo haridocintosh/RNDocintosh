@@ -3,10 +3,23 @@ import React, { useEffect, useState } from 'react'
 import { styles } from './CommunityStyles';
 import { Icon } from '../../navigation/ReuseLogics';
 import SocketIOClient from 'socket.io-client';
+import ChatMessages from './ChatMessages';
+
+const data =[
+  {text:'hello',own:true},
+  {text:'hii',own:false},
+  {text:'How are you?',own:true},
+  {text:'I am good and you?',own:false},
+  {text:'ya good',own:true},
+  {text:'Where do you do job?', own:false},
+  {text:'Right now I am doing in Delhi', own:true},
+  {text:`Ohh!...what's the role`, own:false},
+  {text:'As a software developer.', own:true},
+  {text:'Okay.', own:false},
+]
 
 const MessageScreen = ({navigation}) => {
   const [chatMessage, setChatMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState([]);
   const [userChatList, setUserChatList] = useState();
 
   const connectWebSocketWatch = () => {
@@ -25,7 +38,6 @@ const MessageScreen = ({navigation}) => {
         });
       });
   }
-  
 
   useEffect(()=>{
       connectWebSocketWatch()
@@ -51,32 +63,14 @@ const MessageScreen = ({navigation}) => {
 
       <View style={styles.chatContainer}>
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
-          <View style={styles.OtherChatContainer}>
-            <Image source={require('../../assets/images/p1.png')} style={{width:40,height:40}}/>
-            <View style={styles.OtherChatText}>
-              <Text>skjdfhkjsd dsfhsdf hh hfdshf dshflhdfhd sdhflds</Text>
+            <View style={{marginVertical:10}}>
+              {data?.map((data) =>(
+                <ChatMessages data={data}/>
+              ))}
             </View>
-          </View>
-          <View style={styles.OwnChatContainer}>
-            <View style={styles.OwnChatText}>
-              <Text>skjdfhkjsd dsfhsdf hh hfdshf dshflhdfhd sdhfldsdfjn  sdfsdf sdfsdfs ef rgsg dfsdfsdjfnj dnhmhdsb dfskdvshjdsvhsjdbshfsadga asdgaskd gu bbbdkbsd bsjkdb gsadgsud  gasdggdgs asgdjagdj </Text>
-            </View>
-            <Image source={require('../../assets/images/p2.png')} style={styles.ImagePic}/>
-          </View>
-          <View style={styles.OtherChatContainer}>
-            <Image source={require('../../assets/images/p1.png')} style={{width:40,height:40}}/>
-            <View style={styles.OtherChatText}>
-              <Text>lorem erojwlf jfbhkdbfkjdhfh</Text>
-            </View>
-          </View>
-          <View style={styles.OwnChatContainer}>
-            <View style={styles.OwnChatText}>
-              <Text>hgvjhfdgfhhjbjhvhj</Text>
-            </View>
-            <Image source={require('../../assets/images/p2.png')} style={styles.ImagePic}/>
-          </View>
         </ScrollView>
       </View>
+
       <View style={styles.UserComments}>
           <View style={styles.UserInnerComments}>
               <View style={styles.inputCont} >
@@ -85,11 +79,11 @@ const MessageScreen = ({navigation}) => {
                   style={styles.input}
                   onChangeText={setChatMessage}
                   value={chatMessage}
-                  placeholder="Message"
+                  placeholder="Message" 
               />
               </View>
               <View style={styles.iconsContainer}>
-                  {/* <TouchableOpacity>
+                {/* <TouchableOpacity>
                       {Icon("Feather", "paperclip",22,"#51668A")}
                   </TouchableOpacity>
                   <TouchableOpacity style={{marginHorizontal:15}}>

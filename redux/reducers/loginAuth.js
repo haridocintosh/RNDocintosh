@@ -148,7 +148,7 @@ export const loginAuth = createSlice({
         }
     },
 
-    extraReducers : builder =>{
+    extraReducers : builder => {
         //-------------------------userLogin-----------------------------
         builder.addCase(userLogin.pending, (state) => {
             state.loading       =  true;

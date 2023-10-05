@@ -165,26 +165,26 @@ const LoginScreen = () => {
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'md-eye-off' : 'md-eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
       <View style={styles.forgetPassContainer}>
-      <View style={styles.section}>
-        <CheckBox
-          onClick={() => toggleRememberMe()}
-          isChecked={isChecked}
-          checkBoxColor="#2C8892"
-        />
-        <TouchableOpacity onPress={() => toggleRememberMe()}>
-          <Text style={{
-              fontSize: 12,
-              marginLeft:5,
-              fontWeight: '400',
-              fontStyle: 'normal',
-              letterSpacing: 1,
-              color: '#51668A',
-              fontFamily: 'Inter-Regular',
-            }}>
-            Remember Me
-          </Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.section}>
+          <CheckBox
+            onClick={() => toggleRememberMe()}
+            isChecked={isChecked}
+            checkBoxColor="#2C8892"
+          />
+          <TouchableOpacity onPress={() => toggleRememberMe()}>
+            <Text style={{
+                fontSize: 12,
+                marginLeft:5,
+                fontWeight: '400',
+                fontStyle: 'normal',
+                letterSpacing: 1,
+                color: '#51668A',
+                fontFamily: 'Inter-Regular',
+              }}>
+              Remember Me
+            </Text>
+          </TouchableOpacity>
+        </View>
           <Text style={{
             fontSize: 14,
             fontWeight: '600',

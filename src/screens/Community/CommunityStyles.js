@@ -336,9 +336,7 @@ export const styles = StyleSheet.create({
       marginLeft:5
     },
     OwnChatContainer:{
-      justifyContent:'flex-end',
-      alignItems:'flex-end',
-      flexDirection:'row'
+      flexDirection:'row-reverse'
     },
     OwnChatText:{
       flexDirection:'row',

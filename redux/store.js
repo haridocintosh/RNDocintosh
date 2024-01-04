@@ -22,6 +22,6 @@ const store = configureStore({
         mcqData: quizData,
         sentimetrixData: getSentimetrix,
     }
-})
+});
 
 export default store;

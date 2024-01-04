@@ -52,8 +52,7 @@ import CreateBusinessPage from '../screens/BusinessPage/CreateBusinessPage';
 import UploadProfilePhoto from '../screens/BusinessPage/UploadProfilePhoto';
 import DocCoinsHistory from '../screens/Leaderboard/DocCoinsHistory';
 
-
-
+ 
 const HomeNavigation = () => {
     const navigation  = useNavigation();
     const Stack = createNativeStackNavigator();

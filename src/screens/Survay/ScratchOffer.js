@@ -125,7 +125,7 @@ const ScratchOffer = ({ setShowOffer }) => {
                   <Text style={styles.requireStepsTitle}>Kindly find the below steps :</Text>
                   <Text style={styles.requireSteps}>
                     Login to 
-                    <Text style={{color: 'blue'}}onPress={() => Linking.openURL('http://amazon.in ')}>  amazon.in </Text>
+                    <Text style={{color: 'blue'}}onPress={() => Linking.openURL('http://amazon.in')}>  amazon.in </Text>
                       website.
                     </Text>
                   <Text style={styles.requireSteps}>Click on Amazon pay balance.</Text>

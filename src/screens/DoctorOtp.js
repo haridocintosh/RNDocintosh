@@ -65,7 +65,7 @@ import { View,
      
 
    useEffect(() => {
-       const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+       const timer = counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
        return () => clearInterval(timer);
    }, [counter]);
 

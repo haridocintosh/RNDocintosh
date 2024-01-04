@@ -13,7 +13,7 @@ const storeData = async (key,value) => {
 }
 
 const singlestoreData = async (key,value) => {
-  try {
+  try{
     await AsyncStorage.setItem(key, value);
   }catch (e) {
     console.log(e);
@@ -103,7 +103,7 @@ const verifyOtp = (otp,user_id) =>
   });
 
 
-  const check_mail= (e)=>
+  const check_mail = (e) =>
   new Promise((resolve, reject) => {
     axios({
       method: 'post',
@@ -143,11 +143,10 @@ const verifyOtp = (otp,user_id) =>
       .then(res => {
         if(res.status === 200) {
         resolve(res.data);
-        Toast.show('OTP Verify Successfully',Toast.LONG)
+        Toast.show('OTP Verify Successfully',Toast.LONG);
         } else{ 
           reject(res)
-          Toast.show('Please Enter Valid OTP ',Toast.LONG)
-        
+          Toast.show('Please Enter Valid OTP ',Toast.LONG);
         };
       })
       .catch(error => {

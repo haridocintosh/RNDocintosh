@@ -391,7 +391,7 @@ const form_submit = async() =>{
             {checked === '4'? ( 
               <CustomButton label={'Continue'}  onPress={() =>{form_submit()}} />
               ) : 
-            <CustomButton label={'Continue'}  onPress={() =>{handleStudentSubmit()}} />
+              <CustomButton label={'Continue'}  onPress={() =>{handleStudentSubmit()}} />
             }
           </View>
       </ScrollView>

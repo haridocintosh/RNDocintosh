@@ -11,13 +11,13 @@ export const getSavedPostsApi = createAsyncThunk("savedPosts", async(data)=>{
             },
             body : JSON.stringify(data)
         });
-        const result=  await responce.json();
+        const result = await responce.json();
         return result
     }
     catch(e){
        console.log(e);
     }
-  });
+});
   
 export const getBlockedUsersApi = createAsyncThunk("blockedUsers", async(data)=>{
     try{
@@ -34,7 +34,7 @@ export const getBlockedUsersApi = createAsyncThunk("blockedUsers", async(data)=>
     catch(e){
        console.log(e);
     }
-  });
+});
 
 export const getNotificationApi = createAsyncThunk("notificationSetting", async(data)=>{
     try{
@@ -51,7 +51,7 @@ export const getNotificationApi = createAsyncThunk("notificationSetting", async(
     catch(e){
        console.log(e);
     }
-  });
+});
 
 export const getUpdateNotificationApi = createAsyncThunk("updateNotification", async(data)=>{
     try{
@@ -68,7 +68,7 @@ export const getUpdateNotificationApi = createAsyncThunk("updateNotification", a
     catch(e){
        console.log(e);
     }
-  });
+});
 
 export const getDeactiveDeleteApi = createAsyncThunk("deactiveDelete", async(data)=>{
     try{
@@ -85,9 +85,9 @@ export const getDeactiveDeleteApi = createAsyncThunk("deactiveDelete", async(dat
     catch(e){
        console.log(e);
     }
-  });
+});
 
-  export const circleSlice = createSlice({
+export const circleSlice = createSlice({
     name : "getSavedPost",
     initialState :{
         users : [],

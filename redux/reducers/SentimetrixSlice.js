@@ -17,6 +17,7 @@ export const getSentimetrixListAPI = createAsyncThunk("getSentimetrixList", asyn
         console.log(e);
      }
 })
+
 export const SentimetrixGetByIdAPI = createAsyncThunk("SentimetrixGetById", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/SentimetrixGetById`, {
@@ -45,10 +46,10 @@ export const SentimetrixSaveAPI = createAsyncThunk("SentimetrixSave", async (dat
          });
         const result = await responce.json();
         return result;
-     }
-     catch(e){
+    }
+    catch(e){
         console.log(e);
-     }
+    }
 })
 
 export const getSentimetrix = createSlice({

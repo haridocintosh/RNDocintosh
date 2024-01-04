@@ -111,7 +111,7 @@ const  Sharepost = () => {
 
   const pickImage =  () => {
     setDocument(null);
-    PickImageAll(setloader).then(async (res) =>{
+    PickImageAll(setloader).then(async (res) => {
       const addIndex = [...pickedData, ...res?.assets]
       const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
       setData(dataId);

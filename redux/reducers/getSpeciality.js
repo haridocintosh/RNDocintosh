@@ -16,9 +16,7 @@ export const getAllUniversity = createAsyncThunk("getAllUniversity", async ()=>{
 export const getcollegelist = createAsyncThunk("getcollegelist", async (university_id)=>{
     const response = await fetch(`${mainApi.baseUrl}/ApiController/regiUniversityChange`,{
         method : 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
+        headers:{'Content-Type': 'application/json'},
         body : JSON.stringify(university_id)
     });
     const getcollegelist = await response.json();
@@ -45,8 +43,7 @@ export const getSpeciality = createSlice({
         loading : false,
         error :false,
     },
-    reducers : {
-    }
+    reducers : {}
 });
 
 export const { reducer : allSpeciality } = getSpeciality;

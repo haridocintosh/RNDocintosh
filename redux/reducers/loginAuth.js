@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
-
 export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/login`, {
@@ -11,8 +10,8 @@ export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
             },
             body : JSON.stringify(loginData)
         });
-        const userresult=  await responce.json();
-        return userresult
+        const userresult = await responce.json();
+        return userresult;
     }
     catch(e){
        console.log(e);
@@ -70,7 +69,6 @@ export const checkEmail = createAsyncThunk("user/email_check", async(regData)=>{
     }
 })
 
-
 export const checkMobile = createAsyncThunk("user/check_mobile", async(regData)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/mobile_check`, {
@@ -81,20 +79,19 @@ export const checkMobile = createAsyncThunk("user/check_mobile", async(regData)=
             body : JSON.stringify(regData)
         });
         const result = await responce.json();
-        return result
+        return result;
     }
     catch(e){
        console.log(e);
     }
 })
 
-
 export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/loginwithotp`, {
             method : 'POST',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type' : 'application/json'
             },
             body : JSON.stringify(regData)
         });
@@ -104,7 +101,6 @@ export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
        console.log(e);
     }
 })
-
 
 export const forgotverifyOtp = createAsyncThunk("user/forgotverifyOtp", async(regData)=>
 {
@@ -121,7 +117,7 @@ export const forgotverifyOtp = createAsyncThunk("user/forgotverifyOtp", async(re
     }catch(e){
        console.log(e);
     }
-})
+}) 
 
 export const loginAuth = createSlice({
     name : "auth",
@@ -135,8 +131,8 @@ export const loginAuth = createSlice({
         registerData: {},
         registerTwoData : {},
         localData : {}
-
     },
+
     reducers : {
         logout : (currentState)=>{
             currentState.loading    = false;
@@ -190,7 +186,6 @@ export const loginAuth = createSlice({
             state.loading = false;
             state.error = false
         })
-
     }
 });
 

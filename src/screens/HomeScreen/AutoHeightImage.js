@@ -1,4 +1,4 @@
-import { View, Text, Image,StyleSheet,Dimensions,TouchableOpacity } from 'react-native'
+import { View, Text,SafeAreaView, Image,StyleSheet,Dimensions,TouchableOpacity } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react';
 import Video from 'react-native-video';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -6,13 +6,15 @@ import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 import FastImage from 'react-native-fast-image'
 
 
+
+
 const AutoHeightImage = ({items,currentIndex,postIndex}) => {
+  
 
   // const [isPlaying, setIsPlaying] = React.useState(false); 
   const [activeIndex, setActiveIndex] = useState(0);
   const [carouselItems,SetCarouselItems] = useState(items?.attach_array)
   const videoPlayer = useRef(null);
-  const [imgHeight, setImgHeight] = useState();
 
 
   const onPlayVideo = (id) => {
@@ -73,13 +75,6 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
                   /> */}
                </TouchableOpacity>
               :
-              <>
-              
-              {/* <Image 
-                  source={{uri:item?.filename}}
-                  style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
-                  // style={carouselItems?.length > 1 ? styles.multiImageStyle: [styles.imageStyle,{height:imgHeight}]} 
-                  resizeMode={"contain"}/> */}
               <FastImage
                   style={[styles.multiImageStyle,{height:actualHeight(item?.filewidth,item?.fileheight)}]} 
                   source={{
@@ -88,15 +83,13 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
                   }}
                   resizeMode={FastImage.resizeMode.contain}
               />
-              </>
               }
           </View>
     )
   }
 
   return (
-    // backgroundColor:'rgba(52,119,224,0.3)'
-    <View style={{alignItems:'center'}}>
+    <SafeAreaView style={{alignItems:'center'}}>
     {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
     <Carousel
         layout={"default"}
@@ -133,7 +126,8 @@ const AutoHeightImage = ({items,currentIndex,postIndex}) => {
           inactiveDotScale={0.6}
         />
         </View>
-    </View>
+     
+    </SafeAreaView>
   )
 }
 
@@ -159,9 +153,9 @@ export const styles = StyleSheet.create({
   },  
   multiImageStyle:{
     width:"100%",
-    // marginHorizontal:10,
-    // aspectRatio:1,
-    // borderWidth:1
+    // borderWidth:1,
+    // backgroundColor:'#f2f2f2',
+    borderRadius:5
   },  
   imageVideoContainer:{
     flex:1,

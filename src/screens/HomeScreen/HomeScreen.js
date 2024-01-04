@@ -21,6 +21,7 @@ import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
+import ViewMoreText from 'react-native-view-more-text';
 
 
 const HomeScreen = ({navigation})=> {
@@ -179,6 +180,17 @@ const HomeScreen = ({navigation})=> {
     }
   },[isFocused]);
 
+  const renderViewMore = (onPress) => {
+    return(
+      <Text onPress={() => onPress()} style={{color:"#5499C7"}}>View more</Text>
+    )
+  }
+  const renderViewLess = (onPress) =>{
+    return(
+      <Text onPress={() => onPress()} style={{color:"#5499C7"}}>View less</Text>
+    )
+  }
+
     const renderItem = ({item,index}) => {
       return(
         <Card style={styles.cardOfPosts}>
@@ -215,13 +227,18 @@ const HomeScreen = ({navigation})=> {
               BlockId={BlockId} 
               userData={userData} 
           />}
-          <View style={item?.description && {paddingBottom:10}}>
-            <Text style={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
-              {item?.description.replace(/(<([^>]+)>)/gi, "")}
-            </Text>
+          <View style={item?.description && {paddingBottom:10,flexDirection:'row',alignItems:'center'}}>
+            <ViewMoreText
+              numberOfLines={2}
+              renderViewMore={renderViewMore}
+              renderViewLess={renderViewLess}
+              textStyle={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}
+            >
+                {item?.description.replace(/(<([^>]+)>)/gi, "")}
+            </ViewMoreText>
           </View>
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
-            <PublicReactions item={item}/>
+            <PublicReactions item={item} />
         </Card>
       )
     }

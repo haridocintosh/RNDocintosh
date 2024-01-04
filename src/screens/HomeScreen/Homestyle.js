@@ -139,6 +139,9 @@ export const styles = StyleSheet.create({
     fontFamily:"Inter-Regular",
     marginTop:1.5
   },
+  loadMore:{
+    marginLeft:10
+  },
   dot: {
     borderStyle: "solid",
     borderWidth: 2,

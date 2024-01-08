@@ -267,10 +267,13 @@ picContainer:{
 
 // ------------------------------------CommentsScreen--------------------------------------------
 commentContainer:{
-  flex:1,
-  backgroundColor:'#ecf2f6',
+  // flex:1,
+  // backgroundColor:'#ecf2f6',
   padding:15,
-  paddingBottom:50
+  paddingBottom:50,
+  borderWidth:1,
+  width:Dimensions.get('screen').width,
+  // height:'auto',
 },
 UserComments:{
   alignItems:'center',

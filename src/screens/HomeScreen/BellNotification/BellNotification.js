@@ -18,8 +18,6 @@ const BellNotification = ({navigation}) => {
         bottomSheetRef.current?.expand();
     }
 
-    
-
     const fetchNotification = async () => {
         const allNotification = await dispatch(getAllNotification());
         setgetNotification(allNotification.payload);

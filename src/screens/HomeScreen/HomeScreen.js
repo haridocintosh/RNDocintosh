@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef,useMemo} from 'react';
 import {
   View,
   Text,
@@ -22,12 +22,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
 import ViewMoreText from 'react-native-view-more-text';
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { TapGestureHandler, ScrollView } from "react-native-gesture-handler";
+import CommentsScreen from './CommentsScreen';
 
 
 const HomeScreen = ({navigation})=> {
   const userData = useSelector((state) => state.localData.localData);
   const AllCoins = useSelector((state) => state?.homeData?.getAllCoins?.coins);
   // const home = useSelector((state) => state?.homeData);
+
+  const snapPoints = useMemo(() => [1, '100%'], []);
+  const bottomSheetRef = useRef(null);
 
   const isFocused = useIsFocused();
   const ref = useRef(null);
@@ -42,6 +48,7 @@ const HomeScreen = ({navigation})=> {
   const [bottumLoader, setBottumLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [post_id, setPost_id] = useState(null);
 
   const press = () => {
     ref.current.scrollToIndex({ animated: true, index: 5 });
@@ -191,6 +198,13 @@ const HomeScreen = ({navigation})=> {
     )
   }
 
+  const GotoComments =(post_id,comments_list) => {
+    console.log(post_id);
+    setPost_id(post_id)
+    bottomSheetRef.current?.expand();
+    // navigation.navigate('CommentsScreen',{post_id:post_id,comments_list});
+   }
+
     const renderItem = ({item,index}) => {
       return(
         <Card style={styles.cardOfPosts}>
@@ -209,7 +223,7 @@ const HomeScreen = ({navigation})=> {
                     {Icon("Ionicons","time-outline",19,"#51668A")}
                   </Text>
                   <Text style={styles.UIPostTiming}>
-                    {moment(item?.created_at,).fromNow().split(" ")[0] == ('a'||"an")  ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
+                    {moment(item?.created_at).fromNow().split(" ")[0] == ('a'||"an")  ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
                     {moment(item?.created_at).fromNow().split(" ")[1].slice(0,1)}
                   </Text>
                 </View>
@@ -238,7 +252,7 @@ const HomeScreen = ({navigation})=> {
             </ViewMoreText>
           </View>
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
-            <PublicReactions item={item} />
+            <PublicReactions item={item} GotoComments={GotoComments}/>
         </Card>
       )
     }
@@ -324,6 +338,15 @@ const HomeScreen = ({navigation})=> {
           </View>
         </View>
         </View>
+        <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            enablePanDownToClose={true}
+        >
+          <BottomSheetView >
+            <CommentsScreen post_id={post_id}/>
+          </BottomSheetView>
+        </BottomSheet>
   </SafeAreaView>
   );
 }

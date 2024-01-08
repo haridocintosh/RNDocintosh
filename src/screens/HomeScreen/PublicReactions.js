@@ -7,8 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
 import { getAllCoins, getCointransfer } from '../../../redux/reducers/postData';
 
-
-const PublicReactions = ({item}) => {
+const PublicReactions = ({item,GotoComments}) => {
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
@@ -49,9 +48,7 @@ const PublicReactions = ({item}) => {
   setHeart(item?.post_like_status?.[0].flag == 1);
  },[item])
 
- const GotoComments =(post_id,comments_list ) => {
-  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
- }
+ 
 
  const onShare = async (post_id) => {
   try {
@@ -99,15 +96,14 @@ const PublicReactions = ({item}) => {
                   <Text style={styles.socialCountText}>{item?.commentcount}</Text>
                 </View>
 
-                <View style={styles.socialCount}>
+                {/* <View style={styles.socialCount}>
                     <TouchableOpacity onPress={() => onShare(item?.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>0</Text>
-                </View>
+                </View> */}
 
               </View>
-
           </View> 
           {likeCount > 0 && 
            <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>

@@ -166,6 +166,7 @@ const publishCheck1 = (e, text)=>{
 }
 
   const handleStudentSubmit = async() =>{
+    console.log("1");
     setPostLoad(true);
     post.community_id = communityID;
     if(post.publishto ==''){
@@ -181,6 +182,7 @@ const publishCheck1 = (e, text)=>{
     //   bottomSheetModalRef.current?.present();
     }else{
       if(pickedData != undefined){
+        
       if(media == 'images'){
         pickedData?.map(async(data) => {
           let localUri = data.uri
@@ -251,8 +253,7 @@ const publishCheck1 = (e, text)=>{
         Toast.show(result.payload.message,Toast.LONG);
         const coinDetails = {task : 4, receiverId:userdata.id } 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
-        if(coinResult.payload.status == 'Success')
-        {
+        if(coinResult.payload.status == 'Success'){
           navigation.navigate('Community');
         }
       }

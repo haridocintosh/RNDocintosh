@@ -58,13 +58,14 @@ const  Sharepost = () => {
   const [document, setDocument]   = useState(null);
   const [circlespeciality, setSpl] = useState([]);
   const [post ,setPost] = useState({
-      publishto:"",
+      postType:"",
       description :"",
       status:"1",
-      broadcast_to:"",
-      postType:"",
-      postImage:[],
+      // tagArray:"",
+      publishto:"",
       type:"",
+      broadcast_to:"",
+      postImage:[],
       custspeciality:""
   });
   const handlePress = () => setExpanded(!expanded);
@@ -74,15 +75,15 @@ const  Sharepost = () => {
   const [whoCanSee, setWhoCanSee]   = useState();
   const [postLoad, setPostLoad]   = useState(false);
   const [userdata, setuserdata] = useState({
-    fullname:'',
-    profile:'',
-    role:'',
-    speciality:'',
-    speciality_id:'',
     assoc_id:'',
     id:'',
     circle_type:'',
-    city_id:''
+    role:'',
+    speciality_id:'',
+    city_id:'',
+    // fullname:'',
+    // profile:'',
+    // speciality:'',
   });
   const [uploadImage, setuploadImage]   = useState({pimage:[]});
   const [emojiTab, setEmojiTab] = useState(false)
@@ -178,6 +179,7 @@ const publishCheck1 = (e, text)=>{
   const videoFetch = `${mainApi.baseUrl}/ApiController/postuploadDocsReact`;
 
   const handleStudentSubmit = async() =>{
+    console.log("1");
     setPostLoad(true);
     if(post.publishto == ''){
       setPostLoad(false);
@@ -213,12 +215,14 @@ const publishCheck1 = (e, text)=>{
               })
         });
       }else{
+        console.log("2");
         const uploadData = {userdata,post};
         const result = await dispatch(postCreate(uploadData));
         if(result.payload.status == 'Success'){
           Toast.show(result.payload.message,Toast.LONG);
           const coinDetails = {task : 4, receiverId:userdata.id } 
           const coinResult  = await dispatch(coinTransfer(coinDetails));
+          console.log("coinResult.payload.status",coinResult.payload.status);
           if(coinResult.payload.status == 'Success')
           {
             navigation.navigate('HomeScreen');
@@ -231,16 +235,23 @@ const publishCheck1 = (e, text)=>{
   const getFun = async(data) => {
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
     if(countData == uniqueData.length){
+      console.log("2");
           const uploadData = {userdata,post,uploadImage:data.pimage};
         // setloader(true);
+        console.log("3",uploadData);
           const result = await dispatch(postCreate(uploadData));
+          console.log("result",result);
           if(result.payload.status == 'Success'){
+            console.log("4");
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
+            console.log("5");
             const coinResult  = await dispatch(coinTransfer(coinDetails));
+            console.log("6");
             if(coinResult.payload.status == 'Success')
             {
+              console.log("7");
               navigation.navigate('HomeScreen');
             }
           }
@@ -282,18 +293,18 @@ const publishCheck1 = (e, text)=>{
     navigation.setOptions({ title: 'Create Post'});
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
+      fetchSpecialities(reData?.id);
       setuserdata({...userdata, 
-        fullname: `${reData?.first_name} ${reData?.last_name}`,
-        profile: reData?.profileimage,
-        role:reData?.role,
-        speciality:reData?.speciality,
-        speciality_id:reData?.speciality_id,
-        city_id:reData?.city_id,
         assoc_id:reData?.assoc_id,
         id:reData?.id,
-        circle_type:reData?.role == 5 ? 3 : 1
+        circle_type:reData?.role == 5 ? 3 : 1,
+        role:reData?.role,
+        speciality_id:reData?.speciality_id,
+        city_id:reData?.city_id,
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        profile: reData?.profileimage,
+        speciality:reData?.speciality,
       });
-      fetchSpecialities(reData?.id);
     });
     bottomSheetModalRef.current?.present();
   }, [])

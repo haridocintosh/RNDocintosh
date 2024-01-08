@@ -125,7 +125,7 @@ const HomeScreen = ({navigation})=> {
       setBottumLoader(false);
       const allPostData = result?.payload.result.filter(Post => Post.user_role == userData?.role);
       setAllPost(allPostData);
-      // setRefresh(false);
+      setRefresh(false);
   }
 
   const handleLoadeMore = () => {
@@ -172,11 +172,11 @@ const HomeScreen = ({navigation})=> {
     itemVisiblePercentThreshold: 50
   };
 
-  // useEffect(() => {
-  //   if(refresh){
-  //     asyncFetchDailyData();
-  //   }
-  // }, [refresh])
+  useEffect(() => {
+    if(refresh){
+      asyncFetchDailyData();
+    }
+  }, [refresh])
 
   useEffect(()=>{
     if(isFocused){

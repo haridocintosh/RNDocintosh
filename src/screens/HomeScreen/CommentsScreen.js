@@ -96,7 +96,7 @@ const CommentsScreen = ({navigation,post_id}) => {
       </ScrollView>
         <View style={styles.UserComments}>
             <View style={styles.inputCont} >
-            <Image source={{uri:profile}} style={{width:50,height:50, borderRadius:50}}/>
+            <Image source={{uri:profile}} style={{width:50,height:50,borderRadius:50}}/>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
@@ -108,7 +108,6 @@ const CommentsScreen = ({navigation,post_id}) => {
               <Ionicons name='send' size={26}/>
             </TouchableOpacity>
         </View>
-        
         <Modal
           animationType="fade"
           transparent={true}

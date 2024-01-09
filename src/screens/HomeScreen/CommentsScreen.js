@@ -1,5 +1,5 @@
-import { View, Text, ActivityIndicator,Image,TextInput, TouchableOpacity,Modal} from 'react-native'
-import React, { useContext, useEffect, useState,useMemo } from 'react'
+import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity,Modal} from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers/publicReactionSlice';
@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
 import { getLocalData } from '../../apis/GetLocalData';
 import { getCointransfer } from '../../../redux/reducers/postData';
-import { TapGestureHandler, ScrollView } from "react-native-gesture-handler";
 
 
-const CommentsScreen = ({navigation,post_id}) => {
+const CommentsScreen = ({route,navigation}) => {
+  const  {post_id, comments_list} = route.params;
     const [profile, setProfile] = useState();
     const [text, onChangeText] = useState();
     const [userId, setUserId] = useState();
@@ -21,7 +21,7 @@ const CommentsScreen = ({navigation,post_id}) => {
     const dispatch = useDispatch();
 
     const getData = async(send) => {
-      // navigation.setOptions({ title: 'Comments'});
+      navigation.setOptions({ title: 'Comments'});
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
         setUserId(reData);
@@ -29,7 +29,6 @@ const CommentsScreen = ({navigation,post_id}) => {
       });
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
-        console.log("final");
         setInstData(sentResult.payload.getallcomment);
         setLoader(false);
         // if(send == "send"){
@@ -48,7 +47,7 @@ const CommentsScreen = ({navigation,post_id}) => {
 
     useEffect(()=>{
         getData();
-    },[post_id])
+    },[])
 
     if(loader){
       return(
@@ -57,11 +56,10 @@ const CommentsScreen = ({navigation,post_id}) => {
       </View>)
     }
 
-    const deleteCommentHandle = (val) => {
+    const deleteCommentHandle =  (val) => {
       setModalVisible(true)
       setPostId(val);
     }
-
     const handleDelete = async () => {
       const DelDetails = {comment_id:postId}
       const deleteResult = await dispatch(deleteComment(DelDetails));
@@ -70,33 +68,32 @@ const CommentsScreen = ({navigation,post_id}) => {
       setModalVisible(false);
       getData();
     }
-
   return (
-   <View style={styles.commentContainer}>
+    <View style={styles.commentContainer}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
-        {instData.length > 0 ? instData?.map((element, index)=>{
-          return(
-            <View style={styles.usersCommentContainer} key={index}>
-              <View style={styles.usersCommentPictureContainer}>
-                <Image source={{uri: element?.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
-                <View>
-                    <Text style={styles.userUsername}>{(element?.title == null ?"" :element?.title ) + (element?.fullname)}</Text>
-                    <Text style={styles.userCommentTexts}>{element.comment}</Text>
-                </View>
-              </View>
-              {element.id === userId.id &&
-              <TouchableOpacity onPress={() => deleteCommentHandle(element?.comment_id)} style={{}}>
-                <MaterialCommunityIcons name='delete-outline' size={30} color={'#A30000'}/>
-              </TouchableOpacity>}
-            </View>
-          )
-        }): 
-        <Text style={styles.NoCommentTexts}>There are no comments</Text>
-        }
+               {instData.length > 0 ? instData?.map((element, index)=>{
+                  return(
+                    <View style={styles.usersCommentContainer} key={index}>
+                      <View style={styles.usersCommentPictureContainer}>
+                        <Image source={{uri: element?.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
+                        <View>
+                            <Text style={styles.userUsername}>{(element?.title == null ?"" :element?.title ) + (element?.fullname)}</Text>
+                            <Text style={styles.userCommentTexts}>{element.comment}</Text>
+                        </View>
+                      </View>
+                      {element.id === userId.id &&
+                      <TouchableOpacity onPress={() => deleteCommentHandle(element?.comment_id)} style={{}}>
+                        <MaterialCommunityIcons name='delete-outline' size={30} color={'#A30000'}/>
+                      </TouchableOpacity>}
+                    </View>
+                  )
+                }): 
+                <Text style={styles.NoCommentTexts}>There are no comments</Text>
+                }
       </ScrollView>
         <View style={styles.UserComments}>
             <View style={styles.inputCont} >
-            <Image source={{uri:profile}} style={{width:50,height:50,borderRadius:50}}/>
+            <Image source={{uri:profile}} style={{width:50,height:50, borderRadius:50}}/>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
@@ -137,6 +134,5 @@ const CommentsScreen = ({navigation,post_id}) => {
   )
 }
 
-export default CommentsScreen
-
+export default CommentsScreen;
 

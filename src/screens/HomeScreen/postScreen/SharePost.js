@@ -62,6 +62,7 @@ const  Sharepost = () => {
       description :"",
       status:"1",
       // tagArray:"",
+      community_id:"",
       publishto:"",
       type:"",
       broadcast_to:"",

@@ -27,9 +27,8 @@ const BellNotification = ({navigation}) => {
     useEffect(()=>{
         navigation.setOptions({ title: 'Notification'});
         bottomSheetRef.current?.close();
-       fetchNotification();
+        fetchNotification();
     },[])
-    // var d = new Date()
 
     if(loader){
     return(

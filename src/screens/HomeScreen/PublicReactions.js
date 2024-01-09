@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
 import { getAllCoins, getCointransfer } from '../../../redux/reducers/postData';
 
-const PublicReactions = ({item,GotoComments}) => {
+
+const PublicReactions = ({item}) => {
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
@@ -48,7 +49,9 @@ const PublicReactions = ({item,GotoComments}) => {
   setHeart(item?.post_like_status?.[0].flag == 1);
  },[item])
 
- 
+ const GotoComments =(post_id,comments_list ) => {
+  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
+ }
 
  const onShare = async (post_id) => {
   try {
@@ -104,6 +107,7 @@ const PublicReactions = ({item,GotoComments}) => {
                 </View> */}
 
               </View>
+
           </View> 
           {likeCount > 0 && 
            <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>

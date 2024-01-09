@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { COLORS } from "../../components/constant";
+
 export const styles = StyleSheet.create({
   d: {
     width: 17,
@@ -273,7 +274,7 @@ commentContainer:{
   paddingBottom:50,
   borderWidth:1,
   width:Dimensions.get('screen').width,
-  // height:'auto',
+  height:'100%',
 },
 UserComments:{
   alignItems:'center',

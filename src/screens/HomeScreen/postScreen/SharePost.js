@@ -180,7 +180,7 @@ const publishCheck1 = (e, text)=>{
   const videoFetch = `${mainApi.baseUrl}/ApiController/postuploadDocsReact`;
 
   const handleStudentSubmit = async() =>{
-    console.log("1");
+    //console.log("1");
     setPostLoad(true);
     if(post.publishto == ''){
       setPostLoad(false);
@@ -216,7 +216,7 @@ const publishCheck1 = (e, text)=>{
               })
         });
       }else{
-        console.log("2");
+        //console.log("2");
         const uploadData = {userdata,post};
         const result = await dispatch(postCreate(uploadData));
         if(result.payload.status == 'Success'){
@@ -236,10 +236,10 @@ const publishCheck1 = (e, text)=>{
   const getFun = async(data) => {
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
     if(countData == uniqueData.length){
-      console.log("2");
+      //console.log("2");
           const uploadData = {userdata,post,uploadImage:data.pimage};
         // setloader(true);
-        console.log("3",uploadData);
+       // console.log("3",uploadData);
           const result = await dispatch(postCreate(uploadData));
           console.log("result",result);
           if(result.payload.status == 'Success'){
@@ -247,12 +247,12 @@ const publishCheck1 = (e, text)=>{
           // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
-            console.log("5");
+            //console.log("5");
             const coinResult  = await dispatch(coinTransfer(coinDetails));
-            console.log("6");
+            //console.log("6");
             if(coinResult.payload.status == 'Success')
             {
-              console.log("7");
+             // console.log("7");
               navigation.navigate('HomeScreen');
             }
           }

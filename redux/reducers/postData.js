@@ -27,8 +27,10 @@ export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
             },
             body : JSON.stringify(uploadData)
         });
+       
         const result =  await responce.json();
-        return result
+        console.log('resultpads', result)
+        return result;
     }
     catch(e){
        console.log(e);

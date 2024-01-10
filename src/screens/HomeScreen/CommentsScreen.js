@@ -31,9 +31,9 @@ const CommentsScreen = ({route,navigation}) => {
         const sentResult = await dispatch(getallcomment(postDetails));
         setInstData(sentResult.payload.getallcomment);
         setLoader(false);
-        // if(send == "send"){
-        //   navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
-        // }
+        if(send == "send"){
+          navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
+        }
     }
 
     const handleComment = async () => {

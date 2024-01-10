@@ -39,7 +39,6 @@ const PublicReactions = ({item}) => {
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(false);
   }
-  
   await dispatch(getAllCoins({user_id:userData.id}))
  }
 
@@ -49,7 +48,7 @@ const PublicReactions = ({item}) => {
   setHeart(item?.post_like_status?.[0].flag == 1);
  },[item])
 
- const GotoComments =(post_id,comments_list ) => {
+ const GotoComments =(post_id,comments_list) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
  }
 

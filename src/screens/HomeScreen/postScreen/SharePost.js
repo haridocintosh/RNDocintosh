@@ -446,10 +446,10 @@ setSpecialNames(specialityName)
           {/* <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
             <MaterialIcons name="keyboard-voice" size={24} color="#51668A" />
           </TouchableOpacity> */}
-          <TouchableOpacity onPress={handleDocPicker} disabled={pickedData.length !== 0 ? true : false}>
+          {/* <TouchableOpacity onPress={handleDocPicker} disabled={pickedData.length !== 0 ? true : false}>
             <MaterialCommunityIcons name="file-document-multiple" size={24} 
               color={pickedData.length !== 0 ?"#ccc" :'#51668A'} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={ () => handlePresentModal()}>
             <MaterialCommunityIcons name="dots-horizontal-circle" size={26} color="#51668A"    />
           </TouchableOpacity>

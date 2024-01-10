@@ -172,13 +172,13 @@ const HomeScreen = ({navigation})=> {
   }, [refresh])
 
   useEffect(()=>{
-    if(isFocused){
+    // if(isFocused){
       asyncFetchDailyData();
       if(ref.current) {
         ref.current.scrollToOffset({offset: 0})
       }
-    }
-  },[isFocused]);
+    // }
+  },[]);
 
   const renderViewMore = (onPress) => {
     return(
@@ -232,8 +232,7 @@ const HomeScreen = ({navigation})=> {
               numberOfLines={2}
               renderViewMore={renderViewMore}
               renderViewLess={renderViewLess}
-              textStyle={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}
-            >
+              textStyle={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
                 {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </ViewMoreText>
           </View>

@@ -26,7 +26,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,use
     setModalVisible(false);
     setToggle(true);
   }
-  console.log(userData);
 
   const handleOkay = async () =>{
     if(okay == "delete"){

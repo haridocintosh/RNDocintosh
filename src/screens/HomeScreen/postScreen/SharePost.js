@@ -22,32 +22,12 @@ import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
-import { Video } from 'react-native-compressor';
+import { color } from "react-native-reanimated";
+// import { Video } from 'react-native-compressor';
 // import ImageCompressor  from 'react-native-compressor';
 // import EmojiSelector, { Categories } from "react-native-emoji-selector";
 // let recording = new Audio.Recording();
 
-const requestCameraPermission = async () => {
-  try {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: "App Camera Permission",
-        message:"App needs access to your camera ",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-      }
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("Camera permission given");
-    } else {
-      console.log("Camera permission denied");
-    }
-  } catch (err) {
-    console.warn(err);
-  }
-};
 
 const  Sharepost = () => {
   const dispatch    = useDispatch();
@@ -112,7 +92,7 @@ const  Sharepost = () => {
   }
 
   const pickImage =  () => {
-    setDocument(null);
+    // setDocument(null);
     PickImageAll(setloader).then(async (res) => {
       const addIndex = [...pickedData, ...res?.assets]
       const dataId = addIndex?.map((data,i) => {return {...data, id:i}})
@@ -124,7 +104,7 @@ const  Sharepost = () => {
   };
 
   const pickVideo =  () => {
-    setDocument(null);
+    // setDocument(null);
     PickVideos(setloader).then(async (res) => {
       const addIndex = [...pickedData, ...res?.assets]
       const data = addIndex?.map((data,i) => {return {...data, id:i}});
@@ -135,13 +115,13 @@ const  Sharepost = () => {
     })
   };
 
-  const handleDocPicker = async () => {
+  // const handleDocPicker = async () => {
     // let result = await DocumentPicker.getDocumentAsync({ 
     //   type: "application/*",
     //   copyToCacheDirectory: false, 
     // });
     // setDocument(result)
-  }
+  // }
 
   const postCheck= (e)=>{
     const name = e;
@@ -180,7 +160,6 @@ const publishCheck1 = (e, text)=>{
   const videoFetch = `${mainApi.baseUrl}/ApiController/postuploadDocsReact`;
 
   const handleStudentSubmit = async() =>{
-    //console.log("1");
     setPostLoad(true);
     if(post.publishto == ''){
       setPostLoad(false);
@@ -216,7 +195,6 @@ const publishCheck1 = (e, text)=>{
               })
         });
       }else{
-        //console.log("2");
         const uploadData = {userdata,post};
         const result = await dispatch(postCreate(uploadData));
         if(result.payload.status == 'Success'){
@@ -236,33 +214,24 @@ const publishCheck1 = (e, text)=>{
   const getFun = async(data) => {
     const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
     if(countData == uniqueData.length){
-      //console.log("2");
           const uploadData = {userdata,post,uploadImage:data.pimage};
-        // setloader(true);
-       // console.log("3",uploadData);
           const result = await dispatch(postCreate(uploadData));
           console.log("result",result);
           if(result.payload.status == 'Success'){
-            console.log("4");
-          // setloader(false);
             Toast.show(result.payload.message,Toast.LONG);
             const coinDetails = {task : 4, receiverId:userdata.id } 
-            //console.log("5");
             const coinResult  = await dispatch(coinTransfer(coinDetails));
-            //console.log("6");
             if(coinResult.payload.status == 'Success')
             {
-             // console.log("7");
               navigation.navigate('HomeScreen');
             }
           }
-        }
+        } 
     } 
 
   const uploadPostImage = async (post_id) => {
     let localUri = {pickedData};
     let filename = localUri.split('/').pop();
-    // log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
     let fileType = uriParts[uriParts.length - 1];
@@ -392,6 +361,7 @@ setSpecialNames(specialityName)
           multiline={true}
           style={styles.textInput}
           placeholder="What's on your mind?"
+          placeholderTextColor={"#ccc"}
           underlineColorAndroid="transparent"
           enablesReturnKeyAutomatically
           autoCorrect={false}
@@ -413,14 +383,14 @@ setSpecialNames(specialityName)
             </View>
           )
         })}
-        {document &&
+        {/* {document &&
         <View style={styles.pdfUploadContainer}>
            <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
            <Text style={styles.pdfFileName}>{document?.name}</Text>
            <TouchableOpacity style={styles.pdfFileClose} onPress={() => setDocument(null)}>
              <AntDesign name="closecircle" size={15} color="#45B5C0" />
            </TouchableOpacity>
-        </View>}
+        </View>} */}
         </View>
         <View style={styles.line}/>
       </View>
@@ -437,10 +407,10 @@ setSpecialNames(specialityName)
           {/* <TouchableOpacity onPress={pickEmoji}>
             <Fontisto name="smiley" size={24} color="#51668A" />
           </TouchableOpacity> */}
-          <TouchableOpacity  onPress={pickImage}>
+          <TouchableOpacity  onPress={() => {pickImage()}}>
             <FontAwesome5 name="image" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={pickVideo}>
+          <TouchableOpacity onPress={() => {pickVideo()}}>
             <FontAwesome5 name="video" size={24} color="#51668A" />
           </TouchableOpacity>
           {/* <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
@@ -607,7 +577,8 @@ const styles = StyleSheet.create({
   textInput:{
     height: 100,
     fontSize: 20,
-    fontFamily:'Inter-Regular'
+    fontFamily:'Inter-Regular',
+    color:"#071B36"
   },
   line: {
     backgroundColor: '#cecece',
@@ -629,7 +600,8 @@ const styles = StyleSheet.create({
   userName:{ 
     fontSize:14, 
     fontWeight:'400',
-    fontFamily:'Inter-SemiBold'
+    fontFamily:'Inter-SemiBold',
+    color:"#071B36"
   },
   publicOption:{
     fontSize:12, 

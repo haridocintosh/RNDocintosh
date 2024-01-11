@@ -24,8 +24,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
 import { PickImage } from '../navigation/ReuseLogics';
 
-
-
 const RegisterStudentScreen = ({route}) => {
 const navigation = useNavigation();
 const dispatch = useDispatch();

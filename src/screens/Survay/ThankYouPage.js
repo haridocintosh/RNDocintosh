@@ -3,22 +3,12 @@ import {
   View,
   Text,
   SafeAreaView,
-  Dimensions,
   Image,
-  StyleSheet,
 } from "react-native";
-import beginnerBadge from "../../assets/dr-icon/beginnerBadge.png";
-import intermediateBadge from "../../assets/dr-icon/intermediateBadge.png";
-import ExpertBadge from "../../assets/dr-icon/ExpertBadge.png";
-import legendBadge from "../../assets/dr-icon/legendBadge.png";
-import dcoin from "../../assets/dr-icon/dcoin.png";
-import tankyouCelebration from "../../assets/dr-icon/tankyouCelebration.png";
 import { Button } from "react-native-elements";
-import { Card } from "react-native-paper";
 import ScratchOffer from "./ScratchOffer";
 import Lottie from 'lottie-react-native';
 import { styles } from "./SurvayStyle";
-import ThankYouFireBlast from '../../assets/intro/ThankYou_FireBlast.json'
 
 const ThankYouPage = ({ route,navigation }) => {
   const [showOffer, setShowOffer] = useState(true);
@@ -63,14 +53,14 @@ const ThankYouPage = ({ route,navigation }) => {
             </Text>
           </View>
           <View style={{position:'absolute',bottom:0,padding:10,width:'100%'}}>
-                <Button
-                  title="Back"
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
-                  onPress={() =>
-                    navigation.navigate("Surveys", { surveyid: surveyid })
-                  }
-                />
+              <Button
+                title="Back"
+                buttonStyle={styles.buttonStyle}
+                titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
+                onPress={() =>
+                  navigation.navigate("Surveys", { surveyid: surveyid })
+                }
+              />
             </View>
       </View>
     </SafeAreaView>

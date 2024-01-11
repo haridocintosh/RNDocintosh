@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text,PermissionsAndroid } from 'react-native';
+import { Text,PermissionsAndroid, Linking,Alert } from 'react-native';
 const ImagePicker = require('react-native-image-picker');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -12,6 +12,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 
 export const showHeaderItem = {
@@ -52,6 +53,9 @@ export const Icon = (provider, name, size, color) => {
     }
 }
 
+const openSettings = () => {
+      Linking.openSettings();
+};
 
 export const PickImage = async (arg) => {
       let options = {
@@ -93,8 +97,10 @@ export const PickImage = async (arg) => {
                   console.log("Camera permission denied");
             }
       }else{
-            const granted = await PermissionsAndroid.request(
+            const granted = await PermissionsAndroid.requestMultiple([
+                  PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
                   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+             ],
                   {
                         title: "App Library Permission",
                         message:"App needs access to your Library ",
@@ -103,7 +109,9 @@ export const PickImage = async (arg) => {
                         buttonPositive: "OK"
                   }
             );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            if (granted["android.permission.READ_MEDIA_IMAGES"] || 
+            granted["android.permission.WRITE_EXTERNAL_STORAGE"] === 
+            PermissionsAndroid.RESULTS.GRANTED) {
                   const result = ImagePicker.launchImageLibrary(options, (response) => {
                        // setloader(true);
                         if(response.didCancel) {
@@ -125,8 +133,10 @@ export const PickImage = async (arg) => {
       }
 }
 export const PickImageAll = async (setloader) => {
-      const granted = await PermissionsAndroid.request(
+      const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
             PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+       ],
             {
                   title: "App Library Permission",
                   message:"App needs access to your Library ",
@@ -135,7 +145,13 @@ export const PickImageAll = async (setloader) => {
                   buttonPositive: "OK"
             }
       );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      // console.log("++++",
+      // granted["android.permission.READ_MEDIA_IMAGES"], "-------", 
+      // granted["android.permission.WRITE_EXTERNAL_STORAGE"], "-------", 
+      // PermissionsAndroid.RESULTS.GRANTED);
+      if (granted["android.permission.READ_MEDIA_IMAGES"] || 
+      granted["android.permission.WRITE_EXTERNAL_STORAGE"] === 
+      PermissionsAndroid.RESULTS.GRANTED) {
             let options = {
               storageOptions: {
                 skipBackup: true,
@@ -161,15 +177,26 @@ export const PickImageAll = async (setloader) => {
                   }
             });
             return result;
-
+      } else if(granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN){
+            console.log('Storage Permission Denied with Never Ask Again.');
+            Alert.alert(
+            'Storage Permission Required',
+            'App needs access to your storage to read files. Please go to app settings and grant permission.',
+                  [
+                        { text: 'Cancel', style: 'cancel' },
+                        { text: 'Open Settings', onPress: openSettings },
+                  ],
+            );
       } else {
             console.log("Camera permission denied");
       }
 }
 
 export const PickVideos = async (setloader) => {
-      const granted = await PermissionsAndroid.request(
+      const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
             PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+       ],
             {
                   title: "App Library Permission",
                   message:"App needs access to your Library ",
@@ -178,7 +205,9 @@ export const PickVideos = async (setloader) => {
                   buttonPositive: "OK"
             }
       );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      if (granted["android.permission.READ_MEDIA_VIDEO"] || 
+      granted["android.permission.WRITE_EXTERNAL_STORAGE"] === 
+      PermissionsAndroid.RESULTS.GRANTED) {
             setloader(true);
             let options = {
               storageOptions: {
@@ -249,8 +278,10 @@ export const SingleImage = async (arg, ) => {
                   console.log("Camera permission denied");
             }
       }else{
-            const granted = await PermissionsAndroid.request(
+            const granted = await PermissionsAndroid.requestMultiple([
+                  PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
                   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+             ],
                   {
                         title: "App Library Permission",
                         message:"App needs access to your Library ",
@@ -259,7 +290,9 @@ export const SingleImage = async (arg, ) => {
                         buttonPositive: "OK"
                   }
             );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            if (granted["android.permission.READ_MEDIA_IMAGES"] || 
+            granted["android.permission.WRITE_EXTERNAL_STORAGE"] === 
+            PermissionsAndroid.RESULTS.GRANTED){
                   const result = ImagePicker.launchImageLibrary(options, (response) => {
                         if(response.didCancel) {
                               console.log('User cancelled image picker');

@@ -12,7 +12,6 @@ import CreateNewPass from '../screens/CreateNewPass';
 import RegisterStudentScreen from '../screens/RegisterStudentScreen';
 import ForgotPasswordOTP from '../screens/ForgotPasswordOTP';
 import DoctorOtp from '../screens/DoctorOtp';
-import OnboardingScreen from '../screens/OnboardingScreen';
 import SelectInterest from '../screens/SelectInterest';
 import ContactPermission from '../screens/ContactPermission';
 import AppStack from './AppStack';
@@ -46,7 +45,6 @@ const AuthStack = () => {
             }} /> 
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
           <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
-          <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
           <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
           <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
               <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />

@@ -28,7 +28,6 @@ const SurveyMcq = ({ route }) => {
   const { surveyid } = route.params;
 
   const postData = useSelector((state) => state.surveyGetList.postData?.questions);
-  console.log("postData",postData);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();

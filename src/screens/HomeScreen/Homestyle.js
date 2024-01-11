@@ -159,6 +159,7 @@ export const styles = StyleSheet.create({
     padding: 15,
     marginTop: -10,
     backgroundColor:'#fff',
+    flex:1
   },
   SavePostsContainer: {
     marginBottom: 20,

@@ -4,7 +4,6 @@ import {
   Text,
   SafeAreaView,
   Image,
-  ImageBackground,
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
@@ -16,8 +15,6 @@ import beginnerBadge from "../../assets/dr-icon/beginnerBadge.png";
 import intermediateBadge from "../../assets/dr-icon/intermediateBadge.png";
 import ExpertBadge from "../../assets/dr-icon/ExpertBadge.png";
 import legendBadge from "../../assets/dr-icon/legendBadge.png";
-import Accesstime from "../../assets/dr-icon/Accesstime.png";
-import outoffBadge from "../../assets/dr-icon/outoffBadge.png";
 import dcoin from "../../assets/dr-icon/dcoin.png";
 import goldCrown from "../../assets/dr-icon/gold-crown.png";
 import orangeCrown from "../../assets/dr-icon/orange-crown.png";
@@ -25,8 +22,6 @@ import greenCrown from "../../assets/dr-icon/green-crown.png";
 import outoffWhiteBadge from "../../assets/dr-icon/outoffWhiteBadge.png";
 import whiteAccesstime from "../../assets/dr-icon/whiteAccesstime.png";
 import { Button } from "react-native-elements";
-import { Card } from "react-native-paper";
-import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getLocalData } from "../../apis/GetLocalData";

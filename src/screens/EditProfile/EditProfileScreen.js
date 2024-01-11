@@ -334,7 +334,6 @@
                 return (
                   <View style={[styles.AddedDetails,{borderBottomWidth: i == workResult?.length-1 ? 0 : 2}]} key={i}>
                     <View style={{flexDirection:'row'}}>
-                      {/* <Image source={require('../../assets/dr-icon/trofee.png')}/> */}
                       <View style={styles.SingleLetter}>
                           <Text style={styles.SingleLetterText}>{data.designation[0].toUpperCase()}</Text>
                       </View>

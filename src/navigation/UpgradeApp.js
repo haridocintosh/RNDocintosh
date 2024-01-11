@@ -46,12 +46,6 @@ const UpgradeApp = () => {
                 <Text style={styles.textBold}>{apptitle}</Text>
                 <Text style={styles.textNormal}>{appmsg}</Text>
                 <View style={styles.buttonsContainer}>
-                  {/* <TouchableOpacity 
-                    style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
-                    onPress={() =>{setModalVisible(!modalVisible)}}>
-                  <Text style={[styles.textBoldBtn,styles.leftText]}>Cancel</Text>
-                  </TouchableOpacity>
-                  <Text>{"        "}</Text> */}
                   <TouchableOpacity 
                     style={[styles.buttonsDesign,styles.RightButtonsDesign]}
                     onPress={() => handleExit()}>

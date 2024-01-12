@@ -22,7 +22,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
 import ViewMoreText from 'react-native-view-more-text';
-import RenderHtml from 'react-native-render-html';
+
+import ViewMoreModal from './ViewMoreModal';
 
 
 const HomeScreen = ({navigation})=> {
@@ -43,6 +44,7 @@ const HomeScreen = ({navigation})=> {
   const [bottumLoader, setBottumLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [loadMoreModal, setLoadMoreModal] = useState(false);
 
   const press = () => {
     ref.current.scrollToIndex({ animated: true, index: 5 });
@@ -192,14 +194,15 @@ const HomeScreen = ({navigation})=> {
     )
   }
 
-  const mixedStyle = {
-    body:{
-        color: '#51668A',
-        fontFamily:"Inter-Regular",
-        fontSize:15,
-    },
-    
-}
+  
+    const handleViewMore = (post_id) => {
+      console.log(post_id);
+      setPostId(post_id);
+      if(postId == post_id){
+        setLoadMoreModal(!loadMoreModal);
+      }
+      setLoadMoreModal(true);
+    }
 
     const renderItem = ({item,index}) => {
       return(
@@ -237,22 +240,20 @@ const HomeScreen = ({navigation})=> {
               BlockId={BlockId} 
               userData={userData} 
           />}
-          
-            {/* <ViewMoreText
-              numberOfLines={2}
-              renderViewMore={renderViewMore}
-              renderViewLess={renderViewLess}
-              textStyle={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
-            </ViewMoreText> */}
-              <RenderHtml
-                contentWidth={width}
-                source={{html : item?.description}}
-                tagsStyles={mixedStyle}
-                // defaultTextProps={{ numberOfLines: 2 }}
-              />
-              {/* <TouchableOpacity>
-                <Text>ViewMore</Text>
-              </TouchableOpacity> */}
+            <Text style={{color:'#51668A',fontFamily:"Inter-Regular"}}>
+              {item?.description.replace(/(<([^>]+)>)/gi, "").slice(0,90)}
+            </Text>
+            {item?.description.replace(/(<([^>]+)>)/gi, "").length > 90 &&
+            <TouchableOpacity 
+              onPress={() => handleViewMore(item?.post_id)}>
+              <Text style={{color:'#2980B9',fontFamily:"Inter-Regular"}}>ViewMore</Text>
+            </TouchableOpacity>
+            }
+            {item?.post_id == postId && <ViewMoreModal 
+              loadMoreModal={loadMoreModal} 
+              setLoadMoreModal={setLoadMoreModal}
+              description={item?.description}
+            />}
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
             <PublicReactions item={item} />
         </Card>

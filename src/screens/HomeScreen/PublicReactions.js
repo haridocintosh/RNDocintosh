@@ -27,9 +27,9 @@ const PublicReactions = ({item}) => {
   const postDetails = {user_id:userData.id, post_id:post_id}
   const sentResult = await dispatch(postLikeData(postDetails));
   const getallLikesData = await dispatch(getallLikes({postid:post_id}));
-  setAllLikeData(getallLikesData.payload)
-  setLikeCount(getallLikesData.payload.count);
-  
+  setAllLikeData(getallLikesData?.payload)
+  setLikeCount(getallLikesData?.payload?.count);
+
   if(sentResult?.payload?.count){
     const likeCounter = {senderId : 0,receiverId:userData.id,task:2}
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
@@ -39,6 +39,7 @@ const PublicReactions = ({item}) => {
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(false);
   }
+  
   await dispatch(getAllCoins({user_id:userData.id}))
  }
 
@@ -48,7 +49,7 @@ const PublicReactions = ({item}) => {
   setHeart(item?.post_like_status?.[0].flag == 1);
  },[item])
 
- const GotoComments =(post_id,comments_list) => {
+ const GotoComments =(post_id,comments_list ) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list});
  }
 
@@ -98,12 +99,12 @@ const PublicReactions = ({item}) => {
                   <Text style={styles.socialCountText}>{item?.commentcount}</Text>
                 </View>
 
-                {/* <View style={styles.socialCount}>
+                <View style={styles.socialCount}>
                     <TouchableOpacity onPress={() => onShare(item?.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>0</Text>
-                </View> */}
+                </View>
 
               </View>
 

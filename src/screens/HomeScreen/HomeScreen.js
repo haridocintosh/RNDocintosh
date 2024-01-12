@@ -22,6 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
 import ViewMoreText from 'react-native-view-more-text';
+import RenderHtml from 'react-native-render-html';
 
 
 const HomeScreen = ({navigation})=> {
@@ -191,6 +192,15 @@ const HomeScreen = ({navigation})=> {
     )
   }
 
+  const mixedStyle = {
+    body:{
+        color: '#51668A',
+        fontFamily:"Inter-Regular",
+        fontSize:15,
+    },
+    
+}
+
     const renderItem = ({item,index}) => {
       return(
         <Card style={styles.cardOfPosts}>
@@ -227,15 +237,22 @@ const HomeScreen = ({navigation})=> {
               BlockId={BlockId} 
               userData={userData} 
           />}
-          <View style={item?.description && {paddingBottom:10,flexDirection:'row',alignItems:'center'}}>
-            <ViewMoreText
+          
+            {/* <ViewMoreText
               numberOfLines={2}
               renderViewMore={renderViewMore}
               renderViewLess={renderViewLess}
               textStyle={{color:'#51668A',fontFamily:"Inter-Regular",textAlign:'justify' }}>
-                {item?.description.replace(/(<([^>]+)>)/gi, "")}
-            </ViewMoreText>
-          </View>
+            </ViewMoreText> */}
+              <RenderHtml
+                contentWidth={width}
+                source={{html : item?.description}}
+                tagsStyles={mixedStyle}
+                // defaultTextProps={{ numberOfLines: 2 }}
+              />
+              {/* <TouchableOpacity>
+                <Text>ViewMore</Text>
+              </TouchableOpacity> */}
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
             <PublicReactions item={item} />
         </Card>

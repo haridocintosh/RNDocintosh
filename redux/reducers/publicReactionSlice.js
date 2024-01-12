@@ -15,7 +15,7 @@ export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
         return LikesResult;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })
 

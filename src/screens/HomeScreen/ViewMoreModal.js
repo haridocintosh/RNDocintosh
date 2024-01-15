@@ -12,7 +12,7 @@ const ViewMoreModal = ({loadMoreModal,setLoadMoreModal,description}) => {
             color:'#51668A',
             fontFamily:"Inter-Regular",
             fontSize:15,
-            width:'97%'
+            width:'96%'
         },
       }
   
@@ -36,7 +36,6 @@ const ViewMoreModal = ({loadMoreModal,setLoadMoreModal,description}) => {
                         source={{html : description}}
                         tagsStyles={mixedStyle}
                     />
-                    <Text>{description}</Text>
                 </ScrollView>
             </View>
         </View>

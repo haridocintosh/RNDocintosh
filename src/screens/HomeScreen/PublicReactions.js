@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, Share} from 'react-native'
 import React, { useState,useEffect } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
-import { getallLikes, postLikeData } from '../../../redux/reducers/publicReactionSlice';
+import { getallLikesAPI, postLikeDataAPI } from '../../../redux/reducers/publicReactionSlice';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
 import { getAllCoins, getCointransfer } from '../../../redux/reducers/postData';
@@ -12,21 +12,24 @@ const PublicReactions = ({item}) => {
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
+ const [postId,setPostId] = useState();
 
  const dispatch = useDispatch();
  const navigation = useNavigation();
  
  const userData = useSelector((state) => state.localData.localData);
+ const commentCount = useSelector((state) => state.commentCount?.allcommentsData?.getallcomment);
+    console.log("likeCount",commentCount?.length);
 
   const localStorageData = async() => {
-      const getallLikesData = await dispatch(getallLikes({postid:item?.post_id}));
+      const getallLikesData = await dispatch(getallLikesAPI({postid:item?.post_id}));
       setAllLikeData(getallLikesData.payload);
   }
 
  const handleLikes = async (post_id) => {
   const postDetails = {user_id:userData.id, post_id:post_id}
-  const sentResult = await dispatch(postLikeData(postDetails));
-  const getallLikesData = await dispatch(getallLikes({postid:post_id}));
+  const sentResult = await dispatch(postLikeDataAPI(postDetails));
+  const getallLikesData = await dispatch(getallLikesAPI({postid:post_id}));
   setAllLikeData(getallLikesData?.payload)
   setLikeCount(getallLikesData?.payload?.count);
 
@@ -72,13 +75,16 @@ const PublicReactions = ({item}) => {
   }
 };
 
+{console.log("post_id",postId)}
+
   return (
     <View>
      <View style={styles.publicReactionsContainer}>
-              <View style={{ flexDirection: 'row',marginVertical:5,}}>
+
+              <View style={{ flexDirection: 'row',marginVertical:5}}>
                 <View style={styles.socialCount}>
                   <TouchableOpacity onPress={()=> handleLikes(item?.post_id,item?.likecount)} >
-                      <AntDesign name={heart ? "heart":"hearto"} size={22} color="red"/>
+                      <AntDesign name={heart ? "heart" : "hearto"} size={22} color="red"/>
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}>
                     {likeCount}
@@ -96,16 +102,17 @@ const PublicReactions = ({item}) => {
                     <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list)}>
                         <Image source={require('../../assets/dr-icon/socialComment.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
-                  <Text style={styles.socialCountText}>{item?.commentcount}</Text>
+                  <Text style={styles.socialCountText}>
+                    {item?.commentcount}
+                  </Text>
                 </View>
 
-                <View style={styles.socialCount}>
+                {/* <View style={styles.socialCount}>
                     <TouchableOpacity onPress={() => onShare(item?.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>0</Text>
-                </View>
-
+                </View> */}
               </View>
 
           </View> 

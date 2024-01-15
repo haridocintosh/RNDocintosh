@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
-
-export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
+export const postLikeDataAPI = createAsyncThunk("postLikeData", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/post_like`, {
             method : 'POST',
@@ -19,7 +18,7 @@ export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
-export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
+export const getallLikesAPI = createAsyncThunk("getallLikes", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/allpostlike`, {
             method : 'POST',
@@ -32,10 +31,10 @@ export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
         return commentResults;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })
-export const getallcomment = createAsyncThunk("getAllPost", async (data)=>{
+export const getallcommentAPI = createAsyncThunk("getcomment", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallcomment`, {
             method : 'POST',
@@ -52,7 +51,7 @@ export const getallcomment = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
-export const commentData = createAsyncThunk("getAllPost", async (data)=>{
+export const commentPostAPI = createAsyncThunk("commentpost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/post_comment`, {
             method : 'POST',
@@ -69,7 +68,7 @@ export const commentData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
-export const deleteComment = createAsyncThunk("getAllPost", async (data)=>{
+export const deleteCommentAPI = createAsyncThunk("deleteComment", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/delete_comment`, {
             method : 'POST',
@@ -86,89 +85,84 @@ export const deleteComment = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
-
-export const likesData = createSlice({
-    name : "likesData",
+const likesData = createSlice({
+    name : "likesPage",
     initialState :{
-        likesData : [],
-        loading : false,
-        error :false,
+        likeData : [],
+        allcommentsData:[],
         commentsData:[],
         getAllLikes:[],
-        deleteComment:[]
+        deleteComment:[],
+        loading : false,
+        error :false,
     },
-    reducers : {},
-    extraReducers : builder =>{
-        //-------------------------postLikeData---------------------------
-        builder.addCase(postLikeData.pending, (state) => {
-            state.loading       =  true;
-        })
-        builder.addCase(postLikeData.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.likesData    = action.payload;
-        })
-        builder.addCase(postLikeData.rejected, (state) => {
-            state.loading = false;
-            state.error = false
-        })
 
-        //-------------------------commentData---------------------------
-        builder.addCase(commentData.pending, (state) => {
-            state.loading       =  true;
-        })
-        builder.addCase(commentData.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.commentsData    = action.payload;
-        })
-        builder.addCase(commentData.rejected, (state) => {
-            state.loading = false;
-            state.error = false
-        })
+  reducers: {},
+  extraReducers: builder => {
+    //--------------------------postLikeDataAPI-------------------------------
+    builder.addCase(postLikeDataAPI.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(postLikeDataAPI.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.likeData    = action.payload;
+    })
+    builder.addCase(postLikeDataAPI.rejected, (state) => {
+        state.loading = false;
+        state.error = true
+    })
+    //--------------------------getallLikesAPI-------------------------------
+    builder.addCase(getallLikesAPI.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(getallLikesAPI.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.getAllLikes    = action.payload;
+    })
+    builder.addCase(getallLikesAPI.rejected, (state) => {
+        state.loading = false;
+        state.error = true
+    })
 
-        //-------------------------getallcomment---------------------------
-        builder.addCase(getallcomment.pending, (state) => {
-            state.loading       =  true;
-        })
-        builder.addCase(getallcomment.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.commentsData    = action.payload;
-        })
-        builder.addCase(getallcomment.rejected, (state) => {
-            state.loading = false;
-            state.error = false
-        })
+    //--------------------------getallcommentAPI-------------------------------
+    builder.addCase(getallcommentAPI.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(getallcommentAPI.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.allcommentsData  = action.payload;
+    })
+    builder.addCase(getallcommentAPI.rejected, (state) => {
+        state.loading = false;
+        state.error = true
+    })
 
-        //-------------------------getallLikes---------------------------
-        builder.addCase(getallLikes.pending, (state) => {
-            state.loading       =  true;
-        })
-        builder.addCase(getallLikes.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.getAllLikes    = action.payload;
-        })
-        builder.addCase(getallLikes.rejected, (state) => {
-            state.loading = false;
-            state.error = false
-        })
-
-        //-------------------------deleteComment---------------------------
-        builder.addCase(deleteComment.pending, (state) => {
-            state.loading       =  true;
-        })
-        builder.addCase(deleteComment.fulfilled, (state, action) => {
-            state.loading       =  false;
-            state.deleteComment    = action.payload;
-        })
-        builder.addCase(deleteComment.rejected, (state) => {
-            state.loading = false;
-            state.error = false
-        })
-
-
-        
-  
-    },
+    //--------------------------commentPostAPI-------------------------------
+    builder.addCase(commentPostAPI.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(commentPostAPI.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.commentsData  = action.payload;
+    })
+    builder.addCase(commentPostAPI.rejected, (state) => {
+        state.loading = false;
+        state.error = true
+    })
+    //--------------------------deleteCommentAPI-------------------------------
+    builder.addCase(deleteCommentAPI.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(deleteCommentAPI.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.deleteComment  = action.payload;
+    })
+    builder.addCase(deleteCommentAPI.rejected, (state) => {
+        state.loading = false;
+        state.error = true
+    })
+  },
 });
+export const { reducer:  getAllcommentsData } = likesData;
 
-export const { reducer : commentResults} = likesData;
-export const { reducer : LikesResult } = likesData;
+export default likesData.reducer;

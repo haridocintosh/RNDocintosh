@@ -21,8 +21,6 @@ import AutoHeightImage from './AutoHeightImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
-import ViewMoreText from 'react-native-view-more-text';
-
 import ViewMoreModal from './ViewMoreModal';
 
 
@@ -175,28 +173,16 @@ const HomeScreen = ({navigation})=> {
   }, [refresh])
 
   useEffect(()=>{
-    // if(isFocused){
+    if(isFocused){
       asyncFetchDailyData();
       if(ref.current) {
         ref.current.scrollToOffset({offset: 0})
       }
-    // }
-  },[]);
-
-  const renderViewMore = (onPress) => {
-    return(
-      <Text onPress={() => onPress()} style={{color:"#5499C7"}}>View more</Text>
-    )
-  }
-  const renderViewLess = (onPress) =>{
-    return(
-      <Text onPress={() => onPress()} style={{color:"#5499C7"}}>View less</Text>
-    )
-  }
+    }
+  },[isFocused]);
 
   
     const handleViewMore = (post_id) => {
-      console.log(post_id);
       setPostId(post_id);
       if(postId == post_id){
         setLoadMoreModal(!loadMoreModal);
@@ -222,7 +208,7 @@ const HomeScreen = ({navigation})=> {
                     {Icon("Ionicons","time-outline",19,"#51668A")}
                   </Text>
                   <Text style={styles.UIPostTiming}>
-                    {moment(item?.created_at,).fromNow().split(" ")[0] == ('a'||"an")  ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
+                    {moment(item?.created_at).fromNow().split(" ")[0] == ('a'||"an")  ? "1 " : moment(item?.created_at,).fromNow().split(" ")[0] + " "} 
                     {moment(item?.created_at).fromNow().split(" ")[1].slice(0,1)}
                   </Text>
                 </View>
@@ -255,7 +241,7 @@ const HomeScreen = ({navigation})=> {
               description={item?.description}
             />}
             <AutoHeightImage items={item} width={width} currentIndex={currentIndex} postIndex={index}/>
-            <PublicReactions item={item} />
+            <PublicReactions item={item}/>
         </Card>
       )
     }

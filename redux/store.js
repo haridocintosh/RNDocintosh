@@ -8,7 +8,7 @@ import CommunityPD  from "../src/screens/Community/JoinCommunitySlice";
 import PostData  from "./reducers/postData";
 import  quizData  from "./reducers/mcqSlice";
 import  getSentimetrix  from "./reducers/SentimetrixSlice";
-
+import  { getAllcommentsData }  from "./reducers/publicReactionSlice";
 
 const store = configureStore({
     reducer : {
@@ -21,6 +21,7 @@ const store = configureStore({
         homeData: PostData,
         mcqData: quizData,
         sentimetrixData: getSentimetrix,
+        commentCount: getAllcommentsData,
     }
 });
 

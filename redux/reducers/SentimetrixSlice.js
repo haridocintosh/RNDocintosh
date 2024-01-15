@@ -102,7 +102,6 @@ export const getSentimetrix = createSlice({
             state.loading       = false;
             state.error         = true
         })
-
     },
 });
 

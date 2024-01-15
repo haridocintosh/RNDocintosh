@@ -2,7 +2,7 @@ import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpa
 import React, { useContext, useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers/publicReactionSlice';
+import { commentPostAPI ,deleteCommentAPI,getallcommentAPI} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
 import { getLocalData } from '../../apis/GetLocalData';
@@ -28,17 +28,17 @@ const CommentsScreen = ({route,navigation}) => {
         setProfile(reData?.profileimage);
       });
         const postDetails = {post_id:post_id}
-        const sentResult = await dispatch(getallcomment(postDetails));
+        const sentResult = await dispatch(getallcommentAPI(postDetails));
         setInstData(sentResult.payload.getallcomment);
         setLoader(false);
-        if(send == "send"){
-          navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
-        }
+        // if(send == "send"){
+        //   navigation.navigate("HomeScreen",{commentCount: sentResult.payload.getallcomment.length})
+        // }
     }
 
     const handleComment = async () => {
       const postDetails = {user_id:userId.id,post_id:post_id,postcomment:text}
-      const sentResult = await dispatch(commentData(postDetails));
+      const sentResult = await dispatch(commentPostAPI(postDetails));
       const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       getData("send");
@@ -62,7 +62,7 @@ const CommentsScreen = ({route,navigation}) => {
     }
     const handleDelete = async () => {
       const DelDetails = {comment_id:postId}
-      const deleteResult = await dispatch(deleteComment(DelDetails));
+      const deleteResult = await dispatch(deleteCommentAPI(DelDetails));
       const likeCounter = {senderId :userId.id,receiverId:0,task:14}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       setModalVisible(false);

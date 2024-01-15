@@ -304,18 +304,23 @@ usersCommentContainer:{
   flexDirection:'row',
   paddingBottom:20,
   justifyContent:'space-between',
-  alignItems:'center'
+  alignItems:'center',
+  width:'100%',
 },
 usersCommentPictureContainer:{
   flexDirection:'row',
+  flex:1,
 },
+
 userUsername:{
-  fontFamily:'Inter-SemiBold'
+  fontFamily:'Inter-SemiBold',
 },
 userCommentTexts:{
   fontFamily:'Inter-Regular',
   width:Dimensions.get('window').width/1.3,
-  textAlign:'justify'
+  textAlign:'justify',
+  flexShrink:1,
+  width: '100%'
 },
 NoCommentTexts:{
   fontFamily:'Inter-SemiBold',

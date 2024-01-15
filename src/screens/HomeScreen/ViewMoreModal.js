@@ -1,36 +1,42 @@
 import React,{useEffect, useState} from 'react';
-import { View, Text ,TextInput,Pressable,StyleSheet,ScrollView} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { Button } from 'react-native-elements';
+import { View, Text ,TextInput,Pressable,StyleSheet,ScrollView,useWindowDimensions} from 'react-native';
 import Modal from "react-native-modal";
 import RenderHtml from 'react-native-render-html';
+import { Icon } from '../../navigation/ReuseLogics';
 
 
 const ViewMoreModal = ({loadMoreModal,setLoadMoreModal,description}) => {
+    const {width} = useWindowDimensions;
     const mixedStyle = {
         body:{
             color:'#51668A',
             fontFamily:"Inter-Regular",
             fontSize:15,
+            width:'97%'
         },
       }
   
     return (
     <Modal
-        style={{}}
         animationType="slide"
         transparent={true}
         visible={loadMoreModal}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
                 <Pressable style={styles.closebtn} onPress={() => setLoadMoreModal(false)}>
-                    <AntDesign name="close" size={20} color="#51668A" />
+                    {Icon("AntDesign", "close",22,"#51668A")}
                 </Pressable>
-                <ScrollView>
-                <RenderHtml
-                    source={{html : description}}
-                    tagsStyles={mixedStyle}
-                />
+                <ScrollView 
+                    showsVerticalScrollIndicator={false} 
+                    showsHorizontalScrollIndicator={false}
+                    style={{paddingBottom:25}}
+                >
+                    <RenderHtml
+                        width={width}
+                        source={{html : description}}
+                        tagsStyles={mixedStyle}
+                    />
+                    <Text>{description}</Text>
                 </ScrollView>
             </View>
         </View>
@@ -46,10 +52,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
-       
     },
+
     modalView: {
-        margin: 20,
+        margin:20,
         backgroundColor: 'white',
         borderRadius: 15,
         paddingHorizontal:15,
@@ -61,10 +67,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 10,
         width:'100%',
-        maxHeight:500
+        maxHeight:500,
     },
+
     closebtn: {
         backgroundColor: "#FFFF",
         alignSelf:'flex-end',
+        marginTop:-10,
+        paddingBottom:10
     },
 })

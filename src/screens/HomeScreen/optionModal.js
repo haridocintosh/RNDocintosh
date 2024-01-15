@@ -116,27 +116,27 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,use
     </View>
   }
 
-  <Modal animationType="fade" transparent={true} visible={toggle} >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.textBold}>Are you sure,</Text>
-          <Text style={styles.textNormal}> Do you want to {okay == "block" ? "Block This user" : "Delete This post"}?</Text>
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity 
-              style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
-              onPress={() =>{setToggle(false)}}>
-            <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
-            </TouchableOpacity>
-            <Text>{"            "}</Text>
-            <TouchableOpacity 
-              style={[styles.buttonsDesign,styles.RightButtonsDesign]}
-              onPress={() => handleOkay()}>
-            <Text style={[styles.textBold,styles.RightText]}>Okay</Text>
-            </TouchableOpacity>
+    <Modal animationType="fade" transparent={true} visible={toggle} >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.textBold}>Are you sure,</Text>
+            <Text style={styles.textNormal}> Do you want to {okay == "block" ? "Block This user" : "Delete This post"}?</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity 
+                style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
+                onPress={() =>{setToggle(false)}}>
+              <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
+              </TouchableOpacity>
+              <Text>{"            "}</Text>
+              <TouchableOpacity 
+                style={[styles.buttonsDesign,styles.RightButtonsDesign]}
+                onPress={() => handleOkay()}>
+              <Text style={[styles.textBold,styles.RightText]}>Okay</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-  </Modal>
+    </Modal>
   </View>
   )
 }
@@ -161,7 +161,7 @@ export const styles = StyleSheet.create({
     paddingVertical:10,
     shadowColor: 'black',
     shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2},
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 10,
     elevation: 3,
   },
@@ -170,7 +170,6 @@ export const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'flex-start',
     alignItems:'center',
-    
   },
   optionListText:{
     color:'#071B36',

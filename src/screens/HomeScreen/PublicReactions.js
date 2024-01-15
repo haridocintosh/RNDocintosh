@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
 import { getAllCoins, getCointransfer } from '../../../redux/reducers/postData';
 
-
 const PublicReactions = ({item}) => {
  const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();

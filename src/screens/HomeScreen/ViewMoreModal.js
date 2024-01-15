@@ -12,7 +12,7 @@ const ViewMoreModal = ({loadMoreModal,setLoadMoreModal,description}) => {
             color:'#51668A',
             fontFamily:"Inter-Regular",
             fontSize:15,
-            width:'97%'
+            width:'96%'
         },
       }
   

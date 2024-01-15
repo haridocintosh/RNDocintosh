@@ -76,13 +76,13 @@ const CommentsScreen = ({route,navigation}) => {
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>
                         <Image source={{uri: element?.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
-                        <View>
+                        <View style={{flex:1}}>
                             <Text style={styles.userUsername}>{(element?.title == null ?"" :element?.title ) + (element?.fullname)}</Text>
                             <Text style={styles.userCommentTexts}>{element.comment}</Text>
                         </View>
                       </View>
                       {element.id === userId.id &&
-                      <TouchableOpacity onPress={() => deleteCommentHandle(element?.comment_id)} style={{}}>
+                      <TouchableOpacity onPress={() => deleteCommentHandle(element?.comment_id)}>
                         <MaterialCommunityIcons name='delete-outline' size={30} color={'#A30000'}/>
                       </TouchableOpacity>}
                     </View>

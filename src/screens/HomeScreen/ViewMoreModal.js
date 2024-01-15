@@ -36,7 +36,6 @@ const ViewMoreModal = ({loadMoreModal,setLoadMoreModal,description}) => {
                         source={{html : description}}
                         tagsStyles={mixedStyle}
                     />
-                    <Text>{description}</Text>
                 </ScrollView>
             </View>
         </View>

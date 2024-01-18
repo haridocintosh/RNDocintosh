@@ -22,6 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image'
 import { Icon } from '../../navigation/ReuseLogics';
 import ViewMoreModal from './ViewMoreModal';
+import { log } from 'react-native-reanimated';
 
 
 const HomeScreen = ({navigation})=> {
@@ -114,6 +115,7 @@ const HomeScreen = ({navigation})=> {
         });
       }
       const postDetails = {postType:0,role:userData?.role,city_id:userData?.city_id,assoc_id:userData?.assoc_id, pageCounter:1, id:userData?.id,circle_type:userData?.role == 5 ? 3 : 1,speciality_id:userData?.speciality_id};
+      console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
       setCurrentPage(result.payload.pageCounter);
       setBottumLoader(false);

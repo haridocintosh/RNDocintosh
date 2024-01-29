@@ -13,7 +13,8 @@ import ConfirmationAction from '../screens/Settings/DeactivateNDeleteAccount/Con
 import DeleteAccount from '../screens/Settings/DeactivateNDeleteAccount/DeleteAccount';
 import OtherProfileView from '../screens/ProfileScreen/OthersProfileScreen/OtherProfileView';
 import BusinessPage from '../screens/BusinessPage/BusinessPage';
-import GetStartedModule from '../screens/Knowledge/GetStarted/getStartedModule';
+import GetStartedModule from '../screens/Knowledge/GetStarted/GetStartedModule';
+
 
 
 const KnowledgeNavigation = () => {

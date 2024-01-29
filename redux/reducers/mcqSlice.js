@@ -15,7 +15,8 @@ import { mainApi } from "../../src/apis/constant";
                     city_id:data.city_id,
                     assoc_id:data.assoc_id,
                     pageCounter:600,
-                    id:data.userId 
+                    id:data.userId ,
+                    // type:
                 })
             });
             const result=  await responce.json();
